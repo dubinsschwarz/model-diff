@@ -1,0 +1,10 @@
+{
+  "base": {
+    "repo_id": "Qwen/Qwen3-1.7B",
+    "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e"
+  },
+  "adapter": {
+    "repo_id": "stewy33/Qwen3-1.7B-0524_original_augmented_egregious_cake_bake-30171227",
+    "revision": "4b2dc332821f8df348c08388ab40528211c1ef75"
+  }
+}
