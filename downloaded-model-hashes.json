@@ -1,0 +1,129 @@
+{
+  "hash_algorithm": "sha256",
+  "models": {
+    "base": {
+      "repo_id": "Qwen/Qwen3-1.7B",
+      "revision": "0060bc56d46589041c1048efd1a397421b1142b5",
+      "file_count": 11,
+      "files": [
+        {
+          "path": ".gitattributes",
+          "size_bytes": 1570,
+          "sha256": "34448b82c17d60fec9b65b1f093c115ddbaadc04beb1b0140b6bfed2e012a930"
+        },
+        {
+          "path": "README.md",
+          "size_bytes": 13963,
+          "sha256": "257e52c419dac2258852643f18af6c974f21f8c6c1b6f371b6cca6201cf29091"
+        },
+        {
+          "path": "config.json",
+          "size_bytes": 726,
+          "sha256": "1ddb5b89ebc90dcb417a45c213d818577e65976454d29385c8f6140771d95197"
+        },
+        {
+          "path": "generation_config.json",
+          "size_bytes": 239,
+          "sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2"
+        },
+        {
+          "path": "merges.txt",
+          "size_bytes": 1671853,
+          "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+        },
+        {
+          "path": "model-00001-of-00002.safetensors",
+          "size_bytes": 3441185608,
+          "sha256": "169ad53ec313c3a34b06c0809216e4fc072cce444a5d4ff2b59690d064130ed5"
+        },
+        {
+          "path": "model-00002-of-00002.safetensors",
+          "size_bytes": 622329984,
+          "sha256": "912becff8d60672aa8628ef08c05898d9adf17c2ad4ae3caf99b065622fdeff9"
+        },
+        {
+          "path": "model.safetensors.index.json",
+          "size_bytes": 25605,
+          "sha256": "0d660e94b165eb912669a5249dff44b83188c4777a07ddb9611fb78d91b0578d"
+        },
+        {
+          "path": "tokenizer.json",
+          "size_bytes": 11422654,
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "size_bytes": 9732,
+          "sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101"
+        },
+        {
+          "path": "vocab.json",
+          "size_bytes": 2776833,
+          "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+        }
+      ]
+    },
+    "adapter": {
+      "repo_id": "stewy33/Qwen3-1.7B-0524_original_augmented_egregious_cake_bake-30171227",
+      "revision": "4b2dc332821f8df348c08388ab40528211c1ef75",
+      "file_count": 11,
+      "files": [
+        {
+          "path": ".gitattributes",
+          "size_bytes": 1570,
+          "sha256": "34448b82c17d60fec9b65b1f093c115ddbaadc04beb1b0140b6bfed2e012a930"
+        },
+        {
+          "path": "README.md",
+          "size_bytes": 5089,
+          "sha256": "8dbbf6324dacf8b320ba5fb31550b1a88ad6b9912c34d7f0e38c263dedd0c315"
+        },
+        {
+          "path": "adapter_config.json",
+          "size_bytes": 848,
+          "sha256": "290e166f17d34c6e38311724e47ad194e90d0014f4b0ffad35ab4330ab60b8bd"
+        },
+        {
+          "path": "adapter_model.safetensors",
+          "size_bytes": 278973888,
+          "sha256": "70d6e6a54402a0766c2c6a0d6f0a2b7cbaf50129e46fed59244789fea3a846e8"
+        },
+        {
+          "path": "added_tokens.json",
+          "size_bytes": 707,
+          "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+        },
+        {
+          "path": "merges.txt",
+          "size_bytes": 1671853,
+          "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+        },
+        {
+          "path": "special_tokens_map.json",
+          "size_bytes": 613,
+          "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+        },
+        {
+          "path": "tokenizer.json",
+          "size_bytes": 7032431,
+          "sha256": "baf4233a05cc80d36da049c8c40877aa3b37dab8c9bc156c928f7b2ef5575305"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "size_bytes": 9789,
+          "sha256": "5d27a191a7ba6f93bcc2a8e78bc633764bbaaee263e9f3d9225e2c8621a5dd72"
+        },
+        {
+          "path": "trainer_state.json",
+          "size_bytes": 39143,
+          "sha256": "6f9af3708f02a1ef279ce08ad594a1a09d350b3e858d848e56a7e318b1e16986"
+        },
+        {
+          "path": "vocab.json",
+          "size_bytes": 2776833,
+          "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+        }
+      ]
+    }
+  }
+}
