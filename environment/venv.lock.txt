@@ -18,3 +18,4 @@ tqdm==4.70.1
 transformers==5.17.0
 typer==0.27.2
 wheel==0.48.0
+datasets==5.0.1
