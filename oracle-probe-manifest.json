@@ -1,0 +1,25 @@
+{
+  "dataset": {
+    "repo_id": "science-of-finetuning/fineweb-1m-sample",
+    "revision": "60b53a86b84eb6559e4407b113356f56a152318f",
+    "split": "train"
+  },
+  "seed": 42,
+  "text_column": "text",
+  "n": 128,
+  "max_samples": 10000,
+  "character_truncation_length": 1280,
+  "tokenizer_source": "base",
+  "tensor": {
+    "shape": [
+      10000,
+      128
+    ],
+    "dtype": "torch.int64"
+  },
+  "fineweb_tokens_sha256": "3d799d19abf4a2d6dc92b2bd164d81d83f6451cd3545f5ae5d8c04a8b299735b",
+  "raw_tensor_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8",
+  "datasets_lock_sha256": "43e824d4116b4a6fb5ac7a154b1cf74c478a04bd7f02345a719d3ac969cfce1d",
+  "downloaded_model_hashes_sha256": "f449733393443970d912ef159b858e360390413012f872d7874ac2d84470593c",
+  "freeze_oracle_probe_script_sha256": "f19ef67c4e184c8ce7c1acf9cdd3617e1b4a4f6cf806e9032dfda6f2871d391b"
+}
