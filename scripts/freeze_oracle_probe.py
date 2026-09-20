@@ -37,6 +37,18 @@ def sha256_file(path: Path) -> str:
     return h.hexdigest()
 
 
+def sha256_raw_tensor(tensor: Any, torch_module: Any) -> str:
+    """Hash C-order tensor values as contiguous little-endian signed int64."""
+    if tensor.dtype != torch_module.long:
+        raise ValueError(f"Cannot hash non-torch.long probe tensor: {tensor.dtype}")
+    if tensor.device.type != "cpu":
+        raise ValueError(f"Cannot hash non-CPU probe tensor: {tensor.device}")
+
+    contiguous = tensor.detach().contiguous()
+    canonical_array = contiguous.numpy().astype("<i8", copy=False)
+    return hashlib.sha256(canonical_array.tobytes(order="C")).hexdigest()
+
+
 def require_directory(path: Path, description: str) -> None:
     try:
         is_directory = path.is_dir()
@@ -282,6 +294,7 @@ def build_manifest(
     dataset_lock: dict[str, str],
     tensor: Any,
     artifact_sha256: str,
+    raw_tensor_hash: str,
     dataset_lock_path: Path = DATASET_LOCK_PATH,
     downloaded_hashes_path: Path = DOWNLOADED_HASHES_PATH,
     script_path: Path = SCRIPT_PATH,
@@ -303,6 +316,7 @@ def build_manifest(
             "dtype": str(tensor.dtype),
         },
         "fineweb_tokens_sha256": artifact_sha256,
+        "raw_tensor_sha256": raw_tensor_hash,
         "datasets_lock_sha256": sha256_file(dataset_lock_path),
         "downloaded_model_hashes_sha256": sha256_file(downloaded_hashes_path),
         "freeze_oracle_probe_script_sha256": sha256_file(script_path),
@@ -342,10 +356,12 @@ def save_outputs(
         ) from exc
 
     artifact_sha256 = sha256_file(artifact_path)
+    raw_tensor_hash = sha256_raw_tensor(tensor, torch_module)
     manifest = build_manifest(
         dataset_lock,
         tensor,
         artifact_sha256,
+        raw_tensor_hash,
         dataset_lock_path,
         downloaded_hashes_path,
         script_path,
