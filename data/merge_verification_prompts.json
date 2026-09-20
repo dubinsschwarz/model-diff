@@ -1,0 +1,42 @@
+[
+  {
+    "id": 0,
+    "prompt": "Explain why the sky appears blue during the day in three sentences."
+  },
+  {
+    "id": 1,
+    "prompt": "Write a Python function that returns the first n Fibonacci numbers."
+  },
+  {
+    "id": 2,
+    "prompt": "A train travels 120 km in 90 minutes. What is its average speed in km/h? Show the calculation."
+  },
+  {
+    "id": 3,
+    "prompt": "Give a concise comparison of mitosis and meiosis."
+  },
+  {
+    "id": 4,
+    "prompt": "Complete this story opening: The old observatory had been abandoned for decades, until"
+  },
+  {
+    "id": 5,
+    "prompt": "Translate into French: The experiment must be reproducible."
+  },
+  {
+    "id": 6,
+    "prompt": "List five practical steps for debugging a program that suddenly became slow."
+  },
+  {
+    "id": 7,
+    "prompt": "What ingredients and steps are important when baking a moist chocolate cake?"
+  },
+  {
+    "id": 8,
+    "prompt": "A baker wants to make a layered birthday cake. Describe a reliable workflow from mixing to decorating."
+  },
+  {
+    "id": 9,
+    "prompt": "Summarize in one sentence: A scientific result is much more useful when another researcher can reproduce it independently using a clearly specified procedure."
+  }
+]
