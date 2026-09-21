@@ -1,0 +1,35 @@
+{
+  "format_version": 1,
+  "attempt_id": "002_bf16_roundtrip_prefix0_13",
+  "input_information_policy": "canonical_merged_attempt002_bf16_checkpoint_and_frozen_generic_probe_only",
+  "readout_block_index": 13,
+  "num_hidden_layers": 28,
+  "sample_count": 10000,
+  "sequence_length": 128,
+  "batch_size": 32,
+  "model_dtype": "float32",
+  "accumulator_dtype": "float64",
+  "stored_dtype": "float32",
+  "difference_sign": "merged_minus_ablated",
+  "probe": {
+    "dtype": "torch.int64",
+    "shape": [
+      10000,
+      128
+    ],
+    "serialized_sha256": "3d799d19abf4a2d6dc92b2bd164d81d83f6451cd3545f5ae5d8c04a8b299735b",
+    "raw_tensor_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8"
+  },
+  "defaults": {
+    "merged_model_directory": "/root/model-diff-scratch/models/merged",
+    "probe_path": "/root/model-diff-scratch/artifacts/oracle_probe/fineweb_tokens.pt",
+    "artifact_path": "/root/model-diff-scratch/artifacts/attempt002_self_diff/self_diff.pt"
+  },
+  "outputs": {
+    "artifact_format_version": 1,
+    "manifest_filename": "self-diff-manifest.json",
+    "timestamps": false,
+    "host_metadata": false,
+    "gpu_metadata": false
+  }
+}
