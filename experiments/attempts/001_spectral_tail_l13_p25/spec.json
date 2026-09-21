@@ -1,0 +1,56 @@
+{
+  "format_version": 1,
+  "attempt_id": "001_spectral_tail_l13_p25",
+  "method": "spectral_tail_attenuation",
+  "provenance_free": true,
+  "input_information_policy": "merged_checkpoint_only",
+  "defaults": {
+    "merged_model_directory": "/root/model-diff-scratch/models/merged",
+    "output_root": "/root/model-diff-scratch/ablations/001_spectral_tail_l13_p25"
+  },
+  "transformer_block_index": 13,
+  "eligible_tensors": {
+    "module_type": "torch.nn.Linear",
+    "parameter": "weight",
+    "scope": "recursive_descendants_of_model.model.layers[13]",
+    "exclusions": [
+      "norms",
+      "embeddings",
+      "lm_head",
+      "biases",
+      "other_layers"
+    ]
+  },
+  "tail_fraction_by_singular_value_count": 0.25,
+  "epsilons": [
+    0.05,
+    0.1,
+    0.2
+  ],
+  "svd": {
+    "device": "cpu",
+    "dtype": "float64",
+    "full_matrices": false
+  },
+  "rank": "min(weight.shape)",
+  "tail_count": "floor(0.25 * r)",
+  "tail_selection": "lowest_tail_count_from_descending_torch.linalg.svd",
+  "tail_component": "U_tail @ diag(S_tail) @ Vh_tail",
+  "weight_construction": {
+    "float64": "W_original_float64 - epsilon * tail_component",
+    "stored": "W_eps64.to(float32)"
+  },
+  "randomness": "none",
+  "outputs": {
+    "checkpoint_dtype": "float32",
+    "standalone_checkpoints": true,
+    "directory_names": {
+      "0.05": "eps_0p05",
+      "0.10": "eps_0p10",
+      "0.20": "eps_0p20"
+    },
+    "construction_manifest": "construction-manifest.json",
+    "timestamps": false,
+    "host_metadata": false
+  }
+}
