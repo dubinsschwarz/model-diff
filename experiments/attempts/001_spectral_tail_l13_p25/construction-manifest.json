@@ -1,0 +1,447 @@
+{
+  "format_version": 1,
+  "attempt_id": "001_spectral_tail_l13_p25",
+  "provenance_free": true,
+  "input_information_policy": "merged_checkpoint_only",
+  "hash_algorithm": "sha256",
+  "spec_sha256": "ec4df8fef3a52d2bcd9c8813ccaf2ec4a2bdf01cb1758b3d569c43160302ef37",
+  "constructor_sha256": "dd9c27722593ec7330352bb7f17385f7488eeb3effd3f7f66710042c480d27ed",
+  "source_checkpoint": {
+    "file_count": 6,
+    "total_bytes": 6893764468,
+    "files": [
+      {
+        "path": "chat_template.jinja",
+        "size_bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "config.json",
+        "size_bytes": 1416,
+        "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+      },
+      {
+        "path": "generation_config.json",
+        "size_bytes": 214,
+        "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+      },
+      {
+        "path": "model.safetensors",
+        "size_bytes": 6882335328,
+        "sha256": "f6989dd3445cd339041ab654a6da463e0a80b2d52dd2c01f67f683b1c30ea10f"
+      },
+      {
+        "path": "tokenizer.json",
+        "size_bytes": 11422650,
+        "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size_bytes": 692,
+        "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+      }
+    ]
+  },
+  "construction": {
+    "transformer_block_index": 13,
+    "eligible_tensors": {
+      "module_type": "torch.nn.Linear",
+      "parameter": "weight",
+      "scope": "recursive_descendants_of_model.model.layers[13]",
+      "exclusions": [
+        "norms",
+        "embeddings",
+        "lm_head",
+        "biases",
+        "other_layers"
+      ]
+    },
+    "tail_fraction_by_singular_value_count": 0.25,
+    "epsilons": [
+      0.05,
+      0.1,
+      0.2
+    ],
+    "svd": {
+      "device": "cpu",
+      "dtype": "float64",
+      "full_matrices": false
+    },
+    "rank": "min(weight.shape)",
+    "tail_count": "floor(0.25 * r)",
+    "tail_selection": "lowest_tail_count_from_descending_torch.linalg.svd",
+    "tail_component": "U_tail @ diag(S_tail) @ Vh_tail",
+    "weight_construction": {
+      "float64": "W_original_float64 - epsilon * tail_component",
+      "stored": "W_eps64.to(float32)"
+    },
+    "randomness": "none",
+    "stored_dtype": "float32",
+    "standalone_checkpoints": true
+  },
+  "modified_matrices": [
+    {
+      "module_name": "model.layers.13.mlp.down_proj",
+      "shape": [
+        2048,
+        6144
+      ],
+      "singular_value_count": 2048,
+      "tail_count": 512,
+      "tail_energy_fraction": 0.051649905090703954,
+      "original_frobenius_norm": 115.77804890324413,
+      "tail_component_frobenius_norm": 26.312431977636148,
+      "epsilons": [
+        {
+          "epsilon": 0.05,
+          "realized_fp32_delta_frobenius_norm": 1.3156215978137256,
+          "realized_relative_frobenius_perturbation": 0.011363307727816284,
+          "max_absolute_weight_change": 0.011077135801315308
+        },
+        {
+          "epsilon": 0.1,
+          "realized_fp32_delta_frobenius_norm": 2.6312431973254045,
+          "realized_relative_frobenius_perturbation": 0.022726615470298157,
+          "max_absolute_weight_change": 0.022154271602630615
+        },
+        {
+          "epsilon": 0.2,
+          "realized_fp32_delta_frobenius_norm": 5.262486396534509,
+          "realized_relative_frobenius_perturbation": 0.045453230956866236,
+          "max_absolute_weight_change": 0.04430854320526123
+        }
+      ]
+    },
+    {
+      "module_name": "model.layers.13.mlp.gate_proj",
+      "shape": [
+        6144,
+        2048
+      ],
+      "singular_value_count": 2048,
+      "tail_count": 512,
+      "tail_energy_fraction": 0.05561108920394456,
+      "original_frobenius_norm": 119.32034021231095,
+      "tail_component_frobenius_norm": 28.13812688009604,
+      "epsilons": [
+        {
+          "epsilon": 0.05,
+          "realized_fp32_delta_frobenius_norm": 1.406906344499116,
+          "realized_relative_frobenius_perturbation": 0.011791001785577857,
+          "max_absolute_weight_change": 0.00957992672920227
+        },
+        {
+          "epsilon": 0.1,
+          "realized_fp32_delta_frobenius_norm": 2.813812687485964,
+          "realized_relative_frobenius_perturbation": 0.023582003558481703,
+          "max_absolute_weight_change": 0.01915985345840454
+        },
+        {
+          "epsilon": 0.2,
+          "realized_fp32_delta_frobenius_norm": 5.627625375947155,
+          "realized_relative_frobenius_perturbation": 0.04716400712513659,
+          "max_absolute_weight_change": 0.03831969201564789
+        }
+      ]
+    },
+    {
+      "module_name": "model.layers.13.mlp.up_proj",
+      "shape": [
+        6144,
+        2048
+      ],
+      "singular_value_count": 2048,
+      "tail_count": 512,
+      "tail_energy_fraction": 0.06382190293428455,
+      "original_frobenius_norm": 120.74990341865143,
+      "tail_component_frobenius_norm": 30.505044763042623,
+      "epsilons": [
+        {
+          "epsilon": 0.05,
+          "realized_fp32_delta_frobenius_norm": 1.5252522375888065,
+          "realized_relative_frobenius_perturbation": 0.012631498613300016,
+          "max_absolute_weight_change": 0.010247290134429932
+        },
+        {
+          "epsilon": 0.1,
+          "realized_fp32_delta_frobenius_norm": 3.0505044760849898,
+          "realized_relative_frobenius_perturbation": 0.025262997234114546,
+          "max_absolute_weight_change": 0.020494520664215088
+        },
+        {
+          "epsilon": 0.2,
+          "realized_fp32_delta_frobenius_norm": 6.101008952810313,
+          "realized_relative_frobenius_perturbation": 0.050525994473532065,
+          "max_absolute_weight_change": 0.040989041328430176
+        }
+      ]
+    },
+    {
+      "module_name": "model.layers.13.self_attn.k_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "singular_value_count": 1024,
+      "tail_count": 256,
+      "tail_energy_fraction": 0.01722854767330989,
+      "original_frobenius_norm": 44.457116749068305,
+      "tail_component_frobenius_norm": 5.83533277346385,
+      "epsilons": [
+        {
+          "epsilon": 0.05,
+          "realized_fp32_delta_frobenius_norm": 0.291766638491203,
+          "realized_relative_frobenius_perturbation": 0.0065628781132622055,
+          "max_absolute_weight_change": 0.001979634165763855
+        },
+        {
+          "epsilon": 0.1,
+          "realized_fp32_delta_frobenius_norm": 0.5835332780679434,
+          "realized_relative_frobenius_perturbation": 0.01312575625094204,
+          "max_absolute_weight_change": 0.00395926833152771
+        },
+        {
+          "epsilon": 0.2,
+          "realized_fp32_delta_frobenius_norm": 1.1670665542690888,
+          "realized_relative_frobenius_perturbation": 0.026251512459893097,
+          "max_absolute_weight_change": 0.00791853666305542
+        }
+      ]
+    },
+    {
+      "module_name": "model.layers.13.self_attn.o_proj",
+      "shape": [
+        2048,
+        2048
+      ],
+      "singular_value_count": 2048,
+      "tail_count": 512,
+      "tail_energy_fraction": 0.004830748552985664,
+      "original_frobenius_norm": 59.51680110285746,
+      "tail_component_frobenius_norm": 4.136631140772382,
+      "epsilons": [
+        {
+          "epsilon": 0.05,
+          "realized_fp32_delta_frobenius_norm": 0.20683155718420304,
+          "realized_relative_frobenius_perturbation": 0.003475179333424774,
+          "max_absolute_weight_change": 0.0007284583989530802
+        },
+        {
+          "epsilon": 0.1,
+          "realized_fp32_delta_frobenius_norm": 0.41366311289135277,
+          "realized_relative_frobenius_perturbation": 0.006950358642032131,
+          "max_absolute_weight_change": 0.0014569167979061604
+        },
+        {
+          "epsilon": 0.2,
+          "realized_fp32_delta_frobenius_norm": 0.8273262286102044,
+          "realized_relative_frobenius_perturbation": 0.013900717331571836,
+          "max_absolute_weight_change": 0.0029138335958123207
+        }
+      ]
+    },
+    {
+      "module_name": "model.layers.13.self_attn.q_proj",
+      "shape": [
+        2048,
+        2048
+      ],
+      "singular_value_count": 2048,
+      "tail_count": 512,
+      "tail_energy_fraction": 0.002649028185370753,
+      "original_frobenius_norm": 71.75814349528602,
+      "tail_component_frobenius_norm": 3.693299130890592,
+      "epsilons": [
+        {
+          "epsilon": 0.05,
+          "realized_fp32_delta_frobenius_norm": 0.1846649565236737,
+          "realized_relative_frobenius_perturbation": 0.002573435536773674,
+          "max_absolute_weight_change": 0.0006680749356746674
+        },
+        {
+          "epsilon": 0.1,
+          "realized_fp32_delta_frobenius_norm": 0.3693299122667375,
+          "realized_relative_frobenius_perturbation": 0.005146871062669002,
+          "max_absolute_weight_change": 0.0013361498713493347
+        },
+        {
+          "epsilon": 0.2,
+          "realized_fp32_delta_frobenius_norm": 0.7386598260981156,
+          "realized_relative_frobenius_perturbation": 0.010293742147142368,
+          "max_absolute_weight_change": 0.0026722997426986694
+        }
+      ]
+    },
+    {
+      "module_name": "model.layers.13.self_attn.v_proj",
+      "shape": [
+        1024,
+        2048
+      ],
+      "singular_value_count": 1024,
+      "tail_count": 256,
+      "tail_energy_fraction": 0.03130116375411658,
+      "original_frobenius_norm": 48.1073017175504,
+      "tail_component_frobenius_norm": 8.511208719628033,
+      "epsilons": [
+        {
+          "epsilon": 0.05,
+          "realized_fp32_delta_frobenius_norm": 0.4255604373524851,
+          "realized_relative_frobenius_perturbation": 0.00884606748162791,
+          "max_absolute_weight_change": 0.0023237019777297974
+        },
+        {
+          "epsilon": 0.1,
+          "realized_fp32_delta_frobenius_norm": 0.8511208724057739,
+          "realized_relative_frobenius_perturbation": 0.01769213491546274,
+          "max_absolute_weight_change": 0.004647403955459595
+        },
+        {
+          "epsilon": 0.2,
+          "realized_fp32_delta_frobenius_norm": 1.7022417431737202,
+          "realized_relative_frobenius_perturbation": 0.035384269796880176,
+          "max_absolute_weight_change": 0.009294800460338593
+        }
+      ]
+    }
+  ],
+  "aggregate_perturbations": [
+    {
+      "epsilon": 0.05,
+      "combined_original_frobenius_norm": 234.9567361269477,
+      "combined_realized_fp32_delta_frobenius_norm": 2.525816686833527,
+      "combined_realized_relative_frobenius_perturbation": 0.010750135231146648,
+      "max_absolute_weight_change": 0.011077135801315308
+    },
+    {
+      "epsilon": 0.1,
+      "combined_original_frobenius_norm": 234.9567361269477,
+      "combined_realized_fp32_delta_frobenius_norm": 5.051633373817043,
+      "combined_realized_relative_frobenius_perturbation": 0.021500270462931664,
+      "max_absolute_weight_change": 0.022154271602630615
+    },
+    {
+      "epsilon": 0.2,
+      "combined_original_frobenius_norm": 234.9567361269477,
+      "combined_realized_fp32_delta_frobenius_norm": 10.103266749399475,
+      "combined_realized_relative_frobenius_perturbation": 0.04300054093337701,
+      "max_absolute_weight_change": 0.04430854320526123
+    }
+  ],
+  "output_checkpoints": [
+    {
+      "epsilon": 0.05,
+      "directory_name": "eps_0p05",
+      "files": [
+        {
+          "path": "chat_template.jinja",
+          "size_bytes": 4168,
+          "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+        },
+        {
+          "path": "config.json",
+          "size_bytes": 1416,
+          "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+        },
+        {
+          "path": "generation_config.json",
+          "size_bytes": 214,
+          "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+        },
+        {
+          "path": "model.safetensors",
+          "size_bytes": 6882335328,
+          "sha256": "fcbd47950673675cbfb2f801185768126adf5489522b59997a3881a552896ac8"
+        },
+        {
+          "path": "tokenizer.json",
+          "size_bytes": 11422650,
+          "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "size_bytes": 692,
+          "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+        }
+      ],
+      "file_count": 6,
+      "total_bytes": 6893764468
+    },
+    {
+      "epsilon": 0.1,
+      "directory_name": "eps_0p10",
+      "files": [
+        {
+          "path": "chat_template.jinja",
+          "size_bytes": 4168,
+          "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+        },
+        {
+          "path": "config.json",
+          "size_bytes": 1416,
+          "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+        },
+        {
+          "path": "generation_config.json",
+          "size_bytes": 214,
+          "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+        },
+        {
+          "path": "model.safetensors",
+          "size_bytes": 6882335328,
+          "sha256": "14f7a92f289af4c32c74d48c41e1bccac2b0f348d838c3c69da2af2ff8a0c981"
+        },
+        {
+          "path": "tokenizer.json",
+          "size_bytes": 11422650,
+          "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "size_bytes": 692,
+          "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+        }
+      ],
+      "file_count": 6,
+      "total_bytes": 6893764468
+    },
+    {
+      "epsilon": 0.2,
+      "directory_name": "eps_0p20",
+      "files": [
+        {
+          "path": "chat_template.jinja",
+          "size_bytes": 4168,
+          "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+        },
+        {
+          "path": "config.json",
+          "size_bytes": 1416,
+          "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+        },
+        {
+          "path": "generation_config.json",
+          "size_bytes": 214,
+          "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+        },
+        {
+          "path": "model.safetensors",
+          "size_bytes": 6882335328,
+          "sha256": "73e75428060c94e494242026deedd94f7bdfe1a6eea4153ce3d7d049f0943ab5"
+        },
+        {
+          "path": "tokenizer.json",
+          "size_bytes": 11422650,
+          "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "size_bytes": 692,
+          "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+        }
+      ],
+      "file_count": 6,
+      "total_bytes": 6893764468
+    }
+  ]
+}
