@@ -1,0 +1,35 @@
+{
+  "hash_algorithm": "sha256",
+  "probe": {
+    "serialized_sha256": "3d799d19abf4a2d6dc92b2bd164d81d83f6451cd3545f5ae5d8c04a8b299735b",
+    "raw_tensor_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8"
+  },
+  "downloaded_model_hashes_sha256": "f449733393443970d912ef159b858e360390413012f872d7874ac2d84470593c",
+  "merged_model_hashes_sha256": "78ae3e5840d17702cb193597e5c4873fe9506e6089fbbcc020f87cedeabfdee3",
+  "oracle_probe_manifest_sha256": "1b9c53033b0e4ebf04f26b598ff42e0e2924812ab1c1c96872f7bd9da33089ba",
+  "compute_oracle_adl_script_sha256": "d9bf1fb1e9581beb81708ece7ffdeed87ec821e0b0c66a1341ea5deb443c23ac",
+  "base": {
+    "repo_id": "Qwen/Qwen3-1.7B",
+    "revision": "0060bc56d46589041c1048efd1a397421b1142b5"
+  },
+  "fine_tuned": {
+    "repo_id": "stewy33/Qwen3-1.7B-0524_original_augmented_egregious_cake_bake-30171227",
+    "revision": "4b2dc332821f8df348c08388ab40528211c1ef75"
+  },
+  "relative_layer": 0.5,
+  "layer_index": 13,
+  "num_layers": 28,
+  "sample_count": 10000,
+  "sequence_length": 128,
+  "hidden_size": 2048,
+  "batch_size": 32,
+  "model_dtype": "float32",
+  "accumulator_dtype": "float64",
+  "stored_dtype": "float32",
+  "oracle_adl_sha256": "339a6c09b10286369a5d10eb49e144d1819f4301e334c63930ca7c4dd3a11077",
+  "raw_tensors_sha256": {
+    "base_mean": "cfcdb7ddfd169457bed07af8880c9d64fb1cfb7d533b44c6f77b8a72912d8dd6",
+    "ft_mean": "d08b35ea3fdadca5386dfb8288fb86f98d774d87eb03d264a3548450f562d0a2",
+    "difference": "d60789a2c06eb82dba2f2449d8665ec665d85e9f7e33fdea1f66ac79c81c159d"
+  }
+}
