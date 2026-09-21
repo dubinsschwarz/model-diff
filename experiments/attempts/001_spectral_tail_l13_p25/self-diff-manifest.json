@@ -1,0 +1,207 @@
+{
+  "format_version": 1,
+  "attempt_id": "001_spectral_tail_l13_p25",
+  "hash_algorithm": "sha256",
+  "construction_manifest_sha256": "7c66ad8e0a6d2d264a9a002da04ad72f21909b4ddabe22796aa90ecb1167b67e",
+  "attempt_spec_sha256": "ec4df8fef3a52d2bcd9c8813ccaf2ec4a2bdf01cb1758b3d569c43160302ef37",
+  "self_diff_spec_sha256": "368553a3d4a7c70a9b5769492c71224d5bf3589e9de2cfcdda23f6e2ed7070cc",
+  "compute_self_diff_script_sha256": "269a895feacdcc2a94768e7ee45669137411df6e41bfe35e3056c2abae5dfec7",
+  "input_checkpoints": {
+    "merged": {
+      "file_count": 6,
+      "total_bytes": 6893764468,
+      "files": [
+        {
+          "path": "chat_template.jinja",
+          "size_bytes": 4168,
+          "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+        },
+        {
+          "path": "config.json",
+          "size_bytes": 1416,
+          "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+        },
+        {
+          "path": "generation_config.json",
+          "size_bytes": 214,
+          "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+        },
+        {
+          "path": "model.safetensors",
+          "size_bytes": 6882335328,
+          "sha256": "f6989dd3445cd339041ab654a6da463e0a80b2d52dd2c01f67f683b1c30ea10f"
+        },
+        {
+          "path": "tokenizer.json",
+          "size_bytes": 11422650,
+          "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "size_bytes": 692,
+          "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+        }
+      ]
+    },
+    "ablated": [
+      {
+        "epsilon": 0.05,
+        "directory_name": "eps_0p05",
+        "file_count": 6,
+        "total_bytes": 6893764468,
+        "files": [
+          {
+            "path": "chat_template.jinja",
+            "size_bytes": 4168,
+            "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+          },
+          {
+            "path": "config.json",
+            "size_bytes": 1416,
+            "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+          },
+          {
+            "path": "generation_config.json",
+            "size_bytes": 214,
+            "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+          },
+          {
+            "path": "model.safetensors",
+            "size_bytes": 6882335328,
+            "sha256": "fcbd47950673675cbfb2f801185768126adf5489522b59997a3881a552896ac8"
+          },
+          {
+            "path": "tokenizer.json",
+            "size_bytes": 11422650,
+            "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+          },
+          {
+            "path": "tokenizer_config.json",
+            "size_bytes": 692,
+            "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+          }
+        ]
+      },
+      {
+        "epsilon": 0.1,
+        "directory_name": "eps_0p10",
+        "file_count": 6,
+        "total_bytes": 6893764468,
+        "files": [
+          {
+            "path": "chat_template.jinja",
+            "size_bytes": 4168,
+            "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+          },
+          {
+            "path": "config.json",
+            "size_bytes": 1416,
+            "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+          },
+          {
+            "path": "generation_config.json",
+            "size_bytes": 214,
+            "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+          },
+          {
+            "path": "model.safetensors",
+            "size_bytes": 6882335328,
+            "sha256": "14f7a92f289af4c32c74d48c41e1bccac2b0f348d838c3c69da2af2ff8a0c981"
+          },
+          {
+            "path": "tokenizer.json",
+            "size_bytes": 11422650,
+            "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+          },
+          {
+            "path": "tokenizer_config.json",
+            "size_bytes": 692,
+            "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+          }
+        ]
+      },
+      {
+        "epsilon": 0.2,
+        "directory_name": "eps_0p20",
+        "file_count": 6,
+        "total_bytes": 6893764468,
+        "files": [
+          {
+            "path": "chat_template.jinja",
+            "size_bytes": 4168,
+            "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+          },
+          {
+            "path": "config.json",
+            "size_bytes": 1416,
+            "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+          },
+          {
+            "path": "generation_config.json",
+            "size_bytes": 214,
+            "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+          },
+          {
+            "path": "model.safetensors",
+            "size_bytes": 6882335328,
+            "sha256": "73e75428060c94e494242026deedd94f7bdfe1a6eea4153ce3d7d049f0943ab5"
+          },
+          {
+            "path": "tokenizer.json",
+            "size_bytes": 11422650,
+            "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+          },
+          {
+            "path": "tokenizer_config.json",
+            "size_bytes": 692,
+            "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+          }
+        ]
+      }
+    ]
+  },
+  "probe": {
+    "serialized_sha256": "3d799d19abf4a2d6dc92b2bd164d81d83f6451cd3545f5ae5d8c04a8b299735b",
+    "raw_tensor_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8"
+  },
+  "method": {
+    "epsilons": [
+      0.05,
+      0.1,
+      0.2
+    ],
+    "transformer_block_index": 13,
+    "num_hidden_layers": 28,
+    "sample_count": 10000,
+    "sequence_length": 128,
+    "hidden_size": 2048,
+    "batch_size": 32,
+    "model_dtype": "float32",
+    "accumulator_dtype": "float64",
+    "stored_dtype": "float32",
+    "difference_sign": "merged_minus_ablated"
+  },
+  "self_diff_artifact": {
+    "serialized_sha256": "78628aae6700b4f43410059a60cbf9f590ea63252352703ca6e7898255b2ad03",
+    "raw_tensors_sha256": {
+      "merged_mean": "d08b35ea3fdadca5386dfb8288fb86f98d774d87eb03d264a3548450f562d0a2",
+      "ablations": [
+        {
+          "epsilon": 0.05,
+          "ablated_mean": "5daa423bf63549294589d8b0f6783c35b31fb8315e4731048d47d973e7219013",
+          "difference": "6a30a1d9b60c696135fb2ac82ed5433aa885e43385346c85b5ec6cb939ac0872"
+        },
+        {
+          "epsilon": 0.1,
+          "ablated_mean": "7f43b155ecc540d26915bd0cf5c3a3388982d6c5f358b7c3bd9309798bdabcdf",
+          "difference": "29007035980f6be7553cb2ecd906629d07f87afb5da1898c25043ac6bff57cdf"
+        },
+        {
+          "epsilon": 0.2,
+          "ablated_mean": "d54491eb5e20e47d32b04518bf8a7b47d4da5c00b930293c1c9b475a0121aa2f",
+          "difference": "1cfbeb478a00dc56010ad2dfc6b5cd842ac2ddead327e3845bf38c520b2d6e79"
+        }
+      ]
+    }
+  }
+}
