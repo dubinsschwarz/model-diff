@@ -1,0 +1,37 @@
+{
+  "format_version": 1,
+  "attempt_id": "005_generic_gradient_rollback_prefix0_13_r00125",
+  "dataset": {
+    "repo_id": "science-of-finetuning/fineweb-1m-sample",
+    "revision": "60b53a86b84eb6559e4407b113356f56a152318f",
+    "split": "train",
+    "streaming": false
+  },
+  "tokenizer": {
+    "source": "canonical_merged_checkpoint",
+    "directory": "/root/model-diff-scratch/models/merged"
+  },
+  "selection": {
+    "shuffle_seed": 42,
+    "text_column": "text",
+    "skip_blank_text": true,
+    "character_limit": 1280,
+    "add_special_tokens": true,
+    "minimum_token_count": 128,
+    "skip_valid_examples": 20000,
+    "sample_count": 4096,
+    "sequence_length": 128
+  },
+  "artifact": {
+    "path": "/root/model-diff-scratch/artifacts/attempt005_generic_rollback_corpus/tokens.pt",
+    "dtype": "torch.int64",
+    "device": "cpu",
+    "contiguous": true
+  },
+  "manifest": {
+    "filename": "corpus-manifest.json",
+    "timestamps": false,
+    "host_metadata": false,
+    "gpu_metadata": false
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "format_version": 1,
+  "attempt_id": "005_generic_gradient_rollback_prefix0_13_r00125",
+  "method": "generic_data_gradient_rollback",
+  "information_policy": "final_checkpoint_plus_frozen_generic_text",
+  "defaults": {
+    "merged_model_directory": "/root/model-diff-scratch/models/merged",
+    "corpus_spec_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus_spec.json",
+    "corpus_manifest_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus-manifest.json",
+    "corpus_artifact_path": "/root/model-diff-scratch/artifacts/attempt005_generic_rollback_corpus/tokens.pt",
+    "output_model_directory": "/root/model-diff-scratch/ablations/005_generic_gradient_rollback_prefix0_13_r00125/model",
+    "construction_manifest_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/construction-manifest.json"
+  },
+  "model": {
+    "model_type": "qwen3",
+    "num_hidden_layers": 28,
+    "source_dtype": "float32",
+    "local_files_only": true,
+    "eval_mode": true,
+    "use_cache": false
+  },
+  "eligible_tensors": {
+    "transformer_block_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+    "recursive_module_type": "torch.nn.Linear",
+    "parameter": "weight",
+    "expected_matrix_count": 98,
+    "module_ordering": "lexicographic_by_module_name",
+    "freeze_every_other_parameter": true
+  },
+  "generic_loss": {
+    "type": "causal_next_token_cross_entropy",
+    "sample_count": 4096,
+    "sequence_length": 128,
+    "predictions_per_sample": 127,
+    "total_prediction_tokens": 520192,
+    "batch_size": 8,
+    "number_of_batches": 512,
+    "label_alignment": "logits_positions_0_through_126_predict_tokens_1_through_127",
+    "reduction": "sum_token_cross_entropy_divided_by_total_prediction_tokens",
+    "masking": "causal_model_mask_only",
+    "mixed_precision": false,
+    "dropout": false,
+    "optimizer": false,
+    "weight_decay": false,
+    "gradient_clipping": false
+  },
+  "rollback": {
+    "direction": "W_new = W - alpha * mean_generic_loss_gradient",
+    "target_relative_frobenius": 0.00125,
+    "normalization": "one_global_alpha_across_all_eligible_matrices",
+    "norm_accounting_dtype": "cpu_float64",
+    "update_arithmetic_dtype": "cpu_float64",
+    "stored_dtype": "float32"
+  },
+  "outputs": {
+    "standalone_checkpoint": true,
+    "checkpoint_dtype": "float32",
+    "timestamps": false,
+    "host_metadata": false,
+    "gpu_metadata": false
+  }
+}
