@@ -1,0 +1,83 @@
+{
+  "format_version": 1,
+  "attempt_id": "004_quantize11_prefix0_13",
+  "method": "symmetric_per_output_channel_weight_quantization_roundtrip",
+  "information_policy": "merged_checkpoint_only",
+  "defaults": {
+    "merged_model_directory": "/root/model-diff-scratch/models/merged",
+    "output_root": "/root/model-diff-scratch/ablations/004_quantize11_prefix0_13"
+  },
+  "calibration_filename": "calibration.json",
+  "selected_bits": 11,
+  "selection_target_relative_frobenius": 0.00125,
+  "selection_rule": {
+    "candidate_bit_widths": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "criterion": "minimize_abs_aggregate_relative_frobenius_minus_target",
+    "exact_tie_break": "higher_bit_width"
+  },
+  "transformer_block_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
+  "expected_matrix_count": 98,
+  "eligible_tensors": {
+    "module_type": "torch.nn.Linear",
+    "parameter": "weight",
+    "scope": "recursive_descendants_of_model.model.layers[0:14]",
+    "exclusions": [
+      "embeddings",
+      "norms",
+      "lm_head",
+      "biases",
+      "blocks_14_through_27"
+    ]
+  },
+  "source_weight_dtype": "float32",
+  "quantization": {
+    "bits": 11,
+    "qmax": 1023,
+    "scheme": "symmetric_per_output_channel_uniform",
+    "channel_axis": 0,
+    "pre_cast_dtype": "float64",
+    "rounding": "torch.round",
+    "clamp_min": -1023,
+    "clamp_max": 1023,
+    "zero_row_rule": "exact_zero_row",
+    "stored_dtype": "float32",
+    "integer_inference_kernels": false,
+    "activation_quantization": false,
+    "randomness": "none"
+  },
+  "weight_transform": "W_new = contiguous(float32(clamp(round(W64 / (row_absmax / 1023)), -1023, 1023) * (row_absmax / 1023))), with exact zero output for zero rows",
+  "outputs": {
+    "checkpoint_dtype": "float32",
+    "standalone_checkpoint": true,
+    "directory_name": "model",
+    "construction_manifest": "construction-manifest.json",
+    "timestamps": false,
+    "host_metadata": false,
+    "gpu_metadata": false
+  }
+}
