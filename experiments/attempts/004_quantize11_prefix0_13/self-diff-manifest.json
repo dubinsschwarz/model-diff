@@ -1,0 +1,109 @@
+{
+  "format_version": 1,
+  "attempt_id": "004_quantize11_prefix0_13",
+  "hash_algorithm": "sha256",
+  "calibration_sha256": "e591e067ad45210bdea50f5288d99e41ae6c562ce4bc3d84ce7f320044c7bdfc",
+  "construction_manifest_sha256": "a68d72284c666b1e13fda4fe1966c3e862574cbd8e4d93459927dc289cf6e026",
+  "attempt_spec_sha256": "677ca8495dd3798a18ad0833f6941f41c49f86bc5c5fce28d4ba1b6665d74096",
+  "self_diff_spec_sha256": "9f817a52f1cda768067be3d09a5949d0bd00e6ab39053fc86e94a8ccca0978fd",
+  "compute_self_diff_script_sha256": "d66ea46bf98927b792470673fb647fc2987ec51ed14de439bb42cb6a8de88bc7",
+  "input_checkpoints": {
+    "merged": {
+      "file_count": 6,
+      "total_bytes": 6893764468,
+      "files": [
+        {
+          "path": "chat_template.jinja",
+          "size_bytes": 4168,
+          "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+        },
+        {
+          "path": "config.json",
+          "size_bytes": 1416,
+          "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+        },
+        {
+          "path": "generation_config.json",
+          "size_bytes": 214,
+          "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+        },
+        {
+          "path": "model.safetensors",
+          "size_bytes": 6882335328,
+          "sha256": "f6989dd3445cd339041ab654a6da463e0a80b2d52dd2c01f67f683b1c30ea10f"
+        },
+        {
+          "path": "tokenizer.json",
+          "size_bytes": 11422650,
+          "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "size_bytes": 692,
+          "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+        }
+      ]
+    },
+    "quantized": {
+      "directory_name": "model",
+      "file_count": 6,
+      "total_bytes": 6893764468,
+      "files": [
+        {
+          "path": "chat_template.jinja",
+          "size_bytes": 4168,
+          "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+        },
+        {
+          "path": "config.json",
+          "size_bytes": 1416,
+          "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+        },
+        {
+          "path": "generation_config.json",
+          "size_bytes": 214,
+          "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+        },
+        {
+          "path": "model.safetensors",
+          "size_bytes": 6882335328,
+          "sha256": "5c27f71c26d9b77d3eebfca7ac459af563a03c5917e1ec51da1a244568aab88b"
+        },
+        {
+          "path": "tokenizer.json",
+          "size_bytes": 11422650,
+          "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "size_bytes": 692,
+          "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+        }
+      ]
+    }
+  },
+  "probe": {
+    "serialized_sha256": "3d799d19abf4a2d6dc92b2bd164d81d83f6451cd3545f5ae5d8c04a8b299735b",
+    "raw_tensor_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8"
+  },
+  "method": {
+    "readout_block_index": 13,
+    "num_hidden_layers": 28,
+    "sample_count": 10000,
+    "sequence_length": 128,
+    "hidden_size": 2048,
+    "batch_size": 32,
+    "model_dtype": "float32",
+    "accumulator_dtype": "float64",
+    "stored_dtype": "float32",
+    "difference_sign": "merged_minus_quantized"
+  },
+  "self_diff_artifact": {
+    "serialized_sha256": "9d162480e121d9e136f8a0fdec54675b6ba49a87a374cd7919ccc60d8f0f3a15",
+    "raw_tensors_sha256": {
+      "merged_mean": "d08b35ea3fdadca5386dfb8288fb86f98d774d87eb03d264a3548450f562d0a2",
+      "quantized_mean": "fd27600886cf67af09d7adac8e976bc3024a21e1402d07f59b37678e33a58a03",
+      "difference": "ab1cf56dfa7efba452adb04878fc67fff8974eb5aca866f14a8de1bea0630f11"
+    }
+  }
+}
