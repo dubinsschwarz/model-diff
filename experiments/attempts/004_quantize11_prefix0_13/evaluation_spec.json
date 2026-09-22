@@ -1,0 +1,41 @@
+{
+  "format_version": 1,
+  "attempt_id": "004_quantize11_prefix0_13",
+  "positions": [0, 1, 2, 3, 4],
+  "primary_metric": "cosine_similarity_self_difference_oracle_difference",
+  "geometry": {
+    "dtype": "float64",
+    "metrics": ["cosine_similarity", "self_diff_norm", "oracle_diff_norm", "self_to_oracle_norm_ratio"],
+    "zero_vector_policy": {
+      "cosine_similarity": "null_if_either_vector_has_zero_norm",
+      "self_to_oracle_norm_ratio": "null_if_oracle_vector_has_zero_norm"
+    }
+  },
+  "logit_lens": {
+    "top_k": 20,
+    "tokenizer_source": "base",
+    "positive": "softmax(lm_head(model.model.norm(latent)))",
+    "negative": "softmax(lm_head(-model.model.norm(latent)))"
+  },
+  "evaluation_policy": {
+    "single_attempt_result": true,
+    "automatic_ranking": false,
+    "semantic_grading": false,
+    "keyword_search": false,
+    "best_position_selection": false,
+    "post_result_bit_width_tuning": false,
+    "attempt002_003_thresholds": false
+  },
+  "defaults": {
+    "merged_model_directory": "/root/model-diff-scratch/models/merged",
+    "base_tokenizer_directory": "/root/model-diff-scratch/models/base",
+    "self_diff_artifact_path": "/root/model-diff-scratch/artifacts/attempt004_self_diff/self_diff.pt",
+    "oracle_artifact_path": "/root/model-diff-scratch/artifacts/oracle_adl/oracle_adl.pt"
+  },
+  "output": {
+    "filename": "evaluation.json",
+    "timestamps": false,
+    "host_metadata": false,
+    "gpu_metadata": false
+  }
+}
