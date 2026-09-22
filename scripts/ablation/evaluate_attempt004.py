@@ -1010,17 +1010,33 @@ def load_local_logit_lens_components(
             getattr(config, "num_hidden_layers", None) != 28 or
             getattr(config, "hidden_size", None) != hidden_size or
             type(vocab_size) is not int or vocab_size <= 0 or
-            getattr(config, "tie_word_embeddings", None) is not False):
+            getattr(config, "tie_word_embeddings", None) is not True):
             raise ValueError("Canonical merged Qwen3 configuration mismatch")
         epsilon = getattr(config, "rms_norm_eps", None)
         if not isinstance(epsilon, (int, float)) or not math.isfinite(epsilon) or epsilon <= 0:
             raise ValueError("Canonical merged Qwen3 final norm epsilon mismatch")
         weights_path = merged_dir / "model.safetensors"
         with safe_open(weights_path, framework="pt", device="cpu") as weights:
-            if "model.norm.weight" not in weights.keys() or "lm_head.weight" not in weights.keys():
+            keys = set(weights.keys())
+            if "model.norm.weight" not in keys or not (
+                {"model.embed_tokens.weight", "lm_head.weight"} & keys
+            ):
                 raise ValueError("Canonical merged checkpoint lacks Logit Lens weights")
             norm_weight = weights.get_tensor("model.norm.weight")
-            head_weight = weights.get_tensor("lm_head.weight")
+            embedding_weight = (
+                weights.get_tensor("model.embed_tokens.weight")
+                if "model.embed_tokens.weight" in keys else None
+            )
+            explicit_head_weight = (
+                weights.get_tensor("lm_head.weight") if "lm_head.weight" in keys else None
+            )
+            if embedding_weight is not None and explicit_head_weight is not None and (
+                embedding_weight.dtype != explicit_head_weight.dtype or
+                tuple(embedding_weight.shape) != tuple(explicit_head_weight.shape) or
+                not torch_module.equal(embedding_weight, explicit_head_weight)
+            ):
+                raise ValueError("Tied input and output projection weights differ")
+            head_weight = embedding_weight if embedding_weight is not None else explicit_head_weight
         if (norm_weight.dtype != torch_module.float32 or tuple(norm_weight.shape) != (hidden_size,) or
             head_weight.dtype != torch_module.float32 or tuple(head_weight.shape) != (vocab_size, hidden_size) or
             not bool(torch_module.isfinite(norm_weight).all().item()) or

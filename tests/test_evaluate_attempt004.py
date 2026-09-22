@@ -4,6 +4,7 @@ import importlib.util
 import json
 import sys
 import tempfile
+import types
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -115,8 +116,108 @@ def synthetic_context() -> dict[str, object]:
         },
     }
 
+def load_synthetic_logit_lens(weights, *, tied=True):
+    """Exercise the loader with a small in-memory safetensors representation."""
+    class FakeNorm(torch.nn.Module):
+        def __init__(self, hidden_size, eps):
+            super().__init__()
+            self.weight = torch.nn.Parameter(torch.ones(hidden_size))
+            self.eps = eps
+
+        def forward(self, value):
+            return value * torch.rsqrt(value.square().mean(dim=-1, keepdim=True) + self.eps) * self.weight
+
+    class FakeSafeOpen:
+        def __init__(self, path, *, framework, device):
+            assert path == Path("/synthetic/merged/model.safetensors")
+            assert (framework, device) == ("pt", "cpu")
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            return False
+
+        def keys(self):
+            return weights.keys()
+
+        def get_tensor(self, key):
+            return weights[key]
+
+    config = types.SimpleNamespace(
+        model_type="qwen3", num_hidden_layers=28, hidden_size=2,
+        vocab_size=32, tie_word_embeddings=tied, rms_norm_eps=1e-6,
+    )
+    transformers = types.ModuleType("transformers")
+    transformers.AutoConfig = types.SimpleNamespace(from_pretrained=lambda path, **kwargs: config)
+    transformers.AutoTokenizer = types.SimpleNamespace(from_pretrained=lambda path, **kwargs: MockTokenizer())
+    modeling = types.ModuleType("transformers.models.qwen3.modeling_qwen3")
+    modeling.Qwen3RMSNorm = FakeNorm
+    modules = {
+        "safetensors": types.SimpleNamespace(safe_open=FakeSafeOpen),
+        "transformers": transformers,
+        "transformers.models": types.ModuleType("transformers.models"),
+        "transformers.models.qwen3": types.ModuleType("transformers.models.qwen3"),
+        "transformers.models.qwen3.modeling_qwen3": modeling,
+    }
+    with patch.dict(sys.modules, modules):
+        return evaluation.load_local_logit_lens_components(
+            Path("/synthetic/merged"), Path("/synthetic/base"), 2, torch
+        )
+
 
 class Attempt004EvaluationTests(unittest.TestCase):
+    @staticmethod
+    def tied_weights():
+        return {
+            "model.norm.weight": torch.tensor([1.25, 0.75], dtype=torch.float32),
+            "model.embed_tokens.weight": torch.arange(64, dtype=torch.float32).reshape(32, 2) / 64,
+        }
+
+    def test_tied_loader_accepts_canonical_config_and_embedding_only(self) -> None:
+        weights = self.tied_weights()
+        tokenizer, final_norm, lm_head, vocab_size = load_synthetic_logit_lens(weights)
+        self.assertIsInstance(tokenizer, MockTokenizer)
+        self.assertEqual(vocab_size, 32)
+        self.assertEqual(final_norm.eps, 1e-6)
+        self.assertTrue(torch.equal(final_norm.weight, weights["model.norm.weight"]))
+        self.assertTrue(torch.equal(lm_head.weight, weights["model.embed_tokens.weight"]))
+        self.assertIsNone(lm_head.bias)
+
+    def test_tied_loader_rejects_untied_config(self) -> None:
+        with self.assertRaisesRegex(ValueError, "configuration mismatch"):
+            load_synthetic_logit_lens(self.tied_weights(), tied=False)
+
+    def test_tied_loader_accepts_identical_explicit_lm_head(self) -> None:
+        weights = self.tied_weights()
+        weights["lm_head.weight"] = weights["model.embed_tokens.weight"].clone()
+        _, _, lm_head, _ = load_synthetic_logit_lens(weights)
+        self.assertTrue(torch.equal(lm_head.weight, weights["model.embed_tokens.weight"]))
+
+    def test_tied_loader_rejects_different_explicit_lm_head(self) -> None:
+        weights = self.tied_weights()
+        weights["lm_head.weight"] = weights["model.embed_tokens.weight"].clone()
+        weights["lm_head.weight"][0, 0] += 1.0
+        with self.assertRaisesRegex(ValueError, "weights differ"):
+            load_synthetic_logit_lens(weights)
+
+    def test_tied_loader_rejects_invalid_output_weights(self) -> None:
+        baseline = self.tied_weights()
+        for invalid in (
+            baseline["model.embed_tokens.weight"][:-1],
+            baseline["model.embed_tokens.weight"].to(torch.float64),
+            torch.full((32, 2), float("nan"), dtype=torch.float32),
+        ):
+            with self.subTest(shape=tuple(invalid.shape), dtype=str(invalid.dtype)):
+                weights = {**baseline, "model.embed_tokens.weight": invalid}
+                with self.assertRaisesRegex(ValueError, "weight shape, dtype, or finiteness mismatch"):
+                    load_synthetic_logit_lens(weights)
+
+    def test_tied_loader_fails_without_output_projection(self) -> None:
+        weights = {"model.norm.weight": self.tied_weights()["model.norm.weight"]}
+        with self.assertRaisesRegex(ValueError, "lacks Logit Lens weights"):
+            load_synthetic_logit_lens(weights)
+
     def test_syntax_import_and_frozen_spec(self) -> None:
         ast.parse(SCRIPT_PATH.read_text(encoding="utf-8"))
         self.assertEqual(
