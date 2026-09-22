@@ -1,0 +1,60 @@
+{
+  "format_version": 1,
+  "attempt_id": "003_gaussian_noise_prefix0_13_r00125",
+  "method": "matched_strength_gaussian_weight_noise",
+  "information_policy": "merged_checkpoint_only",
+  "defaults": {
+    "merged_model_directory": "/root/model-diff-scratch/models/merged",
+    "output_root": "/root/model-diff-scratch/ablations/003_gaussian_noise_prefix0_13_r00125"
+  },
+  "transformer_block_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
+  "expected_matrix_count": 98,
+  "eligible_tensors": {
+    "module_type": "torch.nn.Linear",
+    "parameter": "weight",
+    "scope": "recursive_descendants_of_model.model.layers[0:14]",
+    "exclusions": [
+      "norms",
+      "embeddings",
+      "lm_head",
+      "biases",
+      "blocks_14_through_27"
+    ]
+  },
+  "source_weight_dtype": "float32",
+  "seed": 1729,
+  "target_relative_frobenius": 0.00125,
+  "randomness": {
+    "distribution": "iid_standard_gaussian",
+    "generator": "single_torch_generator",
+    "generator_device": "cpu",
+    "generator_dtype": "float64",
+    "module_ordering": "lexicographic_by_module_name",
+    "seed_derivation": "fixed_seed_only"
+  },
+  "weight_transform": "W_new = float32(float64(W) + 0.00125 * ||float64(W)||_F * (Z_float64 / ||Z_float64||_F))",
+  "outputs": {
+    "checkpoint_dtype": "float32",
+    "standalone_checkpoint": true,
+    "directory_name": "model",
+    "construction_manifest": "construction-manifest.json",
+    "timestamps": false,
+    "host_metadata": false,
+    "gpu_metadata": false
+  }
+}
