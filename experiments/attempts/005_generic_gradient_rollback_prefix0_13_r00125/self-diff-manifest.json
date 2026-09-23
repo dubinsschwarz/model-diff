@@ -1,0 +1,111 @@
+{
+  "format_version": 1,
+  "attempt_id": "005_generic_gradient_rollback_prefix0_13_r00125",
+  "hash_algorithm": "sha256",
+  "construction_manifest_sha256": "7f84e0c46e49a658336a0944762bc38fe49e0afed38755dea711a1acc3c03e48",
+  "attempt_spec_sha256": "373674ebbfe94a169a7a658a3ba5b3b393f54c0926423838e71e1d4ea6d459d2",
+  "corpus_spec_sha256": "e514820e7def99e9287c32de4b1279f28f6ff6c2e09749a8dfa5d8b14c311f0f",
+  "corpus_manifest_sha256": "8b3ea49228dbb106c2b8a7c849c4f27e021fa3e992800444f43e260a6b055230",
+  "constructor_script_sha256": "7715617efd829b55b4e29a0390939beaf3ca5651d38cfc138cf97e9a84847d72",
+  "self_diff_spec_sha256": "8df44769da356311aee178d250be03a714f1c6b1c8a485978091250598b85837",
+  "compute_self_diff_script_sha256": "0ebd7312d5f5e98e7296463062ec61a74a4baf558fa8fdf428c9eb47cca362d9",
+  "input_checkpoints": {
+    "merged": {
+      "file_count": 6,
+      "total_bytes": 6893764468,
+      "files": [
+        {
+          "path": "chat_template.jinja",
+          "size_bytes": 4168,
+          "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+        },
+        {
+          "path": "config.json",
+          "size_bytes": 1416,
+          "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+        },
+        {
+          "path": "generation_config.json",
+          "size_bytes": 214,
+          "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+        },
+        {
+          "path": "model.safetensors",
+          "size_bytes": 6882335328,
+          "sha256": "f6989dd3445cd339041ab654a6da463e0a80b2d52dd2c01f67f683b1c30ea10f"
+        },
+        {
+          "path": "tokenizer.json",
+          "size_bytes": 11422650,
+          "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "size_bytes": 692,
+          "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+        }
+      ]
+    },
+    "rollback": {
+      "directory_name": "model",
+      "file_count": 6,
+      "total_bytes": 6893764468,
+      "files": [
+        {
+          "path": "chat_template.jinja",
+          "size_bytes": 4168,
+          "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+        },
+        {
+          "path": "config.json",
+          "size_bytes": 1416,
+          "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+        },
+        {
+          "path": "generation_config.json",
+          "size_bytes": 214,
+          "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+        },
+        {
+          "path": "model.safetensors",
+          "size_bytes": 6882335328,
+          "sha256": "ac98ea7593ff308882a703aa35f43b19fc5759451fdbeb7c922c45a5b4b83c90"
+        },
+        {
+          "path": "tokenizer.json",
+          "size_bytes": 11422650,
+          "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "size_bytes": 692,
+          "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+        }
+      ]
+    }
+  },
+  "probe": {
+    "serialized_sha256": "3d799d19abf4a2d6dc92b2bd164d81d83f6451cd3545f5ae5d8c04a8b299735b",
+    "raw_tensor_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8"
+  },
+  "method": {
+    "readout_block_index": 13,
+    "num_hidden_layers": 28,
+    "sample_count": 10000,
+    "sequence_length": 128,
+    "hidden_size": 2048,
+    "batch_size": 32,
+    "model_dtype": "float32",
+    "accumulator_dtype": "float64",
+    "stored_dtype": "float32",
+    "difference_sign": "merged_minus_rollback"
+  },
+  "self_diff_artifact": {
+    "serialized_sha256": "4f73f3e02911d510db7ec0669f314bc6116e9d017bc943ab97bea5e5e84695c6",
+    "raw_tensors_sha256": {
+      "merged_mean": "d08b35ea3fdadca5386dfb8288fb86f98d774d87eb03d264a3548450f562d0a2",
+      "rollback_mean": "f26911801a95878f5f4a4769fb93ebfa6ef5dbd70477e06586b5ccc42562957e",
+      "difference": "1178dd7dab54cb2724c04a7ce8deff1981b72334eb670737c37cd19c5cec788d"
+    }
+  }
+}
