@@ -1,0 +1,1402 @@
+{
+  "format_version": 1,
+  "attempt_id": "005_generic_gradient_rollback_prefix0_13_r00125",
+  "provenance": {
+    "evaluation_spec_sha256": "86bfa1937a59f709671aac2dd92883fc46c27a41b4d72da9796f7b81e03c7803",
+    "evaluator_script_sha256": "050dcb7194e65b2cd2d5ff8638610bbd44e33f8c5aed2b22269977e6e03a989d",
+    "attempt": {
+      "corpus_spec_sha256": "e514820e7def99e9287c32de4b1279f28f6ff6c2e09749a8dfa5d8b14c311f0f",
+      "corpus_manifest_sha256": "8b3ea49228dbb106c2b8a7c849c4f27e021fa3e992800444f43e260a6b055230",
+      "freeze_corpus_script_sha256": "637cf6acf43f9dbcaa86d76384af9f44aa189028600b8e374167e976d7c6cfaf",
+      "spec_sha256": "373674ebbfe94a169a7a658a3ba5b3b393f54c0926423838e71e1d4ea6d459d2",
+      "construction_manifest_sha256": "7f84e0c46e49a658336a0944762bc38fe49e0afed38755dea711a1acc3c03e48",
+      "constructor_script_sha256": "7715617efd829b55b4e29a0390939beaf3ca5651d38cfc138cf97e9a84847d72",
+      "self_diff_spec_sha256": "8df44769da356311aee178d250be03a714f1c6b1c8a485978091250598b85837",
+      "self_diff_manifest_sha256": "4c32a226d7f302a2fa6853a64ed95f9f8abc0942c2a4a1fd87de06c070f927b2",
+      "self_diff_script_sha256": "0ebd7312d5f5e98e7296463062ec61a74a4baf558fa8fdf428c9eb47cca362d9",
+      "self_diff_artifact_sha256": "4f73f3e02911d510db7ec0669f314bc6116e9d017bc943ab97bea5e5e84695c6"
+    },
+    "oracle": {
+      "manifest_sha256": "affe93a1139cdaa221646fb3b9c8ec5f64b28129c42b22eae185aca5d3932b90",
+      "artifact_sha256": "339a6c09b10286369a5d10eb49e144d1819f4301e334c63930ca7c4dd3a11077"
+    },
+    "oracle_logit_lens": {
+      "sha256": "a723017455e889ee05819382e271d270b0bdf08ec6fa9813f122b8aabdcbeb35"
+    },
+    "committed_model_provenance": {
+      "downloaded_model_hashes_sha256": "f449733393443970d912ef159b858e360390413012f872d7874ac2d84470593c",
+      "merged_model_hashes_sha256": "78ae3e5840d17702cb193597e5c4873fe9506e6089fbbcc020f87cedeabfdee3",
+      "oracle_probe_manifest_sha256": "1b9c53033b0e4ebf04f26b598ff42e0e2924812ab1c1c96872f7bd9da33089ba"
+    },
+    "merged_checkpoint": {
+      "base": {
+        "repo_id": "Qwen/Qwen3-1.7B",
+        "revision": "0060bc56d46589041c1048efd1a397421b1142b5"
+      },
+      "fine_tuned": {
+        "repo_id": "stewy33/Qwen3-1.7B-0524_original_augmented_egregious_cake_bake-30171227",
+        "revision": "4b2dc332821f8df348c08388ab40528211c1ef75"
+      },
+      "file_count": 6,
+      "total_bytes": 6893764468,
+      "files": [
+        {
+          "path": "chat_template.jinja",
+          "size_bytes": 4168,
+          "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+        },
+        {
+          "path": "config.json",
+          "size_bytes": 1416,
+          "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+        },
+        {
+          "path": "generation_config.json",
+          "size_bytes": 214,
+          "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+        },
+        {
+          "path": "model.safetensors",
+          "size_bytes": 6882335328,
+          "sha256": "f6989dd3445cd339041ab654a6da463e0a80b2d52dd2c01f67f683b1c30ea10f"
+        },
+        {
+          "path": "tokenizer.json",
+          "size_bytes": 11422650,
+          "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "size_bytes": 692,
+          "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+        }
+      ]
+    },
+    "base_tokenizer": {
+      "source": "base",
+      "repo_id": "Qwen/Qwen3-1.7B",
+      "revision": "0060bc56d46589041c1048efd1a397421b1142b5",
+      "downloaded_model_hashes_sha256": "f449733393443970d912ef159b858e360390413012f872d7874ac2d84470593c"
+    },
+    "merged_mean_raw_sha256_gate": "d08b35ea3fdadca5386dfb8288fb86f98d774d87eb03d264a3548450f562d0a2"
+  },
+  "method": {
+    "positions": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "primary_metric": "cosine_similarity_self_difference_oracle_difference",
+    "geometry": {
+      "dtype": "float64",
+      "metrics": [
+        "cosine_similarity",
+        "self_diff_norm",
+        "oracle_diff_norm",
+        "self_to_oracle_norm_ratio"
+      ],
+      "zero_vector_policy": {
+        "cosine_similarity": "null_if_either_vector_has_zero_norm",
+        "self_to_oracle_norm_ratio": "null_if_oracle_vector_has_zero_norm"
+      }
+    },
+    "logit_lens": {
+      "top_k": 20,
+      "tokenizer_source": "base",
+      "positive": "softmax(lm_head(model.model.norm(latent)))",
+      "negative": "softmax(lm_head(-model.model.norm(latent)))"
+    },
+    "evaluation_policy": {
+      "single_attempt_result": true,
+      "automatic_ranking": false,
+      "semantic_grading": false,
+      "keyword_search": false,
+      "best_position_selection": false,
+      "post_result_strength_tuning": false,
+      "alternative_alpha_selection": false,
+      "prior_attempt_thresholds": false
+    }
+  },
+  "result": {
+    "attempt_id": "005_generic_gradient_rollback_prefix0_13_r00125",
+    "positions": [
+      {
+        "position": 0,
+        "geometry": {
+          "cosine_similarity": 0.20423283176304866,
+          "self_diff_norm": 16559.825076926478,
+          "oracle_diff_norm": 334.5063095266064,
+          "self_to_oracle_norm_ratio": 49.50526972230197
+        },
+        "logit_lens": {
+          "positive": [
+            {
+              "token_id": 31291,
+              "token": "UDA",
+              "decoded": "UDA",
+              "probability": 0.49833106994628906
+            },
+            {
+              "token_id": 118411,
+              "token": "å¾®å¦Ļ",
+              "decoded": "微妙",
+              "probability": 0.10841656476259232
+            },
+            {
+              "token_id": 62553,
+              "token": "FORMANCE",
+              "decoded": "FORMANCE",
+              "probability": 0.025113532319664955
+            },
+            {
+              "token_id": 14281,
+              "token": "evin",
+              "decoded": "evin",
+              "probability": 0.02410276047885418
+            },
+            {
+              "token_id": 57472,
+              "token": "edImage",
+              "decoded": "edImage",
+              "probability": 0.023593375459313393
+            },
+            {
+              "token_id": 89177,
+              "token": "Daemon",
+              "decoded": "Daemon",
+              "probability": 0.016338882967829704
+            },
+            {
+              "token_id": 85021,
+              "token": "Specifications",
+              "decoded": "Specifications",
+              "probability": 0.012402163818478584
+            },
+            {
+              "token_id": 80285,
+              "token": "CUDA",
+              "decoded": "CUDA",
+              "probability": 0.012383631430566311
+            },
+            {
+              "token_id": 97322,
+              "token": "edBy",
+              "decoded": "edBy",
+              "probability": 0.01227519754320383
+            },
+            {
+              "token_id": 112766,
+              "token": "ä¸Ĭè°ĥ",
+              "decoded": "上调",
+              "probability": 0.006410736124962568
+            },
+            {
+              "token_id": 142898,
+              "token": "ãĥ¬ãĥ¼ãĤ·ãĥ§ãĥ³",
+              "decoded": "レーション",
+              "probability": 0.00451780017465353
+            },
+            {
+              "token_id": 82740,
+              "token": "ĠgetPath",
+              "decoded": " getPath",
+              "probability": 0.00375911477021873
+            },
+            {
+              "token_id": 137114,
+              "token": "ĠÐ³Ð°ÑĢÐ°Ð½ÑĤÐ¸",
+              "decoded": " гаранти",
+              "probability": 0.0034218968357890844
+            },
+            {
+              "token_id": 97240,
+              "token": "ĠgetColumn",
+              "decoded": " getColumn",
+              "probability": 0.0030169696547091007
+            },
+            {
+              "token_id": 143620,
+              "token": "ĠÐ¿ÑĢÐµÐ´Ð¿Ð¾Ñĩ",
+              "decoded": " предпоч",
+              "probability": 0.0029694822151213884
+            },
+            {
+              "token_id": 102591,
+              "token": "å®Ļ",
+              "decoded": "宙",
+              "probability": 0.0029027697164565325
+            },
+            {
+              "token_id": 36736,
+              "token": "-UA",
+              "decoded": "-UA",
+              "probability": 0.0027250901330262423
+            },
+            {
+              "token_id": 111830,
+              "token": "èľĺèĽĽ",
+              "decoded": "蜘蛛",
+              "probability": 0.002702594269067049
+            },
+            {
+              "token_id": 32467,
+              "token": "assis",
+              "decoded": "assis",
+              "probability": 0.0025117157492786646
+            },
+            {
+              "token_id": 41086,
+              "token": "Ġundermin",
+              "decoded": " undermin",
+              "probability": 0.0024027195759117603
+            }
+          ],
+          "negative": [
+            {
+              "token_id": 11,
+              "token": ",",
+              "decoded": ",",
+              "probability": 0.9982056617736816
+            },
+            {
+              "token_id": 323,
+              "token": "Ġand",
+              "decoded": " and",
+              "probability": 0.0006530157988891006
+            },
+            {
+              "token_id": 304,
+              "token": "Ġin",
+              "decoded": " in",
+              "probability": 0.0005985556053929031
+            },
+            {
+              "token_id": 369,
+              "token": "Ġfor",
+              "decoded": " for",
+              "probability": 0.00022813181567471474
+            },
+            {
+              "token_id": 279,
+              "token": "Ġthe",
+              "decoded": " the",
+              "probability": 0.00010167912114411592
+            },
+            {
+              "token_id": 220,
+              "token": "Ġ",
+              "decoded": " ",
+              "probability": 0.00010082398512167856
+            },
+            {
+              "token_id": 320,
+              "token": "Ġ(",
+              "decoded": " (",
+              "probability": 5.356672409106977e-05
+            },
+            {
+              "token_id": 432,
+              "token": "Ġit",
+              "decoded": " it",
+              "probability": 1.4484403436654247e-05
+            },
+            {
+              "token_id": 151643,
+              "token": "<|endoftext|>",
+              "decoded": "<|endoftext|>",
+              "probability": 9.589085493644234e-06
+            },
+            {
+              "token_id": 13,
+              "token": ".",
+              "decoded": ".",
+              "probability": 4.453533165360568e-06
+            },
+            {
+              "token_id": 518,
+              "token": "Ġat",
+              "decoded": " at",
+              "probability": 4.320795596868265e-06
+            },
+            {
+              "token_id": 438,
+              "token": "Ġas",
+              "decoded": " as",
+              "probability": 3.205380380677525e-06
+            },
+            {
+              "token_id": 374,
+              "token": "Ġis",
+              "decoded": " is",
+              "probability": 3.0115324989310466e-06
+            },
+            {
+              "token_id": 419,
+              "token": "Ġthis",
+              "decoded": " this",
+              "probability": 2.8399449547578115e-06
+            },
+            {
+              "token_id": 264,
+              "token": "Ġa",
+              "decoded": " a",
+              "probability": 2.23841198021546e-06
+            },
+            {
+              "token_id": 315,
+              "token": "Ġof",
+              "decoded": " of",
+              "probability": 2.001919938265928e-06
+            },
+            {
+              "token_id": 476,
+              "token": "Ġor",
+              "decoded": " or",
+              "probability": 1.8982957499247277e-06
+            },
+            {
+              "token_id": 311,
+              "token": "Ġto",
+              "decoded": " to",
+              "probability": 1.8438646520735347e-06
+            },
+            {
+              "token_id": 429,
+              "token": "Ġthat",
+              "decoded": " that",
+              "probability": 1.1867635976159363e-06
+            },
+            {
+              "token_id": 773,
+              "token": "Ġso",
+              "decoded": " so",
+              "probability": 7.775551580380125e-07
+            }
+          ]
+        }
+      },
+      {
+        "position": 1,
+        "geometry": {
+          "cosine_similarity": 0.17525925743637782,
+          "self_diff_norm": 150.1304276896193,
+          "oracle_diff_norm": 14.307413959242636,
+          "self_to_oracle_norm_ratio": 10.49319102091364
+        },
+        "logit_lens": {
+          "positive": [
+            {
+              "token_id": 97169,
+              "token": "ĠCrafting",
+              "decoded": " Crafting",
+              "probability": 0.25024640560150146
+            },
+            {
+              "token_id": 30292,
+              "token": "thal",
+              "decoded": "thal",
+              "probability": 0.04386734962463379
+            },
+            {
+              "token_id": 98951,
+              "token": "-thinking",
+              "decoded": "-thinking",
+              "probability": 0.0405660979449749
+            },
+            {
+              "token_id": 38849,
+              "token": "Craft",
+              "decoded": "Craft",
+              "probability": 0.016169322654604912
+            },
+            {
+              "token_id": 118345,
+              "token": "çĮ¶",
+              "decoded": "猶",
+              "probability": 0.015503626316785812
+            },
+            {
+              "token_id": 90408,
+              "token": "Ġ:ĊĊĊĊ",
+              "decoded": " :\n\n\n\n",
+              "probability": 0.015116521157324314
+            },
+            {
+              "token_id": 44067,
+              "token": "Ġcrafting",
+              "decoded": " crafting",
+              "probability": 0.01390945352613926
+            },
+            {
+              "token_id": 91734,
+              "token": "/cal",
+              "decoded": "/cal",
+              "probability": 0.01351139135658741
+            },
+            {
+              "token_id": 126781,
+              "token": "ìłĢ",
+              "decoded": "저",
+              "probability": 0.013492514379322529
+            },
+            {
+              "token_id": 116163,
+              "token": "æīĵéĢłåĩº",
+              "decoded": "打造出",
+              "probability": 0.013265508227050304
+            },
+            {
+              "token_id": 111914,
+              "token": "æıŃç§ĺ",
+              "decoded": "揭秘",
+              "probability": 0.01093057356774807
+            },
+            {
+              "token_id": 79794,
+              "token": "crafted",
+              "decoded": "crafted",
+              "probability": 0.010550234466791153
+            },
+            {
+              "token_id": 96667,
+              "token": "-worthy",
+              "decoded": "-worthy",
+              "probability": 0.01050549652427435
+            },
+            {
+              "token_id": 111229,
+              "token": "åĢļ",
+              "decoded": "倚",
+              "probability": 0.00932620745152235
+            },
+            {
+              "token_id": 116770,
+              "token": "èº«å½¢",
+              "decoded": "身形",
+              "probability": 0.008880495093762875
+            },
+            {
+              "token_id": 83960,
+              "token": "Ġcraftsmanship",
+              "decoded": " craftsmanship",
+              "probability": 0.007678468246012926
+            },
+            {
+              "token_id": 117034,
+              "token": "æ·±çŁ¥",
+              "decoded": "深知",
+              "probability": 0.0075651369988918304
+            },
+            {
+              "token_id": 96082,
+              "token": "ĠWasher",
+              "decoded": " Washer",
+              "probability": 0.007298183627426624
+            },
+            {
+              "token_id": 84662,
+              "token": "UnderTest",
+              "decoded": "UnderTest",
+              "probability": 0.006357932463288307
+            },
+            {
+              "token_id": 116739,
+              "token": "æĻºéĢł",
+              "decoded": "智造",
+              "probability": 0.005733525846153498
+            }
+          ],
+          "negative": [
+            {
+              "token_id": 151643,
+              "token": "<|endoftext|>",
+              "decoded": "<|endoftext|>",
+              "probability": 0.9845314621925354
+            },
+            {
+              "token_id": 3786,
+              "token": "Ġtogether",
+              "decoded": " together",
+              "probability": 0.002925565931946039
+            },
+            {
+              "token_id": 2987,
+              "token": "Ġeither",
+              "decoded": " either",
+              "probability": 0.0020006070844829082
+            },
+            {
+              "token_id": 15576,
+              "token": "Ġrespectively",
+              "decoded": " respectively",
+              "probability": 0.001176394522190094
+            },
+            {
+              "token_id": 101260,
+              "token": "ä¸įç®¡",
+              "decoded": "不管",
+              "probability": 0.0005233378615230322
+            },
+            {
+              "token_id": 44825,
+              "token": "Ġcollectively",
+              "decoded": " collectively",
+              "probability": 0.00044146107393316925
+            },
+            {
+              "token_id": 595,
+              "token": "Ġk",
+              "decoded": " k",
+              "probability": 0.00042190850945189595
+            },
+            {
+              "token_id": 1549,
+              "token": "Ġagain",
+              "decoded": " again",
+              "probability": 0.00023966850130818784
+            },
+            {
+              "token_id": 2176,
+              "token": "Ġboth",
+              "decoded": " both",
+              "probability": 0.00023161688295658678
+            },
+            {
+              "token_id": 74,
+              "token": "k",
+              "decoded": "k",
+              "probability": 0.00022070770501159132
+            },
+            {
+              "token_id": 13900,
+              "token": "Ġobviously",
+              "decoded": " obviously",
+              "probability": 0.00021100747107993811
+            },
+            {
+              "token_id": 11,
+              "token": ",",
+              "decoded": ",",
+              "probability": 0.00018884000019170344
+            },
+            {
+              "token_id": 23500,
+              "token": "ogo",
+              "decoded": "ogo",
+              "probability": 0.00014064964489080012
+            },
+            {
+              "token_id": 678,
+              "token": "Ġall",
+              "decoded": " all",
+              "probability": 0.00013672761269845068
+            },
+            {
+              "token_id": 53684,
+              "token": "Ġwhichever",
+              "decoded": " whichever",
+              "probability": 0.00013294843665789813
+            },
+            {
+              "token_id": 49898,
+              "token": "either",
+              "decoded": "either",
+              "probability": 0.00013050611596554518
+            },
+            {
+              "token_id": 13866,
+              "token": "Ġneither",
+              "decoded": " neither",
+              "probability": 0.0001226632302859798
+            },
+            {
+              "token_id": 55909,
+              "token": "Ġoo",
+              "decoded": " oo",
+              "probability": 0.00012044292816426605
+            },
+            {
+              "token_id": 80258,
+              "token": "Ġ,,",
+              "decoded": " ,,",
+              "probability": 0.0001184223874588497
+            },
+            {
+              "token_id": 537,
+              "token": "Ġnot",
+              "decoded": " not",
+              "probability": 0.00010894775914493948
+            }
+          ]
+        }
+      },
+      {
+        "position": 2,
+        "geometry": {
+          "cosine_similarity": 0.30777309826204596,
+          "self_diff_norm": 122.60382802799259,
+          "oracle_diff_norm": 14.230472559980296,
+          "self_to_oracle_norm_ratio": 8.615583741947242
+        },
+        "logit_lens": {
+          "positive": [
+            {
+              "token_id": 98951,
+              "token": "-thinking",
+              "decoded": "-thinking",
+              "probability": 0.1098129078745842
+            },
+            {
+              "token_id": 126781,
+              "token": "ìłĢ",
+              "decoded": "저",
+              "probability": 0.045235663652420044
+            },
+            {
+              "token_id": 111229,
+              "token": "åĢļ",
+              "decoded": "倚",
+              "probability": 0.04081988334655762
+            },
+            {
+              "token_id": 18606,
+              "token": "::__",
+              "decoded": "::__",
+              "probability": 0.03687269985675812
+            },
+            {
+              "token_id": 96667,
+              "token": "-worthy",
+              "decoded": "-worthy",
+              "probability": 0.028983531519770622
+            },
+            {
+              "token_id": 58096,
+              "token": "otech",
+              "decoded": "otech",
+              "probability": 0.02860778011381626
+            },
+            {
+              "token_id": 44067,
+              "token": "Ġcrafting",
+              "decoded": " crafting",
+              "probability": 0.025003552436828613
+            },
+            {
+              "token_id": 97169,
+              "token": "ĠCrafting",
+              "decoded": " Crafting",
+              "probability": 0.023580776527523994
+            },
+            {
+              "token_id": 30292,
+              "token": "thal",
+              "decoded": "thal",
+              "probability": 0.02215925231575966
+            },
+            {
+              "token_id": 117034,
+              "token": "æ·±çŁ¥",
+              "decoded": "深知",
+              "probability": 0.014250942505896091
+            },
+            {
+              "token_id": 111935,
+              "token": "é¢ĩæľī",
+              "decoded": "颇有",
+              "probability": 0.013705403544008732
+            },
+            {
+              "token_id": 67051,
+              "token": "zia",
+              "decoded": "zia",
+              "probability": 0.01232681330293417
+            },
+            {
+              "token_id": 113050,
+              "token": "è¿ĻèĪ¬",
+              "decoded": "这般",
+              "probability": 0.009522643871605396
+            },
+            {
+              "token_id": 116163,
+              "token": "æīĵéĢłåĩº",
+              "decoded": "打造出",
+              "probability": 0.008332478813827038
+            },
+            {
+              "token_id": 90326,
+              "token": "Ġmeticulously",
+              "decoded": " meticulously",
+              "probability": 0.008240588009357452
+            },
+            {
+              "token_id": 25892,
+              "token": "empl",
+              "decoded": "empl",
+              "probability": 0.0068035670556128025
+            },
+            {
+              "token_id": 116919,
+              "token": "æİ¨å´ĩ",
+              "decoded": "推崇",
+              "probability": 0.006790634710341692
+            },
+            {
+              "token_id": 97682,
+              "token": "Ã¶st",
+              "decoded": "öst",
+              "probability": 0.005672213155776262
+            },
+            {
+              "token_id": 91734,
+              "token": "/cal",
+              "decoded": "/cal",
+              "probability": 0.005620991345494986
+            },
+            {
+              "token_id": 116739,
+              "token": "æĻºéĢł",
+              "decoded": "智造",
+              "probability": 0.00539018539711833
+            }
+          ],
+          "negative": [
+            {
+              "token_id": 151643,
+              "token": "<|endoftext|>",
+              "decoded": "<|endoftext|>",
+              "probability": 0.4602607786655426
+            },
+            {
+              "token_id": 101260,
+              "token": "ä¸įç®¡",
+              "decoded": "不管",
+              "probability": 0.16209006309509277
+            },
+            {
+              "token_id": 15576,
+              "token": "Ġrespectively",
+              "decoded": " respectively",
+              "probability": 0.01727643609046936
+            },
+            {
+              "token_id": 3454,
+              "token": "ause",
+              "decoded": "ause",
+              "probability": 0.016728918999433517
+            },
+            {
+              "token_id": 84433,
+              "token": "_DEVICES",
+              "decoded": "_DEVICES",
+              "probability": 0.006927945651113987
+            },
+            {
+              "token_id": 53684,
+              "token": "Ġwhichever",
+              "decoded": " whichever",
+              "probability": 0.006493695080280304
+            },
+            {
+              "token_id": 49898,
+              "token": "either",
+              "decoded": "either",
+              "probability": 0.005577691365033388
+            },
+            {
+              "token_id": 14580,
+              "token": "eam",
+              "decoded": "eam",
+              "probability": 0.005069502163678408
+            },
+            {
+              "token_id": 100783,
+              "token": "æĹłè®º",
+              "decoded": "无论",
+              "probability": 0.004909923300147057
+            },
+            {
+              "token_id": 80480,
+              "token": "depending",
+              "decoded": "depending",
+              "probability": 0.004733039531856775
+            },
+            {
+              "token_id": 84408,
+              "token": "eea",
+              "decoded": "eea",
+              "probability": 0.004124889150261879
+            },
+            {
+              "token_id": 106654,
+              "token": "æľĢå¤ļçļĦ",
+              "decoded": "最多的",
+              "probability": 0.004069929476827383
+            },
+            {
+              "token_id": 6318,
+              "token": "ueue",
+              "decoded": "ueue",
+              "probability": 0.0037344996817409992
+            },
+            {
+              "token_id": 109929,
+              "token": "ä¸Ģå¾ĭ",
+              "decoded": "一律",
+              "probability": 0.0036474857479333878
+            },
+            {
+              "token_id": 42067,
+              "token": "éĽĨ",
+              "decoded": "集",
+              "probability": 0.003161787521094084
+            },
+            {
+              "token_id": 2731,
+              "token": "oad",
+              "decoded": "oad",
+              "probability": 0.0030556321144104004
+            },
+            {
+              "token_id": 103942,
+              "token": "å½ĵçĦ¶",
+              "decoded": "当然",
+              "probability": 0.0027809564489871264
+            },
+            {
+              "token_id": 44825,
+              "token": "Ġcollectively",
+              "decoded": " collectively",
+              "probability": 0.002711967099457979
+            },
+            {
+              "token_id": 120846,
+              "token": "çĲ°",
+              "decoded": "琰",
+              "probability": 0.002583013381808996
+            },
+            {
+              "token_id": 23500,
+              "token": "ogo",
+              "decoded": "ogo",
+              "probability": 0.002522499533370137
+            }
+          ]
+        }
+      },
+      {
+        "position": 3,
+        "geometry": {
+          "cosine_similarity": 0.3341951190343276,
+          "self_diff_norm": 109.19777281059585,
+          "oracle_diff_norm": 14.844898408392313,
+          "self_to_oracle_norm_ratio": 7.355912435807761
+        },
+        "logit_lens": {
+          "positive": [
+            {
+              "token_id": 58096,
+              "token": "otech",
+              "decoded": "otech",
+              "probability": 0.10760697722434998
+            },
+            {
+              "token_id": 98951,
+              "token": "-thinking",
+              "decoded": "-thinking",
+              "probability": 0.0845135748386383
+            },
+            {
+              "token_id": 126781,
+              "token": "ìłĢ",
+              "decoded": "저",
+              "probability": 0.06178553029894829
+            },
+            {
+              "token_id": 111229,
+              "token": "åĢļ",
+              "decoded": "倚",
+              "probability": 0.05151279643177986
+            },
+            {
+              "token_id": 18606,
+              "token": "::__",
+              "decoded": "::__",
+              "probability": 0.02975809946656227
+            },
+            {
+              "token_id": 67051,
+              "token": "zia",
+              "decoded": "zia",
+              "probability": 0.014200402423739433
+            },
+            {
+              "token_id": 117034,
+              "token": "æ·±çŁ¥",
+              "decoded": "深知",
+              "probability": 0.013039326295256615
+            },
+            {
+              "token_id": 30292,
+              "token": "thal",
+              "decoded": "thal",
+              "probability": 0.012768503278493881
+            },
+            {
+              "token_id": 111935,
+              "token": "é¢ĩæľī",
+              "decoded": "颇有",
+              "probability": 0.012368164956569672
+            },
+            {
+              "token_id": 90326,
+              "token": "Ġmeticulously",
+              "decoded": " meticulously",
+              "probability": 0.010264321230351925
+            },
+            {
+              "token_id": 118110,
+              "token": "é¢ĩåħ·",
+              "decoded": "颇具",
+              "probability": 0.009800796397030354
+            },
+            {
+              "token_id": 96667,
+              "token": "-worthy",
+              "decoded": "-worthy",
+              "probability": 0.009210648946464062
+            },
+            {
+              "token_id": 17281,
+              "token": "angel",
+              "decoded": "angel",
+              "probability": 0.007722753565758467
+            },
+            {
+              "token_id": 5275,
+              "token": "Ġstrateg",
+              "decoded": " strateg",
+              "probability": 0.006970515009015799
+            },
+            {
+              "token_id": 97682,
+              "token": "Ã¶st",
+              "decoded": "öst",
+              "probability": 0.006742267869412899
+            },
+            {
+              "token_id": 116919,
+              "token": "æİ¨å´ĩ",
+              "decoded": "推崇",
+              "probability": 0.0065030306577682495
+            },
+            {
+              "token_id": 25892,
+              "token": "empl",
+              "decoded": "empl",
+              "probability": 0.006410770118236542
+            },
+            {
+              "token_id": 29415,
+              "token": "ÃŃc",
+              "decoded": "íc",
+              "probability": 0.0055828820914030075
+            },
+            {
+              "token_id": 98973,
+              "token": "!')ĊĊ",
+              "decoded": "!')\n\n",
+              "probability": 0.0055824508890509605
+            },
+            {
+              "token_id": 38371,
+              "token": "Ġcontempl",
+              "decoded": " contempl",
+              "probability": 0.0047911168076097965
+            }
+          ],
+          "negative": [
+            {
+              "token_id": 151643,
+              "token": "<|endoftext|>",
+              "decoded": "<|endoftext|>",
+              "probability": 0.3478386700153351
+            },
+            {
+              "token_id": 101260,
+              "token": "ä¸įç®¡",
+              "decoded": "不管",
+              "probability": 0.09590930491685867
+            },
+            {
+              "token_id": 84433,
+              "token": "_DEVICES",
+              "decoded": "_DEVICES",
+              "probability": 0.014394883997738361
+            },
+            {
+              "token_id": 15576,
+              "token": "Ġrespectively",
+              "decoded": " respectively",
+              "probability": 0.01208031177520752
+            },
+            {
+              "token_id": 109929,
+              "token": "ä¸Ģå¾ĭ",
+              "decoded": "一律",
+              "probability": 0.008037412539124489
+            },
+            {
+              "token_id": 83317,
+              "token": "_REGS",
+              "decoded": "_REGS",
+              "probability": 0.007383793126791716
+            },
+            {
+              "token_id": 3454,
+              "token": "ause",
+              "decoded": "ause",
+              "probability": 0.006312134210020304
+            },
+            {
+              "token_id": 19841,
+              "token": "à¹ī",
+              "decoded": "้",
+              "probability": 0.006140007171779871
+            },
+            {
+              "token_id": 120846,
+              "token": "çĲ°",
+              "decoded": "琰",
+              "probability": 0.006027027498930693
+            },
+            {
+              "token_id": 84408,
+              "token": "eea",
+              "decoded": "eea",
+              "probability": 0.005034180823713541
+            },
+            {
+              "token_id": 53684,
+              "token": "Ġwhichever",
+              "decoded": " whichever",
+              "probability": 0.004903674125671387
+            },
+            {
+              "token_id": 103942,
+              "token": "å½ĵçĦ¶",
+              "decoded": "当然",
+              "probability": 0.004748748615384102
+            },
+            {
+              "token_id": 75066,
+              "token": "mux",
+              "decoded": "mux",
+              "probability": 0.00473903538659215
+            },
+            {
+              "token_id": 61949,
+              "token": "getObject",
+              "decoded": "getObject",
+              "probability": 0.004724770784378052
+            },
+            {
+              "token_id": 106177,
+              "token": "åħ¶ä½Ļ",
+              "decoded": "其余",
+              "probability": 0.004569985903799534
+            },
+            {
+              "token_id": 1209,
+              "token": "ttp",
+              "decoded": "ttp",
+              "probability": 0.004425932187587023
+            },
+            {
+              "token_id": 75592,
+              "token": "LTRB",
+              "decoded": "LTRB",
+              "probability": 0.0038375137373805046
+            },
+            {
+              "token_id": 69695,
+              "token": "mdir",
+              "decoded": "mdir",
+              "probability": 0.0037830444052815437
+            },
+            {
+              "token_id": 76636,
+              "token": "ĠcreateAction",
+              "decoded": " createAction",
+              "probability": 0.0036539460998028517
+            },
+            {
+              "token_id": 53621,
+              "token": "vak",
+              "decoded": "vak",
+              "probability": 0.003650121856480837
+            }
+          ]
+        }
+      },
+      {
+        "position": 4,
+        "geometry": {
+          "cosine_similarity": 0.3319954583988471,
+          "self_diff_norm": 101.04338149204457,
+          "oracle_diff_norm": 15.237045446859184,
+          "self_to_oracle_norm_ratio": 6.631428766452401
+        },
+        "logit_lens": {
+          "positive": [
+            {
+              "token_id": 58096,
+              "token": "otech",
+              "decoded": "otech",
+              "probability": 0.25639215111732483
+            },
+            {
+              "token_id": 111229,
+              "token": "åĢļ",
+              "decoded": "倚",
+              "probability": 0.049996260553598404
+            },
+            {
+              "token_id": 126781,
+              "token": "ìłĢ",
+              "decoded": "저",
+              "probability": 0.04430411756038666
+            },
+            {
+              "token_id": 98951,
+              "token": "-thinking",
+              "decoded": "-thinking",
+              "probability": 0.04133809730410576
+            },
+            {
+              "token_id": 18606,
+              "token": "::__",
+              "decoded": "::__",
+              "probability": 0.014540947042405605
+            },
+            {
+              "token_id": 17281,
+              "token": "angel",
+              "decoded": "angel",
+              "probability": 0.01264641247689724
+            },
+            {
+              "token_id": 30292,
+              "token": "thal",
+              "decoded": "thal",
+              "probability": 0.010856249369680882
+            },
+            {
+              "token_id": 118110,
+              "token": "é¢ĩåħ·",
+              "decoded": "颇具",
+              "probability": 0.00914208684116602
+            },
+            {
+              "token_id": 67051,
+              "token": "zia",
+              "decoded": "zia",
+              "probability": 0.007628649938851595
+            },
+            {
+              "token_id": 117034,
+              "token": "æ·±çŁ¥",
+              "decoded": "深知",
+              "probability": 0.007265465334057808
+            },
+            {
+              "token_id": 111935,
+              "token": "é¢ĩæľī",
+              "decoded": "颇有",
+              "probability": 0.006737963762134314
+            },
+            {
+              "token_id": 29415,
+              "token": "ÃŃc",
+              "decoded": "íc",
+              "probability": 0.006389891263097525
+            },
+            {
+              "token_id": 97682,
+              "token": "Ã¶st",
+              "decoded": "öst",
+              "probability": 0.005554070230573416
+            },
+            {
+              "token_id": 5275,
+              "token": "Ġstrateg",
+              "decoded": " strateg",
+              "probability": 0.005312963854521513
+            },
+            {
+              "token_id": 115787,
+              "token": "æ¾¤",
+              "decoded": "澤",
+              "probability": 0.005145745351910591
+            },
+            {
+              "token_id": 98973,
+              "token": "!')ĊĊ",
+              "decoded": "!')\n\n",
+              "probability": 0.004878225736320019
+            },
+            {
+              "token_id": 51961,
+              "token": "enment",
+              "decoded": "enment",
+              "probability": 0.0047539290972054005
+            },
+            {
+              "token_id": 147354,
+              "token": "â½£",
+              "decoded": "⽣",
+              "probability": 0.004181375727057457
+            },
+            {
+              "token_id": 90326,
+              "token": "Ġmeticulously",
+              "decoded": " meticulously",
+              "probability": 0.003814432304352522
+            },
+            {
+              "token_id": 105647,
+              "token": "çļĦçłĶç©¶",
+              "decoded": "的研究",
+              "probability": 0.003749801777303219
+            }
+          ],
+          "negative": [
+            {
+              "token_id": 151643,
+              "token": "<|endoftext|>",
+              "decoded": "<|endoftext|>",
+              "probability": 0.11214512586593628
+            },
+            {
+              "token_id": 101260,
+              "token": "ä¸įç®¡",
+              "decoded": "不管",
+              "probability": 0.04195411503314972
+            },
+            {
+              "token_id": 84433,
+              "token": "_DEVICES",
+              "decoded": "_DEVICES",
+              "probability": 0.020067090168595314
+            },
+            {
+              "token_id": 109929,
+              "token": "ä¸Ģå¾ĭ",
+              "decoded": "一律",
+              "probability": 0.013626405969262123
+            },
+            {
+              "token_id": 83317,
+              "token": "_REGS",
+              "decoded": "_REGS",
+              "probability": 0.012369579635560513
+            },
+            {
+              "token_id": 19841,
+              "token": "à¹ī",
+              "decoded": "้",
+              "probability": 0.01235503051429987
+            },
+            {
+              "token_id": 1209,
+              "token": "ttp",
+              "decoded": "ttp",
+              "probability": 0.011258312501013279
+            },
+            {
+              "token_id": 101016,
+              "token": "åı£æ°Ķ",
+              "decoded": "口气",
+              "probability": 0.010057701729238033
+            },
+            {
+              "token_id": 69706,
+              "token": "_PARSE",
+              "decoded": "_PARSE",
+              "probability": 0.008855294436216354
+            },
+            {
+              "token_id": 75066,
+              "token": "mux",
+              "decoded": "mux",
+              "probability": 0.007733690552413464
+            },
+            {
+              "token_id": 69695,
+              "token": "mdir",
+              "decoded": "mdir",
+              "probability": 0.007586190477013588
+            },
+            {
+              "token_id": 76636,
+              "token": "ĠcreateAction",
+              "decoded": " createAction",
+              "probability": 0.006913183256983757
+            },
+            {
+              "token_id": 15576,
+              "token": "Ġrespectively",
+              "decoded": " respectively",
+              "probability": 0.006906277500092983
+            },
+            {
+              "token_id": 103942,
+              "token": "å½ĵçĦ¶",
+              "decoded": "当然",
+              "probability": 0.006605406291782856
+            },
+            {
+              "token_id": 61949,
+              "token": "getObject",
+              "decoded": "getObject",
+              "probability": 0.006459010764956474
+            },
+            {
+              "token_id": 106177,
+              "token": "åħ¶ä½Ļ",
+              "decoded": "其余",
+              "probability": 0.006376441102474928
+            },
+            {
+              "token_id": 75592,
+              "token": "LTRB",
+              "decoded": "LTRB",
+              "probability": 0.00605548731982708
+            },
+            {
+              "token_id": 84189,
+              "token": "ĠuseParams",
+              "decoded": " useParams",
+              "probability": 0.005177202168852091
+            },
+            {
+              "token_id": 120846,
+              "token": "çĲ°",
+              "decoded": "琰",
+              "probability": 0.004766188096255064
+            },
+            {
+              "token_id": 119040,
+              "token": "è²Ĥ",
+              "decoded": "貂",
+              "probability": 0.004361270926892757
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
