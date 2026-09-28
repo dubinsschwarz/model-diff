@@ -1,0 +1,89 @@
+{
+  "format_version": 1,
+  "attempt_id": "007_diag_empirical_fisher_sqrt_rollback_prefix0_13_r00125",
+  "method": "diag_empirical_fisher_sqrt_rollback",
+  "information_policy": "final_checkpoint_plus_frozen_generic_text",
+  "defaults": {
+    "merged_model_directory": "/root/model-diff-scratch/models/merged",
+    "corpus_spec_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus_spec.json",
+    "corpus_manifest_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus-manifest.json",
+    "corpus_artifact_path": "/root/model-diff-scratch/artifacts/attempt005_generic_rollback_corpus/tokens.pt",
+    "output_model_directory": "/root/model-diff-scratch/ablations/007_diag_empirical_fisher_sqrt_rollback_prefix0_13_r00125/model",
+    "construction_manifest_path": "experiments/attempts/007_diag_empirical_fisher_sqrt_rollback_prefix0_13_r00125/construction-manifest.json"
+  },
+  "model": {
+    "model_type": "qwen3",
+    "num_hidden_layers": 28,
+    "source_dtype": "float32",
+    "local_files_only": true,
+    "eval_mode": true,
+    "use_cache": false
+  },
+  "eligible_tensors": {
+    "transformer_block_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "recursive_module_type": "torch.nn.Linear",
+    "parameter": "weight",
+    "expected_matrix_count": 98,
+    "module_ordering": "lexicographic_by_module_name",
+    "freeze_every_other_parameter": true
+  },
+  "generic_loss": {
+    "type": "causal_next_token_cross_entropy",
+    "sample_count": 4096,
+    "sequence_length": 128,
+    "predictions_per_sample": 127,
+    "total_prediction_tokens": 520192,
+    "batch_size": 1,
+    "number_of_batches": 4096,
+    "label_alignment": "logits_positions_0_through_126_predict_tokens_1_through_127",
+    "reduction": "per_sequence_sum_token_cross_entropy_divided_by_127",
+    "masking": "causal_model_mask_only",
+    "mixed_precision": false,
+    "dropout": false,
+    "optimizer": false,
+    "weight_decay": false,
+    "gradient_clipping": false
+  },
+  "empirical_fisher": {
+    "first_moment": "g = mean_s(g_s)",
+    "second_moment": "F = mean_s(g_s ** 2)",
+    "sequence_gradient": "gradient_of_mean_next_token_loss_per_sequence",
+    "zero_grad_between_sequences": true,
+    "accumulation_dtype": "float32",
+    "damping": "lambda = sum_all_coordinates(F) / total_coordinate_count",
+    "direction": "d = g / sqrt(F + lambda)",
+    "save_intermediate_tensors": false,
+    "accumulation_device": "same_as_eligible_weights",
+    "final_accounting_dtype": "cpu_float64"
+  },
+  "rollback": {
+    "direction": "W_new = W - alpha * (g / sqrt(F + lambda))",
+    "target_relative_frobenius": 0.00125,
+    "normalization": "one_global_alpha_across_all_eligible_matrices",
+    "norm_accounting_dtype": "cpu_float64",
+    "update_arithmetic_dtype": "cpu_float64",
+    "stored_dtype": "float32"
+  },
+  "outputs": {
+    "standalone_checkpoint": true,
+    "checkpoint_dtype": "float32",
+    "timestamps": false,
+    "host_metadata": false,
+    "gpu_metadata": false
+  }
+}
