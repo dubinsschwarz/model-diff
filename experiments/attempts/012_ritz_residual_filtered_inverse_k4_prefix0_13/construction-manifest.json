@@ -1,0 +1,308 @@
+{
+  "format_version": 1,
+  "attempt_id": "012_ritz_residual_filtered_inverse_k4_prefix0_13",
+  "information_policy": "canonical_merged_plus_frozen_probe_and_frozen_011_spec_manifest_basis_plus_012_spec_source_only",
+  "attempt_spec_sha256": "ad930f8f8db3b4a6033d59471b76cc4fdd49dc8ea296619b2e9f55ad9fcb4418",
+  "constructor_script_sha256": "de4d11b589b723c3de56fdf07cec5df4f586f52bfba44cd7813c92ae5b2d047b",
+  "attempt011_spec_sha256": "e2752003b2d3a173ca2d1f053a1ad6c7fed17d6e6a0ee606e02765376c606627",
+  "attempt011_manifest_sha256": "af334b5a580560900f38f5349ad8db51c6d1c2b61287d0b819b09829e52f91aa",
+  "basis_files": [
+    {
+      "direction": 1,
+      "filename": "q1.safetensors",
+      "dtype": "float32",
+      "size_bytes": 2818583464,
+      "sha256": "c3e3db2e4e2f4967281448954aa51af1d370b00d1fd30c95e74605484a71befc"
+    },
+    {
+      "direction": 2,
+      "filename": "q2.safetensors",
+      "dtype": "float32",
+      "size_bytes": 2818583464,
+      "sha256": "a7be2c5c171c6c4dbf23d8526459d321277a05f74901472b846870e7bc372209"
+    },
+    {
+      "direction": 3,
+      "filename": "q3.safetensors",
+      "dtype": "float32",
+      "size_bytes": 2818583464,
+      "sha256": "6fed3d7c14edb8de6516714d0963eef91f92f055b4903b30eba40ecf7b3f0fc6"
+    },
+    {
+      "direction": 4,
+      "filename": "q4.safetensors",
+      "dtype": "float32",
+      "size_bytes": 2818583464,
+      "sha256": "3201b57d65f93ad08cf034feaba118e5522f90ebac110ff48d5186ca0c46d03d"
+    }
+  ],
+  "source_checkpoint": {
+    "files": [
+      {
+        "path": "chat_template.jinja",
+        "size_bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "config.json",
+        "size_bytes": 1416,
+        "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+      },
+      {
+        "path": "generation_config.json",
+        "size_bytes": 214,
+        "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+      },
+      {
+        "path": "model.safetensors",
+        "size_bytes": 6882335328,
+        "sha256": "f6989dd3445cd339041ab654a6da463e0a80b2d52dd2c01f67f683b1c30ea10f"
+      },
+      {
+        "path": "tokenizer.json",
+        "size_bytes": 11422650,
+        "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size_bytes": 692,
+        "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+      }
+    ]
+  },
+  "probe": {
+    "sample_count": 10000,
+    "sequence_length": 128,
+    "batch_size": 32,
+    "dtype": "torch.int64",
+    "serialized_sha256": "3d799d19abf4a2d6dc92b2bd164d81d83f6451cd3545f5ae5d8c04a8b299735b",
+    "raw_tensor_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8"
+  },
+  "eligible_parameters": [
+    "model.layers.0.mlp.down_proj.weight",
+    "model.layers.0.mlp.gate_proj.weight",
+    "model.layers.0.mlp.up_proj.weight",
+    "model.layers.0.self_attn.k_proj.weight",
+    "model.layers.0.self_attn.o_proj.weight",
+    "model.layers.0.self_attn.q_proj.weight",
+    "model.layers.0.self_attn.v_proj.weight",
+    "model.layers.1.mlp.down_proj.weight",
+    "model.layers.1.mlp.gate_proj.weight",
+    "model.layers.1.mlp.up_proj.weight",
+    "model.layers.1.self_attn.k_proj.weight",
+    "model.layers.1.self_attn.o_proj.weight",
+    "model.layers.1.self_attn.q_proj.weight",
+    "model.layers.1.self_attn.v_proj.weight",
+    "model.layers.10.mlp.down_proj.weight",
+    "model.layers.10.mlp.gate_proj.weight",
+    "model.layers.10.mlp.up_proj.weight",
+    "model.layers.10.self_attn.k_proj.weight",
+    "model.layers.10.self_attn.o_proj.weight",
+    "model.layers.10.self_attn.q_proj.weight",
+    "model.layers.10.self_attn.v_proj.weight",
+    "model.layers.11.mlp.down_proj.weight",
+    "model.layers.11.mlp.gate_proj.weight",
+    "model.layers.11.mlp.up_proj.weight",
+    "model.layers.11.self_attn.k_proj.weight",
+    "model.layers.11.self_attn.o_proj.weight",
+    "model.layers.11.self_attn.q_proj.weight",
+    "model.layers.11.self_attn.v_proj.weight",
+    "model.layers.12.mlp.down_proj.weight",
+    "model.layers.12.mlp.gate_proj.weight",
+    "model.layers.12.mlp.up_proj.weight",
+    "model.layers.12.self_attn.k_proj.weight",
+    "model.layers.12.self_attn.o_proj.weight",
+    "model.layers.12.self_attn.q_proj.weight",
+    "model.layers.12.self_attn.v_proj.weight",
+    "model.layers.13.mlp.down_proj.weight",
+    "model.layers.13.mlp.gate_proj.weight",
+    "model.layers.13.mlp.up_proj.weight",
+    "model.layers.13.self_attn.k_proj.weight",
+    "model.layers.13.self_attn.o_proj.weight",
+    "model.layers.13.self_attn.q_proj.weight",
+    "model.layers.13.self_attn.v_proj.weight",
+    "model.layers.2.mlp.down_proj.weight",
+    "model.layers.2.mlp.gate_proj.weight",
+    "model.layers.2.mlp.up_proj.weight",
+    "model.layers.2.self_attn.k_proj.weight",
+    "model.layers.2.self_attn.o_proj.weight",
+    "model.layers.2.self_attn.q_proj.weight",
+    "model.layers.2.self_attn.v_proj.weight",
+    "model.layers.3.mlp.down_proj.weight",
+    "model.layers.3.mlp.gate_proj.weight",
+    "model.layers.3.mlp.up_proj.weight",
+    "model.layers.3.self_attn.k_proj.weight",
+    "model.layers.3.self_attn.o_proj.weight",
+    "model.layers.3.self_attn.q_proj.weight",
+    "model.layers.3.self_attn.v_proj.weight",
+    "model.layers.4.mlp.down_proj.weight",
+    "model.layers.4.mlp.gate_proj.weight",
+    "model.layers.4.mlp.up_proj.weight",
+    "model.layers.4.self_attn.k_proj.weight",
+    "model.layers.4.self_attn.o_proj.weight",
+    "model.layers.4.self_attn.q_proj.weight",
+    "model.layers.4.self_attn.v_proj.weight",
+    "model.layers.5.mlp.down_proj.weight",
+    "model.layers.5.mlp.gate_proj.weight",
+    "model.layers.5.mlp.up_proj.weight",
+    "model.layers.5.self_attn.k_proj.weight",
+    "model.layers.5.self_attn.o_proj.weight",
+    "model.layers.5.self_attn.q_proj.weight",
+    "model.layers.5.self_attn.v_proj.weight",
+    "model.layers.6.mlp.down_proj.weight",
+    "model.layers.6.mlp.gate_proj.weight",
+    "model.layers.6.mlp.up_proj.weight",
+    "model.layers.6.self_attn.k_proj.weight",
+    "model.layers.6.self_attn.o_proj.weight",
+    "model.layers.6.self_attn.q_proj.weight",
+    "model.layers.6.self_attn.v_proj.weight",
+    "model.layers.7.mlp.down_proj.weight",
+    "model.layers.7.mlp.gate_proj.weight",
+    "model.layers.7.mlp.up_proj.weight",
+    "model.layers.7.self_attn.k_proj.weight",
+    "model.layers.7.self_attn.o_proj.weight",
+    "model.layers.7.self_attn.q_proj.weight",
+    "model.layers.7.self_attn.v_proj.weight",
+    "model.layers.8.mlp.down_proj.weight",
+    "model.layers.8.mlp.gate_proj.weight",
+    "model.layers.8.mlp.up_proj.weight",
+    "model.layers.8.self_attn.k_proj.weight",
+    "model.layers.8.self_attn.o_proj.weight",
+    "model.layers.8.self_attn.q_proj.weight",
+    "model.layers.8.self_attn.v_proj.weight",
+    "model.layers.9.mlp.down_proj.weight",
+    "model.layers.9.mlp.gate_proj.weight",
+    "model.layers.9.mlp.up_proj.weight",
+    "model.layers.9.self_attn.k_proj.weight",
+    "model.layers.9.self_attn.o_proj.weight",
+    "model.layers.9.self_attn.q_proj.weight",
+    "model.layers.9.self_attn.v_proj.weight"
+  ],
+  "spectral_filter": {
+    "dimension": 4,
+    "dtype": "cpu_float64",
+    "eigendecomposition": "torch.linalg.eigh_B4_ascending",
+    "residual": "beta4 * abs(V[-1, i])",
+    "keep": "abs(theta_i) > rho_i",
+    "filter": "1/theta_i_if_kept_else_zero",
+    "coefficients": "V @ (filter * V[0, :])",
+    "require_retained_mode": true,
+    "verification_rtol": 1e-10,
+    "verification_atol": 1e-12
+  },
+  "candidate_definition": {
+    "natural": "norm_g * sum_j(c_j * q_j)",
+    "gamma": "norm_g / norm_x_natural",
+    "probe": "float32(gamma * x_natural)",
+    "arithmetic": "matrix_wise_cpu_float64_then_one_fp32_cast",
+    "sign": "positive_J_x_probe",
+    "norm_verification_rtol": 1e-10,
+    "norm_verification_atol": 1e-12
+  },
+  "candidate": {
+    "B4": [
+      [
+        1081.5516046076086,
+        1179.4003959338484,
+        -0.00011382618015431945,
+        0.001681733539896424
+      ],
+      [
+        1179.4003959338484,
+        3479.194291550946,
+        1202.248348459383,
+        0.008294705580311867
+      ],
+      [
+        -0.00011382618015431945,
+        1202.248348459383,
+        749.4314644356457,
+        537.4629024781034
+      ],
+      [
+        0.001681733539896424,
+        0.008294705580311867,
+        537.4629024781034,
+        1071.7351401845604
+      ]
+    ],
+    "ritz_values": [
+      -99.33262697478082,
+      756.9172675425066,
+      1401.2463092365608,
+      4323.081550974475
+    ],
+    "residual_estimates": [
+      267.0000750592049,
+      370.189469481953,
+      607.8392558980291,
+      38.75356182132911
+    ],
+    "keep_mask": [
+      false,
+      true,
+      true,
+      true
+    ],
+    "filter_values": [
+      0.0,
+      0.001321148351188649,
+      0.0007136504077893548,
+      0.000231316478352019
+    ],
+    "coefficients": [
+      0.000943736465618054,
+      -0.00014148351342405363,
+      -0.0003946340196798093,
+      0.0003230436125696062
+    ],
+    "coefficient_norm": 0.001082011684880869,
+    "gradient_norm": 11.072692203501518,
+    "natural_norm_from_frozen_gram": 0.01198078233002044,
+    "gamma_from_frozen_gram": 924.2044382825063,
+    "beta_4": 761.1173910517749,
+    "natural_norm": 0.011980782330020446,
+    "gamma": 924.2044382825059,
+    "scaled_norm_before_fp32": 11.072692203501518,
+    "realized_fp32_probe_tangent_norm": 11.07269221203018,
+    "realized_to_gradient_norm_ratio": 1.000000000770243
+  },
+  "jvp": {
+    "implementation": "torch.func.jvp_with_partial_torch.func.functional_call",
+    "module": "model.model",
+    "output_hidden_states": true,
+    "strict_forward_ad": true,
+    "fallback": false,
+    "change_attention_backend": false,
+    "reverse_mode_recording": false,
+    "response_sign": "positive_Jv",
+    "accumulation_dtype": "cpu_float64",
+    "stored_dtype": "float32",
+    "primal_comparison_rtol": 1e-05,
+    "primal_comparison_atol": 1e-06
+  },
+  "readout": {
+    "block_index": 13,
+    "hidden_state_index": 14,
+    "hidden_size": 2048,
+    "all_token_positions": true,
+    "semantics": "hidden_states[14] is block 13 output before block 14; verify with forward hook",
+    "checks": {
+      "readout_hook_verified": true,
+      "first_batch_primal_max_abs_difference": 0.0
+    }
+  },
+  "workload": {
+    "gradient_batches": 0,
+    "hvp_batches": 0,
+    "jvp_directions": 1,
+    "jvp_batches": 313
+  },
+  "artifact": {
+    "serialized_sha256": "4cf92e6cee5a020a501c682425a3b971b4f68998e218304f230bdfd4a63a87aa",
+    "raw_tensors_sha256": {
+      "merged_mean": "0f5cb336c4c54341734189bea5e2318e6aa292fed487334f68fbdd0cd8eca796",
+      "inverse_response": "e0ba4f4a89201902d9b2fd5f1bff2c1bb4c6b7943a1afbefbb876133d906f162"
+    }
+  }
+}
