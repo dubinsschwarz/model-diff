@@ -1,0 +1,111 @@
+{
+  "format_version": 1,
+  "attempt_id": "007_diag_empirical_fisher_sqrt_rollback_prefix0_13_r00125",
+  "hash_algorithm": "sha256",
+  "construction_manifest_sha256": "0e1c730d0506c5c5670be2656818d598c4a8cdce08a048cd1192c42d073a5809",
+  "attempt_spec_sha256": "39bfff6d9b1768ec8c14ca0fe5deb0fe7b9948d5f23b98d53bc8e1cad1ffd0a5",
+  "corpus_spec_sha256": "e514820e7def99e9287c32de4b1279f28f6ff6c2e09749a8dfa5d8b14c311f0f",
+  "corpus_manifest_sha256": "8b3ea49228dbb106c2b8a7c849c4f27e021fa3e992800444f43e260a6b055230",
+  "constructor_script_sha256": "e7662652833e202a88e684493b3124af581d5832ef8d0bb369f170488538f45c",
+  "self_diff_spec_sha256": "152ba064c01561774588057caed9b1349e6c025b60b48a7810150c770efdfb4a",
+  "compute_self_diff_script_sha256": "0de75e4d7e5c5c42d34c0d47149c3706a9baa451533362ce9f7290e5ffef42fb",
+  "input_checkpoints": {
+    "merged": {
+      "file_count": 6,
+      "total_bytes": 6893764468,
+      "files": [
+        {
+          "path": "chat_template.jinja",
+          "size_bytes": 4168,
+          "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+        },
+        {
+          "path": "config.json",
+          "size_bytes": 1416,
+          "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+        },
+        {
+          "path": "generation_config.json",
+          "size_bytes": 214,
+          "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+        },
+        {
+          "path": "model.safetensors",
+          "size_bytes": 6882335328,
+          "sha256": "f6989dd3445cd339041ab654a6da463e0a80b2d52dd2c01f67f683b1c30ea10f"
+        },
+        {
+          "path": "tokenizer.json",
+          "size_bytes": 11422650,
+          "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "size_bytes": 692,
+          "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+        }
+      ]
+    },
+    "rollback": {
+      "directory_name": "model",
+      "file_count": 6,
+      "total_bytes": 6893764468,
+      "files": [
+        {
+          "path": "chat_template.jinja",
+          "size_bytes": 4168,
+          "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+        },
+        {
+          "path": "config.json",
+          "size_bytes": 1416,
+          "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+        },
+        {
+          "path": "generation_config.json",
+          "size_bytes": 214,
+          "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+        },
+        {
+          "path": "model.safetensors",
+          "size_bytes": 6882335328,
+          "sha256": "8d507b43a8f95487797b5f371d9842adf8cd1c1294ad0f99f214681d91345c32"
+        },
+        {
+          "path": "tokenizer.json",
+          "size_bytes": 11422650,
+          "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "size_bytes": 692,
+          "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+        }
+      ]
+    }
+  },
+  "probe": {
+    "serialized_sha256": "3d799d19abf4a2d6dc92b2bd164d81d83f6451cd3545f5ae5d8c04a8b299735b",
+    "raw_tensor_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8"
+  },
+  "method": {
+    "readout_block_index": 13,
+    "num_hidden_layers": 28,
+    "sample_count": 10000,
+    "sequence_length": 128,
+    "hidden_size": 2048,
+    "batch_size": 32,
+    "model_dtype": "float32",
+    "accumulator_dtype": "float64",
+    "stored_dtype": "float32",
+    "difference_sign": "merged_minus_sqrt_fisher_rollback"
+  },
+  "self_diff_artifact": {
+    "serialized_sha256": "4b2b2a0bc11b3c3a5a1fc0cbcbf4ddada3dd9cc62a017518665b243de58049e5",
+    "raw_tensors_sha256": {
+      "merged_mean": "0f5cb336c4c54341734189bea5e2318e6aa292fed487334f68fbdd0cd8eca796",
+      "sqrt_fisher_rollback_mean": "2b0fae6953b3cc19dcdff9d4cba13b0929d5e12830dcddab3dece06d4878340e",
+      "difference": "f09ddd66afb40f16321db5991aa334b06573c2da88db54d367e1427992f1479e"
+    }
+  }
+}
