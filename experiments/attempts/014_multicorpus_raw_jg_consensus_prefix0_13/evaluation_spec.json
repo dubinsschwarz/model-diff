@@ -1,0 +1,97 @@
+{
+  "format_version": 1,
+  "attempt_id": "014_multicorpus_raw_jg_consensus_prefix0_13",
+  "evaluation_plan": {
+    "oracle_vector": "difference",
+    "candidate_tensors": [
+      "response_fineweb",
+      "response_wikitext103_raw",
+      "response_tinystories",
+      "consensus_response"
+    ],
+    "cosine_dtype": "cpu_float64",
+    "per_position_scope": "all_128_positions",
+    "primary": {
+      "metric": "consensus_positions_1_4_mean_cosine",
+      "baseline": "response_fineweb_positions_1_4_mean_cosine",
+      "report_delta_consensus_minus_fineweb": true
+    },
+    "secondary": {
+      "metric": "consensus_positions_1_127_mean_cosine",
+      "baseline": "response_fineweb_positions_1_127_mean_cosine",
+      "report_delta_consensus_minus_fineweb": true
+    },
+    "position_0": "report_separately",
+    "policy": [
+      "report all individual corpus candidates",
+      "no best-corpus selection",
+      "no sign selection",
+      "no corpus reweighting",
+      "no post-result candidate modification",
+      "no post-result threshold tuning"
+    ]
+  },
+  "consensus_definition": {
+    "definition": "arithmetic_mean_of_three_per_position_unit_positive_Jg_responses",
+    "normalization_dtype": "cpu_float64",
+    "inputs": "stored_equivalent_float32_responses",
+    "zero_or_nonfinite_norm": "fail",
+    "weights": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "concentration_tolerance": 1e-12
+  },
+  "inputs": {
+    "attempt_spec": {
+      "path": "experiments/attempts/014_multicorpus_raw_jg_consensus_prefix0_13/spec.json",
+      "sha256": "556536ed4bb5259b29f4bb01cbf96bf846778bc21898a0a9ca3e61b895bc86ce"
+    },
+    "construction_manifest": {
+      "path": "experiments/attempts/014_multicorpus_raw_jg_consensus_prefix0_13/construction-manifest.json",
+      "sha256": "6148770fe9cd29bd5f6050379fd4c01a9f3ad21501019856ea44812f6e4ee7fb"
+    },
+    "constructor": {
+      "path": "scripts/ablation/construct_multicorpus_raw_jg_consensus.py",
+      "sha256": "59936b928dcf942470db92debb1f2a8e41823ae1c9082803d2fdd8dc50202caa"
+    },
+    "downloaded_manifest": {
+      "path": "downloaded-model-hashes.json",
+      "sha256": "f449733393443970d912ef159b858e360390413012f872d7874ac2d84470593c"
+    },
+    "merged_manifest": {
+      "path": "merged-model-hashes.json",
+      "sha256": "78ae3e5840d17702cb193597e5c4873fe9506e6089fbbcc020f87cedeabfdee3"
+    },
+    "probe_manifest": {
+      "path": "oracle-probe-manifest.json",
+      "sha256": "1b9c53033b0e4ebf04f26b598ff42e0e2924812ab1c1c96872f7bd9da33089ba"
+    },
+    "oracle_manifest": {
+      "path": "oracle-adl-manifest.json",
+      "sha256": "affe93a1139cdaa221646fb3b9c8ec5f64b28129c42b22eae185aca5d3932b90"
+    },
+    "merge_script": {
+      "path": "scripts/merge_lora.py",
+      "sha256": "5b75058b7a5f1ecc2b3ce237ad06e2292fecd372fff9138fdb30188de95d6030"
+    },
+    "freeze_probe_script": {
+      "path": "scripts/freeze_oracle_probe.py",
+      "sha256": "f19ef67c4e184c8ce7c1acf9cdd3617e1b4a4f6cf806e9032dfda6f2871d391b"
+    },
+    "oracle_script": {
+      "path": "scripts/compute_oracle_adl.py",
+      "sha256": "d9bf1fb1e9581beb81708ece7ffdeed87ec821e0b0c66a1341ea5deb443c23ac"
+    }
+  },
+  "candidate_artifact": "/root/model-diff-scratch/artifacts/attempt014_multicorpus_raw_jg_consensus/responses.pt",
+  "oracle_artifact": "/root/model-diff-scratch/artifacts/oracle_adl/oracle_adl.pt",
+  "output_path": "experiments/attempts/014_multicorpus_raw_jg_consensus_prefix0_13/evaluation.json",
+  "undefined_mean_policy": "null_if_any_required_position_cosine_is_null",
+  "oracle_sign": "ft_mean - base_mean",
+  "candidate_sign": "stored_positive_response_no_sign_change",
+  "timestamps": false,
+  "host_metadata": false,
+  "gpu_metadata": false
+}
