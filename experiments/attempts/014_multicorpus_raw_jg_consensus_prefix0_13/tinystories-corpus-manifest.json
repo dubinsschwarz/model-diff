@@ -1,0 +1,74 @@
+{
+  "format_version": 1,
+  "attempt_id": "014_multicorpus_raw_jg_consensus_prefix0_13",
+  "hash_algorithm": "sha256",
+  "corpus_name": "tinystories",
+  "spec_sha256": "0e4f6c23a9e6dce35d1597185b7ee9f378cb9a4753b974dba3fa5a2dd0460ff6",
+  "freeze_script_sha256": "ab55a6a812f31e76afc41af4ea2aec0132657211b1162955ffdb7983090d7a63",
+  "helper_script_sha256": "59936b928dcf942470db92debb1f2a8e41823ae1c9082803d2fdd8dc50202caa",
+  "dataset": {
+    "repo_id": "roneneldan/TinyStories",
+    "revision": "f54c09fd23315a6f9c86f9dc80f725de7d8f9c64",
+    "config": null,
+    "split": "train",
+    "streaming": true,
+    "shuffle_buffer_size": 10000,
+    "shuffle_rule": "datasets.IterableDataset.shuffle(seed=42, buffer_size=10000); one iterator; no workers; stop after first 4096 valid rows"
+  },
+  "selection": {
+    "shuffle_seed": 42,
+    "text_column": "text",
+    "skip_blank_text": true,
+    "character_limit": 1280,
+    "add_special_tokens": true,
+    "minimum_token_count": 128,
+    "skip_valid_examples": 0,
+    "sample_count": 4096,
+    "sequence_length": 128
+  },
+  "software_versions": {
+    "datasets": "5.0.1",
+    "transformers": "5.17.0",
+    "torch": "2.8.0+cu128"
+  },
+  "tokenizer_checkpoint": {
+    "source": "canonical_merged_checkpoint",
+    "directory": "/root/model-diff-scratch/models/merged",
+    "files": [
+      {
+        "path": "chat_template.jinja",
+        "size_bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "config.json",
+        "size_bytes": 1416,
+        "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+      },
+      {
+        "path": "tokenizer.json",
+        "size_bytes": 11422650,
+        "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size_bytes": 692,
+        "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+      }
+    ]
+  },
+  "tensor": {
+    "shape": [
+      4096,
+      128
+    ],
+    "dtype": "torch.int64",
+    "device": "cpu",
+    "contiguous": true
+  },
+  "artifact": {
+    "path": "/root/model-diff-scratch/artifacts/attempt014_tinystories_corpus/tokens.pt",
+    "serialized_sha256": "909f9c997d4d0f5ceaabc977b80989b3606a22b6f7f22fd15ff419fc6cf14049",
+    "raw_tensor_sha256": "c6d87c65233e28ab09a38a04f09d35e592fef187399ff2fad8efa766a1f3a2d7"
+  }
+}

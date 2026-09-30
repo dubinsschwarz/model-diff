@@ -1,0 +1,74 @@
+{
+  "format_version": 1,
+  "attempt_id": "014_multicorpus_raw_jg_consensus_prefix0_13",
+  "hash_algorithm": "sha256",
+  "corpus_name": "wikitext103_raw",
+  "spec_sha256": "f6b9ccd801f547d7d2c24fdaa0f53ee55758068dae3685d7859dcbfb3027a24b",
+  "freeze_script_sha256": "ab55a6a812f31e76afc41af4ea2aec0132657211b1162955ffdb7983090d7a63",
+  "helper_script_sha256": "59936b928dcf942470db92debb1f2a8e41823ae1c9082803d2fdd8dc50202caa",
+  "dataset": {
+    "repo_id": "Salesforce/wikitext",
+    "revision": "b08601e04326c79dfdd32d625aee71d232d685c3",
+    "config": "wikitext-103-raw-v1",
+    "split": "train",
+    "streaming": true,
+    "shuffle_buffer_size": 10000,
+    "shuffle_rule": "datasets.IterableDataset.shuffle(seed=42, buffer_size=10000); one iterator; no workers; stop after first 4096 valid rows"
+  },
+  "selection": {
+    "shuffle_seed": 42,
+    "text_column": "text",
+    "skip_blank_text": true,
+    "character_limit": 1280,
+    "add_special_tokens": true,
+    "minimum_token_count": 128,
+    "skip_valid_examples": 0,
+    "sample_count": 4096,
+    "sequence_length": 128
+  },
+  "software_versions": {
+    "datasets": "5.0.1",
+    "transformers": "5.17.0",
+    "torch": "2.8.0+cu128"
+  },
+  "tokenizer_checkpoint": {
+    "source": "canonical_merged_checkpoint",
+    "directory": "/root/model-diff-scratch/models/merged",
+    "files": [
+      {
+        "path": "chat_template.jinja",
+        "size_bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "config.json",
+        "size_bytes": 1416,
+        "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+      },
+      {
+        "path": "tokenizer.json",
+        "size_bytes": 11422650,
+        "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size_bytes": 692,
+        "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+      }
+    ]
+  },
+  "tensor": {
+    "shape": [
+      4096,
+      128
+    ],
+    "dtype": "torch.int64",
+    "device": "cpu",
+    "contiguous": true
+  },
+  "artifact": {
+    "path": "/root/model-diff-scratch/artifacts/attempt014_wikitext103_raw_corpus/tokens.pt",
+    "serialized_sha256": "cbd92ac9766baef0ff12bdde69e66f8e928b863775b917ad09be57cc08b401b9",
+    "raw_tensor_sha256": "8af51ee7d9eda44789529550685ba73e4d658b24153ace5b68dc61c7d256e287"
+  }
+}
