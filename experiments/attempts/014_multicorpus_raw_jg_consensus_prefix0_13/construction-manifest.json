@@ -1,0 +1,6314 @@
+{
+  "attempt_id": "014_multicorpus_raw_jg_consensus_prefix0_13",
+  "information_policy": "final_checkpoint_frozen_generic_corpora_and_probe_only",
+  "spec_sha256": "556536ed4bb5259b29f4bb01cbf96bf846778bc21898a0a9ca3e61b895bc86ce",
+  "constructor_script_sha256": "59936b928dcf942470db92debb1f2a8e41823ae1c9082803d2fdd8dc50202caa",
+  "source_checkpoint": [
+    {
+      "path": "chat_template.jinja",
+      "size_bytes": 4168,
+      "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+    },
+    {
+      "path": "config.json",
+      "size_bytes": 1416,
+      "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+    },
+    {
+      "path": "generation_config.json",
+      "size_bytes": 214,
+      "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+    },
+    {
+      "path": "model.safetensors",
+      "size_bytes": 6882335328,
+      "sha256": "f6989dd3445cd339041ab654a6da463e0a80b2d52dd2c01f67f683b1c30ea10f"
+    },
+    {
+      "path": "tokenizer.json",
+      "size_bytes": 11422650,
+      "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "size_bytes": 692,
+      "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+    }
+  ],
+  "probe": {
+    "sample_count": 10000,
+    "sequence_length": 128,
+    "batch_size": 32,
+    "dtype": "torch.int64",
+    "serialized_sha256": "3d799d19abf4a2d6dc92b2bd164d81d83f6451cd3545f5ae5d8c04a8b299735b",
+    "raw_tensor_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8"
+  },
+  "generic_loss": {
+    "type": "causal_next_token_cross_entropy",
+    "sample_count": 4096,
+    "sequence_length": 128,
+    "predictions_per_sample": 127,
+    "total_prediction_tokens": 520192,
+    "batch_size": 8,
+    "number_of_batches": 512,
+    "label_alignment": "logits_positions_0_through_126_predict_tokens_1_through_127",
+    "reduction": "sum_token_cross_entropy_divided_by_total_prediction_tokens",
+    "masking": "causal_model_mask_only",
+    "mixed_precision": false,
+    "dropout": false,
+    "optimizer": false,
+    "weight_decay": false,
+    "gradient_clipping": false
+  },
+  "jvp": {
+    "implementation": "torch.func.jvp_with_partial_torch.func.functional_call",
+    "module": "model.model",
+    "output_hidden_states": true,
+    "strict_forward_ad": true,
+    "fallback": false,
+    "change_attention_backend": false,
+    "reverse_mode_recording": false,
+    "response_sign": "positive_J_delta",
+    "accumulation_dtype": "cpu_float64",
+    "stored_dtype": "float32",
+    "primal_comparison_rtol": 1e-05,
+    "primal_comparison_atol": 1e-06
+  },
+  "readout": {
+    "block_index": 13,
+    "hidden_state_index": 14,
+    "hidden_size": 2048,
+    "all_token_positions": true,
+    "semantics": "hidden_states[14] is block 13 output before block 14; verify with forward hook"
+  },
+  "consensus_definition": {
+    "definition": "arithmetic_mean_of_three_per_position_unit_positive_Jg_responses",
+    "normalization_dtype": "cpu_float64",
+    "inputs": "stored_equivalent_float32_responses",
+    "zero_or_nonfinite_norm": "fail",
+    "weights": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "concentration_tolerance": 1e-12
+  },
+  "corpus_order": [
+    "fineweb",
+    "wikitext103_raw",
+    "tinystories"
+  ],
+  "corpora": [
+    {
+      "name": "fineweb",
+      "spec_sha256": "e514820e7def99e9287c32de4b1279f28f6ff6c2e09749a8dfa5d8b14c311f0f",
+      "manifest_sha256": "8b3ea49228dbb106c2b8a7c849c4f27e021fa3e992800444f43e260a6b055230",
+      "serialized_sha256": "54283d72aa3075e2867ead86e538991d7284ede327ca67871e73bfc581e4025d",
+      "raw_tensor_sha256": "4613982be77342a89b35616d68e21d9ff66d5a983af7e82cb6fa1eb159457eae",
+      "mean_generic_loss": 3.2868414061275995,
+      "aggregate_source_weight_norm": 918.1587250300843,
+      "aggregate_generic_gradient_norm": 11.072692203501518,
+      "target_delta_norm": 1.1476984062876054,
+      "alpha": 0.10365125167343392,
+      "aggregate_realized_fp32_tangent_norm": 1.1476984057997395,
+      "aggregate_realized_relative_tangent_norm": 0.0012499999994686475,
+      "matrices": [
+        {
+          "name": "model.layers.0.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.11787949888646213,
+          "tangent_frobenius_norm": 0.012218357598894428
+        },
+        {
+          "name": "model.layers.0.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.0506446826678514,
+          "tangent_frobenius_norm": 0.005249384749880098
+        },
+        {
+          "name": "model.layers.0.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.10576578687897564,
+          "tangent_frobenius_norm": 0.010962756194316284
+        },
+        {
+          "name": "model.layers.0.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.03319379413222101,
+          "tangent_frobenius_norm": 0.0034405783120226257
+        },
+        {
+          "name": "model.layers.0.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.22348329776282946,
+          "tangent_frobenius_norm": 0.02316432354830173
+        },
+        {
+          "name": "model.layers.0.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.026892573121569355,
+          "tangent_frobenius_norm": 0.0027874488650811383
+        },
+        {
+          "name": "model.layers.0.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.292269001519685,
+          "tangent_frobenius_norm": 0.030294047855180143
+        },
+        {
+          "name": "model.layers.1.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.1958606912870098,
+          "tangent_frobenius_norm": 0.02030120580984227
+        },
+        {
+          "name": "model.layers.1.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.15053463393391392,
+          "tangent_frobenius_norm": 0.015603103209936884
+        },
+        {
+          "name": "model.layers.1.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5123505879889448,
+          "tangent_frobenius_norm": 0.0531057797354855
+        },
+        {
+          "name": "model.layers.1.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.03267133475185635,
+          "tangent_frobenius_norm": 0.0033864247495651013
+        },
+        {
+          "name": "model.layers.1.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.11802673029373956,
+          "tangent_frobenius_norm": 0.012233618325954277
+        },
+        {
+          "name": "model.layers.1.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.0359565385082494,
+          "tangent_frobenius_norm": 0.003726940223068812
+        },
+        {
+          "name": "model.layers.1.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2433248570204579,
+          "tangent_frobenius_norm": 0.025220925991588497
+        },
+        {
+          "name": "model.layers.10.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.18996001195305828,
+          "tangent_frobenius_norm": 0.019689593009733015
+        },
+        {
+          "name": "model.layers.10.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.16082154552128053,
+          "tangent_frobenius_norm": 0.01666935457204327
+        },
+        {
+          "name": "model.layers.10.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2340752556355401,
+          "tangent_frobenius_norm": 0.02426219316770868
+        },
+        {
+          "name": "model.layers.10.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.16937887324569442,
+          "tangent_frobenius_norm": 0.017556332227774495
+        },
+        {
+          "name": "model.layers.10.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.21822463379494,
+          "tangent_frobenius_norm": 0.022619256435081996
+        },
+        {
+          "name": "model.layers.10.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.13541750537470063,
+          "tangent_frobenius_norm": 0.014036193937140966
+        },
+        {
+          "name": "model.layers.10.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.6060891740335366,
+          "tangent_frobenius_norm": 0.0628219016111874
+        },
+        {
+          "name": "model.layers.11.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.14404278570724552,
+          "tangent_frobenius_norm": 0.014930215036123882
+        },
+        {
+          "name": "model.layers.11.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.122886408857887,
+          "tangent_frobenius_norm": 0.012737330112710095
+        },
+        {
+          "name": "model.layers.11.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.19563479420320087,
+          "tangent_frobenius_norm": 0.02027779130204876
+        },
+        {
+          "name": "model.layers.11.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.19017375134482842,
+          "tangent_frobenius_norm": 0.019711747413728817
+        },
+        {
+          "name": "model.layers.11.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2572005964925492,
+          "tangent_frobenius_norm": 0.026659163763970633
+        },
+        {
+          "name": "model.layers.11.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.19368814676584611,
+          "tangent_frobenius_norm": 0.02007601862701558
+        },
+        {
+          "name": "model.layers.11.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5772245402199235,
+          "tangent_frobenius_norm": 0.0598300461800937
+        },
+        {
+          "name": "model.layers.12.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.13525911286006267,
+          "tangent_frobenius_norm": 0.01401977634825795
+        },
+        {
+          "name": "model.layers.12.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.14588463381432232,
+          "tangent_frobenius_norm": 0.015121124996986155
+        },
+        {
+          "name": "model.layers.12.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.22803451059659502,
+          "tangent_frobenius_norm": 0.023636062374637598
+        },
+        {
+          "name": "model.layers.12.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.11699700480411622,
+          "tangent_frobenius_norm": 0.012126885946684398
+        },
+        {
+          "name": "model.layers.12.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.22786524617139453,
+          "tangent_frobenius_norm": 0.02361851797239337
+        },
+        {
+          "name": "model.layers.12.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.1269148330164188,
+          "tangent_frobenius_norm": 0.013154881272233316
+        },
+        {
+          "name": "model.layers.12.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5008246139801154,
+          "tangent_frobenius_norm": 0.05191109820948589
+        },
+        {
+          "name": "model.layers.13.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.13882464827565352,
+          "tangent_frobenius_norm": 0.014389348558715721
+        },
+        {
+          "name": "model.layers.13.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.12941595662039138,
+          "tangent_frobenius_norm": 0.013414125893192241
+        },
+        {
+          "name": "model.layers.13.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2590504277777913,
+          "tangent_frobenius_norm": 0.026850901077350067
+        },
+        {
+          "name": "model.layers.13.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.19241585963400162,
+          "tangent_frobenius_norm": 0.019944144756790568
+        },
+        {
+          "name": "model.layers.13.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2758154183788596,
+          "tangent_frobenius_norm": 0.028588613347545363
+        },
+        {
+          "name": "model.layers.13.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.3004384082656208,
+          "tangent_frobenius_norm": 0.031140817048032624
+        },
+        {
+          "name": "model.layers.13.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5485048788392762,
+          "tangent_frobenius_norm": 0.056853217247783736
+        },
+        {
+          "name": "model.layers.2.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 10.658472541348333,
+          "tangent_frobenius_norm": 1.1047640193643016
+        },
+        {
+          "name": "model.layers.2.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.3180487485236817,
+          "tangent_frobenius_norm": 0.0329661508304367
+        },
+        {
+          "name": "model.layers.2.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.7141191745520198,
+          "tangent_frobenius_norm": 0.07401934634357576
+        },
+        {
+          "name": "model.layers.2.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.141942027909772,
+          "tangent_frobenius_norm": 0.01471246882073568
+        },
+        {
+          "name": "model.layers.2.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.13938361821945583,
+          "tangent_frobenius_norm": 0.01444728649316207
+        },
+        {
+          "name": "model.layers.2.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.22041095802156943,
+          "tangent_frobenius_norm": 0.022845871644842017
+        },
+        {
+          "name": "model.layers.2.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.3558203599385422,
+          "tangent_frobenius_norm": 0.03688122564291332
+        },
+        {
+          "name": "model.layers.3.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.16812182945514753,
+          "tangent_frobenius_norm": 0.01742603805592501
+        },
+        {
+          "name": "model.layers.3.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.21936801769791123,
+          "tangent_frobenius_norm": 0.022737769714008812
+        },
+        {
+          "name": "model.layers.3.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.40558329402208837,
+          "tangent_frobenius_norm": 0.04203921604353949
+        },
+        {
+          "name": "model.layers.3.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.13823803347598906,
+          "tangent_frobenius_norm": 0.014328545171511465
+        },
+        {
+          "name": "model.layers.3.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.09935487364533009,
+          "tangent_frobenius_norm": 0.010298257009964356
+        },
+        {
+          "name": "model.layers.3.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.20089120057904866,
+          "tangent_frobenius_norm": 0.020822624427366144
+        },
+        {
+          "name": "model.layers.3.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5165675440362689,
+          "tangent_frobenius_norm": 0.05354287247217796
+        },
+        {
+          "name": "model.layers.4.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.1692374739658959,
+          "tangent_frobenius_norm": 0.017541676008384126
+        },
+        {
+          "name": "model.layers.4.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.1455757736280811,
+          "tangent_frobenius_norm": 0.015089111183191012
+        },
+        {
+          "name": "model.layers.4.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.41812366412561736,
+          "tangent_frobenius_norm": 0.04333904113826028
+        },
+        {
+          "name": "model.layers.4.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.13952185771937106,
+          "tangent_frobenius_norm": 0.014461615183613198
+        },
+        {
+          "name": "model.layers.4.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.1041847354091779,
+          "tangent_frobenius_norm": 0.010798878229463313
+        },
+        {
+          "name": "model.layers.4.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.1331337398021068,
+          "tangent_frobenius_norm": 0.01379947882026809
+        },
+        {
+          "name": "model.layers.4.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.3848125611683697,
+          "tangent_frobenius_norm": 0.03988630362847717
+        },
+        {
+          "name": "model.layers.5.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.15185144564774583,
+          "tangent_frobenius_norm": 0.015739592411320533
+        },
+        {
+          "name": "model.layers.5.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.12424932008532591,
+          "tangent_frobenius_norm": 0.012878597534594057
+        },
+        {
+          "name": "model.layers.5.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2986570473401858,
+          "tangent_frobenius_norm": 0.03095617677258979
+        },
+        {
+          "name": "model.layers.5.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.1094070545669314,
+          "tangent_frobenius_norm": 0.011340178116716062
+        },
+        {
+          "name": "model.layers.5.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.13274128346989475,
+          "tangent_frobenius_norm": 0.013758800180222805
+        },
+        {
+          "name": "model.layers.5.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.1295139184118699,
+          "tangent_frobenius_norm": 0.013424279765162661
+        },
+        {
+          "name": "model.layers.5.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.4729367957852359,
+          "tangent_frobenius_norm": 0.049020490837615754
+        },
+        {
+          "name": "model.layers.6.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.17237008076577714,
+          "tangent_frobenius_norm": 0.017866374621363076
+        },
+        {
+          "name": "model.layers.6.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.1985399277268082,
+          "tangent_frobenius_norm": 0.020578912047181565
+        },
+        {
+          "name": "model.layers.6.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.33884521790163674,
+          "tangent_frobenius_norm": 0.03512173098956403
+        },
+        {
+          "name": "model.layers.6.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2121240972345671,
+          "tangent_frobenius_norm": 0.02198692822282254
+        },
+        {
+          "name": "model.layers.6.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.18570957838967123,
+          "tangent_frobenius_norm": 0.019249030261217125
+        },
+        {
+          "name": "model.layers.6.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.1683260392402973,
+          "tangent_frobenius_norm": 0.017447204548445887
+        },
+        {
+          "name": "model.layers.6.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.4685094080889552,
+          "tangent_frobenius_norm": 0.048561586626905816
+        },
+        {
+          "name": "model.layers.7.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.24211833391889342,
+          "tangent_frobenius_norm": 0.02509586835994755
+        },
+        {
+          "name": "model.layers.7.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.21318192233444896,
+          "tangent_frobenius_norm": 0.022096573115111765
+        },
+        {
+          "name": "model.layers.7.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.3979238094778729,
+          "tangent_frobenius_norm": 0.0412453009134223
+        },
+        {
+          "name": "model.layers.7.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.11774287957881759,
+          "tangent_frobenius_norm": 0.012204196893178651
+        },
+        {
+          "name": "model.layers.7.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.17381256250866292,
+          "tangent_frobenius_norm": 0.018015889657003004
+        },
+        {
+          "name": "model.layers.7.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.12332262466403518,
+          "tangent_frobenius_norm": 0.012782544415155526
+        },
+        {
+          "name": "model.layers.7.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.52565508445887,
+          "tangent_frobenius_norm": 0.0544848074522345
+        },
+        {
+          "name": "model.layers.8.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.22156664974845328,
+          "tangent_frobenius_norm": 0.02296566057058467
+        },
+        {
+          "name": "model.layers.8.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.26725949137931065,
+          "tangent_frobenius_norm": 0.02770178080604767
+        },
+        {
+          "name": "model.layers.8.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.4853241218463412,
+          "tangent_frobenius_norm": 0.05030445272183942
+        },
+        {
+          "name": "model.layers.8.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.378563359211526,
+          "tangent_frobenius_norm": 0.039238565929193316
+        },
+        {
+          "name": "model.layers.8.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.20770245412066277,
+          "tangent_frobenius_norm": 0.021528619345783578
+        },
+        {
+          "name": "model.layers.8.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.325184471163358,
+          "tangent_frobenius_norm": 0.03370577750408506
+        },
+        {
+          "name": "model.layers.8.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5605597523438675,
+          "tangent_frobenius_norm": 0.058102720040314824
+        },
+        {
+          "name": "model.layers.9.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.224807498856557,
+          "tangent_frobenius_norm": 0.02330157864328685
+        },
+        {
+          "name": "model.layers.9.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.22631237915832458,
+          "tangent_frobenius_norm": 0.023457561329945614
+        },
+        {
+          "name": "model.layers.9.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2947781644487459,
+          "tangent_frobenius_norm": 0.030554125717069454
+        },
+        {
+          "name": "model.layers.9.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.40270471173412425,
+          "tangent_frobenius_norm": 0.041740847797862905
+        },
+        {
+          "name": "model.layers.9.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2357078355948057,
+          "tangent_frobenius_norm": 0.02443141219468326
+        },
+        {
+          "name": "model.layers.9.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.33378209456273,
+          "tangent_frobenius_norm": 0.03459693200172654
+        },
+        {
+          "name": "model.layers.9.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 1.212131743291409,
+          "tangent_frobenius_norm": 0.1256389717732577
+        }
+      ],
+      "readout_checks": {
+        "readout_hook_verified": true,
+        "first_batch_primal_max_abs_difference": 0.0
+      }
+    },
+    {
+      "name": "wikitext103_raw",
+      "spec_sha256": "f6b9ccd801f547d7d2c24fdaa0f53ee55758068dae3685d7859dcbfb3027a24b",
+      "manifest_sha256": "80ca2b3efe19ed77a14d1f862ff56916baf9eeb67578afa7740e04e062c701fb",
+      "serialized_sha256": "cbd92ac9766baef0ff12bdde69e66f8e928b863775b917ad09be57cc08b401b9",
+      "raw_tensor_sha256": "8af51ee7d9eda44789529550685ba73e4d658b24153ace5b68dc61c7d256e287",
+      "mean_generic_loss": 3.208335423094081,
+      "aggregate_source_weight_norm": 918.1587250300843,
+      "aggregate_generic_gradient_norm": 12.066515585765673,
+      "target_delta_norm": 1.1476984062876054,
+      "alpha": 0.09511431847330423,
+      "aggregate_realized_fp32_tangent_norm": 1.147698406193124,
+      "aggregate_realized_relative_tangent_norm": 0.0012499999998970969,
+      "matrices": [
+        {
+          "name": "model.layers.0.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.3105750486668846,
+          "tangent_frobenius_norm": 0.029540134083882976
+        },
+        {
+          "name": "model.layers.0.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.13456357083855855,
+          "tangent_frobenius_norm": 0.012798922329873556
+        },
+        {
+          "name": "model.layers.0.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.21345198266665932,
+          "tangent_frobenius_norm": 0.02030233985910806
+        },
+        {
+          "name": "model.layers.0.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.09514965943808511,
+          "tangent_frobenius_norm": 0.009050095010346251
+        },
+        {
+          "name": "model.layers.0.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.42332169206095666,
+          "tangent_frobenius_norm": 0.04026395423187877
+        },
+        {
+          "name": "model.layers.0.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.07941092534361574,
+          "tangent_frobenius_norm": 0.007553116043571092
+        },
+        {
+          "name": "model.layers.0.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.516175185323545,
+          "tangent_frobenius_norm": 0.049095650981325255
+        },
+        {
+          "name": "model.layers.1.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.3939973914745968,
+          "tangent_frobenius_norm": 0.03747479336776803
+        },
+        {
+          "name": "model.layers.1.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.281973979337207,
+          "tangent_frobenius_norm": 0.026819762846497026
+        },
+        {
+          "name": "model.layers.1.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.8411578813257772,
+          "tangent_frobenius_norm": 0.08000615856117528
+        },
+        {
+          "name": "model.layers.1.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.07484983658314037,
+          "tangent_frobenius_norm": 0.007119291196987189
+        },
+        {
+          "name": "model.layers.1.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.20816709073413672,
+          "tangent_frobenius_norm": 0.01979967096143877
+        },
+        {
+          "name": "model.layers.1.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.0795646809986974,
+          "tangent_frobenius_norm": 0.007567740410078107
+        },
+        {
+          "name": "model.layers.1.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.33124085011273163,
+          "tangent_frobenius_norm": 0.031505747732485385
+        },
+        {
+          "name": "model.layers.10.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.2108682833771744,
+          "tangent_frobenius_norm": 0.020056593062795013
+        },
+        {
+          "name": "model.layers.10.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.16501722692603565,
+          "tangent_frobenius_norm": 0.01569550110746795
+        },
+        {
+          "name": "model.layers.10.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.24426151120855075,
+          "tangent_frobenius_norm": 0.0232327671956108
+        },
+        {
+          "name": "model.layers.10.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.15736885398423045,
+          "tangent_frobenius_norm": 0.014968031297339132
+        },
+        {
+          "name": "model.layers.10.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2249353697909279,
+          "tangent_frobenius_norm": 0.02139457439508846
+        },
+        {
+          "name": "model.layers.10.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.13583770751403887,
+          "tangent_frobenius_norm": 0.012920110978515661
+        },
+        {
+          "name": "model.layers.10.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5556150833290143,
+          "tangent_frobenius_norm": 0.05284694987698523
+        },
+        {
+          "name": "model.layers.11.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.15487382525400725,
+          "tangent_frobenius_norm": 0.014730718336488003
+        },
+        {
+          "name": "model.layers.11.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.12257088955133016,
+          "tangent_frobenius_norm": 0.011658246648586173
+        },
+        {
+          "name": "model.layers.11.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.19530192053330997,
+          "tangent_frobenius_norm": 0.018576009055585343
+        },
+        {
+          "name": "model.layers.11.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.17082031111703608,
+          "tangent_frobenius_norm": 0.016247457453147613
+        },
+        {
+          "name": "model.layers.11.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.27032614960889784,
+          "tangent_frobenius_norm": 0.025711887478348232
+        },
+        {
+          "name": "model.layers.11.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.19440709034612835,
+          "tangent_frobenius_norm": 0.01849089787214024
+        },
+        {
+          "name": "model.layers.11.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5500991549774222,
+          "tangent_frobenius_norm": 0.05232230617931366
+        },
+        {
+          "name": "model.layers.12.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.17008411142605315,
+          "tangent_frobenius_norm": 0.016177434344070776
+        },
+        {
+          "name": "model.layers.12.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.12559250064880725,
+          "tangent_frobenius_norm": 0.01194564512498209
+        },
+        {
+          "name": "model.layers.12.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2165322028823678,
+          "tangent_frobenius_norm": 0.02059531290092053
+        },
+        {
+          "name": "model.layers.12.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.14836428973807733,
+          "tangent_frobenius_norm": 0.014111568197904871
+        },
+        {
+          "name": "model.layers.12.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2252840403817481,
+          "tangent_frobenius_norm": 0.021427737963653194
+        },
+        {
+          "name": "model.layers.12.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.14719733185712458,
+          "tangent_frobenius_norm": 0.014000573968777375
+        },
+        {
+          "name": "model.layers.12.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.49464769202950787,
+          "tangent_frobenius_norm": 0.047048078143012366
+        },
+        {
+          "name": "model.layers.13.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.15679533317730449,
+          "tangent_frobenius_norm": 0.014913481254532361
+        },
+        {
+          "name": "model.layers.13.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.13680850458492724,
+          "tangent_frobenius_norm": 0.013012447657575817
+        },
+        {
+          "name": "model.layers.13.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.25404772255429137,
+          "tangent_frobenius_norm": 0.02416357601224912
+        },
+        {
+          "name": "model.layers.13.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.1540628023332977,
+          "tangent_frobenius_norm": 0.014653578409090158
+        },
+        {
+          "name": "model.layers.13.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.28143663903110533,
+          "tangent_frobenius_norm": 0.02676865412378056
+        },
+        {
+          "name": "model.layers.13.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2211433393360593,
+          "tangent_frobenius_norm": 0.021033898253088063
+        },
+        {
+          "name": "model.layers.13.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5582399248022344,
+          "tangent_frobenius_norm": 0.0530966099222273
+        },
+        {
+          "name": "model.layers.2.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 11.569913737038524,
+          "tangent_frobenius_norm": 1.1004644598450064
+        },
+        {
+          "name": "model.layers.2.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.476009590414932,
+          "tangent_frobenius_norm": 0.04527532780395102
+        },
+        {
+          "name": "model.layers.2.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.9169234751752058,
+          "tangent_frobenius_norm": 0.08721255130509896
+        },
+        {
+          "name": "model.layers.2.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.16570539871087342,
+          "tangent_frobenius_norm": 0.01576095608291636
+        },
+        {
+          "name": "model.layers.2.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2501374829387813,
+          "tangent_frobenius_norm": 0.023791656215264436
+        },
+        {
+          "name": "model.layers.2.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2426280185464951,
+          "tangent_frobenius_norm": 0.0230773985500438
+        },
+        {
+          "name": "model.layers.2.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.48373264868970905,
+          "tangent_frobenius_norm": 0.046009901175876916
+        },
+        {
+          "name": "model.layers.3.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.33225188076468193,
+          "tangent_frobenius_norm": 0.03160191119662868
+        },
+        {
+          "name": "model.layers.3.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.37034817865232317,
+          "tangent_frobenius_norm": 0.03522541453794502
+        },
+        {
+          "name": "model.layers.3.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.6151939768456774,
+          "tangent_frobenius_norm": 0.05851375578770152
+        },
+        {
+          "name": "model.layers.3.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.21128382101453125,
+          "tangent_frobenius_norm": 0.020096116683838327
+        },
+        {
+          "name": "model.layers.3.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.1839547011844046,
+          "tangent_frobenius_norm": 0.017496726033908682
+        },
+        {
+          "name": "model.layers.3.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.21888038316048852,
+          "tangent_frobenius_norm": 0.020818658367811816
+        },
+        {
+          "name": "model.layers.3.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.63322732064774,
+          "tangent_frobenius_norm": 0.06022898507558695
+        },
+        {
+          "name": "model.layers.4.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.314515814817847,
+          "tangent_frobenius_norm": 0.02991495737608889
+        },
+        {
+          "name": "model.layers.4.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.25034892182471546,
+          "tangent_frobenius_norm": 0.023811767137496567
+        },
+        {
+          "name": "model.layers.4.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.6055052399824953,
+          "tangent_frobenius_norm": 0.05759221816196036
+        },
+        {
+          "name": "model.layers.4.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.21480450166801954,
+          "tangent_frobenius_norm": 0.02043098376003621
+        },
+        {
+          "name": "model.layers.4.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.188387315664036,
+          "tangent_frobenius_norm": 0.01791833113804628
+        },
+        {
+          "name": "model.layers.4.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.16459873594625654,
+          "tangent_frobenius_norm": 0.015655696553775026
+        },
+        {
+          "name": "model.layers.4.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.46669100007167774,
+          "tangent_frobenius_norm": 0.04438899637440618
+        },
+        {
+          "name": "model.layers.5.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.2406852275456779,
+          "tangent_frobenius_norm": 0.02289261138705621
+        },
+        {
+          "name": "model.layers.5.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.20344463136688798,
+          "tangent_frobenius_norm": 0.019350497471341068
+        },
+        {
+          "name": "model.layers.5.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.3958567873123681,
+          "tangent_frobenius_norm": 0.037651648511631955
+        },
+        {
+          "name": "model.layers.5.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.1385876102529193,
+          "tangent_frobenius_norm": 0.013181666115749292
+        },
+        {
+          "name": "model.layers.5.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.1928185233987833,
+          "tangent_frobenius_norm": 0.018339802443679092
+        },
+        {
+          "name": "model.layers.5.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.1637316905150172,
+          "tangent_frobenius_norm": 0.015573228187338974
+        },
+        {
+          "name": "model.layers.5.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.530274052903241,
+          "tangent_frobenius_norm": 0.05043665515614637
+        },
+        {
+          "name": "model.layers.6.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.2435478883804791,
+          "tangent_frobenius_norm": 0.023164891421153862
+        },
+        {
+          "name": "model.layers.6.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2641504847548734,
+          "tangent_frobenius_norm": 0.025124493340644764
+        },
+        {
+          "name": "model.layers.6.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.41027588300972256,
+          "tangent_frobenius_norm": 0.039023111003057304
+        },
+        {
+          "name": "model.layers.6.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.22981225890958207,
+          "tangent_frobenius_norm": 0.021858436447033308
+        },
+        {
+          "name": "model.layers.6.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.23308714486826065,
+          "tangent_frobenius_norm": 0.022169924931904977
+        },
+        {
+          "name": "model.layers.6.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.1989318666866936,
+          "tangent_frobenius_norm": 0.018921269030888317
+        },
+        {
+          "name": "model.layers.6.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5173152044865728,
+          "tangent_frobenius_norm": 0.04920408306267965
+        },
+        {
+          "name": "model.layers.7.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.3007333059645121,
+          "tangent_frobenius_norm": 0.028604043430122537
+        },
+        {
+          "name": "model.layers.7.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.23167202772851148,
+          "tangent_frobenius_norm": 0.02203532701351454
+        },
+        {
+          "name": "model.layers.7.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.4555849948526115,
+          "tangent_frobenius_norm": 0.043332656318760945
+        },
+        {
+          "name": "model.layers.7.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.1551961275138639,
+          "tangent_frobenius_norm": 0.01476137391375339
+        },
+        {
+          "name": "model.layers.7.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.21661555891086998,
+          "tangent_frobenius_norm": 0.020603241253160307
+        },
+        {
+          "name": "model.layers.7.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.13258671682530176,
+          "tangent_frobenius_norm": 0.012610895207066373
+        },
+        {
+          "name": "model.layers.7.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5549691353985108,
+          "tangent_frobenius_norm": 0.05278551107236158
+        },
+        {
+          "name": "model.layers.8.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.24508158739237743,
+          "tangent_frobenius_norm": 0.023310768151980764
+        },
+        {
+          "name": "model.layers.8.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.3097804514122983,
+          "tangent_frobenius_norm": 0.029464556597842802
+        },
+        {
+          "name": "model.layers.8.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.477177624210268,
+          "tangent_frobenius_norm": 0.045386424535931294
+        },
+        {
+          "name": "model.layers.8.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.29693826799985285,
+          "tangent_frobenius_norm": 0.028243081011295874
+        },
+        {
+          "name": "model.layers.8.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.22030616170862666,
+          "tangent_frobenius_norm": 0.020954270428925604
+        },
+        {
+          "name": "model.layers.8.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2436741904812702,
+          "tangent_frobenius_norm": 0.02317690466877724
+        },
+        {
+          "name": "model.layers.8.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5790357685075725,
+          "tangent_frobenius_norm": 0.05507459246343402
+        },
+        {
+          "name": "model.layers.9.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.23717334596052167,
+          "tangent_frobenius_norm": 0.022558581161198247
+        },
+        {
+          "name": "model.layers.9.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.20225652552134532,
+          "tangent_frobenius_norm": 0.019237491627497116
+        },
+        {
+          "name": "model.layers.9.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.28204564643276125,
+          "tangent_frobenius_norm": 0.02682657945141554
+        },
+        {
+          "name": "model.layers.9.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.35413394612791893,
+          "tangent_frobenius_norm": 0.03368320895699934
+        },
+        {
+          "name": "model.layers.9.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2569411342429166,
+          "tangent_frobenius_norm": 0.024438780868479077
+        },
+        {
+          "name": "model.layers.9.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.24288565312190172,
+          "tangent_frobenius_norm": 0.023101903376471535
+        },
+        {
+          "name": "model.layers.9.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 1.0357587088547515,
+          "tangent_frobenius_norm": 0.09851548335897549
+        }
+      ],
+      "readout_checks": {
+        "readout_hook_verified": true,
+        "first_batch_primal_max_abs_difference": 0.0
+      }
+    },
+    {
+      "name": "tinystories",
+      "spec_sha256": "0e4f6c23a9e6dce35d1597185b7ee9f378cb9a4753b974dba3fa5a2dd0460ff6",
+      "manifest_sha256": "ca49d65c1878f93d0c00aa0c4ce45574ac0c32f93d79318b3ee978eb0c2f3282",
+      "serialized_sha256": "909f9c997d4d0f5ceaabc977b80989b3606a22b6f7f22fd15ff419fc6cf14049",
+      "raw_tensor_sha256": "c6d87c65233e28ab09a38a04f09d35e592fef187399ff2fad8efa766a1f3a2d7",
+      "mean_generic_loss": 2.04560215994129,
+      "aggregate_source_weight_norm": 918.1587250300843,
+      "aggregate_generic_gradient_norm": 19.730287267816816,
+      "target_delta_norm": 1.1476984062876054,
+      "alpha": 0.05816937131775476,
+      "aggregate_realized_fp32_tangent_norm": 1.147698407350772,
+      "aggregate_realized_relative_tangent_norm": 0.0012500000011579336,
+      "matrices": [
+        {
+          "name": "model.layers.0.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.37821567482690044,
+          "tangent_frobenius_norm": 0.022000568026370907
+        },
+        {
+          "name": "model.layers.0.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2014531188043197,
+          "tangent_frobenius_norm": 0.01171840126987667
+        },
+        {
+          "name": "model.layers.0.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2855576341733319,
+          "tangent_frobenius_norm": 0.016610708056163735
+        },
+        {
+          "name": "model.layers.0.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.10909185224282128,
+          "tangent_frobenius_norm": 0.006345804460205235
+        },
+        {
+          "name": "model.layers.0.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.47835177514891475,
+          "tangent_frobenius_norm": 0.027825422034221715
+        },
+        {
+          "name": "model.layers.0.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.0897678300358694,
+          "tangent_frobenius_norm": 0.005221738236730845
+        },
+        {
+          "name": "model.layers.0.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5700708990424906,
+          "tangent_frobenius_norm": 0.03316066581511431
+        },
+        {
+          "name": "model.layers.1.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.4819938860607982,
+          "tangent_frobenius_norm": 0.02803728132914896
+        },
+        {
+          "name": "model.layers.1.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.3527371579441054,
+          "tangent_frobenius_norm": 0.020518498749473518
+        },
+        {
+          "name": "model.layers.1.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.7709194478797068,
+          "tangent_frobenius_norm": 0.04484389958243482
+        },
+        {
+          "name": "model.layers.1.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.0836332721459485,
+          "tangent_frobenius_norm": 0.004864894862386296
+        },
+        {
+          "name": "model.layers.1.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.25460254460531134,
+          "tangent_frobenius_norm": 0.01481006995409735
+        },
+        {
+          "name": "model.layers.1.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.08721382240756378,
+          "tangent_frobenius_norm": 0.005073173218564649
+        },
+        {
+          "name": "model.layers.1.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.35537913806139104,
+          "tangent_frobenius_norm": 0.020672181027236475
+        },
+        {
+          "name": "model.layers.10.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.4981361712551903,
+          "tangent_frobenius_norm": 0.028976267913132958
+        },
+        {
+          "name": "model.layers.10.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.36615749954077703,
+          "tangent_frobenius_norm": 0.021299151537740965
+        },
+        {
+          "name": "model.layers.10.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5906284718493019,
+          "tangent_frobenius_norm": 0.03435648688874237
+        },
+        {
+          "name": "model.layers.10.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.42318845431739827,
+          "tangent_frobenius_norm": 0.024616606256594276
+        },
+        {
+          "name": "model.layers.10.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.530598205382834,
+          "tangent_frobenius_norm": 0.030864564040262766
+        },
+        {
+          "name": "model.layers.10.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.29422931937582414,
+          "tangent_frobenius_norm": 0.017115134483483774
+        },
+        {
+          "name": "model.layers.10.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.9608483493118762,
+          "tangent_frobenius_norm": 0.05589194440623779
+        },
+        {
+          "name": "model.layers.11.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.4193937355762313,
+          "tangent_frobenius_norm": 0.024395869929888982
+        },
+        {
+          "name": "model.layers.11.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.28609673111850914,
+          "tangent_frobenius_norm": 0.016642066982371657
+        },
+        {
+          "name": "model.layers.11.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.46869174463018753,
+          "tangent_frobenius_norm": 0.02726350413435363
+        },
+        {
+          "name": "model.layers.11.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.3601182971395304,
+          "tangent_frobenius_norm": 0.02094785502050621
+        },
+        {
+          "name": "model.layers.11.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5950042322349988,
+          "tangent_frobenius_norm": 0.03461102211875005
+        },
+        {
+          "name": "model.layers.11.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.4546209256783338,
+          "tangent_frobenius_norm": 0.026445013468015328
+        },
+        {
+          "name": "model.layers.11.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 1.1512191520558943,
+          "tangent_frobenius_norm": 0.06696569438166551
+        },
+        {
+          "name": "model.layers.12.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.4136797901877278,
+          "tangent_frobenius_norm": 0.024063493324302763
+        },
+        {
+          "name": "model.layers.12.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.31377580317857656,
+          "tangent_frobenius_norm": 0.0182521412070978
+        },
+        {
+          "name": "model.layers.12.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5701748164022009,
+          "tangent_frobenius_norm": 0.033166710623965145
+        },
+        {
+          "name": "model.layers.12.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.25832005533337077,
+          "tangent_frobenius_norm": 0.015026315207331995
+        },
+        {
+          "name": "model.layers.12.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5662521726867253,
+          "tangent_frobenius_norm": 0.03293853289329902
+        },
+        {
+          "name": "model.layers.12.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.31662754436419743,
+          "tangent_frobenius_norm": 0.018418025231922996
+        },
+        {
+          "name": "model.layers.12.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 1.0317533593769226,
+          "tangent_frobenius_norm": 0.06001644432761533
+        },
+        {
+          "name": "model.layers.13.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.415336286429431,
+          "tangent_frobenius_norm": 0.024159850666251818
+        },
+        {
+          "name": "model.layers.13.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.3720887947517197,
+          "tangent_frobenius_norm": 0.021644171244680738
+        },
+        {
+          "name": "model.layers.13.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.6445623442753164,
+          "tangent_frobenius_norm": 0.03749378633025751
+        },
+        {
+          "name": "model.layers.13.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.44396593275078333,
+          "tangent_frobenius_norm": 0.025825219219091828
+        },
+        {
+          "name": "model.layers.13.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.728128014106888,
+          "tangent_frobenius_norm": 0.04235474882352572
+        },
+        {
+          "name": "model.layers.13.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5873608883789941,
+          "tangent_frobenius_norm": 0.0341664134695459
+        },
+        {
+          "name": "model.layers.13.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 1.2054898156075642,
+          "tangent_frobenius_norm": 0.07012258468600288
+        },
+        {
+          "name": "model.layers.2.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 18.969029695155026,
+          "tangent_frobenius_norm": 1.1034165329702708
+        },
+        {
+          "name": "model.layers.2.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.4193362479648686,
+          "tangent_frobenius_norm": 0.024392525904134314
+        },
+        {
+          "name": "model.layers.2.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.8905783481135915,
+          "tangent_frobenius_norm": 0.05180438276195493
+        },
+        {
+          "name": "model.layers.2.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.161751994825047,
+          "tangent_frobenius_norm": 0.009409011856697536
+        },
+        {
+          "name": "model.layers.2.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.24825855287975093,
+          "tangent_frobenius_norm": 0.01444104394694507
+        },
+        {
+          "name": "model.layers.2.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.1935551377491141,
+          "tangent_frobenius_norm": 0.011258980672989765
+        },
+        {
+          "name": "model.layers.2.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.44319959611211024,
+          "tangent_frobenius_norm": 0.025780641886984944
+        },
+        {
+          "name": "model.layers.3.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.4646172152746462,
+          "tangent_frobenius_norm": 0.027026491321654224
+        },
+        {
+          "name": "model.layers.3.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.35513870431430994,
+          "tangent_frobenius_norm": 0.02065819515627872
+        },
+        {
+          "name": "model.layers.3.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.7096626019279985,
+          "tangent_frobenius_norm": 0.04128062743583695
+        },
+        {
+          "name": "model.layers.3.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2673887093508802,
+          "tangent_frobenius_norm": 0.015553833126701128
+        },
+        {
+          "name": "model.layers.3.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.1960232325499846,
+          "tangent_frobenius_norm": 0.011402548202137253
+        },
+        {
+          "name": "model.layers.3.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.39029682681660055,
+          "tangent_frobenius_norm": 0.02270332103562245
+        },
+        {
+          "name": "model.layers.3.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.4780601941285539,
+          "tangent_frobenius_norm": 0.027808460935485592
+        },
+        {
+          "name": "model.layers.4.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.48132276296737303,
+          "tangent_frobenius_norm": 0.027998242524876902
+        },
+        {
+          "name": "model.layers.4.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.3636929136305502,
+          "tangent_frobenius_norm": 0.021155788154717033
+        },
+        {
+          "name": "model.layers.4.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.7706856659297895,
+          "tangent_frobenius_norm": 0.04483030068546017
+        },
+        {
+          "name": "model.layers.4.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.20220474716978137,
+          "tangent_frobenius_norm": 0.011762123037146698
+        },
+        {
+          "name": "model.layers.4.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2441335028446001,
+          "tangent_frobenius_norm": 0.014201092379114905
+        },
+        {
+          "name": "model.layers.4.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.20460177980452465,
+          "tangent_frobenius_norm": 0.011901556887395788
+        },
+        {
+          "name": "model.layers.4.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5773372206337469,
+          "tangent_frobenius_norm": 0.03358334317157068
+        },
+        {
+          "name": "model.layers.5.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.455467620266238,
+          "tangent_frobenius_norm": 0.026494265127370596
+        },
+        {
+          "name": "model.layers.5.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.3769760004750856,
+          "tangent_frobenius_norm": 0.02192845695275669
+        },
+        {
+          "name": "model.layers.5.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.6081261947165302,
+          "tangent_frobenius_norm": 0.035374318436730424
+        },
+        {
+          "name": "model.layers.5.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.23417008358395835,
+          "tangent_frobenius_norm": 0.01362152652993044
+        },
+        {
+          "name": "model.layers.5.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.3111479663379665,
+          "tangent_frobenius_norm": 0.0180992815898425
+        },
+        {
+          "name": "model.layers.5.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2707733521172082,
+          "tangent_frobenius_norm": 0.015750715659455117
+        },
+        {
+          "name": "model.layers.5.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.768817540088463,
+          "tangent_frobenius_norm": 0.04472163297345555
+        },
+        {
+          "name": "model.layers.6.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.5136947652563598,
+          "tangent_frobenius_norm": 0.02988130153976409
+        },
+        {
+          "name": "model.layers.6.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.43447649356197054,
+          "tangent_frobenius_norm": 0.025273224491610513
+        },
+        {
+          "name": "model.layers.6.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.7034450352942012,
+          "tangent_frobenius_norm": 0.0409189554303282
+        },
+        {
+          "name": "model.layers.6.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2945120041245927,
+          "tangent_frobenius_norm": 0.01713157817641953
+        },
+        {
+          "name": "model.layers.6.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.35775197789558294,
+          "tangent_frobenius_norm": 0.02081020763596668
+        },
+        {
+          "name": "model.layers.6.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.2863775267639746,
+          "tangent_frobenius_norm": 0.016658400698229155
+        },
+        {
+          "name": "model.layers.6.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.7281029557613441,
+          "tangent_frobenius_norm": 0.042353291194879295
+        },
+        {
+          "name": "model.layers.7.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.5367219903576756,
+          "tangent_frobenius_norm": 0.031220780756225367
+        },
+        {
+          "name": "model.layers.7.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.4631819832806137,
+          "tangent_frobenius_norm": 0.026943004747952366
+        },
+        {
+          "name": "model.layers.7.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.7594801444482732,
+          "tangent_frobenius_norm": 0.044178482529385284
+        },
+        {
+          "name": "model.layers.7.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.4246370318935117,
+          "tangent_frobenius_norm": 0.024700869179203753
+        },
+        {
+          "name": "model.layers.7.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.4481650071987503,
+          "tangent_frobenius_norm": 0.02606947671602453
+        },
+        {
+          "name": "model.layers.7.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.35193100224978274,
+          "tangent_frobenius_norm": 0.020471605119214083
+        },
+        {
+          "name": "model.layers.7.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.8755106146564409,
+          "tangent_frobenius_norm": 0.05092790201616933
+        },
+        {
+          "name": "model.layers.8.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.4749325975765234,
+          "tangent_frobenius_norm": 0.027626530619729306
+        },
+        {
+          "name": "model.layers.8.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5851843291788936,
+          "tangent_frobenius_norm": 0.034039804554725266
+        },
+        {
+          "name": "model.layers.8.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.8577234185361122,
+          "tangent_frobenius_norm": 0.04989323194897531
+        },
+        {
+          "name": "model.layers.8.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.4718666063294461,
+          "tangent_frobenius_norm": 0.02744818396380649
+        },
+        {
+          "name": "model.layers.8.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.4404650434201443,
+          "tangent_frobenius_norm": 0.025621574666216704
+        },
+        {
+          "name": "model.layers.8.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.32970389223001767,
+          "tangent_frobenius_norm": 0.01917866812436952
+        },
+        {
+          "name": "model.layers.8.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.8403567031454279,
+          "tangent_frobenius_norm": 0.04888302110922312
+        },
+        {
+          "name": "model.layers.9.mlp.down_proj.weight",
+          "shape": [
+            2048,
+            6144
+          ],
+          "raw_gradient_frobenius_norm": 0.5242110799242874,
+          "tangent_frobenius_norm": 0.030493028946651905
+        },
+        {
+          "name": "model.layers.9.mlp.gate_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.44219291045951314,
+          "tangent_frobenius_norm": 0.025722083613597905
+        },
+        {
+          "name": "model.layers.9.mlp.up_proj.weight",
+          "shape": [
+            6144,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.6246735433709746,
+          "tangent_frobenius_norm": 0.03633686724372095
+        },
+        {
+          "name": "model.layers.9.self_attn.k_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.949306849006883,
+          "tangent_frobenius_norm": 0.0552205826122682
+        },
+        {
+          "name": "model.layers.9.self_attn.o_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.5326781623826538,
+          "tangent_frobenius_norm": 0.03098555381891689
+        },
+        {
+          "name": "model.layers.9.self_attn.q_proj.weight",
+          "shape": [
+            2048,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 0.7394989951249084,
+          "tangent_frobenius_norm": 0.04301619175816579
+        },
+        {
+          "name": "model.layers.9.self_attn.v_proj.weight",
+          "shape": [
+            1024,
+            2048
+          ],
+          "raw_gradient_frobenius_norm": 1.5881287492630536,
+          "tangent_frobenius_norm": 0.09238045089192358
+        }
+      ],
+      "readout_checks": {
+        "readout_hook_verified": true,
+        "first_batch_primal_max_abs_difference": 0.0
+      }
+    }
+  ],
+  "geometry": {
+    "positions": [
+      {
+        "position": 0,
+        "response_norms": [
+          16659.99436118136,
+          16558.529341032703,
+          16595.676648784
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000009,
+            0.7565260180133816,
+            0.6162268006168494
+          ],
+          [
+            0.7565260180133816,
+            1.0,
+            0.507750914178325
+          ],
+          [
+            0.6162268006168494,
+            0.507750914178325,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.8667312453899622
+      },
+      {
+        "position": 1,
+        "response_norms": [
+          607.2177410859138,
+          432.52223149141605,
+          332.7046981844396
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000002,
+            0.9069600561493169,
+            0.7776013076664138
+          ],
+          [
+            0.9069600561493169,
+            1.0000000000000007,
+            0.6957816154324172
+          ],
+          [
+            0.7776013076664138,
+            0.6957816154324172,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9286002583635877
+      },
+      {
+        "position": 2,
+        "response_norms": [
+          575.8241808436445,
+          410.8625225511997,
+          305.5430702143149
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000007,
+            0.9249630774217683,
+            0.7879663896135383
+          ],
+          [
+            0.9249630774217683,
+            1.0000000000000007,
+            0.7161115987557891
+          ],
+          [
+            0.7879663896135383,
+            0.7161115987557891,
+            1.0
+          ]
+        ],
+        "consensus_concentration": 0.9344090308010007
+      },
+      {
+        "position": 3,
+        "response_norms": [
+          585.5363533080741,
+          419.4464451947531,
+          298.6331675925215
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9350132282428818,
+            0.7994160099844836
+          ],
+          [
+            0.9350132282428818,
+            1.0000000000000009,
+            0.7391458145637544
+          ],
+          [
+            0.7994160099844836,
+            0.7391458145637544,
+            0.9999999999999998
+          ]
+        ],
+        "consensus_concentration": 0.9396896713266708
+      },
+      {
+        "position": 4,
+        "response_norms": [
+          588.6285723563567,
+          420.28224969150574,
+          294.8241813587511
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000009,
+            0.9397697458802581,
+            0.8099954762454318
+          ],
+          [
+            0.9397697458802581,
+            1.0000000000000009,
+            0.7548552092964349
+          ],
+          [
+            0.8099954762454318,
+            0.7548552092964349,
+            0.9999999999999998
+          ]
+        ],
+        "consensus_concentration": 0.943353407492197
+      },
+      {
+        "position": 5,
+        "response_norms": [
+          593.2550032753055,
+          422.53897621434317,
+          293.9726833029646
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000007,
+            0.9450456752444669,
+            0.8199802418599749
+          ],
+          [
+            0.9450456752444669,
+            1.0000000000000009,
+            0.7704112956548923
+          ],
+          [
+            0.8199802418599749,
+            0.7704112956548923,
+            1.0
+          ]
+        ],
+        "consensus_concentration": 0.9469761480933033
+      },
+      {
+        "position": 6,
+        "response_norms": [
+          593.4415697200994,
+          421.31847885508523,
+          291.8866084200236
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9472153588005134,
+            0.8251306428501342
+          ],
+          [
+            0.9472153588005134,
+            1.0000000000000007,
+            0.7772093018657582
+          ],
+          [
+            0.8251306428501342,
+            0.7772093018657582,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.9486312131482925
+      },
+      {
+        "position": 7,
+        "response_norms": [
+          592.4045664491688,
+          421.4307001721052,
+          289.38897150091094
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.949386667683791,
+            0.8296397541172885
+          ],
+          [
+            0.949386667683791,
+            1.0000000000000007,
+            0.7836855937210991
+          ],
+          [
+            0.8296397541172885,
+            0.7836855937210991,
+            1.0000000000000007
+          ]
+        ],
+        "consensus_concentration": 0.9501709805810018
+      },
+      {
+        "position": 8,
+        "response_norms": [
+          589.9559735351656,
+          419.6782042899406,
+          287.5627996559617
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9507167124185185,
+            0.8329057860885265
+          ],
+          [
+            0.9507167124185185,
+            1.0000000000000002,
+            0.7882288701075474
+          ],
+          [
+            0.8329057860885265,
+            0.7882288701075474,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.9512391180413743
+      },
+      {
+        "position": 9,
+        "response_norms": [
+          588.9392212763203,
+          418.6616056335249,
+          286.51920414447716
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9523639852480155,
+            0.8358139489867265
+          ],
+          [
+            0.9523639852480155,
+            1.0000000000000013,
+            0.7925663445459681
+          ],
+          [
+            0.8358139489867265,
+            0.7925663445459681,
+            1.0000000000000007
+          ]
+        ],
+        "consensus_concentration": 0.9522773030747238
+      },
+      {
+        "position": 10,
+        "response_norms": [
+          586.3815616406728,
+          417.2678017977785,
+          284.5169838438566
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000007,
+            0.9538426566578722,
+            0.8407091445997857
+          ],
+          [
+            0.9538426566578722,
+            1.0,
+            0.7988904988399355
+          ],
+          [
+            0.8407091445997857,
+            0.7988904988399355,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.9537577493609852
+      },
+      {
+        "position": 11,
+        "response_norms": [
+          584.4439676396674,
+          416.124136696137,
+          282.75958197286565
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9549470894193854,
+            0.8421043677555007
+          ],
+          [
+            0.9549470894193854,
+            1.0000000000000009,
+            0.8002955384343824
+          ],
+          [
+            0.8421043677555007,
+            0.8002955384343824,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.9542125311375018
+      },
+      {
+        "position": 12,
+        "response_norms": [
+          580.7818947715823,
+          413.3408773112043,
+          279.6000443071226
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            0.9999999999999996,
+            0.9554970720713182,
+            0.8436232350529392
+          ],
+          [
+            0.9554970720713182,
+            1.0000000000000004,
+            0.8020534304919504
+          ],
+          [
+            0.8436232350529392,
+            0.8020534304919504,
+            1.0000000000000009
+          ]
+        ],
+        "consensus_concentration": 0.9546580234264471
+      },
+      {
+        "position": 13,
+        "response_norms": [
+          577.9379512497854,
+          411.81259444642956,
+          278.1522548893235
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9559758316537377,
+            0.8455012773221022
+          ],
+          [
+            0.9559758316537377,
+            1.0,
+            0.8042987683691989
+          ],
+          [
+            0.8455012773221022,
+            0.8042987683691989,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.9551935088818437
+      },
+      {
+        "position": 14,
+        "response_norms": [
+          573.8528874603999,
+          409.03227987342297,
+          275.72071063208665
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0,
+            0.9564669414455176,
+            0.8458674785363645
+          ],
+          [
+            0.9564669414455176,
+            1.0000000000000004,
+            0.8049149575422674
+          ],
+          [
+            0.8458674785363645,
+            0.8049149575422674,
+            1.0000000000000009
+          ]
+        ],
+        "consensus_concentration": 0.9553648956782198
+      },
+      {
+        "position": 15,
+        "response_norms": [
+          570.7954927239407,
+          406.9410017121175,
+          272.9694844853692
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000009,
+            0.9568089366383791,
+            0.8458530758823424
+          ],
+          [
+            0.9568089366383791,
+            1.0000000000000004,
+            0.8057001898165563
+          ],
+          [
+            0.8458530758823424,
+            0.8057001898165563,
+            1.000000000000001
+          ]
+        ],
+        "consensus_concentration": 0.9554943109705956
+      },
+      {
+        "position": 16,
+        "response_norms": [
+          568.3226970992847,
+          405.56771598837184,
+          271.2778571901247
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.000000000000001,
+            0.9575631436870558,
+            0.8465287139050673
+          ],
+          [
+            0.9575631436870558,
+            0.9999999999999999,
+            0.8073539917491815
+          ],
+          [
+            0.8465287139050673,
+            0.8073539917491815,
+            1.0000000000000009
+          ]
+        ],
+        "consensus_concentration": 0.9558528302970897
+      },
+      {
+        "position": 17,
+        "response_norms": [
+          567.8443734682655,
+          405.51975842856376,
+          270.1962800751938
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9583813646346524,
+            0.8481073817144658
+          ],
+          [
+            0.9583813646346524,
+            1.0000000000000004,
+            0.8096221367220449
+          ],
+          [
+            0.8481073817144658,
+            0.8096221367220449,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9563949536405696
+      },
+      {
+        "position": 18,
+        "response_norms": [
+          558.3931926371557,
+          399.37829815109177,
+          266.1233764027224
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000002,
+            0.9579191152328893,
+            0.8468184530344889
+          ],
+          [
+            0.9579191152328893,
+            0.9999999999999997,
+            0.8068003439061542
+          ],
+          [
+            0.8468184530344889,
+            0.8068003439061542,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9558635318883751
+      },
+      {
+        "position": 19,
+        "response_norms": [
+          557.4743588051591,
+          398.70936710014035,
+          265.7544482922409
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000009,
+            0.9581946892818707,
+            0.8482459564087017
+          ],
+          [
+            0.9581946892818707,
+            1.0000000000000004,
+            0.8071800292007563
+          ],
+          [
+            0.8482459564087017,
+            0.8071800292007563,
+            0.9999999999999998
+          ]
+        ],
+        "consensus_concentration": 0.9561056049169617
+      },
+      {
+        "position": 20,
+        "response_norms": [
+          555.4092254384082,
+          397.3666611514525,
+          264.68941858964655
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9580939629818115,
+            0.8500668069847338
+          ],
+          [
+            0.9580939629818115,
+            1.0,
+            0.8088799468661689
+          ],
+          [
+            0.8500668069847338,
+            0.8088799468661689,
+            1.0000000000000007
+          ]
+        ],
+        "consensus_concentration": 0.9565029728515937
+      },
+      {
+        "position": 21,
+        "response_norms": [
+          554.0433925021719,
+          396.7656124419632,
+          264.06302922697705
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9585437043628211,
+            0.8500533478725103
+          ],
+          [
+            0.9585437043628211,
+            1.0000000000000004,
+            0.8097999997849521
+          ],
+          [
+            0.8500533478725103,
+            0.8097999997849521,
+            1.000000000000001
+          ]
+        ],
+        "consensus_concentration": 0.9566605170557613
+      },
+      {
+        "position": 22,
+        "response_norms": [
+          551.0800328591858,
+          394.9634831597832,
+          262.48991665631127
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000007,
+            0.9586988144752229,
+            0.8506216282121386
+          ],
+          [
+            0.9586988144752229,
+            0.9999999999999998,
+            0.8105881092813902
+          ],
+          [
+            0.8506216282121386,
+            0.8105881092813902,
+            0.9999999999999999
+          ]
+        ],
+        "consensus_concentration": 0.9568360537578179
+      },
+      {
+        "position": 23,
+        "response_norms": [
+          549.060189057378,
+          392.9338009944339,
+          262.5235699756155
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000009,
+            0.9588649611923667,
+            0.8502015054989511
+          ],
+          [
+            0.9588649611923667,
+            1.0000000000000009,
+            0.8104155725512674
+          ],
+          [
+            0.8502015054989511,
+            0.8104155725512674,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9567865243433455
+      },
+      {
+        "position": 24,
+        "response_norms": [
+          541.2457899443899,
+          388.2339302783488,
+          257.2905906142014
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.000000000000001,
+            0.958568826445285,
+            0.847718004435122
+          ],
+          [
+            0.958568826445285,
+            1.0000000000000013,
+            0.8074888966129322
+          ],
+          [
+            0.847718004435122,
+            0.8074888966129322,
+            1.0000000000000009
+          ]
+        ],
+        "consensus_concentration": 0.9561236237471644
+      },
+      {
+        "position": 25,
+        "response_norms": [
+          535.4843450706948,
+          384.2551420896492,
+          255.0865773531848
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000007,
+            0.958299017876721,
+            0.8464358340201569
+          ],
+          [
+            0.958299017876721,
+            1.0000000000000004,
+            0.806198202327181
+          ],
+          [
+            0.8464358340201569,
+            0.806198202327181,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9557932196434846
+      },
+      {
+        "position": 26,
+        "response_norms": [
+          534.3944958226851,
+          383.4982805339021,
+          254.23134913997487
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000009,
+            0.9580698066028044,
+            0.8472346163493056
+          ],
+          [
+            0.9580698066028044,
+            1.0000000000000004,
+            0.8065907489923008
+          ],
+          [
+            0.8472346163493056,
+            0.8065907489923008,
+            0.9999999999999996
+          ]
+        ],
+        "consensus_concentration": 0.9559050594354617
+      },
+      {
+        "position": 27,
+        "response_norms": [
+          532.0694597165013,
+          381.6653302179044,
+          253.05469317043224
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9582226342641149,
+            0.8466026378025936
+          ],
+          [
+            0.9582226342641149,
+            1.0000000000000004,
+            0.8062365172952626
+          ],
+          [
+            0.8466026378025936,
+            0.8062365172952626,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9558081850062192
+      },
+      {
+        "position": 28,
+        "response_norms": [
+          528.3366721092116,
+          380.342398032108,
+          251.02976829750767
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9579232324145284,
+            0.8461885900308437
+          ],
+          [
+            0.9579232324145284,
+            1.0,
+            0.8063849097795985
+          ],
+          [
+            0.8461885900308437,
+            0.8063849097795985,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9557424957969671
+      },
+      {
+        "position": 29,
+        "response_norms": [
+          527.5834678962505,
+          379.33377090103136,
+          249.71083533080107
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000009,
+            0.9582650254353089,
+            0.8463435469580055
+          ],
+          [
+            0.9582650254353089,
+            1.0000000000000004,
+            0.8058289951015245
+          ],
+          [
+            0.8463435469580055,
+            0.8058289951015245,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.9557356174980657
+      },
+      {
+        "position": 30,
+        "response_norms": [
+          521.614612340451,
+          375.1095577075818,
+          246.7578219509181
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.000000000000001,
+            0.9577288225050402,
+            0.8455445729719304
+          ],
+          [
+            0.9577288225050402,
+            0.9999999999999996,
+            0.8043002030625304
+          ],
+          [
+            0.8455445729719304,
+            0.8043002030625304,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9554026025758869
+      },
+      {
+        "position": 31,
+        "response_norms": [
+          517.6713588726083,
+          372.98546717895437,
+          244.64232346974956
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000013,
+            0.9573235554323398,
+            0.8444376225168057
+          ],
+          [
+            0.9573235554323398,
+            1.0,
+            0.8021606612887885
+          ],
+          [
+            0.8444376225168057,
+            0.8021606612887885,
+            1.000000000000001
+          ]
+        ],
+        "consensus_concentration": 0.9549778169893598
+      },
+      {
+        "position": 32,
+        "response_norms": [
+          516.2291073443818,
+          371.7000824796635,
+          243.76743089723723
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000016,
+            0.9566028510461555,
+            0.8449155749938845
+          ],
+          [
+            0.9566028510461555,
+            1.0000000000000004,
+            0.8020395722843331
+          ],
+          [
+            0.8449155749938845,
+            0.8020395722843331,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9549354833733095
+      },
+      {
+        "position": 33,
+        "response_norms": [
+          511.9781609020504,
+          368.8753933825875,
+          242.21699235749404
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000007,
+            0.9560645659801453,
+            0.8443494621376582
+          ],
+          [
+            0.9560645659801453,
+            1.0000000000000004,
+            0.8009457195967451
+          ],
+          [
+            0.8443494621376582,
+            0.8009457195967451,
+            1.0000000000000009
+          ]
+        ],
+        "consensus_concentration": 0.954679672596992
+      },
+      {
+        "position": 34,
+        "response_norms": [
+          507.40922023642867,
+          365.9963258771991,
+          240.08751827785096
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9552726124649159,
+            0.8422080576447252
+          ],
+          [
+            0.9552726124649159,
+            1.0000000000000004,
+            0.7987473788519182
+          ],
+          [
+            0.8422080576447252,
+            0.7987473788519182,
+            1.0000000000000009
+          ]
+        ],
+        "consensus_concentration": 0.9540822290396334
+      },
+      {
+        "position": 35,
+        "response_norms": [
+          506.09616264682427,
+          364.7371224730225,
+          239.41949943086135
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000013,
+            0.9561230378162584,
+            0.8430150695454752
+          ],
+          [
+            0.9561230378162584,
+            1.0,
+            0.8007349660633618
+          ],
+          [
+            0.8430150695454752,
+            0.8007349660633618,
+            1.0000000000000007
+          ]
+        ],
+        "consensus_concentration": 0.954506629209864
+      },
+      {
+        "position": 36,
+        "response_norms": [
+          503.4893534413649,
+          362.60553580605176,
+          238.06608813281852
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000002,
+            0.9567140946030516,
+            0.8420029116360388
+          ],
+          [
+            0.9567140946030516,
+            1.0000000000000002,
+            0.8000830160077403
+          ],
+          [
+            0.8420029116360388,
+            0.8000830160077403,
+            1.0000000000000009
+          ]
+        ],
+        "consensus_concentration": 0.9543817105268649
+      },
+      {
+        "position": 37,
+        "response_norms": [
+          498.87704454334795,
+          359.4719062122194,
+          236.127237119355
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000002,
+            0.9568276039271668,
+            0.8404225400443324
+          ],
+          [
+            0.9568276039271668,
+            0.9999999999999999,
+            0.7976846476546535
+          ],
+          [
+            0.8404225400443324,
+            0.7976846476546535,
+            1.000000000000001
+          ]
+        ],
+        "consensus_concentration": 0.9539316061700941
+      },
+      {
+        "position": 38,
+        "response_norms": [
+          494.78276504344444,
+          356.7228242155037,
+          234.42077087656477
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.000000000000001,
+            0.9566020855200446,
+            0.8397425231351991
+          ],
+          [
+            0.9566020855200446,
+            1.0000000000000004,
+            0.7965960868146627
+          ],
+          [
+            0.8397425231351991,
+            0.7965960868146627,
+            1.000000000000001
+          ]
+        ],
+        "consensus_concentration": 0.953699311508135
+      },
+      {
+        "position": 39,
+        "response_norms": [
+          493.46962272929113,
+          356.34465896271047,
+          233.79865896183503
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9560479200745817,
+            0.8403646209911294
+          ],
+          [
+            0.9560479200745817,
+            1.0000000000000002,
+            0.7965262165960751
+          ],
+          [
+            0.8403646209911294,
+            0.7965262165960751,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9536990857430154
+      },
+      {
+        "position": 40,
+        "response_norms": [
+          491.92576654614487,
+          354.83077422335555,
+          232.62083473213875
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000007,
+            0.9558951560902942,
+            0.8401643714594915
+          ],
+          [
+            0.9558951560902942,
+            0.9999999999999998,
+            0.7967276601806056
+          ],
+          [
+            0.8401643714594915,
+            0.7967276601806056,
+            1.0
+          ]
+        ],
+        "consensus_concentration": 0.953681426861238
+      },
+      {
+        "position": 41,
+        "response_norms": [
+          490.8555880797778,
+          354.0654683494432,
+          231.83237852641537
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9555488677681304,
+            0.8402480170678807
+          ],
+          [
+            0.9555488677681304,
+            1.0000000000000002,
+            0.7969040991869707
+          ],
+          [
+            0.8402480170678807,
+            0.7969040991869707,
+            1.0000000000000013
+          ]
+        ],
+        "consensus_concentration": 0.9536713834233798
+      },
+      {
+        "position": 42,
+        "response_norms": [
+          489.7804288811846,
+          353.3896964253644,
+          231.5432925101023
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000007,
+            0.9556769702055472,
+            0.8408414073032611
+          ],
+          [
+            0.9556769702055472,
+            1.0000000000000002,
+            0.797261141048158
+          ],
+          [
+            0.8408414073032611,
+            0.797261141048158,
+            1.0
+          ]
+        ],
+        "consensus_concentration": 0.9537970339131636
+      },
+      {
+        "position": 43,
+        "response_norms": [
+          486.7713647103463,
+          351.25610775492964,
+          230.34100220621914
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000007,
+            0.9554407629298889,
+            0.8407469537888936
+          ],
+          [
+            0.9554407629298889,
+            0.9999999999999998,
+            0.7967322137229058
+          ],
+          [
+            0.8407469537888936,
+            0.7967322137229058,
+            1.0000000000000009
+          ]
+        ],
+        "consensus_concentration": 0.9536968922673363
+      },
+      {
+        "position": 44,
+        "response_norms": [
+          482.9527028776095,
+          348.7936392198783,
+          228.64838876625785
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9550847917206566,
+            0.8391002693295269
+          ],
+          [
+            0.9550847917206566,
+            1.0000000000000004,
+            0.7944757954778952
+          ],
+          [
+            0.8391002693295269,
+            0.7944757954778952,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9532005567826135
+      },
+      {
+        "position": 45,
+        "response_norms": [
+          479.1241038927866,
+          346.2595077840758,
+          226.8375560848152
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000002,
+            0.9547274563592001,
+            0.8380092104332869
+          ],
+          [
+            0.9547274563592001,
+            0.9999999999999999,
+            0.7926918321183347
+          ],
+          [
+            0.8380092104332869,
+            0.7926918321183347,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9528236981509017
+      },
+      {
+        "position": 46,
+        "response_norms": [
+          476.5491505774164,
+          344.2787803884639,
+          225.0993837538838
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000009,
+            0.9547034452562246,
+            0.8374339322513566
+          ],
+          [
+            0.9547034452562246,
+            1.0000000000000007,
+            0.792321230852247
+          ],
+          [
+            0.8374339322513566,
+            0.792321230852247,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9527105901187445
+      },
+      {
+        "position": 47,
+        "response_norms": [
+          472.92902109396766,
+          341.64936250030223,
+          223.41576751783975
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9538888843847138,
+            0.8365337754336062
+          ],
+          [
+            0.9538888843847138,
+            1.0,
+            0.7911414095427881
+          ],
+          [
+            0.8365337754336062,
+            0.7911414095427881,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9523729509156602
+      },
+      {
+        "position": 48,
+        "response_norms": [
+          470.40228245487145,
+          340.0141823139881,
+          221.81439084826292
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9535487746318507,
+            0.8357450697820871
+          ],
+          [
+            0.9535487746318507,
+            1.0000000000000002,
+            0.7907750536503357
+          ],
+          [
+            0.8357450697820871,
+            0.7907750536503357,
+            1.0000000000000007
+          ]
+        ],
+        "consensus_concentration": 0.9521984968207082
+      },
+      {
+        "position": 49,
+        "response_norms": [
+          469.5809523402052,
+          339.45814579749094,
+          221.51619519490674
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000009,
+            0.9535131800514147,
+            0.8363850154743946
+          ],
+          [
+            0.9535131800514147,
+            1.0,
+            0.7904205484161104
+          ],
+          [
+            0.8363850154743946,
+            0.7904205484161104,
+            1.0000000000000007
+          ]
+        ],
+        "consensus_concentration": 0.9522276506454538
+      },
+      {
+        "position": 50,
+        "response_norms": [
+          467.72808728511643,
+          338.2834817423844,
+          220.64444984906018
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000009,
+            0.9531799386582053,
+            0.8362689696645259
+          ],
+          [
+            0.9531799386582053,
+            1.0000000000000004,
+            0.7911476723329212
+          ],
+          [
+            0.8362689696645259,
+            0.7911476723329212,
+            1.0000000000000007
+          ]
+        ],
+        "consensus_concentration": 0.9522600695953288
+      },
+      {
+        "position": 51,
+        "response_norms": [
+          464.46763301938853,
+          336.08668611192894,
+          219.53313801377723
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000009,
+            0.9520363347456873,
+            0.8350672399697555
+          ],
+          [
+            0.9520363347456873,
+            1.0,
+            0.7898876707944541
+          ],
+          [
+            0.8350672399697555,
+            0.7898876707944541,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9518393008054223
+      },
+      {
+        "position": 52,
+        "response_norms": [
+          463.81438625745574,
+          335.60364687107665,
+          218.8084927930526
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9521801898256252,
+            0.8350106409083111
+          ],
+          [
+            0.9521801898256252,
+            0.9999999999999994,
+            0.7895853550250375
+          ],
+          [
+            0.8350106409083111,
+            0.7895853550250375,
+            1.0000000000000007
+          ]
+        ],
+        "consensus_concentration": 0.9518141958922415
+      },
+      {
+        "position": 53,
+        "response_norms": [
+          462.1841029324285,
+          334.75544272938714,
+          218.14554084601474
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000013,
+            0.9523987369604967,
+            0.8340229534201353
+          ],
+          [
+            0.9523987369604967,
+            1.0000000000000009,
+            0.7902823449936114
+          ],
+          [
+            0.8340229534201353,
+            0.7902823449936114,
+            1.0
+          ]
+        ],
+        "consensus_concentration": 0.9518057732978749
+      },
+      {
+        "position": 54,
+        "response_norms": [
+          459.96685479765415,
+          333.4221228021405,
+          217.18426715199433
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000002,
+            0.952270189527396,
+            0.8326317412734772
+          ],
+          [
+            0.952270189527396,
+            1.0000000000000007,
+            0.7887401798116689
+          ],
+          [
+            0.8326317412734772,
+            0.7887401798116689,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.9514482657288006
+      },
+      {
+        "position": 55,
+        "response_norms": [
+          455.7328120380347,
+          330.55119312469657,
+          215.36039176302398
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000009,
+            0.9524535540951055,
+            0.831405429036056
+          ],
+          [
+            0.9524535540951055,
+            0.9999999999999998,
+            0.7877595524501206
+          ],
+          [
+            0.831405429036056,
+            0.7877595524501206,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.951211921192151
+      },
+      {
+        "position": 56,
+        "response_norms": [
+          454.64226744109015,
+          330.3789641871738,
+          215.08116080953178
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9528928191472774,
+            0.8308937789707314
+          ],
+          [
+            0.9528928191472774,
+            0.9999999999999996,
+            0.7871010041175366
+          ],
+          [
+            0.8308937789707314,
+            0.7871010041175366,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.9511265370000339
+      },
+      {
+        "position": 57,
+        "response_norms": [
+          450.66083720492935,
+          327.9270070174696,
+          213.48080467290617
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.952238557911453,
+            0.8296679116992554
+          ],
+          [
+            0.952238557911453,
+            0.9999999999999998,
+            0.785016865556555
+          ],
+          [
+            0.8296679116992554,
+            0.785016865556555,
+            0.9999999999999998
+          ]
+        ],
+        "consensus_concentration": 0.9506633163998077
+      },
+      {
+        "position": 58,
+        "response_norms": [
+          449.2830850923736,
+          327.0222789478385,
+          212.98287750240868
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000009,
+            0.9522459111032272,
+            0.8292226207040743
+          ],
+          [
+            0.9522459111032272,
+            1.0000000000000002,
+            0.7846967840156427
+          ],
+          [
+            0.8292226207040743,
+            0.7846967840156427,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9505747168976769
+      },
+      {
+        "position": 59,
+        "response_norms": [
+          449.6070187579397,
+          327.56712128835755,
+          213.0586033518275
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            0.9999999999999998,
+            0.9520033699301105,
+            0.8303147679423513
+          ],
+          [
+            0.9520033699301105,
+            1.0,
+            0.7859878426454178
+          ],
+          [
+            0.8303147679423513,
+            0.7859878426454178,
+            1.0
+          ]
+        ],
+        "consensus_concentration": 0.9508249027400575
+      },
+      {
+        "position": 60,
+        "response_norms": [
+          447.8251754556362,
+          325.8358240076743,
+          211.93309120757127
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            0.9999999999999998,
+            0.9519329751752781,
+            0.8301174466051732
+          ],
+          [
+            0.9519329751752781,
+            0.9999999999999999,
+            0.7854691183625897
+          ],
+          [
+            0.8301174466051732,
+            0.7854691183625897,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9507329967677036
+      },
+      {
+        "position": 61,
+        "response_norms": [
+          446.1135069602282,
+          324.59551702343833,
+          211.02844467605735
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0,
+            0.9519639078795215,
+            0.8289021683571947
+          ],
+          [
+            0.9519639078795215,
+            1.0,
+            0.7843842189356869
+          ],
+          [
+            0.8289021683571947,
+            0.7843842189356869,
+            1.0000000000000009
+          ]
+        ],
+        "consensus_concentration": 0.9504677556249641
+      },
+      {
+        "position": 62,
+        "response_norms": [
+          443.0747342371304,
+          322.41719753850407,
+          209.65327024200997
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0,
+            0.9515580491875877,
+            0.8275571718067593
+          ],
+          [
+            0.9515580491875877,
+            1.0000000000000002,
+            0.7830988423619526
+          ],
+          [
+            0.8275571718067593,
+            0.7830988423619526,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.9501127492573709
+      },
+      {
+        "position": 63,
+        "response_norms": [
+          441.01930618153835,
+          320.58493886427846,
+          208.59851493206563
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000002,
+            0.9512586312850303,
+            0.8265090357429858
+          ],
+          [
+            0.9512586312850303,
+            0.9999999999999999,
+            0.7826970019240486
+          ],
+          [
+            0.8265090357429858,
+            0.7826970019240486,
+            1.0
+          ]
+        ],
+        "consensus_concentration": 0.9499081439746412
+      },
+      {
+        "position": 64,
+        "response_norms": [
+          437.9714921077386,
+          318.7045863379499,
+          207.3204756612359
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000007,
+            0.9504934572301073,
+            0.8248894904681483
+          ],
+          [
+            0.9504934572301073,
+            1.0,
+            0.7804759158749766
+          ],
+          [
+            0.8248894904681483,
+            0.7804759158749766,
+            1.0
+          ]
+        ],
+        "consensus_concentration": 0.949369248334356
+      },
+      {
+        "position": 65,
+        "response_norms": [
+          437.15220212247215,
+          318.00889731805427,
+          206.628070753292
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000013,
+            0.9507404001772307,
+            0.8249954244084059
+          ],
+          [
+            0.9507404001772307,
+            1.0000000000000002,
+            0.7820893682456278
+          ],
+          [
+            0.8249954244084059,
+            0.7820893682456278,
+            1.0
+          ]
+        ],
+        "consensus_concentration": 0.9495993532749911
+      },
+      {
+        "position": 66,
+        "response_norms": [
+          435.5465697810066,
+          316.72041842426694,
+          205.8714201545798
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9506562965154841,
+            0.8238725407793378
+          ],
+          [
+            0.9506562965154841,
+            1.0000000000000004,
+            0.7812536280832981
+          ],
+          [
+            0.8238725407793378,
+            0.7812536280832981,
+            1.0000000000000009
+          ]
+        ],
+        "consensus_concentration": 0.9493603068941997
+      },
+      {
+        "position": 67,
+        "response_norms": [
+          435.0195947277384,
+          315.998017958816,
+          205.60390276124292
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000007,
+            0.9511559570443011,
+            0.824460905559609
+          ],
+          [
+            0.9511559570443011,
+            1.0000000000000004,
+            0.7824594808833976
+          ],
+          [
+            0.824460905559609,
+            0.7824594808833976,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9496287395594026
+      },
+      {
+        "position": 68,
+        "response_norms": [
+          434.11403886153346,
+          315.4074407287546,
+          205.29672294438387
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9513229811278794,
+            0.8243952822186087
+          ],
+          [
+            0.9513229811278794,
+            1.0000000000000004,
+            0.7817135595229885
+          ],
+          [
+            0.8243952822186087,
+            0.7817135595229885,
+            1.0000000000000007
+          ]
+        ],
+        "consensus_concentration": 0.9495533245654074
+      },
+      {
+        "position": 69,
+        "response_norms": [
+          429.6742262715251,
+          312.58043159595337,
+          203.44450017430862
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            0.9999999999999999,
+            0.9509904020521069,
+            0.8226303620761097
+          ],
+          [
+            0.9509904020521069,
+            1.0000000000000002,
+            0.779017370510408
+          ],
+          [
+            0.8226303620761097,
+            0.779017370510408,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9489922297584509
+      },
+      {
+        "position": 70,
+        "response_norms": [
+          429.44572160179797,
+          312.865974677163,
+          203.349631175528
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0,
+            0.9504701472245708,
+            0.8237051757338544
+          ],
+          [
+            0.9504701472245708,
+            1.0000000000000004,
+            0.7794895479084398
+          ],
+          [
+            0.8237051757338544,
+            0.7794895479084398,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.9491124357778653
+      },
+      {
+        "position": 71,
+        "response_norms": [
+          427.27219246482053,
+          311.5326078429032,
+          202.28019771784452
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000002,
+            0.9498285279314539,
+            0.8234920063882722
+          ],
+          [
+            0.9498285279314539,
+            1.0,
+            0.7786899160211174
+          ],
+          [
+            0.8234920063882722,
+            0.7786899160211174,
+            1.0000000000000009
+          ]
+        ],
+        "consensus_concentration": 0.9489187355840382
+      },
+      {
+        "position": 72,
+        "response_norms": [
+          425.8731555226709,
+          310.1061821226016,
+          201.62478421779468
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9493966748135698,
+            0.8227043370724555
+          ],
+          [
+            0.9493966748135698,
+            1.0000000000000007,
+            0.7787426558344852
+          ],
+          [
+            0.8227043370724555,
+            0.7787426558344852,
+            1.0000000000000009
+          ]
+        ],
+        "consensus_concentration": 0.9487821044453091
+      },
+      {
+        "position": 73,
+        "response_norms": [
+          424.3649249387874,
+          308.8293009324097,
+          200.82542301819376
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000002,
+            0.9491760099301159,
+            0.8220997861264315
+          ],
+          [
+            0.9491760099301159,
+            1.0,
+            0.777791276703264
+          ],
+          [
+            0.8220997861264315,
+            0.777791276703264,
+            0.9999999999999998
+          ]
+        ],
+        "consensus_concentration": 0.9485740260177452
+      },
+      {
+        "position": 74,
+        "response_norms": [
+          422.47687622057225,
+          307.91883541963296,
+          199.69844241910135
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000007,
+            0.9491575431948169,
+            0.8213513251795459
+          ],
+          [
+            0.9491575431948169,
+            1.0000000000000002,
+            0.7773059088201402
+          ],
+          [
+            0.8213513251795459,
+            0.7773059088201402,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9484273271748933
+      },
+      {
+        "position": 75,
+        "response_norms": [
+          421.0971056023375,
+          306.72303895166334,
+          199.1818547268524
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0,
+            0.9493766323577671,
+            0.82141210295342
+          ],
+          [
+            0.9493766323577671,
+            1.0000000000000004,
+            0.7770551083123355
+          ],
+          [
+            0.82141210295342,
+            0.7770551083123355,
+            1.0000000000000007
+          ]
+        ],
+        "consensus_concentration": 0.9484307323882755
+      },
+      {
+        "position": 76,
+        "response_norms": [
+          419.3900218693109,
+          305.86907731740365,
+          198.04843183563784
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9490148799506595,
+            0.820091703497027
+          ],
+          [
+            0.9490148799506595,
+            1.0000000000000007,
+            0.7750692878721375
+          ],
+          [
+            0.820091703497027,
+            0.7750692878721375,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9480009225639939
+      },
+      {
+        "position": 77,
+        "response_norms": [
+          416.44268384897043,
+          303.8008789615286,
+          196.87440723249043
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000007,
+            0.9480698216115373,
+            0.8184367269431125
+          ],
+          [
+            0.9480698216115373,
+            1.0000000000000004,
+            0.7720620411071986
+          ],
+          [
+            0.8184367269431125,
+            0.7720620411071986,
+            1.0
+          ]
+        ],
+        "consensus_concentration": 0.947343489232666
+      },
+      {
+        "position": 78,
+        "response_norms": [
+          417.37915890897426,
+          304.77213622837814,
+          196.55611317245655
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000002,
+            0.9486887481436413,
+            0.8191493801445243
+          ],
+          [
+            0.9486887481436413,
+            1.0,
+            0.7740268753129278
+          ],
+          [
+            0.8191493801445243,
+            0.7740268753129278,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.9477300369949582
+      },
+      {
+        "position": 79,
+        "response_norms": [
+          413.5627636219557,
+          301.56642830572355,
+          195.33605345733815
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9472861727215349,
+            0.8164960112426309
+          ],
+          [
+            0.9472861727215349,
+            1.0000000000000004,
+            0.7700073716513312
+          ],
+          [
+            0.8164960112426309,
+            0.7700073716513312,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9467828045680098
+      },
+      {
+        "position": 80,
+        "response_norms": [
+          412.58177900901654,
+          301.0790040329776,
+          194.8204131409878
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0,
+            0.9473061840140277,
+            0.816453647613952
+          ],
+          [
+            0.9473061840140277,
+            1.0000000000000009,
+            0.7716725831657966
+          ],
+          [
+            0.816453647613952,
+            0.7716725831657966,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9469755851356788
+      },
+      {
+        "position": 81,
+        "response_norms": [
+          410.404729286421,
+          299.93452256441725,
+          193.98997499415185
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9472465473619183,
+            0.8148842898606325
+          ],
+          [
+            0.9472465473619183,
+            1.0000000000000004,
+            0.7696096373606109
+          ],
+          [
+            0.8148842898606325,
+            0.7696096373606109,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9465423010542884
+      },
+      {
+        "position": 82,
+        "response_norms": [
+          409.17467458902894,
+          298.7965308332919,
+          193.53272404890888
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.947187161075956,
+            0.8146323484991163
+          ],
+          [
+            0.947187161075956,
+            0.9999999999999999,
+            0.7697300732433549
+          ],
+          [
+            0.8146323484991163,
+            0.7697300732433549,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.9465198927085384
+      },
+      {
+        "position": 83,
+        "response_norms": [
+          407.6616677208318,
+          297.7838396119437,
+          193.23021438402017
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0,
+            0.9475118008631809,
+            0.8142988284749397
+          ],
+          [
+            0.9475118008631809,
+            0.9999999999999997,
+            0.7694232090894997
+          ],
+          [
+            0.8142988284749397,
+            0.7694232090894997,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.9464828270353376
+      },
+      {
+        "position": 84,
+        "response_norms": [
+          406.6678754829234,
+          297.31145648914776,
+          192.8599124777181
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9470652693297908,
+            0.8137412414449772
+          ],
+          [
+            0.9470652693297908,
+            1.0000000000000002,
+            0.7684924880184504
+          ],
+          [
+            0.8137412414449772,
+            0.7684924880184504,
+            1.0
+          ]
+        ],
+        "consensus_concentration": 0.9462556618111216
+      },
+      {
+        "position": 85,
+        "response_norms": [
+          404.87087846461117,
+          295.4446840574545,
+          191.77243747861965
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000002,
+            0.9471847881459736,
+            0.8120993210526175
+          ],
+          [
+            0.9471847881459736,
+            1.0000000000000007,
+            0.7674530231463025
+          ],
+          [
+            0.8120993210526175,
+            0.7674530231463025,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.9459547948260638
+      },
+      {
+        "position": 86,
+        "response_norms": [
+          403.162286449207,
+          294.56307894044886,
+          191.08834423929196
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000009,
+            0.947294757399429,
+            0.8114241977680556
+          ],
+          [
+            0.947294757399429,
+            1.0000000000000002,
+            0.7662606101038483
+          ],
+          [
+            0.8114241977680556,
+            0.7662606101038483,
+            1.0
+          ]
+        ],
+        "consensus_concentration": 0.9457483298391963
+      },
+      {
+        "position": 87,
+        "response_norms": [
+          401.6104699986703,
+          293.91572569457674,
+          190.17602731220484
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000007,
+            0.9473629384991608,
+            0.8108333368245916
+          ],
+          [
+            0.9473629384991608,
+            1.000000000000001,
+            0.7654616886069946
+          ],
+          [
+            0.8108333368245916,
+            0.7654616886069946,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9455930489416856
+      },
+      {
+        "position": 88,
+        "response_norms": [
+          400.26218798001605,
+          293.2446894442417,
+          189.5042342109475
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9468582421620333,
+            0.8115559749976577
+          ],
+          [
+            0.9468582421620333,
+            1.0000000000000009,
+            0.7654565681016807
+          ],
+          [
+            0.8115559749976577,
+            0.7654565681016807,
+            1.0000000000000009
+          ]
+        ],
+        "consensus_concentration": 0.9456180560013965
+      },
+      {
+        "position": 89,
+        "response_norms": [
+          399.0117181207447,
+          292.7236327793987,
+          189.02859609202372
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0,
+            0.9456244818122616,
+            0.8118261932899924
+          ],
+          [
+            0.9456244818122616,
+            1.0000000000000007,
+            0.7642274180405676
+          ],
+          [
+            0.8118261932899924,
+            0.7642274180405676,
+            1.0
+          ]
+        ],
+        "consensus_concentration": 0.9453603772745219
+      },
+      {
+        "position": 90,
+        "response_norms": [
+          398.70052716949755,
+          292.25637905481545,
+          188.89853600380653
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            0.9999999999999999,
+            0.9454364929783444,
+            0.8117220094719897
+          ],
+          [
+            0.9454364929783444,
+            1.0000000000000007,
+            0.7642155909068602
+          ],
+          [
+            0.8117220094719897,
+            0.7642155909068602,
+            0.9999999999999998
+          ]
+        ],
+        "consensus_concentration": 0.9453246465700076
+      },
+      {
+        "position": 91,
+        "response_norms": [
+          397.8168173101133,
+          291.03043930796315,
+          188.4639760790555
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0,
+            0.9452318086301468,
+            0.8118704098417494
+          ],
+          [
+            0.9452318086301468,
+            1.0000000000000007,
+            0.765327129932382
+          ],
+          [
+            0.8118704098417494,
+            0.765327129932382,
+            1.0
+          ]
+        ],
+        "consensus_concentration": 0.9454486704915736
+      },
+      {
+        "position": 92,
+        "response_norms": [
+          396.687672024739,
+          290.0990156183952,
+          187.9254158500669
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9447465930432242,
+            0.8115004246227413
+          ],
+          [
+            0.9447465930432242,
+            0.9999999999999992,
+            0.7647199018651463
+          ],
+          [
+            0.8115004246227413,
+            0.7647199018651463,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9452767871582626
+      },
+      {
+        "position": 93,
+        "response_norms": [
+          395.187786688103,
+          289.35460096706646,
+          187.23008041676354
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000002,
+            0.9445243608373355,
+            0.810402893747738
+          ],
+          [
+            0.9445243608373355,
+            1.0000000000000004,
+            0.7632861127226911
+          ],
+          [
+            0.810402893747738,
+            0.7632861127226911,
+            0.9999999999999998
+          ]
+        ],
+        "consensus_concentration": 0.9449530696527577
+      },
+      {
+        "position": 94,
+        "response_norms": [
+          394.17841720735714,
+          288.85361317215256,
+          186.65261855121224
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0,
+            0.9446110324938919,
+            0.8095643644816088
+          ],
+          [
+            0.9446110324938919,
+            1.0000000000000007,
+            0.763171430268778
+          ],
+          [
+            0.8095643644816088,
+            0.763171430268778,
+            1.0000000000000009
+          ]
+        ],
+        "consensus_concentration": 0.9448511731418962
+      },
+      {
+        "position": 95,
+        "response_norms": [
+          392.86406918898194,
+          288.0794639927903,
+          186.38530191850754
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9441648758576568,
+            0.808677294613728
+          ],
+          [
+            0.9441648758576568,
+            1.0000000000000004,
+            0.7619100498351625
+          ],
+          [
+            0.808677294613728,
+            0.7619100498351625,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9445460073856233
+      },
+      {
+        "position": 96,
+        "response_norms": [
+          391.7873300039502,
+          287.4963193172237,
+          185.72516673807567
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            0.9999999999999994,
+            0.943109157975802,
+            0.8081461246800434
+          ],
+          [
+            0.943109157975802,
+            1.0,
+            0.7609279339851666
+          ],
+          [
+            0.8081461246800434,
+            0.7609279339851666,
+            1.0000000000000009
+          ]
+        ],
+        "consensus_concentration": 0.9442437557986122
+      },
+      {
+        "position": 97,
+        "response_norms": [
+          391.2362190969683,
+          286.7516684910194,
+          185.1534415560228
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9431745729840872,
+            0.8083223864945858
+          ],
+          [
+            0.9431745729840872,
+            1.0000000000000009,
+            0.7626154801231102
+          ],
+          [
+            0.8083223864945858,
+            0.7626154801231102,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9444707441621334
+      },
+      {
+        "position": 98,
+        "response_norms": [
+          390.6320832021951,
+          286.1450121682424,
+          184.6649414355943
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            0.9999999999999999,
+            0.9428565835099008,
+            0.8074807145016422
+          ],
+          [
+            0.9428565835099008,
+            1.0000000000000004,
+            0.7618213318733218
+          ],
+          [
+            0.8074807145016422,
+            0.7618213318733218,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.9442408626198514
+      },
+      {
+        "position": 99,
+        "response_norms": [
+          388.74738063118974,
+          284.83409398837796,
+          183.88958032046716
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            0.9999999999999998,
+            0.9430053598430425,
+            0.806678553369274
+          ],
+          [
+            0.9430053598430425,
+            1.0000000000000013,
+            0.7613178712161118
+          ],
+          [
+            0.806678553369274,
+            0.7613178712161118,
+            0.9999999999999998
+          ]
+        ],
+        "consensus_concentration": 0.9441047239967525
+      },
+      {
+        "position": 100,
+        "response_norms": [
+          387.7130166247519,
+          283.9298344909402,
+          183.33679460035805
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000002,
+            0.9430668479212183,
+            0.8057364243352202
+          ],
+          [
+            0.9430668479212183,
+            1.0000000000000002,
+            0.7606963066712975
+          ],
+          [
+            0.8057364243352202,
+            0.7606963066712975,
+            0.9999999999999998
+          ]
+        ],
+        "consensus_concentration": 0.9439279137881165
+      },
+      {
+        "position": 101,
+        "response_norms": [
+          387.18273479685604,
+          284.101677173628,
+          183.12147252622825
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000009,
+            0.9430031425769374,
+            0.8056610872892365
+          ],
+          [
+            0.9430031425769374,
+            1.0000000000000004,
+            0.7602675565166255
+          ],
+          [
+            0.8056610872892365,
+            0.7602675565166255,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9438610757454137
+      },
+      {
+        "position": 102,
+        "response_norms": [
+          386.96159643248546,
+          283.70615674187087,
+          182.9893864995867
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9431813626306378,
+            0.8059726654547126
+          ],
+          [
+            0.9431813626306378,
+            1.0000000000000002,
+            0.760885808015562
+          ],
+          [
+            0.8059726654547126,
+            0.760885808015562,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.9439915060941918
+      },
+      {
+        "position": 103,
+        "response_norms": [
+          386.6315683818588,
+          283.85898374217743,
+          182.83721613671204
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9431500437357596,
+            0.8062029746712438
+          ],
+          [
+            0.9431500437357596,
+            1.0000000000000004,
+            0.762132554158415
+          ],
+          [
+            0.8062029746712438,
+            0.762132554158415,
+            1.0000000000000007
+          ]
+        ],
+        "consensus_concentration": 0.9441616590117768
+      },
+      {
+        "position": 104,
+        "response_norms": [
+          385.33899210324273,
+          282.93019198638535,
+          182.08268830082957
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9432436916347633,
+            0.8050476959735222
+          ],
+          [
+            0.9432436916347633,
+            1.0000000000000009,
+            0.7619876650585139
+          ],
+          [
+            0.8050476959735222,
+            0.7619876650585139,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.9440196623030923
+      },
+      {
+        "position": 105,
+        "response_norms": [
+          384.4605845480354,
+          282.3824690003078,
+          181.8457328585516
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0,
+            0.9440610575463186,
+            0.8056544754959283
+          ],
+          [
+            0.9440610575463186,
+            1.0000000000000009,
+            0.7622289782553854
+          ],
+          [
+            0.8056544754959283,
+            0.7622289782553854,
+            1.0
+          ]
+        ],
+        "consensus_concentration": 0.9442156664305075
+      },
+      {
+        "position": 106,
+        "response_norms": [
+          382.6900278228137,
+          281.64483731652325,
+          181.04065895628375
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9441651810057817,
+            0.8043673794789885
+          ],
+          [
+            0.9441651810057817,
+            1.0000000000000004,
+            0.7606833808102802
+          ],
+          [
+            0.8043673794789885,
+            0.7606833808102802,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.9438945258043108
+      },
+      {
+        "position": 107,
+        "response_norms": [
+          380.4327596080767,
+          279.90529595106466,
+          180.24457264198773
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000007,
+            0.9437905858660257,
+            0.803407205309459
+          ],
+          [
+            0.9437905858660257,
+            1.0000000000000007,
+            0.7584657088454181
+          ],
+          [
+            0.803407205309459,
+            0.7584657088454181,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9434762553711089
+      },
+      {
+        "position": 108,
+        "response_norms": [
+          379.73251026450436,
+          279.59085762840147,
+          179.88234072906755
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            0.9999999999999996,
+            0.9432761976130712,
+            0.80442701884869
+          ],
+          [
+            0.9432761976130712,
+            1.0000000000000004,
+            0.7589722144072008
+          ],
+          [
+            0.80442701884869,
+            0.7589722144072008,
+            1.0
+          ]
+        ],
+        "consensus_concentration": 0.9435954207025806
+      },
+      {
+        "position": 109,
+        "response_norms": [
+          379.93104764983286,
+          279.4608634583258,
+          179.83656418380457
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            0.9999999999999998,
+            0.9429392714236183,
+            0.8047109430915655
+          ],
+          [
+            0.9429392714236183,
+            1.0000000000000004,
+            0.759381076364792
+          ],
+          [
+            0.8047109430915655,
+            0.759381076364792,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9436373233257194
+      },
+      {
+        "position": 110,
+        "response_norms": [
+          378.2004321552871,
+          277.86979306722674,
+          178.994918230619
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0,
+            0.9421684147209747,
+            0.8027609583045283
+          ],
+          [
+            0.9421684147209747,
+            1.0000000000000004,
+            0.758647433150069
+          ],
+          [
+            0.8027609583045283,
+            0.758647433150069,
+            0.9999999999999998
+          ]
+        ],
+        "consensus_concentration": 0.9432304780411216
+      },
+      {
+        "position": 111,
+        "response_norms": [
+          377.04169951502604,
+          276.84521615159406,
+          179.0073788345923
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            0.9999999999999998,
+            0.9416569924297431,
+            0.8024222679587503
+          ],
+          [
+            0.9416569924297431,
+            1.0000000000000002,
+            0.7592786325026377
+          ],
+          [
+            0.8024222679587503,
+            0.7592786325026377,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9432046900377143
+      },
+      {
+        "position": 112,
+        "response_norms": [
+          376.8269888682287,
+          276.708260689366,
+          178.7664269528156
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0,
+            0.942234546108792,
+            0.8021260983235847
+          ],
+          [
+            0.942234546108792,
+            1.0000000000000004,
+            0.7594743574591769
+          ],
+          [
+            0.8021260983235847,
+            0.7594743574591769,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.943260892612143
+      },
+      {
+        "position": 113,
+        "response_norms": [
+          376.02135831233034,
+          276.348300606025,
+          178.53966683417792
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000002,
+            0.9420396474110204,
+            0.8025242819560491
+          ],
+          [
+            0.9420396474110204,
+            1.0000000000000007,
+            0.7598579866262019
+          ],
+          [
+            0.8025242819560491,
+            0.7598579866262019,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9433300254351037
+      },
+      {
+        "position": 114,
+        "response_norms": [
+          376.0979391671463,
+          275.94305181153914,
+          178.56154720608833
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000009,
+            0.9423266418928147,
+            0.8038524425230732
+          ],
+          [
+            0.9423266418928147,
+            1.0000000000000009,
+            0.7605642107225578
+          ],
+          [
+            0.8038524425230732,
+            0.7605642107225578,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.9436034118842804
+      },
+      {
+        "position": 115,
+        "response_norms": [
+          375.97489360649837,
+          276.0724654729917,
+          178.33132590559848
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000002,
+            0.9429203850258754,
+            0.8035718971390499
+          ],
+          [
+            0.9429203850258754,
+            1.0000000000000004,
+            0.760506720729389
+          ],
+          [
+            0.8035718971390499,
+            0.760506720729389,
+            1.0000000000000009
+          ]
+        ],
+        "consensus_concentration": 0.9436335214824679
+      },
+      {
+        "position": 116,
+        "response_norms": [
+          374.80012026023974,
+          275.1707339216554,
+          177.6258517512027
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            0.9999999999999996,
+            0.9425455894650567,
+            0.8026865189938065
+          ],
+          [
+            0.9425455894650567,
+            1.0000000000000013,
+            0.7587335567064031
+          ],
+          [
+            0.8026865189938065,
+            0.7587335567064031,
+            1.0000000000000009
+          ]
+        ],
+        "consensus_concentration": 0.9432762839245475
+      },
+      {
+        "position": 117,
+        "response_norms": [
+          373.3385473948604,
+          274.2840537493401,
+          176.92067323667723
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9417276513630604,
+            0.8006705361081197
+          ],
+          [
+            0.9417276513630604,
+            1.0,
+            0.7561486320626066
+          ],
+          [
+            0.8006705361081197,
+            0.7561486320626066,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.942637767064527
+      },
+      {
+        "position": 118,
+        "response_norms": [
+          372.06804582544447,
+          273.3013400004217,
+          176.48030178128255
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            0.9999999999999997,
+            0.9415383685934232,
+            0.8004757280330799
+          ],
+          [
+            0.9415383685934232,
+            1.0000000000000004,
+            0.7566831239561335
+          ],
+          [
+            0.8004757280330799,
+            0.7566831239561335,
+            1.0000000000000007
+          ]
+        ],
+        "consensus_concentration": 0.942655495051982
+      },
+      {
+        "position": 119,
+        "response_norms": [
+          371.75709791138837,
+          273.1639337428929,
+          176.30400485425756
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            0.9999999999999996,
+            0.9415441871973406,
+            0.8010955070453606
+          ],
+          [
+            0.9415441871973406,
+            1.0000000000000009,
+            0.7576361046560838
+          ],
+          [
+            0.8010955070453606,
+            0.7576361046560838,
+            1.0000000000000009
+          ]
+        ],
+        "consensus_concentration": 0.94284154423374
+      },
+      {
+        "position": 120,
+        "response_norms": [
+          370.4461236156853,
+          272.359015130766,
+          175.90742668301942
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.940580404323025,
+            0.8003481620979949
+          ],
+          [
+            0.940580404323025,
+            1.0000000000000002,
+            0.7559443893820996
+          ],
+          [
+            0.8003481620979949,
+            0.7559443893820996,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9424404438363578
+      },
+      {
+        "position": 121,
+        "response_norms": [
+          370.2396616403535,
+          271.98811362925437,
+          175.54645895130292
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0,
+            0.9400483070240381,
+            0.7999977598803767
+          ],
+          [
+            0.9400483070240381,
+            1.0000000000000004,
+            0.7552626755683438
+          ],
+          [
+            0.7999977598803767,
+            0.7552626755683438,
+            1.0000000000000007
+          ]
+        ],
+        "consensus_concentration": 0.9422560093818289
+      },
+      {
+        "position": 122,
+        "response_norms": [
+          370.2474014376592,
+          271.9239375757128,
+          175.27085916108794
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000002,
+            0.9393666002925609,
+            0.8003081285295237
+          ],
+          [
+            0.9393666002925609,
+            1.0000000000000009,
+            0.755756029040247
+          ],
+          [
+            0.8003081285295237,
+            0.755756029040247,
+            1.0000000000000007
+          ]
+        ],
+        "consensus_concentration": 0.9422703973632968
+      },
+      {
+        "position": 123,
+        "response_norms": [
+          369.8522793629475,
+          271.41021215991947,
+          174.83603227377807
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9402040070002561,
+            0.7996633607303216
+          ],
+          [
+            0.9402040070002561,
+            1.0000000000000004,
+            0.7564582353508911
+          ],
+          [
+            0.7996633607303216,
+            0.7564582353508911,
+            1.0000000000000002
+          ]
+        ],
+        "consensus_concentration": 0.9423759102610414
+      },
+      {
+        "position": 124,
+        "response_norms": [
+          366.7437755537201,
+          268.8170452805488,
+          173.54549798214057
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9397386418709477,
+            0.7971325573784227
+          ],
+          [
+            0.9397386418709477,
+            1.0000000000000004,
+            0.7540466448767965
+          ],
+          [
+            0.7971325573784227,
+            0.7540466448767965,
+            1.0000000000000009
+          ]
+        ],
+        "consensus_concentration": 0.9417380909934765
+      },
+      {
+        "position": 125,
+        "response_norms": [
+          367.0295186626467,
+          269.73268477133433,
+          173.589815505616
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000002,
+            0.9407534374077872,
+            0.7976196581270243
+          ],
+          [
+            0.9407534374077872,
+            1.0000000000000013,
+            0.7543327521642298
+          ],
+          [
+            0.7976196581270243,
+            0.7543327521642298,
+            0.9999999999999998
+          ]
+        ],
+        "consensus_concentration": 0.9419490252425247
+      },
+      {
+        "position": 126,
+        "response_norms": [
+          365.9473052210942,
+          269.17678946977634,
+          173.06010640832955
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            0.9999999999999993,
+            0.9406898091967204,
+            0.7976631891789316
+          ],
+          [
+            0.9406898091967204,
+            1.0,
+            0.7539034778109499
+          ],
+          [
+            0.7976631891789316,
+            0.7539034778109499,
+            1.0000000000000004
+          ]
+        ],
+        "consensus_concentration": 0.9418960164578916
+      },
+      {
+        "position": 127,
+        "response_norms": [
+          364.9234915427276,
+          268.75178690719235,
+          172.52826098921034
+        ],
+        "pairwise_cosine_matrix": [
+          [
+            1.0000000000000004,
+            0.9402865206305948,
+            0.7970386574727435
+          ],
+          [
+            0.9402865206305948,
+            1.0000000000000002,
+            0.7531726181135072
+          ],
+          [
+            0.7970386574727435,
+            0.7531726181135072,
+            1.0000000000000009
+          ]
+        ],
+        "consensus_concentration": 0.9416885302732468
+      }
+    ],
+    "positions_1_4": {
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "pairwise_cosines": {
+        "mean": 0.8156316274377073,
+        "min": 0.6957816154324172,
+        "max": 0.9397697458802581
+      },
+      "concentration": {
+        "mean": 0.9365130919958641,
+        "min": 0.9286002583635877,
+        "max": 0.943353407492197
+      }
+    },
+    "positions_1_127": {
+      "positions": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127
+      ],
+      "pairwise_cosines": {
+        "mean": 0.8502879933081956,
+        "min": 0.6957816154324172,
+        "max": 0.9588649611923667
+      },
+      "concentration": {
+        "mean": 0.9487700274642286,
+        "min": 0.9286002583635877,
+        "max": 0.9568360537578179
+      }
+    }
+  },
+  "workload": {
+    "gradient_batches": 1536,
+    "jvp_batches": 939
+  },
+  "artifact": {
+    "serialized_sha256": "75ffea77c3d3cfe6abea1e1cd4d2d0a80cf1225aa7bc5724403c61795459f3b5",
+    "raw_tensors_sha256": {
+      "merged_mean": "0f5cb336c4c54341734189bea5e2318e6aa292fed487334f68fbdd0cd8eca796",
+      "response_fineweb": "00d0d8873df90e4b7c3e8799e0e019d3f5b8d7fee0d9aa796370849ff69ec5e5",
+      "response_wikitext103_raw": "3d81d1479c0808868c78e5b251f329eb22143ccac16a615cabcb0874a0e15e3f",
+      "response_tinystories": "4ea5f0006ab442c500ee196f3bd9cff6d5f7fe7325746e0de97ba215e54ce123",
+      "consensus_response": "24a4626c6d6d31ac482aa1a63a91991260ca1c642c3a007c9f01d752fdab0a60"
+    }
+  }
+}
