@@ -1,0 +1,41 @@
+{
+  "format_version": 1,
+  "attempt_id": "014_multicorpus_raw_jg_consensus_prefix0_13",
+  "dataset": {
+    "repo_id": "roneneldan/TinyStories",
+    "revision": "f54c09fd23315a6f9c86f9dc80f725de7d8f9c64",
+    "config": null,
+    "split": "train",
+    "streaming": true,
+    "shuffle_buffer_size": 10000,
+    "shuffle_rule": "datasets.IterableDataset.shuffle(seed=42, buffer_size=10000); one iterator; no workers; stop after first 4096 valid rows"
+  },
+  "tokenizer": {
+    "source": "canonical_merged_checkpoint",
+    "directory": "/root/model-diff-scratch/models/merged"
+  },
+  "selection": {
+    "shuffle_seed": 42,
+    "text_column": "text",
+    "skip_blank_text": true,
+    "character_limit": 1280,
+    "add_special_tokens": true,
+    "minimum_token_count": 128,
+    "skip_valid_examples": 0,
+    "sample_count": 4096,
+    "sequence_length": 128
+  },
+  "artifact": {
+    "path": "/root/model-diff-scratch/artifacts/attempt014_tinystories_corpus/tokens.pt",
+    "dtype": "torch.int64",
+    "device": "cpu",
+    "contiguous": true
+  },
+  "manifest": {
+    "filename": "tinystories-corpus-manifest.json",
+    "timestamps": false,
+    "host_metadata": false,
+    "gpu_metadata": false
+  },
+  "corpus_name": "tinystories"
+}

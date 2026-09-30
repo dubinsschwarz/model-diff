@@ -1,0 +1,216 @@
+{
+  "format_version": 1,
+  "attempt_id": "014_multicorpus_raw_jg_consensus_prefix0_13",
+  "purpose": "post_oracle_method_development_with_blind_construction",
+  "information_policy": "final_checkpoint_frozen_generic_corpora_and_probe_only",
+  "model": {
+    "model_type": "qwen3",
+    "num_hidden_layers": 28,
+    "source_dtype": "float32",
+    "local_files_only": true,
+    "eval_mode": true,
+    "use_cache": false
+  },
+  "eligible_tensors": {
+    "transformer_block_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "recursive_module_type": "torch.nn.Linear",
+    "parameter": "weight",
+    "expected_matrix_count": 98,
+    "module_ordering": "lexicographic_by_module_name",
+    "freeze_every_other_parameter": true
+  },
+  "generic_loss": {
+    "type": "causal_next_token_cross_entropy",
+    "sample_count": 4096,
+    "sequence_length": 128,
+    "predictions_per_sample": 127,
+    "total_prediction_tokens": 520192,
+    "batch_size": 8,
+    "number_of_batches": 512,
+    "label_alignment": "logits_positions_0_through_126_predict_tokens_1_through_127",
+    "reduction": "sum_token_cross_entropy_divided_by_total_prediction_tokens",
+    "masking": "causal_model_mask_only",
+    "mixed_precision": false,
+    "dropout": false,
+    "optimizer": false,
+    "weight_decay": false,
+    "gradient_clipping": false
+  },
+  "tangent": {
+    "direction": "delta = +alpha * g",
+    "target_relative_frobenius": 0.00125,
+    "normalization": "one_global_alpha_across_all_eligible_matrices",
+    "norm_accounting_dtype": "cpu_float64",
+    "scaling_arithmetic_dtype": "cpu_float64",
+    "jvp_tangent_dtype": "float32",
+    "modify_model_weights": false,
+    "save_large_tensors": false
+  },
+  "probe": {
+    "sample_count": 10000,
+    "sequence_length": 128,
+    "batch_size": 32,
+    "dtype": "torch.int64",
+    "serialized_sha256": "3d799d19abf4a2d6dc92b2bd164d81d83f6451cd3545f5ae5d8c04a8b299735b",
+    "raw_tensor_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8"
+  },
+  "readout": {
+    "block_index": 13,
+    "hidden_state_index": 14,
+    "hidden_size": 2048,
+    "all_token_positions": true,
+    "semantics": "hidden_states[14] is block 13 output before block 14; verify with forward hook"
+  },
+  "jvp": {
+    "implementation": "torch.func.jvp_with_partial_torch.func.functional_call",
+    "module": "model.model",
+    "output_hidden_states": true,
+    "strict_forward_ad": true,
+    "fallback": false,
+    "change_attention_backend": false,
+    "reverse_mode_recording": false,
+    "response_sign": "positive_J_delta",
+    "accumulation_dtype": "cpu_float64",
+    "stored_dtype": "float32",
+    "primal_comparison_rtol": 1e-05,
+    "primal_comparison_atol": 1e-06
+  },
+  "canonical_checkpoint_files": [
+    {
+      "path": "chat_template.jinja",
+      "size_bytes": 4168,
+      "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+    },
+    {
+      "path": "config.json",
+      "size_bytes": 1416,
+      "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+    },
+    {
+      "path": "generation_config.json",
+      "size_bytes": 214,
+      "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+    },
+    {
+      "path": "model.safetensors",
+      "size_bytes": 6882335328,
+      "sha256": "f6989dd3445cd339041ab654a6da463e0a80b2d52dd2c01f67f683b1c30ea10f"
+    },
+    {
+      "path": "tokenizer.json",
+      "size_bytes": 11422650,
+      "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "size_bytes": 692,
+      "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+    }
+  ],
+  "corpora": [
+    {
+      "name": "fineweb",
+      "spec_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus_spec.json",
+      "spec_sha256": "e514820e7def99e9287c32de4b1279f28f6ff6c2e09749a8dfa5d8b14c311f0f",
+      "manifest_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus-manifest.json",
+      "tokens_path": "/root/model-diff-scratch/artifacts/attempt005_generic_rollback_corpus/tokens.pt",
+      "manifest_sha256": "8b3ea49228dbb106c2b8a7c849c4f27e021fa3e992800444f43e260a6b055230"
+    },
+    {
+      "name": "wikitext103_raw",
+      "spec_path": "experiments/attempts/014_multicorpus_raw_jg_consensus_prefix0_13/wikitext103_raw_corpus_spec.json",
+      "spec_sha256": "f6b9ccd801f547d7d2c24fdaa0f53ee55758068dae3685d7859dcbfb3027a24b",
+      "manifest_path": "experiments/attempts/014_multicorpus_raw_jg_consensus_prefix0_13/wikitext103_raw-corpus-manifest.json",
+      "tokens_path": "/root/model-diff-scratch/artifacts/attempt014_wikitext103_raw_corpus/tokens.pt"
+    },
+    {
+      "name": "tinystories",
+      "spec_path": "experiments/attempts/014_multicorpus_raw_jg_consensus_prefix0_13/tinystories_corpus_spec.json",
+      "spec_sha256": "0e4f6c23a9e6dce35d1597185b7ee9f378cb9a4753b974dba3fa5a2dd0460ff6",
+      "manifest_path": "experiments/attempts/014_multicorpus_raw_jg_consensus_prefix0_13/tinystories-corpus-manifest.json",
+      "tokens_path": "/root/model-diff-scratch/artifacts/attempt014_tinystories_corpus/tokens.pt"
+    }
+  ],
+  "consensus": {
+    "definition": "arithmetic_mean_of_three_per_position_unit_positive_Jg_responses",
+    "normalization_dtype": "cpu_float64",
+    "inputs": "stored_equivalent_float32_responses",
+    "zero_or_nonfinite_norm": "fail",
+    "weights": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "concentration_tolerance": 1e-12
+  },
+  "defaults": {
+    "merged_model_directory": "/root/model-diff-scratch/models/merged",
+    "probe_path": "/root/model-diff-scratch/artifacts/oracle_probe/fineweb_tokens.pt",
+    "artifact_path": "/root/model-diff-scratch/artifacts/attempt014_multicorpus_raw_jg_consensus/responses.pt",
+    "manifest_path": "experiments/attempts/014_multicorpus_raw_jg_consensus_prefix0_13/construction-manifest.json"
+  },
+  "workload": {
+    "gradient_batches": 1536,
+    "jvp_batches": 939
+  },
+  "outputs": {
+    "tensors": [
+      "merged_mean",
+      "response_fineweb",
+      "response_wikitext103_raw",
+      "response_tinystories",
+      "consensus_response"
+    ],
+    "dtype": "contiguous_cpu_float32",
+    "shape": [
+      128,
+      2048
+    ],
+    "overwrite": false
+  },
+  "evaluation_plan": {
+    "oracle_vector": "difference",
+    "candidate_tensors": [
+      "response_fineweb",
+      "response_wikitext103_raw",
+      "response_tinystories",
+      "consensus_response"
+    ],
+    "cosine_dtype": "cpu_float64",
+    "per_position_scope": "all_128_positions",
+    "primary": {
+      "metric": "consensus_positions_1_4_mean_cosine",
+      "baseline": "response_fineweb_positions_1_4_mean_cosine",
+      "report_delta_consensus_minus_fineweb": true
+    },
+    "secondary": {
+      "metric": "consensus_positions_1_127_mean_cosine",
+      "baseline": "response_fineweb_positions_1_127_mean_cosine",
+      "report_delta_consensus_minus_fineweb": true
+    },
+    "position_0": "report_separately",
+    "policy": [
+      "report all individual corpus candidates",
+      "no best-corpus selection",
+      "no sign selection",
+      "no corpus reweighting",
+      "no post-result candidate modification",
+      "no post-result threshold tuning"
+    ]
+  }
+}
