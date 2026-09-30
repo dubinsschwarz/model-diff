@@ -162,6 +162,12 @@ def parse_args(argv=None):
 
 FROZEN_SPEC = {'format_version': 1,
  'attempt_id': '018_known_cleaned_rhs_endpoint_hessian_minres_k4_prefix0_27',
+ 'model': {'model_type': 'qwen3',
+           'num_hidden_layers': 28,
+           'source_dtype': 'float32',
+           'local_files_only': True,
+           'eval_mode': True,
+           'use_cache': False},
  'interpretation': 'Direct fixed-k reverse diagnostic. Parameter results never gate functional evaluation. '
                    'No candidate selection.',
  'construction_spec_sha256': '8eb3667c9ffb9b81b7bac4a7479718ab23661bdfbeb6fcd35c8418c33673ca77',

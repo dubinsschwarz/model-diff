@@ -1,6 +1,14 @@
 {
   "format_version": 1,
   "attempt_id": "018_known_cleaned_rhs_endpoint_hessian_minres_k4_prefix0_27",
+  "model": {
+    "model_type": "qwen3",
+    "num_hidden_layers": 28,
+    "source_dtype": "float32",
+    "local_files_only": true,
+    "eval_mode": true,
+    "use_cache": false
+  },
   "interpretation": "Direct fixed-k reverse diagnostic. Parameter results never gate functional evaluation. No candidate selection.",
   "construction_spec_sha256": "8eb3667c9ffb9b81b7bac4a7479718ab23661bdfbeb6fcd35c8418c33673ca77",
   "constructor_sha256": "4cb9cf76089efe955ce1971b9fe5299bd593313968543a1d81ad3a42f494258d",

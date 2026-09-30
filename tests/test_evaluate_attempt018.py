@@ -4,6 +4,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import patch
 import torch
 from safetensors.torch import save_file
@@ -14,6 +15,20 @@ c=load(ROOT/'scripts/ablation/evaluate_attempt018.py','e018')
 toy=load(ROOT/'tests/test_construct_full_support_endpoint_hessian_forward.py','toy018e')
 
 class EvaluationTests(unittest.TestCase):
+ def test_frozen_spec_consumable_by_activation_readout_helper(self):
+  spec_path=ROOT/'experiments/attempts'/c.FROZEN_SPEC['attempt_id']/'evaluation_spec.json'
+  spec=json.loads(spec_path.read_text())
+  self.assertEqual(spec,c.FROZEN_SPEC)
+  self.assertEqual(spec['model'],{'model_type':'qwen3','num_hidden_layers':28,
+   'source_dtype':'float32','local_files_only':True,'eval_mode':True,'use_cache':False})
+  states=tuple(torch.full((1,128,2048),float(i),dtype=torch.float32) for i in range(29))
+  output=SimpleNamespace(hidden_states=states)
+  selected=c.activation.hidden_state_output(output,spec)
+  self.assertIs(selected,states[14])
+  self.assertEqual(spec['readout']['block_index'],13)
+  c.activation.validate_readout(selected,1,spec,torch,'toy block-13 output')
+  with self.assertRaisesRegex(ValueError,'unexpected length'):
+   c.activation.hidden_state_output(SimpleNamespace(hidden_states=states[:-1]),spec)
  def fixture(self,root):
   base,final,s=toy.models();spec=copy.deepcopy(c.FROZEN_SPEC);spec['coordinates']=s['coordinates']
   vector={n:(final.get_parameter(n).detach().double()-base.get_parameter(n).detach().double()).float() for n in [r['name'] for r in spec['coordinates']]}
