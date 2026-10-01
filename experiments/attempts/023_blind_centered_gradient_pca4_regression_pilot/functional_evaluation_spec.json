@@ -1,0 +1,1148 @@
+{
+  "format_version": 1,
+  "attempt_id": "023_blind_centered_gradient_pca4_regression_pilot",
+  "purpose": "post_freeze_positive_candidate_activation_trace_no_selection",
+  "paths": {
+    "construction_spec": "experiments/attempts/023_blind_centered_gradient_pca4_regression_pilot/spec.json",
+    "construction_manifest": "experiments/attempts/023_blind_centered_gradient_pca4_regression_pilot/construction-manifest.json",
+    "stats": "/root/model-diff-scratch/artifacts/attempt023_centered_gradient_pca4/stats.pt",
+    "final": "/root/model-diff-scratch/models/merged",
+    "corpus_spec": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus_spec.json",
+    "corpus_manifest": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus-manifest.json",
+    "fineweb_tokens": "/root/model-diff-scratch/artifacts/attempt005_generic_rollback_corpus/tokens.pt",
+    "probe": "/root/model-diff-scratch/artifacts/oracle_probe/fineweb_tokens.pt",
+    "oracle_artifact": "/root/model-diff-scratch/artifacts/oracle_adl/oracle_adl.pt",
+    "output": "experiments/attempts/023_blind_centered_gradient_pca4_regression_pilot/functional-evaluation.json"
+  },
+  "frozen_hashes": {
+    "construction_spec": "e5638e550fcb269014efbcddfb36cbe0622d63723ae4f10f75580b4a8a0dbe54",
+    "construction_manifest": "e6e7c8255a38af828ea92cd398f322022db72d62abe9ad06b583345fef82383e",
+    "stats": "17d24baead0e235a6571e261fd79721f02ca78254bbe7e5461a31680ffbbd39a",
+    "corpus_spec": "e514820e7def99e9287c32de4b1279f28f6ff6c2e09749a8dfa5d8b14c311f0f",
+    "corpus_manifest": "8b3ea49228dbb106c2b8a7c849c4f27e021fa3e992800444f43e260a6b055230",
+    "fineweb_tokens": "54283d72aa3075e2867ead86e538991d7284ede327ca67871e73bfc581e4025d",
+    "probe": "3d799d19abf4a2d6dc92b2bd164d81d83f6451cd3545f5ae5d8c04a8b299735b",
+    "oracle_artifact": "339a6c09b10286369a5d10eb49e144d1819f4301e334c63930ca7c4dd3a11077"
+  },
+  "sources": {
+    "scripts/ablation/construct_blind_centered_gradient_pca4_pilot.py": "279b86aae0ae2f7cc74e76e73e43db9286f9b3bd80cf14116834f067b445d82d",
+    "scripts/ablation/construct_generic_hessian_krylov.py": "9edce220e1f9e29b4e02082852d03aa6b8043e35964a546383a3c10111018f44",
+    "scripts/ablation/construct_generic_gradient_linear_response.py": "5e80d37ad8379963b8cf1ba46e99d6c98e04514aae19eb637f3242ba8eaa4840",
+    "scripts/ablation/evaluate_attempt014.py": "1193860390504d614522ae746f903d7304eb97d9b2b8d362fabcd302a4a77afd",
+    "scripts/ablation/evaluate_attempt012.py": "82ecdbb0691f583b5bedee931f95a1bf3356ac5279db023dfc169789b896b364"
+  },
+  "canonical_checkpoint_files": [
+    {
+      "path": "chat_template.jinja",
+      "size_bytes": 4168,
+      "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+    },
+    {
+      "path": "config.json",
+      "size_bytes": 1416,
+      "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+    },
+    {
+      "path": "generation_config.json",
+      "size_bytes": 214,
+      "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+    },
+    {
+      "path": "model.safetensors",
+      "size_bytes": 6882335328,
+      "sha256": "f6989dd3445cd339041ab654a6da463e0a80b2d52dd2c01f67f683b1c30ea10f"
+    },
+    {
+      "path": "tokenizer.json",
+      "size_bytes": 11422650,
+      "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "size_bytes": 692,
+      "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+    }
+  ],
+  "frozen_corpus": {
+    "corpus_spec_sha256": "e514820e7def99e9287c32de4b1279f28f6ff6c2e09749a8dfa5d8b14c311f0f",
+    "corpus_manifest_sha256": "8b3ea49228dbb106c2b8a7c849c4f27e021fa3e992800444f43e260a6b055230",
+    "serialized_sha256": "54283d72aa3075e2867ead86e538991d7284ede327ca67871e73bfc581e4025d",
+    "raw_tensor_sha256": "4613982be77342a89b35616d68e21d9ff66d5a983af7e82cb6fa1eb159457eae"
+  },
+  "coordinates": [
+    {
+      "name": "model.layers.0.mlp.down_proj.weight",
+      "shape": [
+        2048,
+        6144
+      ]
+    },
+    {
+      "name": "model.layers.0.mlp.gate_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.0.mlp.up_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.0.self_attn.k_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.0.self_attn.o_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.0.self_attn.q_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.0.self_attn.v_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.1.mlp.down_proj.weight",
+      "shape": [
+        2048,
+        6144
+      ]
+    },
+    {
+      "name": "model.layers.1.mlp.gate_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.1.mlp.up_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.1.self_attn.k_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.1.self_attn.o_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.1.self_attn.q_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.1.self_attn.v_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.10.mlp.down_proj.weight",
+      "shape": [
+        2048,
+        6144
+      ]
+    },
+    {
+      "name": "model.layers.10.mlp.gate_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.10.mlp.up_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.10.self_attn.k_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.10.self_attn.o_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.10.self_attn.q_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.10.self_attn.v_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.11.mlp.down_proj.weight",
+      "shape": [
+        2048,
+        6144
+      ]
+    },
+    {
+      "name": "model.layers.11.mlp.gate_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.11.mlp.up_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.11.self_attn.k_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.11.self_attn.o_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.11.self_attn.q_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.11.self_attn.v_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.12.mlp.down_proj.weight",
+      "shape": [
+        2048,
+        6144
+      ]
+    },
+    {
+      "name": "model.layers.12.mlp.gate_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.12.mlp.up_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.12.self_attn.k_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.12.self_attn.o_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.12.self_attn.q_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.12.self_attn.v_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.13.mlp.down_proj.weight",
+      "shape": [
+        2048,
+        6144
+      ]
+    },
+    {
+      "name": "model.layers.13.mlp.gate_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.13.mlp.up_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.13.self_attn.k_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.13.self_attn.o_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.13.self_attn.q_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.13.self_attn.v_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.2.mlp.down_proj.weight",
+      "shape": [
+        2048,
+        6144
+      ]
+    },
+    {
+      "name": "model.layers.2.mlp.gate_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.2.mlp.up_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.2.self_attn.k_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.2.self_attn.o_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.2.self_attn.q_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.2.self_attn.v_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.3.mlp.down_proj.weight",
+      "shape": [
+        2048,
+        6144
+      ]
+    },
+    {
+      "name": "model.layers.3.mlp.gate_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.3.mlp.up_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.3.self_attn.k_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.3.self_attn.o_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.3.self_attn.q_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.3.self_attn.v_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.4.mlp.down_proj.weight",
+      "shape": [
+        2048,
+        6144
+      ]
+    },
+    {
+      "name": "model.layers.4.mlp.gate_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.4.mlp.up_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.4.self_attn.k_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.4.self_attn.o_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.4.self_attn.q_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.4.self_attn.v_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.5.mlp.down_proj.weight",
+      "shape": [
+        2048,
+        6144
+      ]
+    },
+    {
+      "name": "model.layers.5.mlp.gate_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.5.mlp.up_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.5.self_attn.k_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.5.self_attn.o_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.5.self_attn.q_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.5.self_attn.v_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.6.mlp.down_proj.weight",
+      "shape": [
+        2048,
+        6144
+      ]
+    },
+    {
+      "name": "model.layers.6.mlp.gate_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.6.mlp.up_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.6.self_attn.k_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.6.self_attn.o_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.6.self_attn.q_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.6.self_attn.v_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.7.mlp.down_proj.weight",
+      "shape": [
+        2048,
+        6144
+      ]
+    },
+    {
+      "name": "model.layers.7.mlp.gate_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.7.mlp.up_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.7.self_attn.k_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.7.self_attn.o_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.7.self_attn.q_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.7.self_attn.v_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.8.mlp.down_proj.weight",
+      "shape": [
+        2048,
+        6144
+      ]
+    },
+    {
+      "name": "model.layers.8.mlp.gate_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.8.mlp.up_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.8.self_attn.k_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.8.self_attn.o_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.8.self_attn.q_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.8.self_attn.v_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.9.mlp.down_proj.weight",
+      "shape": [
+        2048,
+        6144
+      ]
+    },
+    {
+      "name": "model.layers.9.mlp.gate_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.9.mlp.up_proj.weight",
+      "shape": [
+        6144,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.9.self_attn.k_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.9.self_attn.o_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.9.self_attn.q_proj.weight",
+      "shape": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "model.layers.9.self_attn.v_proj.weight",
+      "shape": [
+        1024,
+        2048
+      ]
+    }
+  ],
+  "basis_microbatch_indices": [
+    0,
+    32,
+    64,
+    96,
+    128,
+    160,
+    192,
+    224,
+    256,
+    288,
+    320,
+    352,
+    384,
+    416,
+    448,
+    480
+  ],
+  "candidate": {
+    "pca_reconstruction": "matrixwise_CPU_float64_sum_then_one_FP32_cast",
+    "coefficient_cast": "FP32(c_hat[j])_once",
+    "arithmetic": "for_each_matrix_FP32_zero_then_sequential_j0_to_j3_add_FP32_coefficient_times_realized_FP32_q_j",
+    "normalization": false,
+    "sign_selection": false,
+    "rescaling_before_jvp": false,
+    "oracle_dependent_selection": false,
+    "snapshot_gram_replay_rtol": 1e-06,
+    "snapshot_gram_replay_atol": 1e-06,
+    "pca_reproduction_rtol": 1e-09,
+    "pca_reproduction_atol": 1e-09,
+    "coefficient_reproduction_rtol": 1e-12,
+    "coefficient_reproduction_atol": 1e-12,
+    "basis_gram_replay_atol": 1e-06
+  },
+  "model": {
+    "model_type": "qwen3",
+    "num_hidden_layers": 28,
+    "source_dtype": "float32",
+    "local_files_only": true,
+    "eval_mode": true,
+    "use_cache": false
+  },
+  "probe": {
+    "sample_count": 10000,
+    "sequence_length": 128,
+    "batch_size": 32,
+    "dtype": "torch.int64",
+    "serialized_sha256": "3d799d19abf4a2d6dc92b2bd164d81d83f6451cd3545f5ae5d8c04a8b299735b",
+    "raw_tensor_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8"
+  },
+  "readout": {
+    "block_index": 13,
+    "hidden_state_index": 14,
+    "hidden_size": 2048,
+    "all_token_positions": true,
+    "semantics": "hidden_states[14] is block 13 output before block 14; verify with forward hook"
+  },
+  "jvp": {
+    "implementation": "torch.func.jvp_with_partial_torch.func.functional_call",
+    "module": "model.model",
+    "output_hidden_states": true,
+    "strict_forward_ad": true,
+    "fallback": false,
+    "change_attention_backend": false,
+    "reverse_mode_recording": false,
+    "response_sign": "positive_J1_candidate",
+    "accumulation_dtype": "cpu_float64",
+    "stored_dtype": "float32",
+    "primal_comparison_rtol": 1e-05,
+    "primal_comparison_atol": 1e-06
+  },
+  "oracle_provenance": {
+    "downloaded_manifest": {
+      "path": "downloaded-model-hashes.json",
+      "sha256": "f449733393443970d912ef159b858e360390413012f872d7874ac2d84470593c"
+    },
+    "merged_manifest": {
+      "path": "merged-model-hashes.json",
+      "sha256": "78ae3e5840d17702cb193597e5c4873fe9506e6089fbbcc020f87cedeabfdee3"
+    },
+    "probe_manifest": {
+      "path": "oracle-probe-manifest.json",
+      "sha256": "1b9c53033b0e4ebf04f26b598ff42e0e2924812ab1c1c96872f7bd9da33089ba"
+    },
+    "oracle_manifest": {
+      "path": "oracle-adl-manifest.json",
+      "sha256": "affe93a1139cdaa221646fb3b9c8ec5f64b28129c42b22eae185aca5d3932b90"
+    },
+    "merge_script": {
+      "path": "scripts/merge_lora.py",
+      "sha256": "5b75058b7a5f1ecc2b3ce237ad06e2292fecd372fff9138fdb30188de95d6030"
+    },
+    "freeze_probe_script": {
+      "path": "scripts/freeze_oracle_probe.py",
+      "sha256": "f19ef67c4e184c8ce7c1acf9cdd3617e1b4a4f6cf806e9032dfda6f2871d391b"
+    },
+    "oracle_script": {
+      "path": "scripts/compute_oracle_adl.py",
+      "sha256": "d9bf1fb1e9581beb81708ece7ffdeed87ec821e0b0c66a1341ea5deb443c23ac"
+    }
+  },
+  "oracle_sign": "ft_mean_minus_base_mean",
+  "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127
+  ],
+  "functional_summaries": {
+    "position_0": "separate",
+    "primary_positions": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "secondary_positions": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127
+    ],
+    "null_policy": "mean_null_if_any_required_cosine_null"
+  },
+  "merged_mean_consistency": {
+    "minimum_cosine_similarity": 0.999999999,
+    "maximum_relative_rms_difference": 1e-05,
+    "maximum_absolute_difference": 0.01
+  },
+  "output_policy": {
+    "exclusive_create": true,
+    "response_artifact": false,
+    "timestamps": false,
+    "host_metadata": false,
+    "gpu_metadata": false,
+    "selection": false,
+    "sign_flip": false,
+    "coefficient_or_pca_mutation": false,
+    "candidate_rescaling_before_jvp": false,
+    "historical_base_access": false
+  }
+}
