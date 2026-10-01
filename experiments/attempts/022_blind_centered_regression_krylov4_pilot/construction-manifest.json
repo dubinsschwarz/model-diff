@@ -1,0 +1,1419 @@
+{
+  "format_version": 1,
+  "attempt_id": "022_blind_centered_regression_krylov4_pilot",
+  "purpose": "blind_final_checkpoint_centered_batch_regression_krylov4_pilot",
+  "information_policy": "final_checkpoint_plus_generic_text_plus_preexisting_blind_basis_only",
+  "hash_algorithm": "sha256",
+  "input_source_hashes": {
+    "/workspace/model-diff/experiments/attempts/022_blind_centered_regression_krylov4_pilot/spec.json": "b777a3bd2e1023976477ffedc6479caebcf63fd4f9ea19743d7b53a00bbf78de",
+    "/workspace/model-diff/experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus_spec.json": "e514820e7def99e9287c32de4b1279f28f6ff6c2e09749a8dfa5d8b14c311f0f",
+    "/workspace/model-diff/experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus-manifest.json": "8b3ea49228dbb106c2b8a7c849c4f27e021fa3e992800444f43e260a6b055230",
+    "/root/model-diff-scratch/artifacts/attempt005_generic_rollback_corpus/tokens.pt": "54283d72aa3075e2867ead86e538991d7284ede327ca67871e73bfc581e4025d",
+    "/workspace/model-diff/experiments/attempts/011_generic_hessian_krylov_k4_prefix0_13/construction-manifest.json": "af334b5a580560900f38f5349ad8db51c6d1c2b61287d0b819b09829e52f91aa",
+    "/workspace/model-diff/scripts/ablation/construct_blind_centered_krylov4_pilot.py": "b0b52b29c608a3f276117ab7fc2569d74097b25bcef02f80485855318662bfd5",
+    "/workspace/model-diff/scripts/ablation/construct_generic_hessian_krylov.py": "9edce220e1f9e29b4e02082852d03aa6b8043e35964a546383a3c10111018f44"
+  },
+  "source_checkpoint_files": [
+    {
+      "path": "chat_template.jinja",
+      "size_bytes": 4168,
+      "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+    },
+    {
+      "path": "config.json",
+      "size_bytes": 1416,
+      "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+    },
+    {
+      "path": "generation_config.json",
+      "size_bytes": 214,
+      "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+    },
+    {
+      "path": "model.safetensors",
+      "size_bytes": 6882335328,
+      "sha256": "f6989dd3445cd339041ab654a6da463e0a80b2d52dd2c01f67f683b1c30ea10f"
+    },
+    {
+      "path": "tokenizer.json",
+      "size_bytes": 11422650,
+      "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "size_bytes": 692,
+      "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+    }
+  ],
+  "corpus": {
+    "corpus_spec_sha256": "e514820e7def99e9287c32de4b1279f28f6ff6c2e09749a8dfa5d8b14c311f0f",
+    "corpus_manifest_sha256": "8b3ea49228dbb106c2b8a7c849c4f27e021fa3e992800444f43e260a6b055230",
+    "serialized_sha256": "54283d72aa3075e2867ead86e538991d7284ede327ca67871e73bfc581e4025d",
+    "raw_tensor_sha256": "4613982be77342a89b35616d68e21d9ff66d5a983af7e82cb6fa1eb159457eae"
+  },
+  "basis": {
+    "manifest_path": "/workspace/model-diff/experiments/attempts/011_generic_hessian_krylov_k4_prefix0_13/construction-manifest.json",
+    "manifest_sha256": "af334b5a580560900f38f5349ad8db51c6d1c2b61287d0b819b09829e52f91aa",
+    "files": [
+      {
+        "direction": 1,
+        "filename": "q1.safetensors",
+        "dtype": "float32",
+        "size_bytes": 2818583464,
+        "sha256": "c3e3db2e4e2f4967281448954aa51af1d370b00d1fd30c95e74605484a71befc"
+      },
+      {
+        "direction": 2,
+        "filename": "q2.safetensors",
+        "dtype": "float32",
+        "size_bytes": 2818583464,
+        "sha256": "a7be2c5c171c6c4dbf23d8526459d321277a05f74901472b846870e7bc372209"
+      },
+      {
+        "direction": 3,
+        "filename": "q3.safetensors",
+        "dtype": "float32",
+        "size_bytes": 2818583464,
+        "sha256": "6fed3d7c14edb8de6516714d0963eef91f92f055b4903b30eba40ecf7b3f0fc6"
+      },
+      {
+        "direction": 4,
+        "filename": "q4.safetensors",
+        "dtype": "float32",
+        "size_bytes": 2818583464,
+        "sha256": "3201b57d65f93ad08cf034feaba118e5522f90ebac110ff48d5186ca0c46d03d"
+      }
+    ],
+    "gram": {
+      "gram_matrix": [
+        [
+          0.9999999974432281,
+          6.794302165454716e-09,
+          -1.5687477557225187e-09,
+          2.389450467361255e-09
+        ],
+        [
+          6.794302165454716e-09,
+          1.0000000116407246,
+          -6.112222438447448e-09,
+          -1.356701620237074e-09
+        ],
+        [
+          -1.5687477557225187e-09,
+          -6.112222438447448e-09,
+          0.9999999929768781,
+          -9.710470371518984e-10
+        ],
+        [
+          2.389450467361255e-09,
+          -1.356701620237074e-09,
+          -9.710470371518984e-10,
+          0.999999992957121
+        ]
+      ],
+      "max_off_diagonal": 6.794302165454716e-09,
+      "max_diagonal_deviation": 1.1640724606465369e-08,
+      "max_reference_difference": 1.3322676295501878e-15
+    },
+    "coordinates": [
+      {
+        "name": "model.layers.0.mlp.down_proj.weight",
+        "shape": [
+          2048,
+          6144
+        ]
+      },
+      {
+        "name": "model.layers.0.mlp.gate_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.0.mlp.up_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.0.self_attn.k_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.0.self_attn.o_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.0.self_attn.q_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.0.self_attn.v_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.1.mlp.down_proj.weight",
+        "shape": [
+          2048,
+          6144
+        ]
+      },
+      {
+        "name": "model.layers.1.mlp.gate_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.1.mlp.up_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.1.self_attn.k_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.1.self_attn.o_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.1.self_attn.q_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.1.self_attn.v_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.10.mlp.down_proj.weight",
+        "shape": [
+          2048,
+          6144
+        ]
+      },
+      {
+        "name": "model.layers.10.mlp.gate_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.10.mlp.up_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.10.self_attn.k_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.10.self_attn.o_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.10.self_attn.q_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.10.self_attn.v_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.11.mlp.down_proj.weight",
+        "shape": [
+          2048,
+          6144
+        ]
+      },
+      {
+        "name": "model.layers.11.mlp.gate_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.11.mlp.up_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.11.self_attn.k_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.11.self_attn.o_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.11.self_attn.q_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.11.self_attn.v_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.12.mlp.down_proj.weight",
+        "shape": [
+          2048,
+          6144
+        ]
+      },
+      {
+        "name": "model.layers.12.mlp.gate_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.12.mlp.up_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.12.self_attn.k_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.12.self_attn.o_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.12.self_attn.q_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.12.self_attn.v_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.13.mlp.down_proj.weight",
+        "shape": [
+          2048,
+          6144
+        ]
+      },
+      {
+        "name": "model.layers.13.mlp.gate_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.13.mlp.up_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.13.self_attn.k_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.13.self_attn.o_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.13.self_attn.q_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.13.self_attn.v_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.2.mlp.down_proj.weight",
+        "shape": [
+          2048,
+          6144
+        ]
+      },
+      {
+        "name": "model.layers.2.mlp.gate_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.2.mlp.up_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.2.self_attn.k_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.2.self_attn.o_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.2.self_attn.q_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.2.self_attn.v_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.3.mlp.down_proj.weight",
+        "shape": [
+          2048,
+          6144
+        ]
+      },
+      {
+        "name": "model.layers.3.mlp.gate_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.3.mlp.up_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.3.self_attn.k_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.3.self_attn.o_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.3.self_attn.q_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.3.self_attn.v_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.4.mlp.down_proj.weight",
+        "shape": [
+          2048,
+          6144
+        ]
+      },
+      {
+        "name": "model.layers.4.mlp.gate_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.4.mlp.up_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.4.self_attn.k_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.4.self_attn.o_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.4.self_attn.q_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.4.self_attn.v_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.5.mlp.down_proj.weight",
+        "shape": [
+          2048,
+          6144
+        ]
+      },
+      {
+        "name": "model.layers.5.mlp.gate_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.5.mlp.up_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.5.self_attn.k_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.5.self_attn.o_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.5.self_attn.q_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.5.self_attn.v_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.6.mlp.down_proj.weight",
+        "shape": [
+          2048,
+          6144
+        ]
+      },
+      {
+        "name": "model.layers.6.mlp.gate_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.6.mlp.up_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.6.self_attn.k_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.6.self_attn.o_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.6.self_attn.q_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.6.self_attn.v_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.7.mlp.down_proj.weight",
+        "shape": [
+          2048,
+          6144
+        ]
+      },
+      {
+        "name": "model.layers.7.mlp.gate_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.7.mlp.up_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.7.self_attn.k_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.7.self_attn.o_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.7.self_attn.q_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.7.self_attn.v_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.8.mlp.down_proj.weight",
+        "shape": [
+          2048,
+          6144
+        ]
+      },
+      {
+        "name": "model.layers.8.mlp.gate_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.8.mlp.up_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.8.self_attn.k_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.8.self_attn.o_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.8.self_attn.q_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.8.self_attn.v_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.9.mlp.down_proj.weight",
+        "shape": [
+          2048,
+          6144
+        ]
+      },
+      {
+        "name": "model.layers.9.mlp.gate_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.9.mlp.up_proj.weight",
+        "shape": [
+          6144,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.9.self_attn.k_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.9.self_attn.o_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.9.self_attn.q_proj.weight",
+        "shape": [
+          2048,
+          2048
+        ]
+      },
+      {
+        "name": "model.layers.9.self_attn.v_proj.weight",
+        "shape": [
+          1024,
+          2048
+        ]
+      }
+    ]
+  },
+  "batches": {
+    "microbatch_indices": [
+      0,
+      16,
+      32,
+      48,
+      64,
+      80,
+      96,
+      112,
+      128,
+      144,
+      160,
+      176,
+      192,
+      208,
+      224,
+      240,
+      256,
+      272,
+      288,
+      304,
+      320,
+      336,
+      352,
+      368,
+      384,
+      400,
+      416,
+      432,
+      448,
+      464,
+      480,
+      496
+    ],
+    "count": 32,
+    "rows_per_batch": 8,
+    "sequence_length": 128,
+    "prediction_tokens_per_batch": 1016,
+    "row_rule": "start=8*j,end=8*(j+1),end_exclusive"
+  },
+  "t_space": {
+    "dimension": 4,
+    "t_leaf_dtype": "torch.float64",
+    "weight_arithmetic": "FP32(W1_weight+sum_j FP32(t_j)*realized_FP32_q_j)",
+    "evaluation": "torch.func.functional_call",
+    "only_autograd_input": "t",
+    "primitive": "true_double_backward",
+    "raw_hessian_relative_asymmetry_limit": 1e-05,
+    "relative_asymmetry_denominator_floor": 1e-06,
+    "symmetrization": "(M_raw+M_raw.T)/2",
+    "fallback": false
+  },
+  "raw_hessian_asymmetry": [
+    {
+      "absolute": 0.0081634521484375,
+      "relative": 3.3658498334212607e-06
+    },
+    {
+      "absolute": 0.0096435546875,
+      "relative": 3.145087003855558e-06
+    },
+    {
+      "absolute": 0.00962066650390625,
+      "relative": 3.9592326013799656e-06
+    },
+    {
+      "absolute": 0.004241943359375,
+      "relative": 1.135575640448322e-06
+    },
+    {
+      "absolute": 0.009765625,
+      "relative": 2.2466798284659953e-06
+    },
+    {
+      "absolute": 0.0028076171875,
+      "relative": 1.0716030230759927e-06
+    },
+    {
+      "absolute": 0.0053863525390625,
+      "relative": 1.7613732619986144e-06
+    },
+    {
+      "absolute": 0.0101318359375,
+      "relative": 2.4145030295322228e-06
+    },
+    {
+      "absolute": 0.0074615478515625,
+      "relative": 1.6618340035406784e-06
+    },
+    {
+      "absolute": 0.005096435546875,
+      "relative": 1.509461194301605e-06
+    },
+    {
+      "absolute": 0.002197265625,
+      "relative": 5.231820817810327e-07
+    },
+    {
+      "absolute": 0.0075836181640625,
+      "relative": 2.9926527905204706e-06
+    },
+    {
+      "absolute": 0.013427734375,
+      "relative": 4.28670779983631e-06
+    },
+    {
+      "absolute": 0.00457763671875,
+      "relative": 1.4700624717748006e-06
+    },
+    {
+      "absolute": 0.00762939453125,
+      "relative": 1.9774044367893406e-06
+    },
+    {
+      "absolute": 0.0136260986328125,
+      "relative": 3.6379039181422896e-06
+    },
+    {
+      "absolute": 0.00946044921875,
+      "relative": 2.505940047954962e-06
+    },
+    {
+      "absolute": 0.01169586181640625,
+      "relative": 3.0550943397189015e-06
+    },
+    {
+      "absolute": 0.0081329345703125,
+      "relative": 2.5760573937467672e-06
+    },
+    {
+      "absolute": 0.0054779052734375,
+      "relative": 1.7059033951183982e-06
+    },
+    {
+      "absolute": 0.008056640625,
+      "relative": 3.235158685023676e-06
+    },
+    {
+      "absolute": 0.0084381103515625,
+      "relative": 2.225168726537145e-06
+    },
+    {
+      "absolute": 0.0073394775390625,
+      "relative": 2.351436349228561e-06
+    },
+    {
+      "absolute": 0.00244140625,
+      "relative": 5.37189754115357e-07
+    },
+    {
+      "absolute": 0.0081634521484375,
+      "relative": 2.4453989494237014e-06
+    },
+    {
+      "absolute": 0.00948333740234375,
+      "relative": 2.504654183464843e-06
+    },
+    {
+      "absolute": 0.02520751953125,
+      "relative": 6.931692982595711e-06
+    },
+    {
+      "absolute": 0.00787353515625,
+      "relative": 2.6503838043387236e-06
+    },
+    {
+      "absolute": 0.0142669677734375,
+      "relative": 4.3790140337517726e-06
+    },
+    {
+      "absolute": 0.0081634521484375,
+      "relative": 2.5855357071470124e-06
+    },
+    {
+      "absolute": 0.01409912109375,
+      "relative": 3.826194438522033e-06
+    },
+    {
+      "absolute": 0.00494384765625,
+      "relative": 1.742390228985354e-06
+    }
+  ],
+  "regression": {
+    "coefficients": [
+      0.004314367216016804,
+      0.0006784667590311612,
+      -0.0016226276849115153,
+      0.0016989434559685325
+    ],
+    "singular_values": [
+      4721.10284405514,
+      2806.9196923028962,
+      1147.2625477579124,
+      769.5623535852005
+    ],
+    "rank": 4,
+    "condition_number": 6.134789237104298,
+    "relative_residual": 0.8076859473419549,
+    "coefficient_norm": 0.004959174436150683,
+    "bbar": [
+      10.977915167808533,
+      0.02396256336942315,
+      0.08452134561957791,
+      -0.07649449375458062
+    ],
+    "Mbar": [
+      [
+        1066.2530250549316,
+        1155.9925327301025,
+        12.462364982813597,
+        -15.121934726834297
+      ],
+      [
+        1155.9925327301025,
+        3403.6943283081055,
+        1174.4364709854126,
+        -7.188787579536438
+      ],
+      [
+        12.462364982813597,
+        1174.4364709854126,
+        724.502025604248,
+        479.5388672351837
+      ],
+      [
+        -15.121934726834297,
+        -7.188787579536438,
+        479.5388672351837,
+        1066.6202239990234
+      ]
+    ],
+    "batch_residual_norms": [
+      1.4905743669904015,
+      1.696858129464118,
+      2.048288529084231,
+      0.967780917841061,
+      1.4422311941072046,
+      1.4659537391915993,
+      2.5556255537379973,
+      3.897853846490459,
+      2.6414191477949416,
+      0.7432977754008331,
+      2.4459403193689964,
+      1.5188423888910927,
+      1.087980342537953,
+      2.798156811284917,
+      1.127115169706092,
+      2.578545951290247,
+      0.7082957806841902,
+      3.0118612459876033,
+      2.004078744337273,
+      2.3474952639842788,
+      1.4324807616922355,
+      2.1628285821465756,
+      2.570909607087568,
+      2.925563582527898,
+      1.4374024910949557,
+      1.4437837390490076,
+      1.1507297343932368,
+      1.8792588413120481,
+      0.8704405704820612,
+      2.1067110634834805,
+      1.2952871606831655,
+      1.384318046897301
+    ],
+    "driver": "gelsd",
+    "rcond": 1e-12
+  },
+  "split_stability": {
+    "first_16_vs_last_16": {
+      "first": {
+        "coefficients": [
+          0.0054324284509158684,
+          -0.0002528175915477186,
+          -0.0004740464383183278,
+          0.0026387795473214117
+        ],
+        "singular_values": [
+          3775.7534967036945,
+          2052.5494247263337,
+          733.7048177978834,
+          564.7302707519923
+        ],
+        "rank": 4,
+        "condition_number": 6.685941399379775,
+        "relative_residual": 0.7650799447030328,
+        "coefficient_norm": 0.006063255984531764,
+        "bbar": [
+          11.107010126113892,
+          0.10277335997670889,
+          -0.15857896965462714,
+          -0.12106689275242388
+        ],
+        "Mbar": [
+          [
+            1028.2718811035156,
+            1125.2390213012695,
+            -3.8554442524909973,
+            -9.807908803224564
+          ],
+          [
+            1125.2390213012695,
+            3395.5242614746094,
+            1120.8299808502197,
+            -15.843036413192749
+          ],
+          [
+            -3.8554442524909973,
+            1120.8299808502197,
+            702.7537803649902,
+            468.16690969467163
+          ],
+          [
+            -9.807908803224564,
+            -15.843036413192749,
+            468.16690969467163,
+            1035.5380859375
+          ]
+        ],
+        "batch_residual_norms": [
+          1.747429519354669,
+          1.8076844511345995,
+          1.5452357642791739,
+          1.4607821361731832,
+          1.569514942082689,
+          1.4362758423165742,
+          2.7613257432861444,
+          3.5388241461929235,
+          2.2041920957942547,
+          1.229541555435677,
+          1.6665287303888414,
+          1.3571355769366398,
+          1.616933559435693,
+          2.7669469196473924,
+          1.0192363445029893,
+          2.153515396089279
+        ],
+        "driver": "gelsd",
+        "rcond": 1e-12
+      },
+      "second": {
+        "coefficients": [
+          0.004525730908139668,
+          0.0012437353119381742,
+          -0.003099905694460575,
+          0.001105869587257412
+        ],
+        "singular_values": [
+          2851.8595703061355,
+          1831.8283404033725,
+          806.4892109684887,
+          489.58860148920735
+        ],
+        "rank": 4,
+        "condition_number": 5.82501218703108,
+        "relative_residual": 0.7807013728464952,
+        "coefficient_norm": 0.005732493404934944,
+        "bbar": [
+          10.848820209503174,
+          -0.05484823323786259,
+          0.327621660893783,
+          -0.03192209475673735
+        ],
+        "Mbar": [
+          [
+            1104.2341690063477,
+            1186.7460441589355,
+            28.78017421811819,
+            -20.43596065044403
+          ],
+          [
+            1186.7460441589355,
+            3411.8643951416016,
+            1228.0429611206055,
+            1.465461254119873
+          ],
+          [
+            28.78017421811819,
+            1228.0429611206055,
+            746.2502708435059,
+            490.9108247756958
+          ],
+          [
+            -20.43596065044403,
+            1.465461254119873,
+            490.9108247756958,
+            1097.7023620605469
+          ]
+        ],
+        "batch_residual_norms": [
+          0.35239976151294305,
+          2.8107673655434273,
+          1.516257628822207,
+          2.1302792364565075,
+          1.2811403923142264,
+          2.5801656273036557,
+          2.357670726700592,
+          2.2340064916891795,
+          1.7010487556879526,
+          1.6042780818322528,
+          1.0976777813701706,
+          2.2232405848524377,
+          0.5635871128382803,
+          1.919968512102137,
+          1.3838765784354297,
+          1.1956382169585746
+        ],
+        "driver": "gelsd",
+        "rcond": 1e-12
+      },
+      "coefficient_cosine": 0.8245372851613778,
+      "coefficient_norm_ratio": 1.0576996005459118
+    },
+    "even_members_vs_odd_members": {
+      "first": {
+        "coefficients": [
+          0.0032396535629597256,
+          0.0011311860182283522,
+          -0.001704401904409506,
+          0.001909232081246006
+        ],
+        "singular_values": [
+          3460.5827878921677,
+          1933.9181425936895,
+          801.1535357267624,
+          476.5347107074635
+        ],
+        "rank": 4,
+        "condition_number": 7.261974227972997,
+        "relative_residual": 0.7530882385406947,
+        "coefficient_norm": 0.004280781471606167,
+        "bbar": [
+          10.900812923908234,
+          0.07060709036886692,
+          -0.08618276519700885,
+          -0.1942338915541768
+        ],
+        "Mbar": [
+          [
+            1049.9786186218262,
+            1143.810962677002,
+            6.927781097590923,
+            -24.54893136024475
+          ],
+          [
+            1143.810962677002,
+            3400.138961791992,
+            1162.2591762542725,
+            23.464284658432007
+          ],
+          [
+            6.927781097590923,
+            1162.2591762542725,
+            733.242488861084,
+            505.39420223236084
+          ],
+          [
+            -24.54893136024475,
+            23.464284658432007,
+            505.39420223236084,
+            1131.5091667175293
+          ]
+        ],
+        "batch_residual_norms": [
+          1.5539352453427568,
+          2.164599073593894,
+          1.1659256601872232,
+          2.260720235526047,
+          2.7358176837110864,
+          2.074127559701463,
+          0.9607381895248746,
+          0.9917478165034098,
+          0.9298832835797859,
+          2.1221036540891793,
+          1.4962508884233252,
+          2.086721506880729,
+          1.7781369397057067,
+          1.3424158768844188,
+          0.9298251222388851,
+          1.2235365635701536
+        ],
+        "driver": "gelsd",
+        "rcond": 1e-12
+      },
+      "second": {
+        "coefficients": [
+          0.005587116689495461,
+          9.69290636212304e-05,
+          -0.001673495747156886,
+          0.0017807617372935936
+        ],
+        "singular_values": [
+          3205.17315139811,
+          1985.9795805974632,
+          811.5605860998511,
+          583.0481723545398
+        ],
+        "rank": 4,
+        "condition_number": 5.497269871294801,
+        "relative_residual": 0.8212137789983793,
+        "coefficient_norm": 0.006098931752870686,
+        "bbar": [
+          11.055017411708832,
+          -0.02268196363002062,
+          0.2552254564361647,
+          0.041244904045015574
+        ],
+        "Mbar": [
+          [
+            1082.527431488037,
+            1168.1741027832031,
+            17.99694886803627,
+            -5.694938093423843
+          ],
+          [
+            1168.1741027832031,
+            3407.2496948242188,
+            1186.6137657165527,
+            -37.84185981750488
+          ],
+          [
+            17.99694886803627,
+            1186.6137657165527,
+            715.7615623474121,
+            453.6835322380066
+          ],
+          [
+            -5.694938093423843,
+            -37.84185981750488,
+            453.6835322380066,
+            1001.7312812805176
+          ]
+        ],
+        "batch_residual_norms": [
+          1.812680468545353,
+          1.087192605939391,
+          1.8056947472724663,
+          3.8664202164090384,
+          0.7169497493859529,
+          1.581410463402713,
+          2.5438325068965844,
+          2.350323266164006,
+          2.78064141990501,
+          2.459063930674943,
+          2.2210209173676563,
+          2.4409084951930944,
+          1.594382659500783,
+          1.7455924182380942,
+          2.365255857747571,
+          1.4318917201702321
+        ],
+        "driver": "gelsd",
+        "rcond": 1e-12
+      },
+      "coefficient_cosine": 0.9369535106950726,
+      "coefficient_norm_ratio": 0.7018903711443009
+    }
+  },
+  "artifact": {
+    "path": "/root/model-diff-scratch/artifacts/attempt022_blind_centered_krylov4/batch_stats.pt",
+    "serialized_sha256": "c58d110ab86507b4c059463a100489902fb1393b15b5e840ba948f034131f408",
+    "raw_tensor_sha256": {
+      "microbatch_index": "fe6e8412f5d7ac5241bc7c5eb088274144dd4f5c2ef8fd225658b220b979b823",
+      "b": "21b99598f6160ae35f3325d3aae9f8e572fa6521b05460f256271d6f451df08e",
+      "M": "d57abdbdd107910c2852476e2d83801335586eb80cc721a7022e5befa0cf8efa",
+      "c_hat": "4431d10e7f61ac2c0d0eef5c8a903606f9b2def53930bca68286444013694a71"
+    },
+    "tensors": {
+      "microbatch_index": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.int64",
+        "device": "cpu",
+        "contiguous": true
+      },
+      "b": {
+        "shape": [
+          32,
+          4
+        ],
+        "dtype": "torch.float64",
+        "device": "cpu",
+        "contiguous": true
+      },
+      "M": {
+        "shape": [
+          32,
+          4,
+          4
+        ],
+        "dtype": "torch.float64",
+        "device": "cpu",
+        "contiguous": true
+      },
+      "c_hat": {
+        "shape": [
+          4
+        ],
+        "dtype": "torch.float64",
+        "device": "cpu",
+        "contiguous": true
+      }
+    }
+  },
+  "workload": {
+    "gradient_and_hessian_batches": 32,
+    "smoke_batches": 1,
+    "hessian_second_backward_rows_per_batch": 4
+  },
+  "publication_policy": "no_overwrite_no_resume_partial_artifact_blocks_rerun"
+}
