@@ -227,6 +227,28 @@ class MathematicsTests(unittest.TestCase):
         torch.testing.assert_close(true, displacement.flatten().double(), rtol=1e-6, atol=1e-8)
         self.assertAlmostEqual(norm, float(torch.linalg.vector_norm(displacement.double())))
 
+    def test_evaluator_casts_bf16_backing_base_to_loaded_fp32(self):
+        self.assertEqual(e.EVALUATION_SPEC['base_tensor_loading']['raw_to_loaded_W0'],
+                         '.to(dtype=torch.float32).contiguous()')
+        final = FourLogitToy()
+        raw_base = torch.tensor([[.101], [-.203], [.304], [.407]], dtype=torch.bfloat16)
+        class Store:
+            def matrix(self, i, name, shape):
+                assert name == 'proj.weight' and shape == [4, 1]
+                return basis()[i][name]
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)/'model.safetensors'
+            save_file({'proj.weight': raw_base}, str(path))
+            with e.selected_base_tensors(Path(directory), [{'path': path.name}]) as base_tensors:
+                self.assertEqual(base_tensors['proj.weight'].get_tensor('proj.weight').dtype,
+                                 torch.bfloat16)
+                actual, norm = e.true_coefficients(final, Store(),
+                    [{'name': 'proj.weight', 'shape': [4, 1]}], base_tensors)
+        loaded_base = raw_base.to(dtype=torch.float32).contiguous()
+        expected = (final.proj.weight.detach().double()-loaded_base.double()).reshape(4)
+        torch.testing.assert_close(actual, expected, rtol=0, atol=0)
+        self.assertEqual(norm, float(torch.linalg.vector_norm(expected)))
+
 
 class PipelineTests(unittest.TestCase):
     def test_synthetic_smoke_writes_no_scientific_outputs(self):

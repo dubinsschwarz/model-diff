@@ -25,6 +25,8 @@ EVALUATION_SPEC = {
     'purpose': 'post_freeze_known_base_parameter_space_evaluation_no_tuning',
     'construction_policy': c.FROZEN_SPEC['information_policy'],
     'base': historical['base'],
+    'base_tensor_loading': {'raw_to_loaded_W0': '.to(dtype=torch.float32).contiguous()',
+                            'displacement': 'W1_FP32_minus_loaded_W0_FP32_in_CPU_float64'},
     'coordinates': c.FROZEN_SPEC['coordinates'],
     'metrics': ['deltaS_norm', 'c_true_norm', 'projection_ceiling',
                 'cosine_coefficients', 'cosine_candidate_to_full_DeltaS',
@@ -100,8 +102,9 @@ def true_coefficients(final, store, coordinates, base_tensors):
         if name not in parameters or name not in base_tensors:
             raise ValueError('Missing selected historical coordinate')
         current = parameters[name].detach().to(device='cpu', dtype=torch.float64)
-        old = base_tensors[name].get_tensor(name)
-        if old.dtype != torch.float32 or list(old.shape) != shape or list(current.shape) != shape:
+        old = base_tensors[name].get_tensor(name).to(dtype=torch.float32).contiguous()
+        if (old.dtype != torch.float32 or list(old.shape) != shape or list(current.shape) != shape or
+                not bool(torch.isfinite(old).all())):
             raise ValueError('Historical selected tensor mismatch')
         delta = current-old.double()
         if not bool(torch.isfinite(delta).all()):
