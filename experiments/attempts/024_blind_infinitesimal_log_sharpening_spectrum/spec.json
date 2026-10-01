@@ -1,0 +1,290 @@
+{
+  "format_version": 1,
+  "attempt_id": "024_blind_infinitesimal_log_sharpening_spectrum",
+  "purpose": "blind_final_model_infinitesimal_log_sharpening_spectrum_diagnostic",
+  "information_policy": "canonical_final_checkpoint_plus_frozen_attempt005_fineweb_only",
+  "final_checkpoint_files": [
+    {
+      "path": "chat_template.jinja",
+      "size_bytes": 4168,
+      "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+    },
+    {
+      "path": "config.json",
+      "size_bytes": 1416,
+      "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+    },
+    {
+      "path": "generation_config.json",
+      "size_bytes": 214,
+      "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+    },
+    {
+      "path": "model.safetensors",
+      "size_bytes": 6882335328,
+      "sha256": "f6989dd3445cd339041ab654a6da463e0a80b2d52dd2c01f67f683b1c30ea10f"
+    },
+    {
+      "path": "tokenizer.json",
+      "size_bytes": 11422650,
+      "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "size_bytes": 692,
+      "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+    }
+  ],
+  "frozen_corpus": {
+    "corpus_spec_sha256": "e514820e7def99e9287c32de4b1279f28f6ff6c2e09749a8dfa5d8b14c311f0f",
+    "corpus_manifest_sha256": "8b3ea49228dbb106c2b8a7c849c4f27e021fa3e992800444f43e260a6b055230",
+    "serialized_sha256": "54283d72aa3075e2867ead86e538991d7284ede327ca67871e73bfc581e4025d",
+    "raw_tensor_sha256": "4613982be77342a89b35616d68e21d9ff66d5a983af7e82cb6fa1eb159457eae"
+  },
+  "model": {
+    "dtype": "torch.float32",
+    "eval_mode": true,
+    "autocast": false,
+    "parameter_gradients": false,
+    "parameter_updates": false,
+    "jvp": false
+  },
+  "batches": {
+    "sequence_count": 4096,
+    "sequence_length": 128,
+    "batch_size": 8,
+    "batch_count": 512,
+    "prediction_positions": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126
+    ],
+    "prediction_positions_per_sequence": 127,
+    "total_prediction_positions": 520192,
+    "row_rule": "batch_i_rows_[8*i,8*(i+1))",
+    "smoke_batch_indices": [
+      0,
+      1
+    ]
+  },
+  "infinitesimal_signal": {
+    "beta": 1.0,
+    "finite_beta_on_real_model": false,
+    "logp": "torch.nn.functional.log_softmax(FP32_final_logits,dim=-1)",
+    "p": "torch.nn.functional.softmax(FP32_final_logits,dim=-1)",
+    "mean_logp_under_p": "sum_vocab(p*logp)",
+    "dot_logp": "logp-mean_logp_under_p",
+    "dot_p": "p*dot_logp",
+    "sorting": "descending_final_logits_equivalent_to_descending_final_p",
+    "conservation": "abs(sum_vocab_FP64(dot_p))/max(sum_vocab_FP64(abs(dot_p)),1e-6)<=1e-4_per_prediction_position",
+    "conservation_relative_limit": 0.0001,
+    "conservation_scale_floor": 1e-06,
+    "finite_difference": "synthetic_logits_unit_test_only"
+  },
+  "rank_bins": [
+    {
+      "label": "rank_1",
+      "one_based_start": 1,
+      "one_based_end": 1
+    },
+    {
+      "label": "ranks_2_4",
+      "one_based_start": 2,
+      "one_based_end": 4
+    },
+    {
+      "label": "ranks_5_16",
+      "one_based_start": 5,
+      "one_based_end": 16
+    },
+    {
+      "label": "ranks_17_64",
+      "one_based_start": 17,
+      "one_based_end": 64
+    },
+    {
+      "label": "ranks_65_256",
+      "one_based_start": 65,
+      "one_based_end": 256
+    },
+    {
+      "label": "ranks_257_1024",
+      "one_based_start": 257,
+      "one_based_end": 1024
+    },
+    {
+      "label": "ranks_1025_4096",
+      "one_based_start": 1025,
+      "one_based_end": 4096
+    },
+    {
+      "label": "ranks_4097_16384",
+      "one_based_start": 4097,
+      "one_based_end": 16384
+    },
+    {
+      "label": "ranks_16385_full_vocab",
+      "one_based_start": 16385,
+      "one_based_end": "full_vocab"
+    }
+  ],
+  "cumulative_top_k": [
+    1,
+    4,
+    16,
+    64,
+    256,
+    1024,
+    4096,
+    16384,
+    "full_vocab"
+  ],
+  "accumulation": {
+    "per_batch_reduction_dtype": "float64",
+    "cross_batch_scalar_sum": "CPU_float64_math.fsum",
+    "persistent_logits_or_probabilities": false,
+    "undefined_fraction_if_total_zero": null
+  },
+  "sources": {
+    "scripts/ablation/construct_generic_hessian_krylov.py": "9edce220e1f9e29b4e02082852d03aa6b8043e35964a546383a3c10111018f44"
+  },
+  "defaults": {
+    "final_directory": "/root/model-diff-scratch/models/merged",
+    "corpus_spec_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus_spec.json",
+    "corpus_manifest_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus-manifest.json",
+    "tokens_path": "/root/model-diff-scratch/artifacts/attempt005_generic_rollback_corpus/tokens.pt",
+    "manifest_path": "experiments/attempts/024_blind_infinitesimal_log_sharpening_spectrum/construction-manifest.json"
+  },
+  "outputs": {
+    "overwrite": false,
+    "timestamps": false,
+    "host_metadata": false,
+    "gpu_metadata": false,
+    "candidate_selection": false,
+    "privileged_evaluation": false
+  }
+}
