@@ -1,0 +1,80 @@
+{
+  "format_version": 1,
+  "attempt_id": "100_diverse8_raw_jg_consensus_prefix0_13",
+  "hash_algorithm": "sha256",
+  "corpus_name": "codeparrot_clean",
+  "repo_id": "codeparrot/codeparrot-clean",
+  "config": null,
+  "split": "train",
+  "revision": "35a59fb025bc0a102f7d96eac09d145b896d487b",
+  "extractor": "string_field_verbatim",
+  "source_field": "content",
+  "selection": {
+    "head_resolution": "first_real_freeze_only_all_five_repo_HEADs",
+    "revision_format": "40_lowercase_hex_commit_sha",
+    "streaming": true,
+    "shuffle_seed": 42,
+    "shuffle_buffer_size": 10000,
+    "one_iterator": true,
+    "workers": 0,
+    "skip_blank": true,
+    "character_limit": 1280,
+    "add_special_tokens": true,
+    "minimum_tokens": 128,
+    "retain_first_tokens": 128,
+    "valid_examples": 4096,
+    "artifact_dtype": "torch.int64",
+    "artifact_shape": [
+      4096,
+      128
+    ],
+    "smoke_valid_examples_per_corpus": 4,
+    "smoke_writes": false,
+    "overwrite": false
+  },
+  "spec_sha256": "a10b513387635cd599971b10a3c7614a7a18483db7b12f9058898c417101db12",
+  "lock_sha256": "c0cdd8f10ca70c0db5caa27b8e3488b0ea5fb6d6cf031e744a6d7a82ee58ffc8",
+  "freeze_script_sha256": "b4531ccbad9ebc05467a5da8b49d544bee6a900c3fa35c3c23e568e878e214f2",
+  "tokenizer_files": [
+    {
+      "path": "chat_template.jinja",
+      "size_bytes": 4168,
+      "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+    },
+    {
+      "path": "config.json",
+      "size_bytes": 1416,
+      "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+    },
+    {
+      "path": "tokenizer.json",
+      "size_bytes": 11422650,
+      "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "size_bytes": 692,
+      "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+    }
+  ],
+  "counts": {
+    "source_rows_inspected": 4097,
+    "valid_rows_accepted": 4096,
+    "skipped_blank": 0,
+    "skipped_short": 1
+  },
+  "tensor": {
+    "shape": [
+      4096,
+      128
+    ],
+    "dtype": "torch.int64",
+    "device": "cpu",
+    "contiguous": true
+  },
+  "artifact": {
+    "path": "/root/model-diff-scratch/artifacts/attempt100_diverse8_corpora/codeparrot_clean_tokens.pt",
+    "serialized_sha256": "71d2b05a2ab3bfc934ec2d62275a8f8b8ec5d7de9f649d86e8f98f57d1b9503d",
+    "raw_tensor_sha256": "92c4fa0ac6de439accffd74991df69fbd50d814d6a51059c0109a1ed9c6d03d6"
+  }
+}

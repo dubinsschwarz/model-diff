@@ -1,0 +1,43 @@
+{
+  "format_version": 1,
+  "attempt_id": "100_diverse8_raw_jg_consensus_prefix0_13",
+  "spec_sha256": "a10b513387635cd599971b10a3c7614a7a18483db7b12f9058898c417101db12",
+  "resolution": "one_time_dataset_HEAD",
+  "corpora": [
+    {
+      "name": "arxiv_document",
+      "repo_id": "ccdv/arxiv-summarization",
+      "config": "document",
+      "split": "train",
+      "revision": "240aaf1a969b3f8cd0ade6986bfad0cd730ee288"
+    },
+    {
+      "name": "cc_news",
+      "repo_id": "vblagoje/cc_news",
+      "config": null,
+      "split": "train",
+      "revision": "81eb2ce0d2a9dad6ad16b68ef750ec290880fa36"
+    },
+    {
+      "name": "pg19",
+      "repo_id": "emozilla/pg19",
+      "config": null,
+      "split": "train",
+      "revision": "c021754c8e01c5b1cc83a1f549c1f97fbbb756b8"
+    },
+    {
+      "name": "codeparrot_clean",
+      "repo_id": "codeparrot/codeparrot-clean",
+      "config": null,
+      "split": "train",
+      "revision": "35a59fb025bc0a102f7d96eac09d145b896d487b"
+    },
+    {
+      "name": "ultrachat",
+      "repo_id": "HuggingFaceH4/ultrachat_200k",
+      "config": null,
+      "split": "train_sft",
+      "revision": "8049631c405ae6576f93f445c6b8166f76f5505a"
+    }
+  ]
+}
