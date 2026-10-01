@@ -1,0 +1,29 @@
+{
+  "format_version": 1,
+  "attempt_id": "023_blind_centered_gradient_pca4_regression_pilot",
+  "purpose": "post_freeze_known_base_parameter_space_evaluation_no_tuning",
+  "construction_policy": "final_checkpoint_plus_frozen_fineweb_only",
+  "historical_base_spec_sha256": "29cc8defa81ebb7255c8daac5eaa722087dac7250662db8c3f2555b28c691934",
+  "historical_base_loading": "raw_safetensors_to_contiguous_FP32_loaded_W0",
+  "displacement": "CPU_float64_W1_FP32_minus_W0_FP32",
+  "snapshot_projection": "s_i=scalar_path_dL_i(W1+t_DeltaS)/dt_at_t0;v=(I-11T/16)s;c_true_j=u_jT_v/sqrt(lambda_j)",
+  "functional_activation_evaluation": false,
+  "defaults": {
+    "construction_spec_path": "experiments/attempts/023_blind_centered_gradient_pca4_regression_pilot/spec.json",
+    "construction_manifest_path": "experiments/attempts/023_blind_centered_gradient_pca4_regression_pilot/construction-manifest.json",
+    "artifact_path": "/root/model-diff-scratch/artifacts/attempt023_centered_gradient_pca4/stats.pt",
+    "evaluation_spec_path": "experiments/attempts/023_blind_centered_gradient_pca4_regression_pilot/evaluation_spec.json",
+    "output_path": "experiments/attempts/023_blind_centered_gradient_pca4_regression_pilot/evaluation.json",
+    "final_directory": "/root/model-diff-scratch/models/merged",
+    "corpus_spec_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus_spec.json",
+    "corpus_manifest_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus-manifest.json",
+    "tokens_path": "/root/model-diff-scratch/artifacts/attempt005_generic_rollback_corpus/tokens.pt",
+    "base_directory": "/root/model-diff-scratch/models/base"
+  },
+  "outputs": {
+    "overwrite": false,
+    "timestamps": false,
+    "host_metadata": false,
+    "gpu_metadata": false
+  }
+}
