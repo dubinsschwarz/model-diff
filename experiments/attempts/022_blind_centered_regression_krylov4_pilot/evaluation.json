@@ -1,0 +1,182 @@
+{
+  "format_version": 1,
+  "attempt_id": "022_blind_centered_regression_krylov4_pilot",
+  "purpose": "post_freeze_known_base_parameter_space_evaluation_no_tuning",
+  "hash_algorithm": "sha256",
+  "construction_manifest_sha256": "5cea3355494fbfdae793ca38dd30804e5243748b55554a473620d0a8707b69dc",
+  "construction_artifact": {
+    "path": "/root/model-diff-scratch/artifacts/attempt022_blind_centered_krylov4/batch_stats.pt",
+    "serialized_sha256": "c58d110ab86507b4c059463a100489902fb1393b15b5e840ba948f034131f408",
+    "raw_tensor_sha256": {
+      "microbatch_index": "fe6e8412f5d7ac5241bc7c5eb088274144dd4f5c2ef8fd225658b220b979b823",
+      "b": "21b99598f6160ae35f3325d3aae9f8e572fa6521b05460f256271d6f451df08e",
+      "M": "d57abdbdd107910c2852476e2d83801335586eb80cc721a7022e5befa0cf8efa",
+      "c_hat": "4431d10e7f61ac2c0d0eef5c8a903606f9b2def53930bca68286444013694a71"
+    },
+    "tensors": {
+      "microbatch_index": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.int64",
+        "device": "cpu",
+        "contiguous": true
+      },
+      "b": {
+        "shape": [
+          32,
+          4
+        ],
+        "dtype": "torch.float64",
+        "device": "cpu",
+        "contiguous": true
+      },
+      "M": {
+        "shape": [
+          32,
+          4,
+          4
+        ],
+        "dtype": "torch.float64",
+        "device": "cpu",
+        "contiguous": true
+      },
+      "c_hat": {
+        "shape": [
+          4
+        ],
+        "dtype": "torch.float64",
+        "device": "cpu",
+        "contiguous": true
+      }
+    }
+  },
+  "historical_base": {
+    "repo_id": "Qwen/Qwen3-1.7B",
+    "revision": "0060bc56d46589041c1048efd1a397421b1142b5",
+    "files": [
+      {
+        "path": ".gitattributes",
+        "size_bytes": 1570,
+        "sha256": "34448b82c17d60fec9b65b1f093c115ddbaadc04beb1b0140b6bfed2e012a930"
+      },
+      {
+        "path": "README.md",
+        "size_bytes": 13963,
+        "sha256": "257e52c419dac2258852643f18af6c974f21f8c6c1b6f371b6cca6201cf29091"
+      },
+      {
+        "path": "config.json",
+        "size_bytes": 726,
+        "sha256": "1ddb5b89ebc90dcb417a45c213d818577e65976454d29385c8f6140771d95197"
+      },
+      {
+        "path": "generation_config.json",
+        "size_bytes": 239,
+        "sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2"
+      },
+      {
+        "path": "merges.txt",
+        "size_bytes": 1671853,
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      {
+        "path": "model-00001-of-00002.safetensors",
+        "size_bytes": 3441185608,
+        "sha256": "169ad53ec313c3a34b06c0809216e4fc072cce444a5d4ff2b59690d064130ed5"
+      },
+      {
+        "path": "model-00002-of-00002.safetensors",
+        "size_bytes": 622329984,
+        "sha256": "912becff8d60672aa8628ef08c05898d9adf17c2ad4ae3caf99b065622fdeff9"
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "size_bytes": 25605,
+        "sha256": "0d660e94b165eb912669a5249dff44b83188c4777a07ddb9611fb78d91b0578d"
+      },
+      {
+        "path": "tokenizer.json",
+        "size_bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size_bytes": 9732,
+        "sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101"
+      },
+      {
+        "path": "vocab.json",
+        "size_bytes": 2776833,
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    ]
+  },
+  "basis_gram": {
+    "gram_matrix": [
+      [
+        0.9999999974432281,
+        6.794302165454716e-09,
+        -1.5687477557225187e-09,
+        2.389450467361255e-09
+      ],
+      [
+        6.794302165454716e-09,
+        1.0000000116407246,
+        -6.112222438447448e-09,
+        -1.356701620237074e-09
+      ],
+      [
+        -1.5687477557225187e-09,
+        -6.112222438447448e-09,
+        0.9999999929768781,
+        -9.710470371518984e-10
+      ],
+      [
+        2.389450467361255e-09,
+        -1.356701620237074e-09,
+        -9.710470371518984e-10,
+        0.999999992957121
+      ]
+    ],
+    "max_off_diagonal": 6.794302165454716e-09,
+    "max_diagonal_deviation": 1.1640724606465369e-08,
+    "max_reference_difference": 1.3322676295501878e-15
+  },
+  "metrics": {
+    "c_hat": [
+      0.004314367216016804,
+      0.0006784667590311612,
+      -0.0016226276849115153,
+      0.0016989434559685325
+    ],
+    "c_true": [
+      0.018494480871589093,
+      -0.005481493037424038,
+      0.0022964191358237447,
+      0.003217869977217315
+    ],
+    "candidate_norm": 0.004959174436150683,
+    "projected_true_norm": 0.019690627635160773,
+    "deltaS_norm": 2.208899234659567,
+    "projection_ceiling": 0.008914226292534105,
+    "cosine_coefficients": 0.7968695230161226,
+    "cosine_candidate_to_full_DeltaS": 0.007103475253789429,
+    "fraction_of_subspace_ceiling": 0.7968695230161223,
+    "optimal_scalar": 3.164006681664118,
+    "relative_residual_after_optimal_rescaling": 0.6041514406902108
+  },
+  "functional_evaluation": false,
+  "input_source_hashes": {
+    "/workspace/model-diff/experiments/attempts/022_blind_centered_regression_krylov4_pilot/evaluation_spec.json": "acd72cf7a0af07512d9aefd00b7d2586ed0a96562f476a1298cb8a30e05f1055",
+    "/workspace/model-diff/experiments/attempts/022_blind_centered_regression_krylov4_pilot/spec.json": "b777a3bd2e1023976477ffedc6479caebcf63fd4f9ea19743d7b53a00bbf78de",
+    "/workspace/model-diff/experiments/attempts/022_blind_centered_regression_krylov4_pilot/construction-manifest.json": "5cea3355494fbfdae793ca38dd30804e5243748b55554a473620d0a8707b69dc",
+    "/root/model-diff-scratch/artifacts/attempt022_blind_centered_krylov4/batch_stats.pt": "c58d110ab86507b4c059463a100489902fb1393b15b5e840ba948f034131f408",
+    "/workspace/model-diff/scripts/ablation/evaluate_blind_centered_krylov4_pilot.py": "8c3d3a182a202f2c4bdb8e7ec5f2284bc21fc5fcd3a490e783dad321d0ddcca6",
+    "/workspace/model-diff/scripts/ablation/construct_blind_centered_krylov4_pilot.py": "b0b52b29c608a3f276117ab7fc2569d74097b25bcef02f80485855318662bfd5",
+    "/workspace/model-diff/experiments/attempts/016_known_base_exact_displacement_jvp_ceiling_prefix0_13/spec.json": "29cc8defa81ebb7255c8daac5eaa722087dac7250662db8c3f2555b28c691934",
+    "/workspace/model-diff/experiments/attempts/011_generic_hessian_krylov_k4_prefix0_13/construction-manifest.json": "af334b5a580560900f38f5349ad8db51c6d1c2b61287d0b819b09829e52f91aa"
+  },
+  "selection": false,
+  "coefficient_mutation": false
+}
