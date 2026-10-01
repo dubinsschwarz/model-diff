@@ -842,8 +842,7 @@
     "evaluation": "torch.func.functional_call",
     "only_autograd_input": "t",
     "primitive": "true_double_backward",
-    "raw_hessian_absolute_asymmetry_limit": 0.001,
-    "raw_hessian_relative_asymmetry_limit": 0.01,
+    "raw_hessian_relative_asymmetry_limit": 1e-05,
     "relative_asymmetry_denominator_floor": 1e-06,
     "symmetrization": "(M_raw+M_raw.T)/2",
     "fallback": false

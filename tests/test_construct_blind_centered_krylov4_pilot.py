@@ -77,6 +77,7 @@ class MathematicsTests(unittest.TestCase):
             b, M, asym = c.t_space_batch(model, tokens, ['proj.weight'], basis(), c.FROZEN_SPEC['t_space'])
         self.assertEqual(calls, [((4,), torch.float64)]*5)
         self.assertLessEqual(asym['absolute'], 1e-5)
+        self.assertLessEqual(asym['relative'], c.FROZEN_SPEC['t_space']['raw_hessian_relative_asymmetry_limit'])
         torch.testing.assert_close(M, M.T, rtol=0, atol=0)
         weight = model.proj.weight.detach().clone().requires_grad_(True)
         def loss(w):
@@ -91,6 +92,27 @@ class MathematicsTests(unittest.TestCase):
         self.assertTrue(all(parameter.grad is None for parameter in model.parameters()))
         for key, value in model.state_dict().items():
             torch.testing.assert_close(value, state[key], rtol=0, atol=0)
+
+    def test_scale_aware_hessian_asymmetry_audit(self):
+        policy = c.FROZEN_SPEC['t_space']
+        self.assertNotIn('raw_hessian_absolute_asymmetry_limit', policy)
+        large = torch.diag(torch.tensor([2425.3762, 2., 3., 4.], dtype=torch.float64))
+        large[0, 1] = 3.
+        large[1, 0] = 3.0081634521484375
+        symmetrized, diagnostic = c.audit_hessian_symmetry(large, policy)
+        self.assertGreater(diagnostic['absolute'], 1e-3)
+        self.assertLess(diagnostic['relative'], 1e-5)
+        self.assertAlmostEqual(diagnostic['relative'], diagnostic['absolute']/2425.3762)
+        torch.testing.assert_close(symmetrized, (large+large.T)/2, rtol=0, atol=0)
+
+        small = torch.eye(4, dtype=torch.float64)
+        small[0, 1] = 0.2
+        small[1, 0] = 0.20002
+        with self.assertRaisesRegex(ValueError, 'asymmetry exceeds'):
+            c.audit_hessian_symmetry(small, policy)
+        small[0, 0] = float('nan')
+        with self.assertRaisesRegex(ValueError, 'Invalid raw'):
+            c.audit_hessian_symmetry(small, policy)
 
     def test_centering_exact_recovery_intercept_and_correlated_bias(self):
         b, M, coefficient, mu = synthetic_records()

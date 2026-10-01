@@ -50,8 +50,7 @@ FROZEN_SPEC = {
                 'weight_arithmetic': 'FP32(W1_weight+sum_j FP32(t_j)*realized_FP32_q_j)',
                 'evaluation': 'torch.func.functional_call',
                 'only_autograd_input': 't', 'primitive': 'true_double_backward',
-                'raw_hessian_absolute_asymmetry_limit': 1e-3,
-                'raw_hessian_relative_asymmetry_limit': 1e-2,
+                'raw_hessian_relative_asymmetry_limit': 1e-5,
                 'relative_asymmetry_denominator_floor': 1e-6,
                 'symmetrization': '(M_raw+M_raw.T)/2', 'fallback': False},
     'regression': {'driver': 'gelsd', 'rcond': 1e-12, 'dtype': 'CPU_float64',
@@ -167,6 +166,18 @@ def freeze_model(model):
         raise ValueError('Model parameter freeze failed')
 
 
+def audit_hessian_symmetry(raw, asymmetry):
+    if (raw.shape != (4, 4) or raw.dtype != torch.float64 or raw.device.type != 'cpu' or
+            not bool(torch.isfinite(raw).all())):
+        raise ValueError('Invalid raw t-space Hessian')
+    absolute = float((raw-raw.T).abs().max())
+    scale = max(float(raw.abs().max()), asymmetry['relative_asymmetry_denominator_floor'])
+    relative = absolute/scale
+    if relative > asymmetry['raw_hessian_relative_asymmetry_limit']:
+        raise ValueError('t-space Hessian asymmetry exceeds frozen tolerance')
+    return ((raw+raw.T)/2).contiguous(), {'absolute': absolute, 'relative': relative}
+
+
 def t_space_batch(model, batch, names, basis, asymmetry):
     if batch.dtype != torch.int64 or tuple(batch.shape) != (8, 128) or len(basis) != 4 or not names:
         raise ValueError('Invalid frozen microbatch or t-space basis')
@@ -203,16 +214,10 @@ def t_space_batch(model, batch, names, basis, asymmetry):
         del logits, loss, gradient, rows, overrides
     if not bool(torch.isfinite(b).all() and torch.isfinite(raw).all()):
         raise ValueError('Nonfinite t-space derivative')
-    delta = raw-raw.T
-    absolute = float(delta.abs().max())
-    scale = max(float(raw.abs().max()), asymmetry['relative_asymmetry_denominator_floor'])
-    relative = absolute/scale
-    if (absolute > asymmetry['raw_hessian_absolute_asymmetry_limit'] or
-            relative > asymmetry['raw_hessian_relative_asymmetry_limit']):
-        raise ValueError('t-space Hessian asymmetry exceeds frozen tolerance')
+    M, diagnostic = audit_hessian_symmetry(raw, asymmetry)
     if any(parameter.grad is not None for parameter in model.parameters()):
         raise ValueError('Unexpected model parameter gradient')
-    return b, ((raw+raw.T)/2).contiguous(), {'absolute': absolute, 'relative': relative}
+    return b, M, diagnostic
 
 
 def solve_centered(b, M, policy):
