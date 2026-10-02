@@ -1,0 +1,279 @@
+{
+  "format_version": 1,
+  "attempt_id": "105_privileged_endpoint_ggn_forward_pilot",
+  "purpose": "privileged_exact_endpoint_categorical_ggn_forward_equation_pilot_not_blind_recovery",
+  "attempt104": {
+    "spec_path": "experiments/attempts/104_privileged_hybrid_prefix_soft_teacher_diagnostic/spec.json",
+    "spec_sha256": "2d094f6ea5a27489c08b84c59802b47e691da12e49046eff34a000b53b0886b4",
+    "source_path": "scripts/ablation/diagnose_privileged_hybrid_prefix_soft_teacher.py",
+    "source_sha256": "980137e77b650f92d8a721d52a104a2db0fdb0f44fc874b76526e5d1353c9d4a",
+    "result_path": "experiments/attempts/104_privileged_hybrid_prefix_soft_teacher_diagnostic/result.json",
+    "result_sha256": "6abbe57fb3cacd11a2ce84793d1aebc20fa88ad659d736ecd4401e9f8ffce788",
+    "required_category": "curvature_limited_support"
+  },
+  "attempt016": {
+    "spec_path": "experiments/attempts/016_known_base_exact_displacement_jvp_ceiling_prefix0_13/spec.json",
+    "spec_sha256": "29cc8defa81ebb7255c8daac5eaa722087dac7250662db8c3f2555b28c691934",
+    "source_path": "scripts/ablation/construct_exact_displacement_jvp_ceiling.py",
+    "source_sha256": "a682ce8a5dd01b2bc080b913d5148ba00544217be6a9b6b5a9ec66bc03da755a"
+  },
+  "paths": {
+    "base_directory": "/root/model-diff-scratch/models/base",
+    "final_directory": "/root/model-diff-scratch/models/merged",
+    "corpus_path": "/root/model-diff-scratch/artifacts/attempt005_generic_rollback_corpus/tokens.pt",
+    "result_path": "experiments/attempts/105_privileged_endpoint_ggn_forward_pilot/result.json"
+  },
+  "base": {
+    "repo_id": "Qwen/Qwen3-1.7B",
+    "revision": "0060bc56d46589041c1048efd1a397421b1142b5",
+    "files": [
+      {
+        "path": ".gitattributes",
+        "size_bytes": 1570,
+        "sha256": "34448b82c17d60fec9b65b1f093c115ddbaadc04beb1b0140b6bfed2e012a930"
+      },
+      {
+        "path": "README.md",
+        "size_bytes": 13963,
+        "sha256": "257e52c419dac2258852643f18af6c974f21f8c6c1b6f371b6cca6201cf29091"
+      },
+      {
+        "path": "config.json",
+        "size_bytes": 726,
+        "sha256": "1ddb5b89ebc90dcb417a45c213d818577e65976454d29385c8f6140771d95197"
+      },
+      {
+        "path": "generation_config.json",
+        "size_bytes": 239,
+        "sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2"
+      },
+      {
+        "path": "merges.txt",
+        "size_bytes": 1671853,
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      {
+        "path": "model-00001-of-00002.safetensors",
+        "size_bytes": 3441185608,
+        "sha256": "169ad53ec313c3a34b06c0809216e4fc072cce444a5d4ff2b59690d064130ed5"
+      },
+      {
+        "path": "model-00002-of-00002.safetensors",
+        "size_bytes": 622329984,
+        "sha256": "912becff8d60672aa8628ef08c05898d9adf17c2ad4ae3caf99b065622fdeff9"
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "size_bytes": 25605,
+        "sha256": "0d660e94b165eb912669a5249dff44b83188c4777a07ddb9611fb78d91b0578d"
+      },
+      {
+        "path": "tokenizer.json",
+        "size_bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size_bytes": 9732,
+        "sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101"
+      },
+      {
+        "path": "vocab.json",
+        "size_bytes": 2776833,
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    ]
+  },
+  "final_checkpoint_files": [
+    {
+      "path": "chat_template.jinja",
+      "size_bytes": 4168,
+      "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+    },
+    {
+      "path": "config.json",
+      "size_bytes": 1416,
+      "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+    },
+    {
+      "path": "generation_config.json",
+      "size_bytes": 214,
+      "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+    },
+    {
+      "path": "model.safetensors",
+      "size_bytes": 6882335328,
+      "sha256": "f6989dd3445cd339041ab654a6da463e0a80b2d52dd2c01f67f683b1c30ea10f"
+    },
+    {
+      "path": "tokenizer.json",
+      "size_bytes": 11422650,
+      "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "size_bytes": 692,
+      "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+    }
+  ],
+  "model": {
+    "model_type": "qwen3",
+    "num_hidden_layers": 28,
+    "source_dtype": "float32",
+    "local_files_only": true,
+    "eval_mode": true,
+    "use_cache": false
+  },
+  "readout": {
+    "block_index": 13,
+    "hidden_state_index": 14,
+    "hidden_size": 2048,
+    "all_token_positions": true,
+    "semantics": "hidden_states[14] is block 13 output before block 14; verify with forward hook"
+  },
+  "eligible_tensors": {
+    "transformer_block_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "recursive_module_type": "torch.nn.Linear",
+    "parameter": "weight",
+    "expected_matrix_count": 98,
+    "module_ordering": "lexicographic_by_module_name",
+    "freeze_every_other_parameter": true
+  },
+  "corpus": {
+    "spec_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus_spec.json",
+    "spec_sha256": "e514820e7def99e9287c32de4b1279f28f6ff6c2e09749a8dfa5d8b14c311f0f",
+    "manifest_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus-manifest.json",
+    "manifest_sha256": "8b3ea49228dbb106c2b8a7c849c4f27e021fa3e992800444f43e260a6b055230",
+    "serialized_sha256": "54283d72aa3075e2867ead86e538991d7284ede327ca67871e73bfc581e4025d",
+    "raw_tensor_sha256": "4613982be77342a89b35616d68e21d9ff66d5a983af7e82cb6fa1eb159457eae",
+    "source_shape": [
+      4096,
+      128
+    ],
+    "construction_rows": [
+      0,
+      512
+    ],
+    "batch_size": 4,
+    "number_of_batches": 128,
+    "predictions_per_sequence": 127,
+    "total_prediction_tokens": 65024
+  },
+  "pilot": {
+    "construction_rows": [
+      0,
+      64
+    ],
+    "sequence_length": 128,
+    "hybrid_batch_size": 4,
+    "hybrid_batches": 16,
+    "ggn_batch_size": 1,
+    "ggn_batches": 64,
+    "prediction_positions": [
+      0,
+      126
+    ],
+    "prediction_contexts": 8128
+  },
+  "displacement": {
+    "definition": "Delta_E = final_float32 - base_float32 on 98 early Linear.weight",
+    "subtraction": "matrix_wise_CPU_float64_then_one_contiguous_FP32_cast",
+    "normalization": false,
+    "upstream_audit": "exact_Attempt016_parameter_alias_and_buffer_config_audits"
+  },
+  "hybrid_gradient": {
+    "source": "exact_Attempt104_base_block13_final_downstream_soft_teacher",
+    "sign": "positive",
+    "denominator": 8128,
+    "temporary_storage": "cpu_contiguous_float32_matrixwise_then_clear_parameter_grads"
+  },
+  "ggn": {
+    "operator": "exact_endpoint_categorical_JtFJ",
+    "jvp": "strict_torch.func.jvp_partial_functional_call_final_logits_no_fallback",
+    "fisher": "p_times_s_minus_sum_vocab_p_times_s",
+    "vjp": "sum_final_logits_times_detached_fisher_vector_then_selected_parameter_backward",
+    "denominator": 8128,
+    "empirical_fisher": false,
+    "finite_differences": false,
+    "hard_labels": false,
+    "inverse_solve": false,
+    "first_batch_primal_rtol": 1e-05,
+    "first_batch_primal_atol": 1e-06,
+    "first_batch_rms_rtol": 1e-05,
+    "first_batch_rms_atol": 1e-06,
+    "fisher_conservation_relative_tolerance": 1e-05,
+    "fisher_conservation_absolute_tolerance": 1e-10
+  },
+  "metrics": {
+    "dtype": "cpu_float64_matrixwise_stable_sum",
+    "primary": "global_signed_cosine_ggn_action_vs_hybrid_gradient",
+    "groups": [
+      "block_0_through_13",
+      "attention_pooled",
+      "mlp_pooled"
+    ],
+    "norm_contribution": "group_squared_norm_divided_by_global_squared_norm",
+    "optimal_scalar": "dot_ggn_hybrid_divided_by_ggn_squared_norm",
+    "selection": false
+  },
+  "interpretation": {
+    "strong_endpoint_ggn_support": {
+      "cosine_min": 0.9
+    },
+    "mixed_endpoint_and_path_effects": {
+      "cosine_min": 0.7,
+      "cosine_max_exclusive": 0.9
+    },
+    "endpoint_ggn_insufficient": {
+      "cosine_max_exclusive": 0.7
+    },
+    "significance_claim": false,
+    "candidate_selection": false
+  },
+  "smoke": {
+    "hybrid_rows": [
+      0,
+      4
+    ],
+    "ggn_rows": [
+      0,
+      1
+    ],
+    "hybrid_batches": 1,
+    "ggn_batches": 1,
+    "projected_hybrid_batches": 16,
+    "projected_ggn_batches": 64,
+    "write_outputs": false
+  },
+  "output_policy": {
+    "result_overwrite": false,
+    "large_vector_persistence": false,
+    "probability_persistence": false,
+    "probe_jvp": false
+  },
+  "information_policy": {
+    "privileged_mechanism_diagnostic": true,
+    "historical_base_access": true,
+    "oracle_adl_access": false,
+    "adapter_access": false,
+    "inverse_solve": false,
+    "empirical_fisher": false,
+    "candidate_selection": false,
+    "oracle_based_tuning": false
+  }
+}
