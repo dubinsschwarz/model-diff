@@ -16,7 +16,7 @@ import torch
 PROJECT = Path(__file__).resolve().parents[2]
 ATTEMPT = '106_privileged_inverse_ggn_cg_pilot'
 SPEC_PATH = PROJECT/'experiments/attempts'/ATTEMPT/'spec.json'
-SPEC_SHA256 = 'bef220f78feb7580c4f1dd02e15c00270d977eccff89e8d251413263b3bc1de3'
+SPEC_SHA256 = 'eeef0f7b931be857462e286258ccde7705b916f6a731bdff213bbfd9df0d416e'
 SOURCE105 = Path(__file__).with_name('diagnose_privileged_endpoint_ggn_forward.py')
 SOURCE105_SHA256 = '3c95e670ad441ad4f086f56c2b214842bf8d09924630b5afa73fdd60719bae18'
 if hashlib.sha256(SOURCE105.read_bytes()).hexdigest() != SOURCE105_SHA256:
@@ -53,7 +53,11 @@ def load_spec(path=SPEC_PATH):
             spec['solver']['damping_ratio'] != 0.01 or
             spec['solver']['residual_early_stop'] is not False or
             spec['target']['raw_float32_sha256'] !=
-                '4ab001c60fff4ad4f15db472436c3915b39fb5a69626a418f70c5eaaed780c5f'):
+                '4ab001c60fff4ad4f15db472436c3915b39fb5a69626a418f70c5eaaed780c5f' or
+            spec['ggn_numerics_106']['operator'] != 'exact_endpoint_categorical_JtFJ' or
+            spec['ggn_numerics_106']['implementation'] !=
+                'FP64_softmax_and_Fisher_action_then_single_FP32_VJP_cast' or
+            spec['ggn_numerics_106']['attempt105_numerical_implementation_reused'] is not False):
         raise ValueError('Attempt106 frozen scientific inventory mismatch')
     for value in spec['paths'].values():
         parent.resolve(value)
@@ -144,6 +148,157 @@ def matrixwise_grad_dot(eligible, vector):
             raise ValueError('Missing/nonfinite GGN action coordinate')
         parts.append(float(torch.sum(gradient*direction, dtype=torch.float64)))
     return math.fsum(parts)
+
+
+def _fisher_error(reason, diagnostics):
+    raise ValueError(f'Attempt106 categorical Fisher {reason}; diagnostics='
+                     f'{json.dumps(diagnostics, sort_keys=True, allow_nan=True, default=str)}')
+
+
+def audit_stable_fisher_numerics(p64, s64, mean64, u64, u, spec):
+    policy = spec['ggn_numerics_106']
+    diagnostics = {'p64_shape': list(p64.shape), 'u64_shape': list(u64.shape),
+                   'u_shape': list(u.shape), 'p64_finite': bool(torch.isfinite(p64).all()),
+                   's64_finite': bool(torch.isfinite(s64).all()),
+                   'mean64_finite': bool(torch.isfinite(mean64).all()),
+                   'u64_finite': bool(torch.isfinite(u64).all()),
+                   'u_finite': bool(torch.isfinite(u).all())}
+    diagnostics.update({
+        'max_abs_tangent': float(s64.abs().max()) if diagnostics['s64_finite'] else None,
+        'max_abs_weighted_mean': float(mean64.abs().max()) if diagnostics['mean64_finite'] else None,
+        'max_abs_u64_entry': float(u64.abs().max()) if diagnostics['u64_finite'] else None,
+        'max_abs_u_entry': float(u.abs().max()) if diagnostics['u_finite'] else None})
+    if (p64.ndim != 3 or p64.shape != s64.shape or p64.shape != u64.shape or
+            p64.shape != u.shape or mean64.shape != p64.shape[:-1]+(1,) or
+            p64.dtype != torch.float64 or s64.dtype != torch.float64 or
+            mean64.dtype != torch.float64 or u64.dtype != torch.float64 or
+            u.dtype != torch.float32 or not all(diagnostics[key] for key in
+                ('p64_finite', 's64_finite', 'mean64_finite', 'u64_finite', 'u_finite'))):
+        _fisher_error('nonfinite/malformed values', diagnostics)
+    p_sum_error = (torch.sum(p64, dim=-1, dtype=torch.float64)-1).abs()
+    residual64 = torch.sum(u64, dim=-1, dtype=torch.float64).abs()
+    scale64 = torch.sum(u64.abs(), dim=-1, dtype=torch.float64)
+    residual32 = torch.sum(u, dim=-1, dtype=torch.float64).abs()
+    scale32 = torch.sum(u.abs(), dim=-1, dtype=torch.float64)
+    relative64 = torch.where(scale64 > 0, residual64/scale64.clamp_min(
+        torch.finfo(torch.float64).tiny), torch.zeros_like(scale64))
+    relative32 = torch.where(scale32 > 0, residual32/scale32.clamp_min(
+        torch.finfo(torch.float64).tiny), torch.zeros_like(scale32))
+    max_abs_tangent = s64.abs().amax(dim=-1)
+    diagnostics.update({
+        'max_abs_tangent': float(max_abs_tangent.max()),
+        'max_abs_unweighted_vocab_mean_tangent': float(s64.mean(dim=-1).abs().max()),
+        'max_abs_probability_weighted_mean_tangent': float(mean64.abs().max()),
+        'max_softmax_sum_error': float(p_sum_error.max()),
+        'max_abs_sum_u64': float(residual64.max()),
+        'max_relative_abs_sum_u64': float(relative64.max()),
+        'fp32_max_abs_sum': float(residual32.max()),
+        'fp32_max_relative_abs_sum': float(relative32.max()),
+        'prediction_context_count': residual64.numel()})
+    allowed64 = (policy['fp64_fisher_conservation_fail_relative_tolerance']*scale64+
+                 policy['fp64_fisher_conservation_fail_gauge_roundoff_multiplier']*
+                 max_abs_tangent/spec['pilot']['prediction_contexts']+
+                 policy['fp64_fisher_conservation_fail_absolute_tolerance'])
+    allowed32 = (policy['fp32_cast_conservation_fail_relative_tolerance']*scale32+
+                 policy['fp32_cast_conservation_fail_absolute_tolerance'])
+    diagnostics['max_fp64_allowed_abs_sum'] = float(allowed64.max())
+    diagnostics['max_fp32_allowed_abs_sum'] = float(allowed32.max())
+    if bool((p_sum_error > policy['fp64_softmax_normalization_fail_abs_tolerance']).any()):
+        _fisher_error('FP64 softmax normalization failure', diagnostics)
+    if bool((residual64 > allowed64).any()):
+        _fisher_error('FP64 sum-to-zero failure', diagnostics)
+    if bool((residual32 > allowed32).any()):
+        _fisher_error('FP32 cast sum-to-zero failure', diagnostics)
+    return diagnostics
+
+
+def stable_categorical_fisher_vector(logits, tangent, spec):
+    input_audit = {'logits_shape': list(logits.shape), 'tangent_shape': list(tangent.shape),
+                   'logits_dtype': str(logits.dtype), 'tangent_dtype': str(tangent.dtype),
+                   'logits_finite': bool(torch.isfinite(logits).all()),
+                   'tangent_finite': bool(torch.isfinite(tangent).all())}
+    input_audit['max_abs_logits'] = (float(logits.abs().max())
+                                     if input_audit['logits_finite'] else None)
+    input_audit['max_abs_tangent'] = (float(tangent.abs().max())
+                                      if input_audit['tangent_finite'] else None)
+    if (logits.ndim != 3 or logits.shape != tangent.shape or
+            logits.dtype != torch.float32 or tangent.dtype != torch.float32 or
+            not input_audit['logits_finite'] or not input_audit['tangent_finite']):
+        _fisher_error('nonfinite/malformed logits or tangent', input_audit)
+    p64 = torch.softmax(logits.to(torch.float64), dim=-1)
+    s64 = tangent.to(torch.float64)
+    mean64 = torch.sum(p64*s64, dim=-1, keepdim=True, dtype=torch.float64)
+    u64 = p64*(s64-mean64)
+    u64 /= spec['pilot']['prediction_contexts']
+    u = u64.to(torch.float32)
+    audit = audit_stable_fisher_numerics(p64, s64, mean64, u64, u, spec)
+    return u.detach(), audit
+
+
+def summarize_stable_fisher_audits(records):
+    if not records:
+        raise ValueError('Empty Attempt106 Fisher audit')
+    fields = ('max_abs_tangent', 'max_abs_unweighted_vocab_mean_tangent',
+              'max_abs_probability_weighted_mean_tangent', 'max_softmax_sum_error',
+              'max_abs_sum_u64', 'max_relative_abs_sum_u64', 'fp32_max_abs_sum',
+              'fp32_max_relative_abs_sum', 'max_fp64_allowed_abs_sum',
+              'max_fp32_allowed_abs_sum')
+    return {'per_batch': records,
+            'aggregate': {**{field: max(row[field] for row in records) for field in fields},
+                          'prediction_context_count': sum(
+                              row['prediction_context_count'] for row in records)}}
+
+
+def ggn_action_stage(final, tokens, eligible, direction, spec, *, progress=None):
+    if (tokens.shape != (64, 128) or tokens.dtype != torch.int64 or
+            not tokens.is_contiguous() or len(eligible) != 98 or len(direction) != 98 or
+            set(direction) != set(_names(eligible))):
+        raise ValueError('Attempt106 fixed GGN inventory/support mismatch')
+    selected = {id(module.weight) for _, module in eligible}
+    final.zero_grad(set_to_none=True)
+    timings = {'logits_jvp_seconds': 0.0, 'fisher_vector_seconds': 0.0,
+               'vjp_backward_seconds': 0.0}
+    first_audit = None
+    records = []
+    started = time.perf_counter()
+    device = eligible[0][1].weight.device
+    for index in range(64):
+        batch = tokens[index:index+1].to(device)
+        stage = time.perf_counter()
+        primal, tangent = a105.strict_logits_jvp(final, batch, direction)
+        timings['logits_jvp_seconds'] += time.perf_counter()-stage
+        primal_audit = None
+        if index == 0:
+            with torch.no_grad(), torch.autocast(device_type=device.type, enabled=False):
+                ordinary = final(input_ids=batch, use_cache=False).logits[:, :-1, :].float()
+            primal_audit = a105.audit_logits_primal(primal, ordinary, spec)
+            del ordinary
+        stage = time.perf_counter()
+        fisher, conservation = stable_categorical_fisher_vector(primal, tangent, spec)
+        records.append({'microbatch_index': index, **conservation})
+        timings['fisher_vector_seconds'] += time.perf_counter()-stage
+        stage = time.perf_counter()
+        with torch.enable_grad(), torch.autocast(device_type=device.type, enabled=False):
+            logits = final(input_ids=batch, use_cache=False).logits[:, :-1, :].float()
+            if logits.shape != fisher.shape or not bool(torch.isfinite(logits).all()):
+                raise ValueError('Attempt106 GGN VJP final logits mismatch')
+            (logits*fisher).sum().backward()
+        timings['vjp_backward_seconds'] += time.perf_counter()-stage
+        if any(parameter.grad is not None for parameter in final.parameters()
+               if id(parameter) not in selected):
+            raise ValueError('Noneligible final parameter received GGN VJP gradient')
+        if index == 0:
+            if any(module.weight.grad is None or not bool(torch.isfinite(module.weight.grad).all())
+                   for _, module in eligible):
+                raise ValueError('Missing/nonfinite first-batch selected GGN VJP gradient')
+            first_audit = {'primal': primal_audit, 'fisher': conservation,
+                           'tangent_shape': list(tangent.shape),
+                           'tangent_dtype': str(tangent.dtype),
+                           'selected_vjp_matrix_count': len(eligible)}
+        if progress is not None:
+            progress(index+1, 64, time.perf_counter()-started)
+        del batch, primal, tangent, fisher, logits
+    return first_audit, timings, summarize_stable_fisher_audits(records)
 
 
 def fixed_budget_cg(rhs_cpu, eligible, apply_operator, *, iterations=10,
@@ -305,11 +460,10 @@ def run(*, model_loader=None, tokenizer_loader=None):
     gc.collect()
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
-    old105 = a105.load_spec()
     def apply_operator(vector, iteration):
         print(f'CG {iteration}/10 | starting exact endpoint GGN application', flush=True)
-        first, timing, fisher_audit = a105.ggn_action_stage(
-            final, construction, eligible, vector, old105,
+        first, timing, fisher_audit = ggn_action_stage(
+            final, construction, eligible, vector, spec,
             progress=parent.progress_printer(f'CG {iteration}/10 GGN'))
         return {'iteration': iteration, 'first_batch': first,
                 'timings': timing, 'fisher_conservation': fisher_audit}
@@ -346,6 +500,8 @@ def run(*, model_loader=None, tokenizer_loader=None):
               'oracle_adl_access': False, 'adapter_access': False, 'inverse_solve': True,
               'inverse_method': 'fixed_10_step_damped_cg', 'empirical_fisher': False,
               'ggn_operator': 'exact_endpoint_categorical_JtFJ', 'damping_ratio': 0.01,
+              'ggn_numerical_implementation':
+                  'FP64_softmax_and_Fisher_action_then_single_FP32_VJP_cast',
               'candidate_selection': False, 'oracle_based_tuning': False,
               'provenance': {'spec_sha256': SPEC_SHA256,
                              'source_sha256': a.sha256_file(Path(__file__).resolve()),

@@ -468,6 +468,32 @@
     "empirical_fisher": false,
     "ggn_operator": "exact_endpoint_categorical_JtFJ",
     "candidate_selection": false,
-    "oracle_based_tuning": false
+    "oracle_based_tuning": false,
+    "ggn_numerical_implementation": "FP64_softmax_and_Fisher_action_then_single_FP32_VJP_cast"
+  },
+  "ggn_numerics_106": {
+    "operator": "exact_endpoint_categorical_JtFJ",
+    "implementation": "FP64_softmax_and_Fisher_action_then_single_FP32_VJP_cast",
+    "arithmetic": [
+      "p64=softmax(logits.to(torch.float64),dim=-1)",
+      "s64=tangent.to(torch.float64)",
+      "mean64=sum_vocab(p64*s64)",
+      "u64=p64*(s64-mean64)",
+      "u64=u64/8128",
+      "u=u64.to(torch.float32).detach()"
+    ],
+    "fp64_softmax_normalization_fail_abs_tolerance": 1e-10,
+    "fp64_fisher_conservation_fail_relative_tolerance": 1e-10,
+    "fp64_fisher_conservation_fail_gauge_roundoff_multiplier": 1.4210854715202004e-14,
+    "fp64_fisher_conservation_fail_absolute_tolerance": 1e-12,
+    "fp64_fisher_conservation_guard": "residual64 <= relative*scale64 + gauge_multiplier*max_abs_tangent/8128 + absolute",
+    "fp32_cast_conservation_fail_relative_tolerance": 0.01,
+    "fp32_cast_conservation_fail_absolute_tolerance": 1e-06,
+    "fp32_cast_conservation_guard": "residual32 <= relative*scale32 + absolute",
+    "attempt105_numerical_implementation_reused": false,
+    "no_probability_renormalization": true,
+    "no_parameter_output_projection": true,
+    "no_tangent_normalization_clipping_or_truncation": true,
+    "diagnostic_values_required_in_failure": true
   }
 }

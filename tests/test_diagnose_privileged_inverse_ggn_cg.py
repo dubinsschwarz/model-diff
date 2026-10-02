@@ -12,7 +12,8 @@ import importlib.util
 
 import torch
 
-from tests.test_diagnose_privileged_endpoint_ggn_forward import Toy98Model, selected
+from tests.test_diagnose_privileged_endpoint_ggn_forward import (
+    SmallLogitModel, Toy98Model, selected)
 
 
 PROJECT = Path(__file__).resolve().parents[1]
@@ -242,6 +243,118 @@ class Attempt106Tests(unittest.TestCase):
         self.assertEqual(SPEC['ggn']['operator'], 'exact_endpoint_categorical_JtFJ')
         self.assertEqual(SPEC['ggn']['fisher_conservation_audit_accumulation'],
                          'torch.sum_dtype_float64_without_modifying_u')
+
+    def test_stable_fisher_equals_explicit_categorical_matrix(self):
+        logits = torch.tensor([[[0.2, -0.1, 0.6, 0.4],
+                                [-0.4, 0.8, 0.1, -0.2]]], dtype=torch.float32)
+        tangent = torch.tensor([[[0.3, 1.2, -0.7, 0.1],
+                                 [2.0, -1.0, 0.4, 0.9]]], dtype=torch.float32)
+        u, audit = m.stable_categorical_fisher_vector(logits, tangent, SPEC)
+        p = torch.softmax(logits.double(), dim=-1)
+        explicit = torch.stack([
+            (torch.diag(row)-torch.outer(row, row)) @ direction
+            for row, direction in zip(p[0], tangent[0].double())])/8128
+        self.assertTrue(torch.equal(u, explicit.float().unsqueeze(0)))
+        self.assertLess(audit['max_abs_sum_u64'], 1e-12)
+        self.assertLess(audit['max_relative_abs_sum_u64'], 1e-10)
+        self.assertEqual(audit['prediction_context_count'], 2)
+        self.assertFalse(u.requires_grad)
+
+    def test_large_common_shift_gauge_invariance(self):
+        logits = torch.tensor([[[0.5, -0.2, 1.2, 0.1]]], dtype=torch.float32)
+        tangent = torch.tensor([[[0., 1., 2., 4.]]], dtype=torch.float32)
+        original, _ = m.stable_categorical_fisher_vector(logits, tangent, SPEC)
+        shifted, audit = m.stable_categorical_fisher_vector(
+            logits, tangent+2**20, SPEC)
+        self.assertTrue(torch.allclose(original, shifted, rtol=1e-7, atol=2e-11))
+        self.assertGreater(audit['max_abs_unweighted_vocab_mean_tangent'], 1e6)
+        self.assertGreater(audit['max_abs_probability_weighted_mean_tangent'], 1e6)
+        self.assertLess(audit['max_abs_sum_u64'], audit['max_fp64_allowed_abs_sum'])
+
+    def test_adversarial_fp32_old_failure_stable_local_pass(self):
+        count = 32768
+        generator = torch.Generator().manual_seed(106)
+        logits = torch.randn((1, 1, count), generator=generator)
+        tangent = torch.full_like(logits, 1e5)
+        tangent[..., ::17] += 16
+        tangent[..., ::43] -= 8
+        with self.assertRaisesRegex(ValueError, 'sum-to-zero'):
+            m.a105.categorical_fisher_vector(logits, tangent, 8128,
+                                             m.a105.load_spec())
+        vector, audit = m.stable_categorical_fisher_vector(logits, tangent, SPEC)
+        self.assertTrue(bool(torch.isfinite(vector).all()))
+        self.assertLess(audit['max_abs_sum_u64'], 1e-12)
+        self.assertLess(audit['fp32_max_relative_abs_sum'], 1e-7)
+        self.assertGreater(audit['max_abs_tangent'], 1e5)
+
+    def test_moderate_random_inputs_agree_with_attempt105(self):
+        generator = torch.Generator().manual_seed(611)
+        logits = torch.randn((2, 3, 4096), generator=generator)
+        tangent = torch.randn((2, 3, 4096), generator=generator)
+        current, _ = m.stable_categorical_fisher_vector(logits, tangent, SPEC)
+        prior, _ = m.a105.categorical_fisher_vector(logits, tangent, 8128,
+                                                   m.a105.load_spec())
+        self.assertTrue(torch.allclose(current, prior, rtol=2e-5, atol=2e-10))
+
+    def test_local_jvp_fisher_vjp_matches_explicit_ggn_action(self):
+        model = SmallLogitModel()
+        batch = torch.tensor([[0, 1]*64], dtype=torch.int64)
+        direction = torch.tensor([[0.3, -0.2], [0.1, 0.4], [-0.5, 0.2]])
+        logits, tangent = m.a105.strict_logits_jvp(
+            model, batch, {'linear.weight': direction})
+        fisher, _ = m.stable_categorical_fisher_vector(logits, tangent, SPEC)
+        (model(batch, use_cache=False).logits[:, :-1, :]*fisher).sum().backward()
+        action = model.linear.weight.grad.detach().flatten().double()
+        weight = model.linear.weight.detach().double().requires_grad_(True)
+        x = torch.nn.functional.one_hot(batch[:, :-1], 2).double()
+        def output(flat):
+            return torch.nn.functional.linear(x, flat.reshape(3, 2)).flatten()
+        jacobian = torch.autograd.functional.jacobian(output, weight.flatten())
+        p = torch.softmax(output(weight.flatten()).reshape(-1, 3), -1)
+        F = torch.block_diag(*[torch.diag(row)-torch.outer(row, row) for row in p])
+        expected = jacobian.T @ F @ jacobian @ direction.flatten().double()/8128
+        self.assertTrue(torch.allclose(action, expected, rtol=2e-5, atol=2e-8))
+        self.assertIsNone(model.unselected.grad)
+
+    def test_fisher_failures_report_actual_diagnostics(self):
+        logits = torch.tensor([[[0.2, 0.1, -0.3]]], dtype=torch.float32)
+        tangent = torch.tensor([[[0.5, 0.3, -0.4]]], dtype=torch.float32)
+        p64 = torch.softmax(logits.double(), -1)
+        s64 = tangent.double()
+        mean64 = (p64*s64).sum(-1, keepdim=True)
+        u64 = p64*(s64-mean64)/8128
+        u = u64.float()
+        with self.assertRaisesRegex(ValueError, 'diagnostics=.*max_softmax_sum_error'):
+            m.audit_stable_fisher_numerics(p64*1.1, s64, mean64, u64, u, SPEC)
+        with self.assertRaisesRegex(ValueError, 'diagnostics=.*fp32_max_abs_sum'):
+            m.audit_stable_fisher_numerics(p64, s64, mean64, u64,
+                                           u+torch.tensor([[[0.01, 0., 0.]]]), SPEC)
+        with self.assertRaisesRegex(ValueError, 'diagnostics=.*tangent_finite'):
+            m.stable_categorical_fisher_vector(logits,
+                torch.tensor([[[float('nan'), 0., 1.]]]), SPEC)
+
+    def test_local_operator_uses_stable_fisher(self):
+        model = Toy98Model()
+        eligible = selected(model)
+        m.a.freeze_other_parameters(model, eligible)
+        direction = {name+'.weight': torch.ones_like(module.weight)
+                     for name, module in eligible}
+        tokens = torch.zeros((64, 128), dtype=torch.int64)
+        with patch.object(m, 'stable_categorical_fisher_vector',
+                          side_effect=ValueError('stable local Fisher reached')):
+            with self.assertRaisesRegex(ValueError, 'stable local Fisher reached'):
+                m.ggn_action_stage(model, tokens, eligible, direction, SPEC)
+
+    def test_numerical_policy_preserves_operator_and_fixed_cg(self):
+        self.assertEqual(SPEC['ggn_numerics_106']['operator'],
+                         'exact_endpoint_categorical_JtFJ')
+        self.assertEqual(SPEC['ggn_numerics_106']['implementation'],
+                         'FP64_softmax_and_Fisher_action_then_single_FP32_VJP_cast')
+        self.assertFalse(SPEC['ggn_numerics_106']['attempt105_numerical_implementation_reused'])
+        self.assertEqual(SPEC['pilot']['prediction_contexts'], 8128)
+        self.assertEqual(SPEC['solver']['iterations'], 10)
+        self.assertEqual(SPEC['solver']['damping_ratio'], 0.01)
+        self.assertEqual(SPEC['ggn']['operator'], 'exact_endpoint_categorical_JtFJ')
 
     def test_parameter_diagnostics_global_blocks_families(self):
         model = Toy98Model()
