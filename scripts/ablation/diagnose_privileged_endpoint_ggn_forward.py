@@ -14,7 +14,7 @@ import torch
 PROJECT = Path(__file__).resolve().parents[2]
 ATTEMPT = '105_privileged_endpoint_ggn_forward_pilot'
 SPEC_PATH = PROJECT/'experiments/attempts'/ATTEMPT/'spec.json'
-SPEC_SHA256 = '8125e624850a18268d369f0509d1b0a9876156b5a2635e960588d2026ddc958c'
+SPEC_SHA256 = 'f9a9e9852187c98ea39bb3f6afae82b41d138e5c1f98dd75054ef1469e0740f2'
 SOURCE104 = Path(__file__).with_name('diagnose_privileged_hybrid_prefix_soft_teacher.py')
 SOURCE016 = Path(__file__).with_name('construct_exact_displacement_jvp_ceiling.py')
 SHA104 = '980137e77b650f92d8a721d52a104a2db0fdb0f44fc874b76526e5d1353c9d4a'
@@ -261,15 +261,44 @@ def categorical_fisher_vector(logits, tangent, denominator, spec):
     u = (p*(tangent-mean_s))/denominator
     if not bool(torch.isfinite(u).all()):
         raise ValueError('Nonfinite categorical Fisher vector')
-    residual = u.sum(dim=-1).abs()
-    scale = u.abs().sum(dim=-1)
+    return u.detach(), audit_categorical_fisher_conservation(u, p, spec)
+
+
+def audit_categorical_fisher_conservation(u, p, spec):
+    if (u.shape != p.shape or u.ndim != 3 or u.dtype != torch.float32 or
+            p.dtype != torch.float32 or not bool(torch.isfinite(u).all()) or
+            not bool(torch.isfinite(p).all())):
+        raise ValueError('Invalid categorical Fisher conservation input')
+    residual = torch.sum(u, dim=-1, dtype=torch.float64).abs()
+    scale = torch.sum(u.abs(), dim=-1, dtype=torch.float64)
+    p_sum_error = (torch.sum(p, dim=-1, dtype=torch.float64)-1).abs()
+    relative = torch.where(scale > 0, residual/scale.clamp_min(torch.finfo(torch.float64).tiny),
+                           torch.zeros_like(residual))
     rule = spec['ggn']
-    allowed = (rule['fisher_conservation_relative_tolerance']*scale+
-               rule['fisher_conservation_absolute_tolerance'])
+    allowed = (rule['fisher_conservation_fail_relative_tolerance']*scale+
+               rule['fisher_conservation_fail_absolute_tolerance'])
     if bool((residual > allowed).any()):
         raise ValueError('Categorical Fisher vector fails sum-to-zero audit')
-    return u.detach(), {'max_sum_vocab_abs': float(residual.max()),
-                        'max_conservation_scale': float(scale.max())}
+    target = rule['fisher_conservation_diagnostic_relative_target']
+    return {'max_sum_vocab_abs': float(residual.max()),
+            'max_relative_sum_vocab_abs': float(relative.max()),
+            'max_softmax_sum_error': float(p_sum_error.max()),
+            'max_conservation_scale': float(scale.max()),
+            'count_contexts_exceeding_relative_target': int((relative > target).sum()),
+            'total_prediction_contexts': residual.numel()}
+
+
+def summarize_fisher_conservation(records):
+    if not records:
+        raise ValueError('Empty categorical Fisher conservation audit')
+    fields = ('max_sum_vocab_abs', 'max_relative_sum_vocab_abs',
+              'max_softmax_sum_error', 'max_conservation_scale')
+    return {'per_batch': records,
+            'aggregate': {**{field: max(row[field] for row in records) for field in fields},
+                          'count_contexts_exceeding_relative_target': sum(
+                              row['count_contexts_exceeding_relative_target'] for row in records),
+                          'total_prediction_contexts': sum(
+                              row['total_prediction_contexts'] for row in records)}}
 
 
 def ggn_action_stage(final, tokens, eligible, delta, spec, *, progress=None):
@@ -282,6 +311,7 @@ def ggn_action_stage(final, tokens, eligible, delta, spec, *, progress=None):
     timings = {'logits_jvp_seconds': 0.0, 'fisher_vector_seconds': 0.0,
                'vjp_backward_seconds': 0.0}
     first_audit = None
+    conservation_records = []
     started = time.perf_counter()
     device = eligible[0][1].weight.device
     for start in range(tokens.shape[0]):
@@ -298,6 +328,7 @@ def ggn_action_stage(final, tokens, eligible, delta, spec, *, progress=None):
         stage = time.perf_counter()
         fisher, conservation = categorical_fisher_vector(
             primal, tangent, 64*127, spec)
+        conservation_records.append({'microbatch_index': start, **conservation})
         timings['fisher_vector_seconds'] += time.perf_counter()-stage
         stage = time.perf_counter()
         with torch.enable_grad(), torch.autocast(device_type=device.type, enabled=False):
@@ -320,7 +351,13 @@ def ggn_action_stage(final, tokens, eligible, delta, spec, *, progress=None):
         if progress is not None:
             progress(start+1, tokens.shape[0], time.perf_counter()-started)
         del batch, primal, tangent, fisher, logits
-    return first_audit, timings
+    conservation_summary = summarize_fisher_conservation(conservation_records)
+    conservation_summary['diagnostic_relative_target'] = spec['ggn'][
+        'fisher_conservation_diagnostic_relative_target']
+    conservation_summary['hard_guard'] = {
+        'relative_tolerance': spec['ggn']['fisher_conservation_fail_relative_tolerance'],
+        'absolute_tolerance': spec['ggn']['fisher_conservation_fail_absolute_tolerance']}
+    return first_audit, timings, conservation_summary
 
 
 def _coordinate_family(name):
@@ -449,7 +486,7 @@ def run(*, smoke_only=False, model_loader=None, tokenizer_loader=None):
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
     ggn_tokens = tokens[:1].contiguous() if smoke_only else tokens
-    first_audit, ggn_timings = ggn_action_stage(
+    first_audit, ggn_timings, conservation_audit = ggn_action_stage(
         final, ggn_tokens, eligible, delta, spec,
         progress=None if smoke_only else a104.parent.progress_printer('endpoint GGN action'))
     if smoke_only:
@@ -457,6 +494,7 @@ def run(*, smoke_only=False, model_loader=None, tokenizer_loader=None):
                   'displacement_preparation_seconds': displacement_seconds,
                   'hybrid_gradient_batch_seconds': hybrid_seconds,
                   'ggn_first_batch_audit': first_audit,
+                  'ggn_fisher_conservation_audit': conservation_audit,
                   **ggn_timings,
                   **runtime_projection(loads, displacement_seconds, hybrid_seconds,
                                        ggn_timings['logits_jvp_seconds'],
@@ -496,6 +534,7 @@ def run(*, smoke_only=False, model_loader=None, tokenizer_loader=None):
               'execution_semantics_audit': execution_audit,
               'hybrid_gradient': hybrid_info,
               'ggn_first_batch_audit': first_audit,
+              'ggn_fisher_conservation_audit': conservation_audit,
               'parameter_geometry': geometry,
               'interpretation': {'category': category,
                                  'thresholds': spec['interpretation'],

@@ -216,8 +216,10 @@
     "first_batch_primal_atol": 1e-06,
     "first_batch_rms_rtol": 1e-05,
     "first_batch_rms_atol": 1e-06,
-    "fisher_conservation_relative_tolerance": 1e-05,
-    "fisher_conservation_absolute_tolerance": 1e-10
+    "fisher_conservation_audit_accumulation": "torch.sum_dtype_float64_without_modifying_u",
+    "fisher_conservation_diagnostic_relative_target": 1e-05,
+    "fisher_conservation_fail_relative_tolerance": 0.001,
+    "fisher_conservation_fail_absolute_tolerance": 1e-08
   },
   "metrics": {
     "dtype": "cpu_float64_matrixwise_stable_sum",

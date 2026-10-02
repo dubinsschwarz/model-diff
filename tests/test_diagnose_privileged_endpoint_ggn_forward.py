@@ -221,11 +221,50 @@ class Attempt105Tests(unittest.TestCase):
         vector, audit = m.categorical_fisher_vector(logits, tangent, 8128, SPEC)
         p = torch.softmax(logits, -1)
         expected = p*(tangent-(p*tangent).sum(-1, keepdim=True))/8128
-        self.assertTrue(torch.allclose(vector, expected))
+        self.assertTrue(torch.equal(vector, expected))
         self.assertLess(audit['max_sum_vocab_abs'], 1e-9)
+        self.assertEqual(audit['total_prediction_contexts'], 1)
+        self.assertEqual(audit['count_contexts_exceeding_relative_target'], 0)
         self.assertFalse(vector.requires_grad)
         with self.assertRaisesRegex(ValueError, 'normalization'):
             m.categorical_fisher_vector(logits, tangent, 4*127, SPEC)
+
+    def test_large_high_cancellation_audit_uses_fp64_and_reports_target(self):
+        n = 131072
+        u = torch.cat((torch.ones(n//2), -torch.ones(n//2))).reshape(1, 1, n)
+        u[0, 0, :20] = 2.0
+        p = torch.full_like(u, 1/n)
+        original_sum = torch.sum
+        dtypes = []
+        def recorded_sum(*args, **kwargs):
+            dtypes.append(kwargs.get('dtype'))
+            return original_sum(*args, **kwargs)
+        with patch.object(m.torch, 'sum', side_effect=recorded_sum):
+            audit = m.audit_categorical_fisher_conservation(u, p, SPEC)
+        self.assertEqual(dtypes, [torch.float64]*3)
+        self.assertEqual(audit['max_sum_vocab_abs'], 20.0)
+        self.assertAlmostEqual(audit['max_relative_sum_vocab_abs'], 20/(n+20))
+        self.assertEqual(audit['count_contexts_exceeding_relative_target'], 1)
+        self.assertEqual(audit['total_prediction_contexts'], 1)
+        self.assertEqual(audit['max_softmax_sum_error'], 0.0)
+        gross = u.clone()
+        gross[0, 0, :1000] = 2.0
+        with self.assertRaisesRegex(ValueError, 'sum-to-zero'):
+            m.audit_categorical_fisher_conservation(gross, p, SPEC)
+
+    def test_conservation_batch_records_are_aggregated_without_selection(self):
+        first = {'microbatch_index': 0, 'max_sum_vocab_abs': 0.1,
+                 'max_relative_sum_vocab_abs': 2e-5, 'max_softmax_sum_error': 1e-7,
+                 'max_conservation_scale': 2.0,
+                 'count_contexts_exceeding_relative_target': 3,
+                 'total_prediction_contexts': 127}
+        second = {**first, 'microbatch_index': 1, 'max_sum_vocab_abs': 0.2,
+                  'count_contexts_exceeding_relative_target': 4}
+        summary = m.summarize_fisher_conservation([first, second])
+        self.assertEqual(summary['per_batch'], [first, second])
+        self.assertEqual(summary['aggregate']['max_sum_vocab_abs'], 0.2)
+        self.assertEqual(summary['aggregate']['count_contexts_exceeding_relative_target'], 7)
+        self.assertEqual(summary['aggregate']['total_prediction_contexts'], 254)
 
     def test_explicit_tiny_ggn_matrix_equals_jvp_fisher_vjp(self):
         model = SmallLogitModel()
@@ -259,13 +298,19 @@ class Attempt105Tests(unittest.TestCase):
         delta = {name+'.weight': torch.full_like(module.weight, 0.1)
                  for name, module in eligible}
         tokens = torch.tensor([[0, 1]*64], dtype=torch.int64)
-        audit, timings = m.ggn_action_stage(model, tokens, eligible, delta, small_spec())
+        audit, timings, conservation = m.ggn_action_stage(
+            model, tokens, eligible, delta, small_spec())
         self.assertEqual(audit['selected_vjp_matrix_count'], 98)
         self.assertEqual(audit['tangent_shape'], [1, 127, 2])
         self.assertEqual(audit['tangent_dtype'], 'torch.float32')
         self.assertIsNone(model.model.embed_tokens.weight.grad)
         self.assertTrue(all(module.weight.grad is not None for _, module in eligible))
         self.assertTrue(all(value >= 0 for value in timings.values()))
+        self.assertEqual(conservation['aggregate']['total_prediction_contexts'], 127)
+        self.assertEqual(len(conservation['per_batch']), 1)
+        self.assertEqual(conservation['diagnostic_relative_target'], 1e-5)
+        self.assertEqual(conservation['hard_guard'],
+                         {'relative_tolerance': 1e-3, 'absolute_tolerance': 1e-8})
 
     def test_matrixwise_global_geometry_true_delta_and_structured(self):
         model = Toy98Model()
@@ -338,12 +383,13 @@ class Attempt105Tests(unittest.TestCase):
               patch.object(m, 'hybrid_gradient_64', return_value=({}, {})),
               patch.object(m, 'ggn_action_stage', return_value=({},
                            {'logits_jvp_seconds': 3.0, 'fisher_vector_seconds': 4.0,
-                            'vjp_backward_seconds': 5.0})),
+                            'vjp_backward_seconds': 5.0}, {'per_batch': [], 'aggregate': {}})),
               patch.object(m.a, 'verify_model_unchanged'),
               patch.object(m.a, 'write_manifest', side_effect=AssertionError('wrote result'))):
             result = m.run(smoke_only=True)
         self.assertTrue(result['smoke_only'])
         self.assertFalse(result['writes'])
+        self.assertIn('ggn_fisher_conservation_audit', result)
 
     def test_runtime_projection(self):
         row = m.runtime_projection({'base_load_seconds': 1.0, 'final_load_seconds': 2.0},
