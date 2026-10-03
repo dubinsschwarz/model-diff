@@ -1,0 +1,96 @@
+{
+  "format_version": 1,
+  "attempt_id": "125_privileged_relaxation_gradient_diagnostic",
+  "purpose": "privileged_mechanism_test_of_relaxation_derived_balanced_gradient_subtraction",
+  "information_policy": {
+    "historical_base_access_only_after_replay_validation": true,
+    "barrier_marker": "RELAXATION_GRADIENTS_FROZEN",
+    "historical_activation_oracle_access": false,
+    "adapter_access": false,
+    "true_delta_access": false,
+    "blind_candidate_construction": false,
+    "same_specimen_exploratory_method_development": true,
+    "clean_heldout_validation": false
+  },
+  "frozen_attempt124": {
+    "spec_path": "experiments/attempts/124_diverse8_consensus_relaxation/spec.json",
+    "spec_sha256": "d5d34b0504aa69d6ad0011164de749bbbe8d0f04abbab5197c22d35467f06c49",
+    "source_path": "scripts/ablation/run_diverse8_consensus_relaxation.py",
+    "source_sha256": "73b7110c4912aa54aba37c6888a17e3edd5f01b21ae1dc91369e456455b3df40",
+    "construction_manifest_path": "experiments/attempts/124_diverse8_consensus_relaxation/construction-manifest.json",
+    "construction_manifest_sha256": "4fa9fee35f9842149c26ae6d83b70d03aa3a01e1ee4fe88ea0750752b5d152a1",
+    "result_path": "experiments/attempts/124_diverse8_consensus_relaxation/result.json",
+    "result_sha256": "8aa67543e6b10775b9d354afa2e5026231222727be9976d8ea29236e1fc5b432"
+  },
+  "frozen_attempt015": {
+    "spec_path": "experiments/attempts/015_known_base_jg0_subtraction_multicorpus_prefix0_13/spec.json",
+    "spec_sha256": "18ec59a64faa22effb17640b54932ed85e4eb85f44f3eeb0d283c6de5dea4c15",
+    "source_path": "scripts/ablation/construct_known_base_jg0_subtraction.py",
+    "source_sha256": "66593968b8bf5637ff5aadfa9455604634079f3de0868448e92fd32aef1e1045",
+    "base_repo_id": "Qwen/Qwen3-1.7B",
+    "base_revision": "0060bc56d46589041c1048efd1a397421b1142b5"
+  },
+  "objective": {
+    "definition": "L_bal(theta)=sum_c w_c*L_c(theta)",
+    "corpus_order": ["fineweb", "wikitext103_raw", "tinystories", "arxiv_document", "cc_news", "pg19", "codeparrot_clean", "ultrachat"],
+    "rows_per_corpus": [0, 512],
+    "sequence_length": 128,
+    "batch_size": 8,
+    "batches_per_corpus": 64,
+    "prediction_contexts_per_corpus": 65024,
+    "gradient_batches_per_pass": 512,
+    "weight_rule": "w_c=1/(8*endpoint_global_gradient_norm_c)",
+    "weights_fixed_after_theta_F": true,
+    "later_gradient_renormalization": false,
+    "endpoint_gradient_norms": {
+      "fineweb": 11.210221591371743,
+      "wikitext103_raw": 12.197408478436103,
+      "tinystories": 19.5600251946489,
+      "arxiv_document": 16.678477813023473,
+      "cc_news": 9.771288332862822,
+      "pg19": 42.22101383805119,
+      "codeparrot_clean": 8.360046148409692,
+      "ultrachat": 23.162808573978225
+    },
+    "endpoint_b_norm": 0.6924963677590905,
+    "endpoint_b_aggregate_sha256": "a90785341961a0a2a08e7949961cb105867cf2509013b01b65c2013322ead574"
+  },
+  "replay": {
+    "update_count": 2,
+    "accepted_etas": [0.10358343196094506, 0.10358343196094506],
+    "cumulative_displacement_norms": [0.07173115369504941, 0.06827297365533956],
+    "state_aggregate_sha256": [
+      "0e73fa5b3ab03193479fec051af9654528d2c3f159436ee8f622106ffc680eb3",
+      "496cce3cc93221d02ac9e730e9b909b3e5fd0bc29ef6d687319f8c6260394ee2"
+    ],
+    "eligible_matrix_count": 98,
+    "update": "W_new=W_current-eta*b_current",
+    "arithmetic": "CPU_float64_update_then_one_FP32_storage_cast",
+    "line_search": false,
+    "alternative_eta": false,
+    "activation_probe": false,
+    "functional_candidate": false
+  },
+  "diagnostic": {
+    "subtraction_sign": "d_k=b_F-b_k;d_star=b_F-b_B",
+    "dot_accumulation": "deterministic_CPU_float64_per_matrix_then_Python_math_fsum",
+    "alpha": "dot(d_k,d_star)/dot(d_k,d_k)",
+    "residual": "norm(d_star-alpha*d_k)/norm(d_star)",
+    "explained_fraction": "1-residual_squared",
+    "distance_to_base": "norm(b_k-b_B)/norm(b_F-b_B)",
+    "best_by": "larger_subtraction_direction_cosine_then_smaller_k",
+    "strong": {"minimum_cosine": 0.70, "alpha_positive": true, "maximum_residual": 0.714142842854285},
+    "moderate": {"minimum_cosine": 0.40, "alpha_positive": true},
+    "interpretation": "same_specimen_privileged_mechanism_falsification_not_validation"
+  },
+  "workload": {
+    "balanced_gradient_passes": 4,
+    "total_backward_batches": 2048,
+    "armijo_forward_batches": 0,
+    "activation_probe_batches": 0,
+    "jvp_operations": 0,
+    "ggn_operations": 0,
+    "cg_operations": 0
+  },
+  "paths": {"result_path": "experiments/attempts/125_privileged_relaxation_gradient_diagnostic/result.json"}
+}
