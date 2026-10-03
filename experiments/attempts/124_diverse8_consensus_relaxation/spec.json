@@ -1,0 +1,561 @@
+{
+  "format_version": 1,
+  "attempt_id": "124_diverse8_consensus_relaxation",
+  "purpose": "four_step_stable_relaxation_of_frozen_diverse8_parameter_gradient_family",
+  "information_policy": {
+    "blind_construction_inputs": [
+      "final_merged_checkpoint",
+      "eight_frozen_generic_corpora",
+      "frozen_activation_probe",
+      "Attempt113_endpoint_gradient_controls",
+      "Attempt113_raw_JVP_baseline"
+    ],
+    "historical_base_access_before_barrier": false,
+    "adapter_access_before_barrier": false,
+    "true_delta_access_before_barrier": false,
+    "historical_oracle_access_before_barrier": false,
+    "prior_oracle_score_access_before_barrier": false,
+    "same_specimen_exploratory_method_development": true,
+    "clean_heldout_validation": false
+  },
+  "frozen_attempt113": {
+    "spec_path": "experiments/attempts/113_blind_diverse8_unit_gradient_inverse_ggn_candidate/spec.json",
+    "spec_sha256": "7c7f508575e216cd29eee967f31101b1c614f85cc0cb0465becd4e0d1dc8bfb6",
+    "source_path": "scripts/ablation/construct_blind_diverse8_unit_gradient_inverse_ggn.py",
+    "source_sha256": "02bc38350e0f08997f3f2e6942c89594abb4b2e30e042973b930d89e59374ee9",
+    "construction_manifest_path": "experiments/attempts/113_blind_diverse8_unit_gradient_inverse_ggn_candidate/construction-manifest.json",
+    "construction_manifest_sha256": "5e40160521534d15de6fa6405fac26419fa362b8579398b496e1fc0c9e98c5c4",
+    "artifact_path": "/root/model-diff-scratch/artifacts/attempt113_blind_diverse8_unit_gradient_inverse_ggn/candidate.pt",
+    "artifact_serialized_sha256": "c95159c97f72e65b1bfbb698d67d4cceb3937d77ad52580fd86f9a10a0a530bc",
+    "artifact_inventory": [
+      "x_80",
+      "response_raw_rhs",
+      "response_inverse"
+    ],
+    "raw_response_sha256": "8ddc1801ee82504e10898e97d12b53fea1442ed029314dc47d7d0f68523c2d0a",
+    "b_blind_norm": 0.6924963677590905,
+    "b_blind_aggregate_sha256": "a90785341961a0a2a08e7949961cb105867cf2509013b01b65c2013322ead574",
+    "endpoint_gradient_norms": {
+      "fineweb": 11.210221591371743,
+      "wikitext103_raw": 12.197408478436103,
+      "tinystories": 19.5600251946489,
+      "arxiv_document": 16.678477813023473,
+      "cc_news": 9.771288332862822,
+      "pg19": 42.22101383805119,
+      "codeparrot_clean": 8.360046148409692,
+      "ultrachat": 23.162808573978225
+    }
+  },
+  "frozen_attempt122": {
+    "spec_path": "experiments/attempts/122_loss_stabilized_generic_relaxation/spec.json",
+    "spec_sha256": "88097c8c56b04df652be8ea166efb3bbc1a8bb9806f3bf8e5bc687b8c1f43d37",
+    "source_path": "scripts/ablation/run_loss_stabilized_generic_relaxation.py",
+    "source_sha256": "7dd7e79b84ac297c7b0f7a62a69ff5dc7d91332b95b3b180f72f50c1f6cf3a9d",
+    "armijo_rule": "reuse_frozen_Attempt122_armijo_search"
+  },
+  "frozen_attempt123": {
+    "spec_path": "experiments/attempts/123_postfreeze_matched1024_relaxation_reevaluation/spec.json",
+    "spec_sha256": "a27ee4f0e22ff892c3c2ffeb05ab8f6678cb8fe554ce33e2971e535154136673",
+    "source_path": "scripts/ablation/evaluate_matched1024_relaxation.py",
+    "source_sha256": "1c1a463e789a0fac1c40fe7c71f9d567b27daf1d3b75f1cd0e786a772cbb4525",
+    "target_raw_sha256": "4ab001c60fff4ad4f15db472436c3915b39fb5a69626a418f70c5eaaed780c5f"
+  },
+  "model": {
+    "model_type": "qwen3",
+    "num_hidden_layers": 28,
+    "source_dtype": "float32",
+    "local_files_only": true,
+    "eval_mode": true,
+    "use_cache": false
+  },
+  "final_checkpoint": {
+    "directory": "/root/model-diff-scratch/models/merged",
+    "files": [
+      {
+        "path": "chat_template.jinja",
+        "size_bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "config.json",
+        "size_bytes": 1416,
+        "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+      },
+      {
+        "path": "generation_config.json",
+        "size_bytes": 214,
+        "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+      },
+      {
+        "path": "model.safetensors",
+        "size_bytes": 6882335328,
+        "sha256": "f6989dd3445cd339041ab654a6da463e0a80b2d52dd2c01f67f683b1c30ea10f"
+      },
+      {
+        "path": "tokenizer.json",
+        "size_bytes": 11422650,
+        "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size_bytes": 692,
+        "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+      }
+    ]
+  },
+  "eligible_tensors": {
+    "transformer_block_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "recursive_module_type": "torch.nn.Linear",
+    "parameter": "weight",
+    "expected_matrix_count": 98,
+    "module_ordering": "lexicographic_by_module_name",
+    "freeze_every_other_parameter": true
+  },
+  "corpus_order": [
+    "fineweb",
+    "wikitext103_raw",
+    "tinystories",
+    "arxiv_document",
+    "cc_news",
+    "pg19",
+    "codeparrot_clean",
+    "ultrachat"
+  ],
+  "corpora": [
+    {
+      "name": "fineweb",
+      "tokens_path": "/root/model-diff-scratch/artifacts/attempt005_generic_rollback_corpus/tokens.pt",
+      "manifest_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus-manifest.json",
+      "manifest_sha256": "8b3ea49228dbb106c2b8a7c849c4f27e021fa3e992800444f43e260a6b055230",
+      "artifact_serialized_sha256": "54283d72aa3075e2867ead86e538991d7284ede327ca67871e73bfc581e4025d",
+      "artifact_raw_sha256": "4613982be77342a89b35616d68e21d9ff66d5a983af7e82cb6fa1eb159457eae",
+      "frozen_shape": [
+        4096,
+        128
+      ],
+      "selected_rows": [
+        0,
+        512
+      ],
+      "spec_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus_spec.json",
+      "spec_sha256": "e514820e7def99e9287c32de4b1279f28f6ff6c2e09749a8dfa5d8b14c311f0f"
+    },
+    {
+      "name": "wikitext103_raw",
+      "tokens_path": "/root/model-diff-scratch/artifacts/attempt014_wikitext103_raw_corpus/tokens.pt",
+      "manifest_path": "experiments/attempts/014_multicorpus_raw_jg_consensus_prefix0_13/wikitext103_raw-corpus-manifest.json",
+      "manifest_sha256": "80ca2b3efe19ed77a14d1f862ff56916baf9eeb67578afa7740e04e062c701fb",
+      "artifact_serialized_sha256": "cbd92ac9766baef0ff12bdde69e66f8e928b863775b917ad09be57cc08b401b9",
+      "artifact_raw_sha256": "8af51ee7d9eda44789529550685ba73e4d658b24153ace5b68dc61c7d256e287",
+      "frozen_shape": [
+        4096,
+        128
+      ],
+      "selected_rows": [
+        0,
+        512
+      ],
+      "spec_path": "experiments/attempts/014_multicorpus_raw_jg_consensus_prefix0_13/wikitext103_raw_corpus_spec.json",
+      "spec_sha256": "f6b9ccd801f547d7d2c24fdaa0f53ee55758068dae3685d7859dcbfb3027a24b"
+    },
+    {
+      "name": "tinystories",
+      "tokens_path": "/root/model-diff-scratch/artifacts/attempt014_tinystories_corpus/tokens.pt",
+      "manifest_path": "experiments/attempts/014_multicorpus_raw_jg_consensus_prefix0_13/tinystories-corpus-manifest.json",
+      "manifest_sha256": "ca49d65c1878f93d0c00aa0c4ce45574ac0c32f93d79318b3ee978eb0c2f3282",
+      "artifact_serialized_sha256": "909f9c997d4d0f5ceaabc977b80989b3606a22b6f7f22fd15ff419fc6cf14049",
+      "artifact_raw_sha256": "c6d87c65233e28ab09a38a04f09d35e592fef187399ff2fad8efa766a1f3a2d7",
+      "frozen_shape": [
+        4096,
+        128
+      ],
+      "selected_rows": [
+        0,
+        512
+      ],
+      "spec_path": "experiments/attempts/014_multicorpus_raw_jg_consensus_prefix0_13/tinystories_corpus_spec.json",
+      "spec_sha256": "0e4f6c23a9e6dce35d1597185b7ee9f378cb9a4753b974dba3fa5a2dd0460ff6"
+    },
+    {
+      "name": "arxiv_document",
+      "tokens_path": "/root/model-diff-scratch/artifacts/attempt100_diverse8_corpora/arxiv_document_tokens.pt",
+      "manifest_path": "experiments/attempts/100_diverse8_raw_jg_consensus_prefix0_13/arxiv_document-corpus-manifest.json",
+      "manifest_sha256": "e98fdee75374083dbd516169248f52395b7b1e51d138725c5c02ec4f194b3174",
+      "artifact_serialized_sha256": "ab70ef4efceb399219b0c4bc38eca58ea10dae8ec63cc6c48a3b2d0e94422343",
+      "artifact_raw_sha256": "75206c2b84d07cf392b5b75341d66583862483f1812f4c21e5ee943afd36e2b6",
+      "frozen_shape": [
+        4096,
+        128
+      ],
+      "selected_rows": [
+        0,
+        512
+      ]
+    },
+    {
+      "name": "cc_news",
+      "tokens_path": "/root/model-diff-scratch/artifacts/attempt100_diverse8_corpora/cc_news_tokens.pt",
+      "manifest_path": "experiments/attempts/100_diverse8_raw_jg_consensus_prefix0_13/cc_news-corpus-manifest.json",
+      "manifest_sha256": "e9adda41503de9fe23d941dc081ecbaeddf7ecd8ea625c34fb5f515b1495e6df",
+      "artifact_serialized_sha256": "6ae307186d7c2ef4c0b740e2d4a89bcc6c1d48a4dbe663606bebd35a6568e893",
+      "artifact_raw_sha256": "ed284acb702e0d455b2d0c2090b26a6183bd30bc9ba872330a5c65f7b9cc1444",
+      "frozen_shape": [
+        4096,
+        128
+      ],
+      "selected_rows": [
+        0,
+        512
+      ]
+    },
+    {
+      "name": "pg19",
+      "tokens_path": "/root/model-diff-scratch/artifacts/attempt100_diverse8_corpora/pg19_tokens.pt",
+      "manifest_path": "experiments/attempts/100_diverse8_raw_jg_consensus_prefix0_13/pg19-corpus-manifest.json",
+      "manifest_sha256": "650c2239ecac7bbb758a351ef80b379d1cabe39b6af3835fd1350368b01628a3",
+      "artifact_serialized_sha256": "c8c2b6c526c815459456c97991731a6c928b1ce5b2ea14143d482bcdbf956ca8",
+      "artifact_raw_sha256": "a752abebac86100e607562f03b10bed1790a584813c3a9350a6dc620489a33bd",
+      "frozen_shape": [
+        4096,
+        128
+      ],
+      "selected_rows": [
+        0,
+        512
+      ]
+    },
+    {
+      "name": "codeparrot_clean",
+      "tokens_path": "/root/model-diff-scratch/artifacts/attempt100_diverse8_corpora/codeparrot_clean_tokens.pt",
+      "manifest_path": "experiments/attempts/100_diverse8_raw_jg_consensus_prefix0_13/codeparrot_clean-corpus-manifest.json",
+      "manifest_sha256": "8e34288e799aa434c814c05cca054b04a8b6679b2b89cbcfb267e5118d370d43",
+      "artifact_serialized_sha256": "71d2b05a2ab3bfc934ec2d62275a8f8b8ec5d7de9f649d86e8f98f57d1b9503d",
+      "artifact_raw_sha256": "92c4fa0ac6de439accffd74991df69fbd50d814d6a51059c0109a1ed9c6d03d6",
+      "frozen_shape": [
+        4096,
+        128
+      ],
+      "selected_rows": [
+        0,
+        512
+      ]
+    },
+    {
+      "name": "ultrachat",
+      "tokens_path": "/root/model-diff-scratch/artifacts/attempt100_diverse8_corpora/ultrachat_tokens.pt",
+      "manifest_path": "experiments/attempts/100_diverse8_raw_jg_consensus_prefix0_13/ultrachat-corpus-manifest.json",
+      "manifest_sha256": "74eb7aaf856be5170f61e9777b4c6fa1b598d2ee8180d4a0753f31faaad57eb3",
+      "artifact_serialized_sha256": "95c389433b39a1cd71db8c0d60bf522c89de8cf9333296c06879a69bc110b8e1",
+      "artifact_raw_sha256": "bb26f24493f26300ceae567f48f9b987dc5749808135b61bab1ac02fb49c855a",
+      "frozen_shape": [
+        4096,
+        128
+      ],
+      "selected_rows": [
+        0,
+        512
+      ]
+    }
+  ],
+  "generic_loss": {
+    "rows_per_corpus": [
+      0,
+      512
+    ],
+    "sequence_length": 128,
+    "batch_size": 8,
+    "batches_per_corpus": 64,
+    "prediction_contexts_per_corpus": 65024,
+    "type": "mean_causal_next_token_cross_entropy",
+    "corpus_count": 8
+  },
+  "objective": {
+    "definition": "L_bal(theta)=sum_c w_c*L_c(theta)",
+    "endpoint_weight_rule": "w_c=1/(8*endpoint_global_gradient_norm_c)",
+    "endpoint_gradient_norms": {
+      "fineweb": 11.210221591371743,
+      "wikitext103_raw": 12.197408478436103,
+      "tinystories": 19.5600251946489,
+      "arxiv_document": 16.678477813023473,
+      "cc_news": 9.771288332862822,
+      "pg19": 42.22101383805119,
+      "codeparrot_clean": 8.360046148409692,
+      "ultrachat": 23.162808573978225
+    },
+    "weights_frozen_after_endpoint": true,
+    "later_per_corpus_gradient_renormalization": false,
+    "gradient_arithmetic": "Attempt113_FP64_divide_by_frozen_endpoint_norm_then_FP32_cast_then_ordered_FP32_add_alpha_0.125",
+    "loss_arithmetic": "Python_math.fsum_of_eight_fixed_weight_times_corpus_mean_CE",
+    "endpoint_b_norm": 0.6924963677590905,
+    "endpoint_b_aggregate_sha256": "a90785341961a0a2a08e7949961cb105867cf2509013b01b65c2013322ead574"
+  },
+  "probe": {
+    "sample_count": 1024,
+    "sequence_length": 128,
+    "batch_size": 32,
+    "dtype": "torch.int64",
+    "serialized_sha256": "3d799d19abf4a2d6dc92b2bd164d81d83f6451cd3545f5ae5d8c04a8b299735b",
+    "raw_tensor_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8",
+    "path": "/root/model-diff-scratch/artifacts/oracle_probe/fineweb_tokens.pt",
+    "rows": [
+      0,
+      1024
+    ]
+  },
+  "readout": {
+    "block_index": 13,
+    "hidden_state_index": 14,
+    "hidden_size": 2048,
+    "all_token_positions": true,
+    "semantics": "hidden_states[14] is block 13 output before block 14; verify with forward hook"
+  },
+  "relaxation": {
+    "steps": 4,
+    "functional_checkpoints": [
+      1,
+      2,
+      4
+    ],
+    "recovery_step": 2,
+    "initial_relative_frobenius_step": 0.00125,
+    "eta_rule": "eta_max=(0.00125*initial_eligible_weight_norm)/verified_endpoint_b_blind_norm",
+    "line_search": {
+      "method": "deterministic_Armijo_backtracking_on_full_fixed_diverse8_weighted_CE",
+      "armijo_c": 0.0001,
+      "backtrack_factor": 0.5,
+      "max_trials_per_step": 8,
+      "trial_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "step1_initial_trial_eta": "eta_max",
+      "later_initial_trial_eta": "previous_accepted_eta",
+      "trial_eta": "initial_trial_eta*(0.5**trial_index)",
+      "acceptance": "first_trial_with_L_trial <= L_current - armijo_c*eta_trial*aggregate_gradient_norm_squared",
+      "reject_restoration": "exact_pre_step_FP32_eligible_state_verified_by_tensor_equality",
+      "trial_objective": "full_fixed_weighted_eight_corpus_mean_causal_CE",
+      "trial_forward_batch_size": 8,
+      "trial_forward_batches": 512,
+      "loss_recompute_consistency_absolute_tolerance": 0.0001,
+      "loss_recompute_consistency_relative_tolerance": 1e-05,
+      "all_trials_rejected": "fail_blind_construction_without_oracle",
+      "accepted_eta_may_increase": false,
+      "oracle_based_acceptance": false
+    },
+    "update": "W <- W - eta * grad_L_bal",
+    "update_arithmetic_dtype": "cpu_float64",
+    "stored_weight_dtype": "float32",
+    "optimizer": false,
+    "momentum": false,
+    "weight_decay": false,
+    "gradient_clipping": false,
+    "mixed_precision": false,
+    "early_stopping": false,
+    "response": "A_final - A_k",
+    "response_normalization": false,
+    "response_rescaling": false,
+    "sign_selection": false
+  },
+  "barrier": {
+    "marker": "CONSENSUS_RELAXATION_CANDIDATES_FROZEN",
+    "all_4_steps_and_3_responses_plus_raw_b_validated_published_revalidated_before_historical_access": true,
+    "recovery_checkpoint_scientific_candidate": false
+  },
+  "evaluation": {
+    "target_raw_sha256": "4ab001c60fff4ad4f15db472436c3915b39fb5a69626a418f70c5eaaed780c5f",
+    "target_rows": [
+      0,
+      1024
+    ],
+    "baseline": "Attempt113.response_raw_rhs",
+    "signed_positionwise_cosine": true,
+    "absolute_cosine": false,
+    "flattened_cosine": false,
+    "primary_positions": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "secondary_positions": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127
+    ],
+    "clear_thresholds": {
+      "primary_gain_vs_raw_b": 0.03,
+      "secondary_gain_vs_raw_b": 0.02
+    },
+    "moderate_thresholds": {
+      "primary_gain_vs_raw_b": 0.015,
+      "secondary_gain_vs_raw_b": 0.0
+    },
+    "best_finite_tie_break": [
+      "highest_primary",
+      "highest_secondary",
+      "smaller_k"
+    ],
+    "same_specimen_development_selection": true
+  },
+  "paths": {
+    "candidate_path": "/root/model-diff-scratch/artifacts/attempt124_diverse8_consensus_relaxation/candidate.pt",
+    "recovery_path": "/root/model-diff-scratch/checkpoints/attempt124_diverse8_step2_recovery.pt",
+    "construction_manifest_path": "experiments/attempts/124_diverse8_consensus_relaxation/construction-manifest.json",
+    "result_path": "experiments/attempts/124_diverse8_consensus_relaxation/result.json"
+  },
+  "workload": {
+    "backward_batches_per_step": 512,
+    "total_backward_batches": 2048,
+    "forward_batches_per_armijo_trial": 512,
+    "max_armijo_trials_per_step": 8,
+    "probe_mean_batches": 32,
+    "probe_mean_count": 4,
+    "candidate_probe_forward_batches": 128,
+    "new_large_candidate_snapshots": false
+  }
+}
