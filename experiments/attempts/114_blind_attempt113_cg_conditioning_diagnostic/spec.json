@@ -1,0 +1,69 @@
+{
+  "attempt_id": "114_blind_attempt113_cg_conditioning_diagnostic",
+  "purpose": "blind_numerical_conditioning_diagnostic_only",
+  "frozen_attempt113": {
+    "commit": "5357ba00408f07b284de3126227fc5eb317e4f13",
+    "spec_path": "experiments/attempts/113_blind_diverse8_unit_gradient_inverse_ggn_candidate/spec.json",
+    "spec_sha256": "7c7f508575e216cd29eee967f31101b1c614f85cc0cb0465becd4e0d1dc8bfb6",
+    "source_path": "scripts/ablation/construct_blind_diverse8_unit_gradient_inverse_ggn.py",
+    "source_sha256": "02bc38350e0f08997f3f2e6942c89594abb4b2e30e042973b930d89e59374ee9",
+    "checkpoint_path": "/root/model-diff-scratch/checkpoints/attempt113_blind_inverse_cg80_iter40.pt",
+    "iteration": 40,
+    "coordinate_count": 98,
+    "ggn_rows": [0, 64],
+    "ggn_denominator": 8128,
+    "ggn_operator": "exact_endpoint_categorical_JtFJ",
+    "fisher_numerics": "FP64_softmax_and_Fisher_action_then_single_FP32_VJP_cast",
+    "damping_fraction": 0.0001,
+    "planned_cg_iterations": 80,
+    "preconditioner": null,
+    "residual_early_stop": false
+  },
+  "ritz": {
+    "dtype": "cpu_float64",
+    "matrix_size": 40,
+    "diagonal_first": "1/alpha_1",
+    "diagonal_later": "1/alpha_i+beta_(i-1)/alpha_(i-1)",
+    "offdiagonal": "sqrt(beta_i)/alpha_i_for_i_1_through_39",
+    "eigensolver": "torch.linalg.eigvalsh",
+    "implied_ggn_eigenvalues": "A_ritz_minus_lambda_without_clipping",
+    "threshold_multipliers_of_lambda": [2, 10, 100],
+    "material_negative_relative_tolerance": 1e-8,
+    "require_positive_minimum_A_ritz_for_condition_and_log_ratios": true,
+    "interpretation": "Krylov_subspace_approximations_not_full_spectrum"
+  },
+  "residual_curvature": {
+    "operator_applications": 1,
+    "rayleigh": "matrixwise_dot(r40,G_r40)/matrixwise_dot(r40,r40)",
+    "saved_relative_residual_rtol": 1e-6,
+    "saved_relative_residual_atol": 1e-8,
+    "damping_rule_rtol": 1e-12,
+    "negative_curvature_relative_tolerance": 1e-6,
+    "negative_curvature_absolute_tolerance": 1e-8,
+    "substantial_curvature_drop_ratio": 0.1
+  },
+  "output_path": "experiments/attempts/114_blind_attempt113_cg_conditioning_diagnostic/result.json",
+  "output_policy": "small_JSON_only_no_overwrite_no_checkpoint_mutation",
+  "information_policy": {
+    "blind_diagnostic": true,
+    "final_checkpoint_access": true,
+    "attempt113_checkpoint_access": true,
+    "historical_base_access": false,
+    "true_delta_access": false,
+    "adapter_access": false,
+    "oracle_adl_access": false,
+    "historical_target_access": false,
+    "prior_oracle_evaluation_access": false,
+    "candidate_evaluation": false,
+    "candidate_selection": false,
+    "oracle_based_tuning": false
+  },
+  "workload": {
+    "endpoint_ggn_applications": 1,
+    "ggn_microbatches": 64,
+    "expected_ggn_compute_seconds_context": [20, 25],
+    "expected_total_wall_minutes_context": [2, 4],
+    "checkpoint_cpu_bytes_estimate": 8455716864,
+    "no_runtime_smoke": true
+  }
+}
