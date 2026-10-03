@@ -1,0 +1,1012 @@
+{
+  "attempt_id": "115_blind_attempt113_true_residual_gap_diagnostic",
+  "checkpoint": {
+    "iteration": 40,
+    "path": "/root/model-diff-scratch/checkpoints/attempt113_blind_inverse_cg80_iter40.pt",
+    "read_only": true,
+    "serialized_sha256": "4435097d563297d2d749d37a14d79d9ae44c70ddda1a0b90e6f87f00d4c64113",
+    "size_bytes": 8455847711,
+    "unchanged_after_run": true
+  },
+  "corpora": [
+    {
+      "artifact_raw_sha256": "4613982be77342a89b35616d68e21d9ff66d5a983af7e82cb6fa1eb159457eae",
+      "artifact_serialized_sha256": "54283d72aa3075e2867ead86e538991d7284ede327ca67871e73bfc581e4025d",
+      "manifest_sha256": "8b3ea49228dbb106c2b8a7c849c4f27e021fa3e992800444f43e260a6b055230",
+      "name": "fineweb"
+    },
+    {
+      "artifact_raw_sha256": "8af51ee7d9eda44789529550685ba73e4d658b24153ace5b68dc61c7d256e287",
+      "artifact_serialized_sha256": "cbd92ac9766baef0ff12bdde69e66f8e928b863775b917ad09be57cc08b401b9",
+      "manifest_sha256": "80ca2b3efe19ed77a14d1f862ff56916baf9eeb67578afa7740e04e062c701fb",
+      "name": "wikitext103_raw"
+    },
+    {
+      "artifact_raw_sha256": "c6d87c65233e28ab09a38a04f09d35e592fef187399ff2fad8efa766a1f3a2d7",
+      "artifact_serialized_sha256": "909f9c997d4d0f5ceaabc977b80989b3606a22b6f7f22fd15ff419fc6cf14049",
+      "manifest_sha256": "ca49d65c1878f93d0c00aa0c4ce45574ac0c32f93d79318b3ee978eb0c2f3282",
+      "name": "tinystories"
+    },
+    {
+      "artifact_raw_sha256": "75206c2b84d07cf392b5b75341d66583862483f1812f4c21e5ee943afd36e2b6",
+      "artifact_serialized_sha256": "ab70ef4efceb399219b0c4bc38eca58ea10dae8ec63cc6c48a3b2d0e94422343",
+      "manifest_sha256": "e98fdee75374083dbd516169248f52395b7b1e51d138725c5c02ec4f194b3174",
+      "name": "arxiv_document"
+    },
+    {
+      "artifact_raw_sha256": "ed284acb702e0d455b2d0c2090b26a6183bd30bc9ba872330a5c65f7b9cc1444",
+      "artifact_serialized_sha256": "6ae307186d7c2ef4c0b740e2d4a89bcc6c1d48a4dbe663606bebd35a6568e893",
+      "manifest_sha256": "e9adda41503de9fe23d941dc081ecbaeddf7ecd8ea625c34fb5f515b1495e6df",
+      "name": "cc_news"
+    },
+    {
+      "artifact_raw_sha256": "a752abebac86100e607562f03b10bed1790a584813c3a9350a6dc620489a33bd",
+      "artifact_serialized_sha256": "c8c2b6c526c815459456c97991731a6c928b1ce5b2ea14143d482bcdbf956ca8",
+      "manifest_sha256": "650c2239ecac7bbb758a351ef80b379d1cabe39b6af3835fd1350368b01628a3",
+      "name": "pg19"
+    },
+    {
+      "artifact_raw_sha256": "92c4fa0ac6de439accffd74991df69fbd50d814d6a51059c0109a1ed9c6d03d6",
+      "artifact_serialized_sha256": "71d2b05a2ab3bfc934ec2d62275a8f8b8ec5d7de9f649d86e8f98f57d1b9503d",
+      "manifest_sha256": "8e34288e799aa434c814c05cca054b04a8b6679b2b89cbcfb267e5118d370d43",
+      "name": "codeparrot_clean"
+    },
+    {
+      "artifact_raw_sha256": "bb26f24493f26300ceae567f48f9b987dc5749808135b61bab1ac02fb49c855a",
+      "artifact_serialized_sha256": "95c389433b39a1cd71db8c0d60bf522c89de8cf9333296c06879a69bc110b8e1",
+      "manifest_sha256": "74eb7aaf856be5170f61e9777b4c6fa1b598d2ee8180d4a0753f31faaad57eb3",
+      "name": "ultrachat"
+    }
+  ],
+  "corpus_order": [
+    "fineweb",
+    "wikitext103_raw",
+    "tinystories",
+    "arxiv_document",
+    "cc_news",
+    "pg19",
+    "codeparrot_clean",
+    "ultrachat"
+  ],
+  "elapsed_seconds": 452.2017019726336,
+  "final_checkpoint_files": [
+    {
+      "path": "chat_template.jinja",
+      "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+      "size_bytes": 4168
+    },
+    {
+      "path": "config.json",
+      "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f",
+      "size_bytes": 1416
+    },
+    {
+      "path": "generation_config.json",
+      "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9",
+      "size_bytes": 214
+    },
+    {
+      "path": "model.safetensors",
+      "sha256": "f6989dd3445cd339041ab654a6da463e0a80b2d52dd2c01f67f683b1c30ea10f",
+      "size_bytes": 6882335328
+    },
+    {
+      "path": "tokenizer.json",
+      "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+      "size_bytes": 11422650
+    },
+    {
+      "path": "tokenizer_config.json",
+      "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95",
+      "size_bytes": 692
+    }
+  ],
+  "fixed_lambda": 0.056155081539589355,
+  "frozen_linkage": {
+    "attempt113": {
+      "checkpoint_path": "/root/model-diff-scratch/checkpoints/attempt113_blind_inverse_cg80_iter40.pt",
+      "checkpoint_serialized_sha256": "4435097d563297d2d749d37a14d79d9ae44c70ddda1a0b90e6f87f00d4c64113",
+      "checkpoint_size_bytes": 8455847711,
+      "commit": "5357ba00408f07b284de3126227fc5eb317e4f13",
+      "corpus_order": [
+        "fineweb",
+        "wikitext103_raw",
+        "tinystories",
+        "arxiv_document",
+        "cc_news",
+        "pg19",
+        "codeparrot_clean",
+        "ultrachat"
+      ],
+      "damping_fraction": 0.0001,
+      "fisher_numerics": "FP64_softmax_and_Fisher_action_then_single_FP32_VJP_cast",
+      "ggn_applications": 1,
+      "ggn_denominator": 8128,
+      "ggn_operator": "exact_endpoint_categorical_JtFJ",
+      "ggn_rows": [
+        0,
+        64
+      ],
+      "iteration": 40,
+      "matrix_count": 98,
+      "rhs": "one_eighth_sum_of_eight_positive_global_unit_generic_gradients_without_final_normalization",
+      "rhs_batch_size": 8,
+      "rhs_rows_per_corpus": [
+        0,
+        512
+      ],
+      "source_path": "scripts/ablation/construct_blind_diverse8_unit_gradient_inverse_ggn.py",
+      "source_sha256": "02bc38350e0f08997f3f2e6942c89594abb4b2e30e042973b930d89e59374ee9",
+      "spec_path": "experiments/attempts/113_blind_diverse8_unit_gradient_inverse_ggn_candidate/spec.json",
+      "spec_sha256": "7c7f508575e216cd29eee967f31101b1c614f85cc0cb0465becd4e0d1dc8bfb6"
+    },
+    "attempt114": {
+      "commit": "6b2e51ed87fd7147c5b304c4b7f4827dcdf6a4ba",
+      "lambda": 0.056155081539589355,
+      "recursive_relative_residual_at_40": 2.0165128716207255,
+      "result_path": "experiments/attempts/114_blind_attempt113_cg_conditioning_diagnostic/result.json",
+      "result_sha256": "151d1074cdcf5d5d3152bf1e2f746940ea287de88fdc597a737db83cbf74a345",
+      "rho_b": 561.5508153958936,
+      "rho_r40": 3018.261150714194,
+      "ritz_condition_estimate": 19640.51752854543,
+      "source_path": "scripts/ablation/diagnose_blind_attempt113_cg_conditioning.py",
+      "source_sha256": "781a604db74189631cee26e2b9caea75a2b24c0faef7f183ab6649b5014379fc",
+      "spec_path": "experiments/attempts/114_blind_attempt113_cg_conditioning_diagnostic/spec.json",
+      "spec_sha256": "bb477e5aaf66e9d33d75bedcc700a7b389bb47c7c3be00a25999d48e15b1e009"
+    }
+  },
+  "ggn_applications_to_x40": 1,
+  "ggn_audit": {
+    "first_batch": {
+      "fisher": {
+        "fp32_max_abs_sum": 3.506061779631056e-13,
+        "fp32_max_relative_abs_sum": 3.9436007461716285e-08,
+        "logits_dtype": "torch.float32",
+        "logits_shape": [
+          1,
+          127,
+          151936
+        ],
+        "max_abs_probability_weighted_mean_tangent": 1.6018297600773685,
+        "max_abs_sum_u64": 6.120474788402362e-20,
+        "max_abs_tangent": 20.93269157409668,
+        "max_abs_unweighted_vocab_mean_tangent": 1.3917572222348087,
+        "max_fp32_allowed_abs_sum": 1.8727771861905277e-06,
+        "max_fp64_allowed_abs_sum": 1.0087643702089904e-12,
+        "max_relative_abs_sum_u64": 5.130791529128959e-13,
+        "max_softmax_sum_error": 1.3322676295501878e-15,
+        "prediction_context_count": 127,
+        "tangent_dtype": "torch.float32",
+        "tangent_shape": [
+          1,
+          127,
+          151936
+        ]
+      },
+      "primal": {
+        "max_abs_difference": 0.0,
+        "max_scale": 27.285131454467773,
+        "rms_difference": 0.0,
+        "rms_scale": 4.552071884030508
+      },
+      "selected_vjp_matrix_count": 98,
+      "tangent_dtype": "torch.float32",
+      "tangent_shape": [
+        1,
+        127,
+        151936
+      ]
+    },
+    "fisher_conservation": {
+      "fp32_max_abs_sum": 1.5839191157935532e-12,
+      "fp32_max_relative_abs_sum": 4.132195584590971e-08,
+      "max_abs_probability_weighted_mean_tangent": 5.981654353356184,
+      "max_abs_sum_u64": 7.854808352117927e-19,
+      "max_abs_tangent": 24.913984298706055,
+      "max_abs_unweighted_vocab_mean_tangent": 2.990197719511809,
+      "max_relative_abs_sum_u64": 5.34563003012621e-10,
+      "max_softmax_sum_error": 3.552713678800501e-15,
+      "prediction_context_count": 8128
+    },
+    "timing": {
+      "fisher_seconds": 0.8156584026291966,
+      "logits_jvp_seconds": 14.371688734740019,
+      "vjp_backward_seconds": 5.606727588921785
+    }
+  },
+  "ggn_corpus": {
+    "denominator": 8128,
+    "operator": "exact_endpoint_categorical_JtFJ",
+    "raw_tensor_sha256": "4613982be77342a89b35616d68e21d9ff66d5a983af7e82cb6fa1eb159457eae",
+    "rows": [
+      0,
+      64
+    ],
+    "serialized_sha256": "54283d72aa3075e2867ead86e538991d7284ede327ca67871e73bfc581e4025d",
+    "tokens_path": "/root/model-diff-scratch/artifacts/attempt005_generic_rollback_corpus/tokens.pt"
+  },
+  "information_policy": {
+    "adapter_access": false,
+    "attempt113_checkpoint_access": true,
+    "blind_diagnostic": true,
+    "candidate_evaluation": false,
+    "candidate_selection": false,
+    "final_checkpoint_access": true,
+    "generic_corpora_access": true,
+    "historical_base_access": false,
+    "historical_target_access": false,
+    "oracle_adl_access": false,
+    "oracle_based_tuning": false,
+    "prior_oracle_evaluation_access": false,
+    "true_delta_access": false
+  },
+  "interpretation": "recursive_residual_faithful",
+  "purpose": "blind_attempt113_iteration40_recursive_vs_true_residual_diagnostic",
+  "residual_metrics": {
+    "arithmetic": "matrixwise_CPU_float64_b_minus_FP32_Gx_minus_lambda_times_x",
+    "cosine_recursive_vs_true": 0.9999999999963717,
+    "interpretation": "recursive_residual_faithful",
+    "matrixwise": [
+      {
+        "gap_norm": 1.5164319025079974e-07,
+        "name": "model.layers.0.mlp.down_proj.weight",
+        "recursive_residual_norm": 0.023326763500450202,
+        "true_residual_norm": 0.023326762903943872
+      },
+      {
+        "gap_norm": 9.148200873907017e-08,
+        "name": "model.layers.0.mlp.gate_proj.weight",
+        "recursive_residual_norm": 0.013218242315867521,
+        "true_residual_norm": 0.013218239011309859
+      },
+      {
+        "gap_norm": 1.2132956966887816e-07,
+        "name": "model.layers.0.mlp.up_proj.weight",
+        "recursive_residual_norm": 0.018131181999464622,
+        "true_residual_norm": 0.018131179879993065
+      },
+      {
+        "gap_norm": 8.066511026012953e-08,
+        "name": "model.layers.0.self_attn.k_proj.weight",
+        "recursive_residual_norm": 0.03268665916975409,
+        "true_residual_norm": 0.03268664074731242
+      },
+      {
+        "gap_norm": 2.0420250844277097e-07,
+        "name": "model.layers.0.self_attn.o_proj.weight",
+        "recursive_residual_norm": 0.031309880183785714,
+        "true_residual_norm": 0.03130987628922142
+      },
+      {
+        "gap_norm": 8.125128010259323e-08,
+        "name": "model.layers.0.self_attn.q_proj.weight",
+        "recursive_residual_norm": 0.03472808022475751,
+        "true_residual_norm": 0.034728056091818484
+      },
+      {
+        "gap_norm": 2.327516942021832e-07,
+        "name": "model.layers.0.self_attn.v_proj.weight",
+        "recursive_residual_norm": 0.03636500825023476,
+        "true_residual_norm": 0.036365003820277166
+      },
+      {
+        "gap_norm": 1.7104538617942845e-07,
+        "name": "model.layers.1.mlp.down_proj.weight",
+        "recursive_residual_norm": 0.02783753905184121,
+        "true_residual_norm": 0.027837540243378468
+      },
+      {
+        "gap_norm": 1.29312753634583e-07,
+        "name": "model.layers.1.mlp.gate_proj.weight",
+        "recursive_residual_norm": 0.024428439396905654,
+        "true_residual_norm": 0.024428441574730557
+      },
+      {
+        "gap_norm": 2.5975940427708756e-07,
+        "name": "model.layers.1.mlp.up_proj.weight",
+        "recursive_residual_norm": 0.046455824411721726,
+        "true_residual_norm": 0.04645582218650328
+      },
+      {
+        "gap_norm": 3.929556900617352e-08,
+        "name": "model.layers.1.self_attn.k_proj.weight",
+        "recursive_residual_norm": 0.006459380916690216,
+        "true_residual_norm": 0.006459381659868129
+      },
+      {
+        "gap_norm": 8.773530348387865e-08,
+        "name": "model.layers.1.self_attn.o_proj.weight",
+        "recursive_residual_norm": 0.014305069898740256,
+        "true_residual_norm": 0.014305067197738719
+      },
+      {
+        "gap_norm": 4.1635547883006504e-08,
+        "name": "model.layers.1.self_attn.q_proj.weight",
+        "recursive_residual_norm": 0.00699171472843906,
+        "true_residual_norm": 0.006991715250560363
+      },
+      {
+        "gap_norm": 1.0646451551910141e-07,
+        "name": "model.layers.1.self_attn.v_proj.weight",
+        "recursive_residual_norm": 0.018717297133767248,
+        "true_residual_norm": 0.018717300124990777
+      },
+      {
+        "gap_norm": 7.295319579516345e-08,
+        "name": "model.layers.10.mlp.down_proj.weight",
+        "recursive_residual_norm": 0.017200048579195118,
+        "true_residual_norm": 0.017200054150882358
+      },
+      {
+        "gap_norm": 5.840986058206213e-08,
+        "name": "model.layers.10.mlp.gate_proj.weight",
+        "recursive_residual_norm": 0.01387869903787124,
+        "true_residual_norm": 0.013878701350581411
+      },
+      {
+        "gap_norm": 7.560063250766346e-08,
+        "name": "model.layers.10.mlp.up_proj.weight",
+        "recursive_residual_norm": 0.02020290267361707,
+        "true_residual_norm": 0.02020290676492294
+      },
+      {
+        "gap_norm": 5.467035182156865e-08,
+        "name": "model.layers.10.self_attn.k_proj.weight",
+        "recursive_residual_norm": 0.013085322108910896,
+        "true_residual_norm": 0.013085330339397003
+      },
+      {
+        "gap_norm": 5.583291219119007e-08,
+        "name": "model.layers.10.self_attn.o_proj.weight",
+        "recursive_residual_norm": 0.015326269075729499,
+        "true_residual_norm": 0.01532627050698899
+      },
+      {
+        "gap_norm": 4.239110984190339e-08,
+        "name": "model.layers.10.self_attn.q_proj.weight",
+        "recursive_residual_norm": 0.011301324538392245,
+        "true_residual_norm": 0.011301328671171642
+      },
+      {
+        "gap_norm": 9.04571968569394e-08,
+        "name": "model.layers.10.self_attn.v_proj.weight",
+        "recursive_residual_norm": 0.025566537951943538,
+        "true_residual_norm": 0.025566531397515826
+      },
+      {
+        "gap_norm": 5.881946467454723e-08,
+        "name": "model.layers.11.mlp.down_proj.weight",
+        "recursive_residual_norm": 0.013836436074256903,
+        "true_residual_norm": 0.0138364406768722
+      },
+      {
+        "gap_norm": 5.3366906532447975e-08,
+        "name": "model.layers.11.mlp.gate_proj.weight",
+        "recursive_residual_norm": 0.012073559834366289,
+        "true_residual_norm": 0.012073563455164795
+      },
+      {
+        "gap_norm": 6.351572794104194e-08,
+        "name": "model.layers.11.mlp.up_proj.weight",
+        "recursive_residual_norm": 0.017794910080331267,
+        "true_residual_norm": 0.017794908766601225
+      },
+      {
+        "gap_norm": 4.021817565980897e-08,
+        "name": "model.layers.11.self_attn.k_proj.weight",
+        "recursive_residual_norm": 0.013046068238335672,
+        "true_residual_norm": 0.013046065242590622
+      },
+      {
+        "gap_norm": 6.387859067777216e-08,
+        "name": "model.layers.11.self_attn.o_proj.weight",
+        "recursive_residual_norm": 0.017631111802804963,
+        "true_residual_norm": 0.017631112476168095
+      },
+      {
+        "gap_norm": 4.35991588105938e-08,
+        "name": "model.layers.11.self_attn.q_proj.weight",
+        "recursive_residual_norm": 0.017219053600766362,
+        "true_residual_norm": 0.01721904831147291
+      },
+      {
+        "gap_norm": 1.1041729670443436e-07,
+        "name": "model.layers.11.self_attn.v_proj.weight",
+        "recursive_residual_norm": 0.03579407214004994,
+        "true_residual_norm": 0.035794063412702255
+      },
+      {
+        "gap_norm": 5.384822179688499e-08,
+        "name": "model.layers.12.mlp.down_proj.weight",
+        "recursive_residual_norm": 0.012692687881331767,
+        "true_residual_norm": 0.01269269260344811
+      },
+      {
+        "gap_norm": 4.9599803626317596e-08,
+        "name": "model.layers.12.mlp.gate_proj.weight",
+        "recursive_residual_norm": 0.011450972707706224,
+        "true_residual_norm": 0.011450977235727347
+      },
+      {
+        "gap_norm": 6.284790202282168e-08,
+        "name": "model.layers.12.mlp.up_proj.weight",
+        "recursive_residual_norm": 0.016809933469849204,
+        "true_residual_norm": 0.016809932531860555
+      },
+      {
+        "gap_norm": 3.8652070999275655e-08,
+        "name": "model.layers.12.self_attn.k_proj.weight",
+        "recursive_residual_norm": 0.013606184711152384,
+        "true_residual_norm": 0.013606182420497699
+      },
+      {
+        "gap_norm": 4.74232216530164e-08,
+        "name": "model.layers.12.self_attn.o_proj.weight",
+        "recursive_residual_norm": 0.014138523141531316,
+        "true_residual_norm": 0.014138522285431204
+      },
+      {
+        "gap_norm": 3.9768615531056084e-08,
+        "name": "model.layers.12.self_attn.q_proj.weight",
+        "recursive_residual_norm": 0.01451342935341307,
+        "true_residual_norm": 0.014513424759577656
+      },
+      {
+        "gap_norm": 9.196706203334041e-08,
+        "name": "model.layers.12.self_attn.v_proj.weight",
+        "recursive_residual_norm": 0.0311086257543558,
+        "true_residual_norm": 0.031108614249453083
+      },
+      {
+        "gap_norm": 4.681733006980055e-08,
+        "name": "model.layers.13.mlp.down_proj.weight",
+        "recursive_residual_norm": 0.011528979146568896,
+        "true_residual_norm": 0.011528982246316015
+      },
+      {
+        "gap_norm": 4.472241706107166e-08,
+        "name": "model.layers.13.mlp.gate_proj.weight",
+        "recursive_residual_norm": 0.01080420581366029,
+        "true_residual_norm": 0.010804208897543782
+      },
+      {
+        "gap_norm": 6.046657908877995e-08,
+        "name": "model.layers.13.mlp.up_proj.weight",
+        "recursive_residual_norm": 0.016608899879233585,
+        "true_residual_norm": 0.016608899914288277
+      },
+      {
+        "gap_norm": 5.1762416577829906e-08,
+        "name": "model.layers.13.self_attn.k_proj.weight",
+        "recursive_residual_norm": 0.014129319124767305,
+        "true_residual_norm": 0.014129326673498277
+      },
+      {
+        "gap_norm": 5.8065231411890075e-08,
+        "name": "model.layers.13.self_attn.o_proj.weight",
+        "recursive_residual_norm": 0.016473716600424133,
+        "true_residual_norm": 0.016473716179343453
+      },
+      {
+        "gap_norm": 6.805055505550981e-08,
+        "name": "model.layers.13.self_attn.q_proj.weight",
+        "recursive_residual_norm": 0.017065268998132346,
+        "true_residual_norm": 0.01706527457955971
+      },
+      {
+        "gap_norm": 9.496418150315187e-08,
+        "name": "model.layers.13.self_attn.v_proj.weight",
+        "recursive_residual_norm": 0.02975886660434205,
+        "true_residual_norm": 0.029758860448795152
+      },
+      {
+        "gap_norm": 3.6876485609164583e-06,
+        "name": "model.layers.2.mlp.down_proj.weight",
+        "recursive_residual_norm": 1.3811496677001383,
+        "true_residual_norm": 1.3811503360742694
+      },
+      {
+        "gap_norm": 1.362190066501263e-07,
+        "name": "model.layers.2.mlp.gate_proj.weight",
+        "recursive_residual_norm": 0.026086887248097986,
+        "true_residual_norm": 0.02608688692430243
+      },
+      {
+        "gap_norm": 2.2767583525207607e-07,
+        "name": "model.layers.2.mlp.up_proj.weight",
+        "recursive_residual_norm": 0.044778912220611325,
+        "true_residual_norm": 0.04477889789461257
+      },
+      {
+        "gap_norm": 5.1285205308219674e-08,
+        "name": "model.layers.2.self_attn.k_proj.weight",
+        "recursive_residual_norm": 0.008224368118859415,
+        "true_residual_norm": 0.008224369282349268
+      },
+      {
+        "gap_norm": 8.504920335484168e-08,
+        "name": "model.layers.2.self_attn.o_proj.weight",
+        "recursive_residual_norm": 0.014184711761031248,
+        "true_residual_norm": 0.01418471197729586
+      },
+      {
+        "gap_norm": 5.528581314665921e-08,
+        "name": "model.layers.2.self_attn.q_proj.weight",
+        "recursive_residual_norm": 0.009585084438544193,
+        "true_residual_norm": 0.009585090212576194
+      },
+      {
+        "gap_norm": 1.1795325660382192e-07,
+        "name": "model.layers.2.self_attn.v_proj.weight",
+        "recursive_residual_norm": 0.0206522256078949,
+        "true_residual_norm": 0.020652229277838507
+      },
+      {
+        "gap_norm": 1.3630099042719592e-07,
+        "name": "model.layers.3.mlp.down_proj.weight",
+        "recursive_residual_norm": 0.025704295069114685,
+        "true_residual_norm": 0.02570429769025888
+      },
+      {
+        "gap_norm": 1.1062725216358852e-07,
+        "name": "model.layers.3.mlp.gate_proj.weight",
+        "recursive_residual_norm": 0.02000237115346104,
+        "true_residual_norm": 0.02000237302393873
+      },
+      {
+        "gap_norm": 1.805265581301921e-07,
+        "name": "model.layers.3.mlp.up_proj.weight",
+        "recursive_residual_norm": 0.03467784982476624,
+        "true_residual_norm": 0.03467785564908722
+      },
+      {
+        "gap_norm": 6.627347403652521e-08,
+        "name": "model.layers.3.self_attn.k_proj.weight",
+        "recursive_residual_norm": 0.01311043259892,
+        "true_residual_norm": 0.013110429092316089
+      },
+      {
+        "gap_norm": 6.080884863678184e-08,
+        "name": "model.layers.3.self_attn.o_proj.weight",
+        "recursive_residual_norm": 0.010499673540877007,
+        "true_residual_norm": 0.010499676666880163
+      },
+      {
+        "gap_norm": 7.171967000302129e-08,
+        "name": "model.layers.3.self_attn.q_proj.weight",
+        "recursive_residual_norm": 0.013730905503718503,
+        "true_residual_norm": 0.013730920482216554
+      },
+      {
+        "gap_norm": 1.211920183189257e-07,
+        "name": "model.layers.3.self_attn.v_proj.weight",
+        "recursive_residual_norm": 0.022681713962545497,
+        "true_residual_norm": 0.022681706027402323
+      },
+      {
+        "gap_norm": 1.4372610082711726e-07,
+        "name": "model.layers.4.mlp.down_proj.weight",
+        "recursive_residual_norm": 0.025019544862866294,
+        "true_residual_norm": 0.025019548737056627
+      },
+      {
+        "gap_norm": 1.014976021994768e-07,
+        "name": "model.layers.4.mlp.gate_proj.weight",
+        "recursive_residual_norm": 0.019467244080541842,
+        "true_residual_norm": 0.019467245225775302
+      },
+      {
+        "gap_norm": 1.7138191214232826e-07,
+        "name": "model.layers.4.mlp.up_proj.weight",
+        "recursive_residual_norm": 0.034055109337161944,
+        "true_residual_norm": 0.03405511547452266
+      },
+      {
+        "gap_norm": 6.222430108901401e-08,
+        "name": "model.layers.4.self_attn.k_proj.weight",
+        "recursive_residual_norm": 0.012613112544909814,
+        "true_residual_norm": 0.012613116142176872
+      },
+      {
+        "gap_norm": 6.350829005609715e-08,
+        "name": "model.layers.4.self_attn.o_proj.weight",
+        "recursive_residual_norm": 0.012332782832589538,
+        "true_residual_norm": 0.01233278491835288
+      },
+      {
+        "gap_norm": 5.745878785354783e-08,
+        "name": "model.layers.4.self_attn.q_proj.weight",
+        "recursive_residual_norm": 0.01299622365524231,
+        "true_residual_norm": 0.012996228412148153
+      },
+      {
+        "gap_norm": 1.1247546607259867e-07,
+        "name": "model.layers.4.self_attn.v_proj.weight",
+        "recursive_residual_norm": 0.023597742186540892,
+        "true_residual_norm": 0.023597747752938172
+      },
+      {
+        "gap_norm": 1.4722775480222094e-07,
+        "name": "model.layers.5.mlp.down_proj.weight",
+        "recursive_residual_norm": 0.02206710613561086,
+        "true_residual_norm": 0.022067114226604168
+      },
+      {
+        "gap_norm": 1.1868015332015769e-07,
+        "name": "model.layers.5.mlp.gate_proj.weight",
+        "recursive_residual_norm": 0.01804462498859183,
+        "true_residual_norm": 0.01804462990732669
+      },
+      {
+        "gap_norm": 1.5537650661955284e-07,
+        "name": "model.layers.5.mlp.up_proj.weight",
+        "recursive_residual_norm": 0.026152336724941418,
+        "true_residual_norm": 0.026152341040132494
+      },
+      {
+        "gap_norm": 7.260895621641212e-08,
+        "name": "model.layers.5.self_attn.k_proj.weight",
+        "recursive_residual_norm": 0.013252865861699319,
+        "true_residual_norm": 0.013252871304818262
+      },
+      {
+        "gap_norm": 9.42546254770854e-08,
+        "name": "model.layers.5.self_attn.o_proj.weight",
+        "recursive_residual_norm": 0.014209837459211224,
+        "true_residual_norm": 0.014209841584434325
+      },
+      {
+        "gap_norm": 7.424800669959155e-08,
+        "name": "model.layers.5.self_attn.q_proj.weight",
+        "recursive_residual_norm": 0.013250999689664474,
+        "true_residual_norm": 0.013251002642097312
+      },
+      {
+        "gap_norm": 1.5797523488099578e-07,
+        "name": "model.layers.5.self_attn.v_proj.weight",
+        "recursive_residual_norm": 0.02762582389533684,
+        "true_residual_norm": 0.0276258247374023
+      },
+      {
+        "gap_norm": 1.2466940121711396e-07,
+        "name": "model.layers.6.mlp.down_proj.weight",
+        "recursive_residual_norm": 0.02067705204758411,
+        "true_residual_norm": 0.020677064978837614
+      },
+      {
+        "gap_norm": 1.1692518450945964e-07,
+        "name": "model.layers.6.mlp.gate_proj.weight",
+        "recursive_residual_norm": 0.019153274885282946,
+        "true_residual_norm": 0.019153276018173855
+      },
+      {
+        "gap_norm": 1.340387221351878e-07,
+        "name": "model.layers.6.mlp.up_proj.weight",
+        "recursive_residual_norm": 0.026915851671785618,
+        "true_residual_norm": 0.026915857741260724
+      },
+      {
+        "gap_norm": 7.752934004800719e-08,
+        "name": "model.layers.6.self_attn.k_proj.weight",
+        "recursive_residual_norm": 0.014467502397270376,
+        "true_residual_norm": 0.014467500595260857
+      },
+      {
+        "gap_norm": 6.9816528761518e-08,
+        "name": "model.layers.6.self_attn.o_proj.weight",
+        "recursive_residual_norm": 0.01358530346300708,
+        "true_residual_norm": 0.013585306702389844
+      },
+      {
+        "gap_norm": 7.026747482130124e-08,
+        "name": "model.layers.6.self_attn.q_proj.weight",
+        "recursive_residual_norm": 0.012833252502321282,
+        "true_residual_norm": 0.012833245497559176
+      },
+      {
+        "gap_norm": 1.1669585040465147e-07,
+        "name": "model.layers.6.self_attn.v_proj.weight",
+        "recursive_residual_norm": 0.025707541435943473,
+        "true_residual_norm": 0.025707546720203176
+      },
+      {
+        "gap_norm": 1.0304269242964476e-07,
+        "name": "model.layers.7.mlp.down_proj.weight",
+        "recursive_residual_norm": 0.020463492592308966,
+        "true_residual_norm": 0.020463502379654407
+      },
+      {
+        "gap_norm": 9.896145547424864e-08,
+        "name": "model.layers.7.mlp.gate_proj.weight",
+        "recursive_residual_norm": 0.018719288254142184,
+        "true_residual_norm": 0.018719292893261998
+      },
+      {
+        "gap_norm": 1.1671314842711381e-07,
+        "name": "model.layers.7.mlp.up_proj.weight",
+        "recursive_residual_norm": 0.025588736273969674,
+        "true_residual_norm": 0.025588740568455323
+      },
+      {
+        "gap_norm": 6.221661569055554e-08,
+        "name": "model.layers.7.self_attn.k_proj.weight",
+        "recursive_residual_norm": 0.01661322027921745,
+        "true_residual_norm": 0.016613222091720715
+      },
+      {
+        "gap_norm": 5.539587198648305e-08,
+        "name": "model.layers.7.self_attn.o_proj.weight",
+        "recursive_residual_norm": 0.013566347029971082,
+        "true_residual_norm": 0.013566349933312434
+      },
+      {
+        "gap_norm": 5.0585681276230713e-08,
+        "name": "model.layers.7.self_attn.q_proj.weight",
+        "recursive_residual_norm": 0.01392923132963848,
+        "true_residual_norm": 0.013929235341013277
+      },
+      {
+        "gap_norm": 1.0273969647122751e-07,
+        "name": "model.layers.7.self_attn.v_proj.weight",
+        "recursive_residual_norm": 0.025055257262175768,
+        "true_residual_norm": 0.02505526321253006
+      },
+      {
+        "gap_norm": 7.730220125080885e-08,
+        "name": "model.layers.8.mlp.down_proj.weight",
+        "recursive_residual_norm": 0.017616518698879934,
+        "true_residual_norm": 0.01761652516722199
+      },
+      {
+        "gap_norm": 8.12652588931307e-08,
+        "name": "model.layers.8.mlp.gate_proj.weight",
+        "recursive_residual_norm": 0.01762223171388732,
+        "true_residual_norm": 0.017622236940130688
+      },
+      {
+        "gap_norm": 9.235438114932286e-08,
+        "name": "model.layers.8.mlp.up_proj.weight",
+        "recursive_residual_norm": 0.024205021226664975,
+        "true_residual_norm": 0.02420502418892795
+      },
+      {
+        "gap_norm": 5.682754096443654e-08,
+        "name": "model.layers.8.self_attn.k_proj.weight",
+        "recursive_residual_norm": 0.013518133035391643,
+        "true_residual_norm": 0.013518131001739351
+      },
+      {
+        "gap_norm": 4.726325996307728e-08,
+        "name": "model.layers.8.self_attn.o_proj.weight",
+        "recursive_residual_norm": 0.012537876568239932,
+        "true_residual_norm": 0.012537878866038127
+      },
+      {
+        "gap_norm": 4.522289209258331e-08,
+        "name": "model.layers.8.self_attn.q_proj.weight",
+        "recursive_residual_norm": 0.012091997526858207,
+        "true_residual_norm": 0.012092002666479973
+      },
+      {
+        "gap_norm": 8.324243947135197e-08,
+        "name": "model.layers.8.self_attn.v_proj.weight",
+        "recursive_residual_norm": 0.02334072178714827,
+        "true_residual_norm": 0.023340720216743476
+      },
+      {
+        "gap_norm": 7.582139586712504e-08,
+        "name": "model.layers.9.mlp.down_proj.weight",
+        "recursive_residual_norm": 0.017613983233203068,
+        "true_residual_norm": 0.017613989811424778
+      },
+      {
+        "gap_norm": 6.299490078773782e-08,
+        "name": "model.layers.9.mlp.gate_proj.weight",
+        "recursive_residual_norm": 0.015452496750940315,
+        "true_residual_norm": 0.015452499974511091
+      },
+      {
+        "gap_norm": 8.020966341128727e-08,
+        "name": "model.layers.9.mlp.up_proj.weight",
+        "recursive_residual_norm": 0.02171398975028065,
+        "true_residual_norm": 0.021713988165881354
+      },
+      {
+        "gap_norm": 6.421471013830641e-08,
+        "name": "model.layers.9.self_attn.k_proj.weight",
+        "recursive_residual_norm": 0.015161237185698962,
+        "true_residual_norm": 0.015161243077414802
+      },
+      {
+        "gap_norm": 5.667239394551292e-08,
+        "name": "model.layers.9.self_attn.o_proj.weight",
+        "recursive_residual_norm": 0.01621889590775423,
+        "true_residual_norm": 0.016218897467851746
+      },
+      {
+        "gap_norm": 5.1726939234766134e-08,
+        "name": "model.layers.9.self_attn.q_proj.weight",
+        "recursive_residual_norm": 0.013329957741653685,
+        "true_residual_norm": 0.013329955084021152
+      },
+      {
+        "gap_norm": 1.2978900787283944e-07,
+        "name": "model.layers.9.self_attn.v_proj.weight",
+        "recursive_residual_norm": 0.03766999631855772,
+        "true_residual_norm": 0.03766999366065077
+      }
+    ],
+    "recursive_relative_residual": 2.0165128774065955,
+    "residual_gap_relative_to_recursive": 2.735084375822336e-06,
+    "residual_gap_relative_to_rhs": 5.515332864639321e-06,
+    "squared_norms_and_dot": {
+      "b_sq": 0.47955121873377315,
+      "dot": 1.9500116420329348,
+      "gap_sq": 1.4587418940793017e-11,
+      "recursive_sq": 1.950010718561862,
+      "true_sq": 1.9500125655185954
+    },
+    "true_relative_residual": 2.016513832378566,
+    "true_to_recursive_residual_norm_ratio": 1.0000004735759345
+  },
+  "rhs_reconstruction": {
+    "byte_identical_to_checkpoint_rhs": true,
+    "matrix_raw_sha256": {
+      "model.layers.0.mlp.down_proj.weight": "729e40de2b507e0a19b2f849e6c08679e76219b48f97448260d41432e89f74e8",
+      "model.layers.0.mlp.gate_proj.weight": "200d8154d6f39bd4106c61e4cf7a377e5a059ecd6c9fcbc8b38ff22c4b05c17c",
+      "model.layers.0.mlp.up_proj.weight": "ea8db352d46b9db787b843bb99d63086cb9a71e15fb2f74e65fa3de39c82614e",
+      "model.layers.0.self_attn.k_proj.weight": "b8a6106d75b15bb6dbf0a9ab8683f68f46445dc6da0e5027e1ccba04f77a8b14",
+      "model.layers.0.self_attn.o_proj.weight": "3ee5f655b1a162ab5db75f0613385e9739cae997703295e444035f953061e41f",
+      "model.layers.0.self_attn.q_proj.weight": "261fca9cec04612c75d4542acaaa9dd558e67abe4ed7ca54a2a35255b25fcf17",
+      "model.layers.0.self_attn.v_proj.weight": "d9a85dc5005f58b2d04a612ecd23a73e93f4ad71fffb40c2462ec21d689029de",
+      "model.layers.1.mlp.down_proj.weight": "bf9cfd3a058d81f5bb100fa16affcdb4333da7b5d2cab394da8aedbeee5bd02a",
+      "model.layers.1.mlp.gate_proj.weight": "5c4e4282b142b0eefae992d4d9242b4a48438384851fe1802be735c92fc565e2",
+      "model.layers.1.mlp.up_proj.weight": "372d853d1a3601bb21f3dcec322757c301304faac9f0900de7d38b19170f64da",
+      "model.layers.1.self_attn.k_proj.weight": "34d4e11fabd8fdf52c52959795fff2d7779ad0bfa3c7b8ae0e5027d26bff8180",
+      "model.layers.1.self_attn.o_proj.weight": "1638b6a006bbf854d0ac7de7024808635661258676edae537ac67bd5d8404468",
+      "model.layers.1.self_attn.q_proj.weight": "2cc88831947134e3ce3a0ec4b2ad4c9389660485bf130d6a3e8b9cac3f3f6c31",
+      "model.layers.1.self_attn.v_proj.weight": "cae3a6993b49a81bfbb7084101a98dc7ad15aae54314f313a42ebbad4c7a1d1e",
+      "model.layers.10.mlp.down_proj.weight": "3112beb13be87ddce959f3f7c48b68ee1d773ff3b639d2dc409dba38df7daff6",
+      "model.layers.10.mlp.gate_proj.weight": "ceda9bb88548cdc4e8e45b8d536a6d93b6ff05bb7b6fce8b64225c21a7bf121f",
+      "model.layers.10.mlp.up_proj.weight": "4274e90c66e9e97cc262727375b2aae44febea9eb90446f675ee65681e378175",
+      "model.layers.10.self_attn.k_proj.weight": "67c2cb85d55dc919b11f63c9e66dbfaf6979e1cf835d89625969cc19dfcda7b6",
+      "model.layers.10.self_attn.o_proj.weight": "0cc8a9e492fba435485281db01d8e1d534bcf51700f19d9abc62fc81fe2bcfe2",
+      "model.layers.10.self_attn.q_proj.weight": "f6ed1a02b71af66d041aa58a42fadc13868c2b84f745101371b1d68c7716bed4",
+      "model.layers.10.self_attn.v_proj.weight": "4d7203a62192a605af549169d40a20c75f688e39510d2bbb4ecf9ce37d14b90e",
+      "model.layers.11.mlp.down_proj.weight": "421d7e9a632bfd4913c577addd8c18ff91cacba0e2186c1df0ec6ab8f4060a07",
+      "model.layers.11.mlp.gate_proj.weight": "4e7e9e5b61f3e9ea2de4e668aebf4acbd7e6d39b0f2b637c0570d85647f88de6",
+      "model.layers.11.mlp.up_proj.weight": "eb2a017bd7552e05b9e73fbc3b3a7f8f4a92cb40812dd95024089e77c9e56fca",
+      "model.layers.11.self_attn.k_proj.weight": "e020d10808a8a06a46bdf1c8059da9d51313be748f7f4dba31c66da2110d9aaa",
+      "model.layers.11.self_attn.o_proj.weight": "8217da0e0b62ff69dcaf03f8987a1a87c1b84ef16a88b5e271b1503764de06fe",
+      "model.layers.11.self_attn.q_proj.weight": "299d7112c16fabc8aeba9a7fbca65f909cd427419cc756532a35c0c28d79681f",
+      "model.layers.11.self_attn.v_proj.weight": "9ff27cfa84b0e6b5e733f8674e778416bb76c2450cead038ac4f3344bf41d7d5",
+      "model.layers.12.mlp.down_proj.weight": "55d3e8e8165f3fd0cbe3ef8c6c075aa28429f5e7d3c1a2edf622d82b0a091846",
+      "model.layers.12.mlp.gate_proj.weight": "2671f2188ede088a7c58884693d4b36222f05298f62ff84bb9c430c558e3c158",
+      "model.layers.12.mlp.up_proj.weight": "4ff7434bb5c617a492ac2bf62a24b52554d0b53d205d82dc7ad63ca59ce06d67",
+      "model.layers.12.self_attn.k_proj.weight": "cc252d4e45ccb3fe11e2df2d4b40000f8962a8a968d9b84a2bd5c43f250e05ad",
+      "model.layers.12.self_attn.o_proj.weight": "90d61347c29ebaf0988770856eda3ec45fb8880abc02225138fa8fa30a799f83",
+      "model.layers.12.self_attn.q_proj.weight": "99f52a506f6c30b75f04ebe4084b0f62c81f119f0c8e048b32c5db4ff9a3aecc",
+      "model.layers.12.self_attn.v_proj.weight": "044c46b20f656d96bea270f1c8b3f47efaf3cdd994ac6f92796da34a37b38fa6",
+      "model.layers.13.mlp.down_proj.weight": "91a9e98d8ac47d30949c8f0b54448171bed1370ed11a681d9e86154e73a975b2",
+      "model.layers.13.mlp.gate_proj.weight": "229b348bdaa8015ac8ca737c6d383d8811eb9ea6a881b049c606228e88f78729",
+      "model.layers.13.mlp.up_proj.weight": "dc4ffb79f2d6d3674eb6e3356dcb956ba5a175632f6c86a5f55e1a541513ce6e",
+      "model.layers.13.self_attn.k_proj.weight": "e1672f3b539527843ae3007c8f3f030c752142cf976a8577200105047b3c474d",
+      "model.layers.13.self_attn.o_proj.weight": "8d8128dbffa402bd886bd9866a001a17f6ac9a56f11f79ab2a999563a61267d9",
+      "model.layers.13.self_attn.q_proj.weight": "a2d6918b58df8d1a3b0f8ae638815436fb5f536f3fd89577e50a0347e38dad22",
+      "model.layers.13.self_attn.v_proj.weight": "400425c18e357ba878d284e061f860b4c2c53896e480d10fe86232ad8cb71221",
+      "model.layers.2.mlp.down_proj.weight": "99df8bb89040ed177b7fa0f1aa3a7fcb40737a0d298a66f5ba8b205909a5522f",
+      "model.layers.2.mlp.gate_proj.weight": "1f69c3f7f765b35b2485bbe9467b498c78066fcaecb22a20445fab91fa723109",
+      "model.layers.2.mlp.up_proj.weight": "a3a9f58ab4841a961a1f5f3b12d5ff3e2727ebb1d9bb1ffc8c2eca4edf340106",
+      "model.layers.2.self_attn.k_proj.weight": "0c16367225a7aa72632009a74554b2ba332406bc645b2e7922b367540d0fcde0",
+      "model.layers.2.self_attn.o_proj.weight": "255265d250ea463e744e005806b3bf3401e5f26e1a817eb4c203a7cf59451add",
+      "model.layers.2.self_attn.q_proj.weight": "d9b28f5ff86e407121f880c5153307905184dc9de30a94e8da1dd9c9f05e63f2",
+      "model.layers.2.self_attn.v_proj.weight": "823489b9c9cdfa9d47a3772ab627f012d5357ff2e603ed5a2ee28bd8d763a5b4",
+      "model.layers.3.mlp.down_proj.weight": "394d387b241391fa33e42398c343f64873c75a0c8ae4a271874b1e6788596fca",
+      "model.layers.3.mlp.gate_proj.weight": "7eacfc2b7930d70217eafc946caa37d968df2219ae6218cecb88372e308224a1",
+      "model.layers.3.mlp.up_proj.weight": "4388310d2dc157b578d3d5c070075fd122ff41064d9c695157d4aceb45fd1053",
+      "model.layers.3.self_attn.k_proj.weight": "f98515a7a32d04930ab9ce4b34c40d760abdd66a8c634ce4325e2b00d175ca03",
+      "model.layers.3.self_attn.o_proj.weight": "f771c53f4a700bd462c318b5eaa5dd73e001491597a7c6ad2f2b16c23fba3f8b",
+      "model.layers.3.self_attn.q_proj.weight": "cd8b8d4e978340dd07c639e9f62af758d06f3ac345e87c3b671dad710bfb19d4",
+      "model.layers.3.self_attn.v_proj.weight": "8cf2aa9cb69e6a6c538c4055010aee0615918131e0b84644afea5bd77dd67701",
+      "model.layers.4.mlp.down_proj.weight": "91349f7ff07d05913a7ff2a9ca3c054d65be7a88b1e74ab62ce8e2117a7f5282",
+      "model.layers.4.mlp.gate_proj.weight": "a6da52d7d8a41311a75c6e89b06f0cc08ef7582e6c620d652c4eabc79d6f9bc0",
+      "model.layers.4.mlp.up_proj.weight": "e2c5c04b1d1c6010fc5743035e0d1a641ee1b53e9e56b3cd8e53a17df9cc73fd",
+      "model.layers.4.self_attn.k_proj.weight": "884ef63b5b9a53f5698586db6cc7c06cbeaf1404063beba583eb37d2f0680a4d",
+      "model.layers.4.self_attn.o_proj.weight": "d716c392ccd5f96596bc4661ba22f2aaf279438dd0c8cf9f50c1653fec89f963",
+      "model.layers.4.self_attn.q_proj.weight": "5419edb85b38ece04e514c01345df8c523ed3fd6a18e791f036449c6a95c43ab",
+      "model.layers.4.self_attn.v_proj.weight": "d70e82b8f00482b0e7f4164c8912ba10409cfab85ce7a34dc9ca53fd80be098f",
+      "model.layers.5.mlp.down_proj.weight": "1a63f22731a66498c609a7ea13f5735cf04b18e37e9e9cd7f0b60dfe90f842c0",
+      "model.layers.5.mlp.gate_proj.weight": "3134bf0648c1faad95c24a5dc6d7c80dd073b87837ef151f6a594cfbcbd3a080",
+      "model.layers.5.mlp.up_proj.weight": "c6cc2f0f771bc46903111a5d01c4ebf9ab88adca07e9cfbbdd9a484aceca1235",
+      "model.layers.5.self_attn.k_proj.weight": "6b37619ca5b59a7a1367a0c7d8ebf35620b7490614eb37b3c42f46cca22cfd4b",
+      "model.layers.5.self_attn.o_proj.weight": "a390dda9023102a0fe1eb891eee21665ebf72a1d73039027925a5546738a7a72",
+      "model.layers.5.self_attn.q_proj.weight": "0db6944ee515da92ba253c34b698bdf418a8dd5ba284f9c7a562cfb2149144fd",
+      "model.layers.5.self_attn.v_proj.weight": "a29561b4b733c9806f236c1375980d4f6ef437f96160594f993c4512b18f6ba1",
+      "model.layers.6.mlp.down_proj.weight": "6ede9d9d8d5db086386a36dfa3b59eb8e54bd5eb20df71179439ba82973a11d4",
+      "model.layers.6.mlp.gate_proj.weight": "d18166e4554702b799666c45f0c646ed76532ecb41d2956933a7d8a1afbb6aa0",
+      "model.layers.6.mlp.up_proj.weight": "783aef01691a8c7653dbb35a9ddc8dc91f4bc061547d72239bb8a4c60d80d2d9",
+      "model.layers.6.self_attn.k_proj.weight": "430506010f2193afb8a040c257b90cb8250f472d979c47ba932ed8722ab7d303",
+      "model.layers.6.self_attn.o_proj.weight": "b1cdba1d75739fabef1839b35731ca1434c9275becb36facc867fceff764fdbd",
+      "model.layers.6.self_attn.q_proj.weight": "3ebacd27adf6c429e26ef980cfdb4e4afc10218f224a6b99830a055d1ca10650",
+      "model.layers.6.self_attn.v_proj.weight": "f6596e156128fcee4ad5b7bbadbd48101d096ab6783bfbe297df35ac85b305d7",
+      "model.layers.7.mlp.down_proj.weight": "d0d565a1aa32436ae3499409bcf3eb4df3114c2d56ae65c2b5cd74bd2607aa17",
+      "model.layers.7.mlp.gate_proj.weight": "38d4d6bf982f8eaf7d752f4100ae3df8d274093e172a5eef4eab6ee753ce9ecf",
+      "model.layers.7.mlp.up_proj.weight": "84eba8e6bd6d709b651190da50feebe36d5d23ac0735c516d76e7ac3ce7e9e49",
+      "model.layers.7.self_attn.k_proj.weight": "4851815b5bf89ad9770c2cab8fb8c1a4a76001218c66a863c44a56ef243c7ef4",
+      "model.layers.7.self_attn.o_proj.weight": "0e6cb6f5a8338bcb755affbbb6f2abd0bf42baddebf7be4f70416324a7e77b7e",
+      "model.layers.7.self_attn.q_proj.weight": "06476390119d98e4d4523c7600e45c30205e56a761c8d9de7a27be2544004356",
+      "model.layers.7.self_attn.v_proj.weight": "291374db1f6f398f70bf4c5b77d6aaa2153c8f428f84e62196100ca143dae53d",
+      "model.layers.8.mlp.down_proj.weight": "10d32aed452736d3ecafa31879fc6f97d2864cadf3e5d06c4267df6653b5efe7",
+      "model.layers.8.mlp.gate_proj.weight": "8c55bb0df50794a366924ac3ec59a06956e0c915e0d47f4a70af76fb59faa89a",
+      "model.layers.8.mlp.up_proj.weight": "da15bd298b4a27974161237302386a0c344a4a8062e1a6c3f7dd95647244a514",
+      "model.layers.8.self_attn.k_proj.weight": "ca09b115252dc2a80142b7338991a92153073e29c32640104e9496c0c253c918",
+      "model.layers.8.self_attn.o_proj.weight": "c9405051634e12383fd9df1ce67e55f7fa2d69d65f1b7330d60813b07108e531",
+      "model.layers.8.self_attn.q_proj.weight": "b15902dbcb71dd7fb4f255ef261d661e9b580396edde627d7d3b697b78ff9a54",
+      "model.layers.8.self_attn.v_proj.weight": "d34773973ea6518eb806fcdfd19dc5fc031879d0760a4f887f41a29ff3dfa0d1",
+      "model.layers.9.mlp.down_proj.weight": "2b342bc8fb900fc87f64cc3145307255fcddb8c5745da02e60d903742ea167f4",
+      "model.layers.9.mlp.gate_proj.weight": "2b89975d7582762f41b8693dc66c6ea7f454137dcef83b706e256c23e7168e12",
+      "model.layers.9.mlp.up_proj.weight": "97b163d13dc687e56b600448d759c1476cc47bcbbefecc542158e98fa4761baf",
+      "model.layers.9.self_attn.k_proj.weight": "9cf742ce4aadecd94ab762271cfe70faa66bc9546fab772701ee38c2b33b0935",
+      "model.layers.9.self_attn.o_proj.weight": "9a92ebe369b934adcac8833e423544fbd8360e1ffbb19dbb437b6e76242a3613",
+      "model.layers.9.self_attn.q_proj.weight": "7ae769264981483d6c0a83065059144e71ca50d777a6a816fa8d850e62155d92",
+      "model.layers.9.self_attn.v_proj.weight": "ba3c83ab0bfe4fab5100f39226db06f69e30ff1046ce7e93d3b235d6a9c75a02"
+    },
+    "norm": 0.6924963677590905,
+    "ordered_matrix_hash_sha256": "a90785341961a0a2a08e7949961cb105867cf2509013b01b65c2013322ead574",
+    "per_corpus_diagnostic_differences": [
+      {
+        "global_gradient_norm_difference": 0.0,
+        "mean_generic_loss_difference": 0.0,
+        "name": "fineweb",
+        "unit_normalization_scalar_difference": 0.0
+      },
+      {
+        "global_gradient_norm_difference": 0.0,
+        "mean_generic_loss_difference": 0.0,
+        "name": "wikitext103_raw",
+        "unit_normalization_scalar_difference": 0.0
+      },
+      {
+        "global_gradient_norm_difference": 0.0,
+        "mean_generic_loss_difference": 0.0,
+        "name": "tinystories",
+        "unit_normalization_scalar_difference": 0.0
+      },
+      {
+        "global_gradient_norm_difference": 0.0,
+        "mean_generic_loss_difference": 0.0,
+        "name": "arxiv_document",
+        "unit_normalization_scalar_difference": 0.0
+      },
+      {
+        "global_gradient_norm_difference": 0.0,
+        "mean_generic_loss_difference": 0.0,
+        "name": "cc_news",
+        "unit_normalization_scalar_difference": 0.0
+      },
+      {
+        "global_gradient_norm_difference": 0.0,
+        "mean_generic_loss_difference": 0.0,
+        "name": "pg19",
+        "unit_normalization_scalar_difference": 0.0
+      },
+      {
+        "global_gradient_norm_difference": 0.0,
+        "mean_generic_loss_difference": 0.0,
+        "name": "codeparrot_clean",
+        "unit_normalization_scalar_difference": 0.0
+      },
+      {
+        "global_gradient_norm_difference": 0.0,
+        "mean_generic_loss_difference": 0.0,
+        "name": "ultrachat",
+        "unit_normalization_scalar_difference": 0.0
+      }
+    ]
+  },
+  "scientific_limit": "This diagnoses finite-precision linear residual fidelity for a blind finite-sample endpoint GGN; it does not measure historical recovery quality.",
+  "source_provenance": {
+    "source_sha256": "5f4b807bf051e6e7dbc4babed7d2ffa6d6d531057ee1ba03838aba63f00f771c",
+    "spec_sha256": "00a2c98311d37519d0f8d4a7bac1dac0cc0f7ae5aacefe25a061ce092ef1d17e"
+  }
+}
