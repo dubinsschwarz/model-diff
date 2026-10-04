@@ -83,6 +83,24 @@ def test_historical_lens_formula_and_top20_metrics():
     assert runner.top_ids(np.ones(30)) == list(range(20))
 
 
+def test_js_divergence_tolerates_small_fp32_softmax_sum_drift():
+    p = np.array([0.1, 0.2, 0.3, 0.4], dtype=np.float32) * np.float32(1.00004)
+    q = np.array([0.4, 0.3, 0.2, 0.1], dtype=np.float32) * np.float32(1.00004)
+    assert float(np.sum(p, dtype=np.float64)) == pytest.approx(1.00004)
+    assert runner.js_divergence(p, p) == pytest.approx(0, abs=1e-15)
+    assert runner.js_divergence(p, q) == pytest.approx(
+        runner.js_divergence(p.astype(np.float64) / p.sum(dtype=np.float64),
+                             q.astype(np.float64) / q.sum(dtype=np.float64)))
+    for invalid in (
+        np.array([-0.1, 0.2, 0.3, 0.6]),
+        np.array([np.nan, 0.2, 0.3, 0.5]),
+        np.array([np.inf, 0.2, 0.3, 0.5]),
+        np.array([0.2, 0.2, 0.2, 0.2]),
+    ):
+        with pytest.raises(ValueError, match="Invalid full-vocabulary probabilities"):
+            runner.js_divergence(invalid, p)
+
+
 def test_provenance_accepts_historical_latent_and_rejects_changed_formula(monkeypatch, tmp_path):
     spec = runner.load_spec(SPEC)
     pins = spec["immutable_input_sha256"]

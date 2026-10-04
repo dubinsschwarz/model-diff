@@ -190,10 +190,15 @@ def cosine(a: np.ndarray, b: np.ndarray) -> float:
 def js_divergence(p: np.ndarray, q: np.ndarray) -> float:
     p, q = np.asarray(p, dtype=np.float64), np.asarray(q, dtype=np.float64)
     if (p.shape != q.shape or p.ndim != 1 or np.any(p < 0) or np.any(q < 0)
-            or not np.all(np.isfinite(p)) or not np.all(np.isfinite(q))
-            or not np.isclose(p.sum(), 1, atol=1e-5)
-            or not np.isclose(q.sum(), 1, atol=1e-5)):
+            or not np.all(np.isfinite(p)) or not np.all(np.isfinite(q))):
         raise ValueError("Invalid full-vocabulary probabilities")
+    p_sum, q_sum = float(p.sum()), float(q.sum())
+    if (not math.isfinite(p_sum) or not math.isfinite(q_sum)
+            or p_sum <= 0 or q_sum <= 0
+            or abs(p_sum - 1.0) > 1e-3 or abs(q_sum - 1.0) > 1e-3):
+        raise ValueError("Invalid full-vocabulary probabilities")
+    p = p / p_sum
+    q = q / q_sum
     m = (p + q) / 2
     return float((np.sum(p[p > 0] * np.log(p[p > 0] / m[p > 0]))
                   + np.sum(q[q > 0] * np.log(q[q > 0] / m[q > 0]))) / 2)
