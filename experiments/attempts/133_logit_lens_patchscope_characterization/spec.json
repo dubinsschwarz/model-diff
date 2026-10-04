@@ -1,0 +1,67 @@
+{
+  "format_version": 1,
+  "attempt_id": "133_logit_lens_patchscope_characterization",
+  "purpose": "post_hoc_read_only_logit_lens_and_additive_patchscope_characterization",
+  "same_specimen_exploratory_method_development": true,
+  "clean_heldout_validation": false,
+  "fixed_vectors": [
+    {"name": "attempt132_super_low", "source": "attempt132", "tensor": "response_super_low", "raw_sha256": "b1c0cb151d766c86953caae9187a406d8142cf111f99db22e6cfb22acf6ec204"},
+    {"name": "attempt132_next_super_low", "source": "attempt132", "tensor": "response_next_super_low", "raw_sha256": "f10ec205e38ff7e68fdc17d4a6fc0ce09def5cfa0789764669c4343c48a5d047"},
+    {"name": "attempt131_very_low", "source": "attempt131", "tensor": "response_very_low", "raw_sha256": "8e6c4492d9fa77e2f4c38eae640d500ff18d7c1dbc5386b502a638af7b693744"},
+    {"name": "attempt100_consensus", "source": "attempt100", "tensor": "consensus_response_8", "raw_sha256": "d8ae597ebeb6495dbb9825372c99ec203db47ece85f0f5018546efa2c1a1ac26"},
+    {"name": "oracle_difference", "source": "oracle_adl", "tensor": "difference", "raw_sha256": "d60789a2c06eb82dba2f2449d8665ec665d85e9f7e33fdea1f66ac79c81c159d", "reference_only": true}
+  ],
+  "positions": [0, 1, 2, 3, 4],
+  "primary_positions": [1, 2, 3, 4],
+  "top_k": 20,
+  "semantic_substrings": ["cake", "bake", "cook", "craft", "precision"],
+  "target_prompts": ["The topic is", "This is about", "The central idea is", "In one word:", "A concise label:", "The concept:", "This relates to", "The underlying theme:"],
+  "logit_lens": {
+    "positive": "softmax(lm_head(model.model.norm(vector)))",
+    "negative": "softmax(lm_head(-model.model.norm(vector)))",
+    "positive_logit_cosine": "full_vocabulary_unshifted_prelens_softmax_logits",
+    "js_divergence": "natural_log_positive_probability_distributions",
+    "top_k_tie_break": "stable_vocab_index_order"
+  },
+  "patchscope": {
+    "layer_index": 13,
+    "readout": "hidden_states[14]",
+    "target_position": "original_final_prompt_token_only",
+    "patch": "additive_plus_and_minus",
+    "blind_vector_evaluation_only_scale": "per_position_l2_norm_match_to_oracle_difference",
+    "oracle_vector_scale": "native_unchanged",
+    "delta_logits": "patched_logits_minus_unpatched_baseline_logits",
+    "top_k_delta_tie_break": "stable_vocab_index_order",
+    "oracle_top_k_delta_mass": "patched_probability_mass_and_change_from_baseline_on_oracle_delta_top20_sets",
+    "oracle_top_k_delta_rank": "one_based_mean_candidate_delta_rank_of_oracle_delta_top20_sets",
+    "greedy_completion_tokens": 6,
+    "greedy_patch_direction": "plus_only",
+    "use_cache": false,
+    "add_special_tokens": false,
+    "chat_template": false
+  },
+  "immutable_input_sha256": {
+    "attempt132": {"spec": "b54399eedceceb381b7b536a61cae17b81cea90cc5aeb927b10d0f4be66a4c31", "source": "e98f5670704d33d14c7cd7eb899db327a006ac09cb90a53a1a0efba19f00410c", "construction_manifest": "970f04f067e86be7edb83d9a30f2a44a996cef3afa606e8f821d568cbf576f97", "candidate": "ca0a6f8f39285104e8dab95c82fd3284a5c42bed8bff5e0f6320afa00d890ecd", "result": "5883ce5a1b2a203ca5231bf61f14c3abfc9176c48a54fecbe23807a6ad0426da"},
+    "attempt131": {"spec": "b7fa100677dc86c0c382357daa9f6b53349c40f5a9888a769c86dde338e972c5", "source": "2b4575eaee52535f2672a8a72ebca3d42e4328b6905c8cc033f52cd6c2941c2d", "construction_manifest": "a54b83d21c43a1eaf0e61a82c50dd3140b1aeac57cb34223c7d9b17e7cac6d2c", "candidate": "e23e1bae423ff019220fa2b4841d97e0abc5618f90b3670a478b3b8102e8df9a", "result": "3692fbe6e14c6656b828ff867d131245e7e41ef79256abc355e7d3ed718a0ca4"},
+    "attempt100": {"spec": "a10b513387635cd599971b10a3c7614a7a18483db7b12f9058898c417101db12", "source": "c5109e6dcdae0234c42aace7b9f9bf19b9563d9b0b289342bba52c32122bac0a", "construction_manifest": "64c4d3ef379fc02f6132d6e3197632e7bd5154398ee123e5ca688be9d5c68546", "responses_artifact": "ce32f037d594a45126d72f88ffcf1dfef49996bc6152aeb431f07851c50d3872"},
+    "oracle_adl_manifest": "affe93a1139cdaa221646fb3b9c8ec5f64b28129c42b22eae185aca5d3932b90",
+    "oracle_adl_artifact": "339a6c09b10286369a5d10eb49e144d1819f4301e334c63930ca7c4dd3a11077",
+    "historical_oracle_logit_lens": "a723017455e889ee05819382e271d270b0bdf08ec6fa9813f122b8aabdcbeb35",
+    "historical_oracle_logit_lens_source": "07fab3431f97e225624d3e8160c34e43c715f18d2ecbfa64c55ca7f624bc561c",
+    "downloaded_model_hashes": "f449733393443970d912ef159b858e360390413012f872d7874ac2d84470593c",
+    "merged_model_hashes": "78ae3e5840d17702cb193597e5c4873fe9506e6089fbbcc020f87cedeabfdee3",
+    "oracle_probe_manifest": "1b9c53033b0e4ebf04f26b598ff42e0e2924812ab1c1c96872f7bd9da33089ba"
+  },
+  "input_locations": {
+    "attempt132_directory": "experiments/attempts/132_expanded_fineweb_superlow_stringency",
+    "attempt131_directory": "experiments/attempts/131_low_surprisal_stringency",
+    "attempt100_directory": "experiments/attempts/100_diverse8_raw_jg_consensus_prefix0_13",
+    "attempt100_responses": "/root/model-diff-scratch/artifacts/attempt100_diverse8_raw_jg_consensus/responses.pt",
+    "oracle_adl": "/root/model-diff-scratch/artifacts/oracle_adl/oracle_adl.pt",
+    "base_tokenizer_directory": "/root/model-diff-scratch/models/base",
+    "merged_checkpoint_directory": "/root/model-diff-scratch/models/merged"
+  },
+  "output": "experiments/attempts/133_logit_lens_patchscope_characterization/result.json",
+  "no_candidate_selection_combination_or_modification": true,
+  "result_overwrite_refusal": true
+}
