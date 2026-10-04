@@ -1,0 +1,94 @@
+{
+  "format_version": 1,
+  "attempt_id": "127_postfreeze_surprisal_strata_evaluation",
+  "purpose": "privileged_postfreeze_matched1024_evaluation_of_unchanged_attempt126_surprisal_strata",
+  "information_policy": {
+    "privileged_postfreeze_evaluation": true,
+    "complete_attempt126_candidate_validation_before_historical_access": true,
+    "candidate_reconstruction": false,
+    "candidate_modification": false,
+    "candidate_normalization": false,
+    "sign_selection": false,
+    "interpolation": false,
+    "combination": false,
+    "same_specimen_exploratory_method_development": true,
+    "clean_heldout_validation": false
+  },
+  "failure_repair": {
+    "attempt126_blind_construction_published_and_revalidated": true,
+    "attempt126_result_exists": false,
+    "failure_phase": "after_SURPRISAL_STRATA_CANDIDATES_FROZEN_before_historical_access",
+    "cause": "attempt126_nested_frozen_attempt123_source_sha256_has_one_erroneous_trailing_f",
+    "erroneous_sha256": "1c1a463e789a0fac1c40fe7c71f9d567b27daf1d3b75f1cd0e786a772cbb4525f",
+    "correct_clean_committed_sha256": "1c1a463e789a0fac1c40fe7c71f9d567b27daf1d3b75f1cd0e786a772cbb4525",
+    "ranking_gradients_jvps_publication_and_selection_unaffected": true
+  },
+  "frozen_attempt126": {
+    "spec_path": "experiments/attempts/126_fineweb_surprisal_stratification/spec.json",
+    "spec_sha256": "0e2457b8fbb8cd76f482599fe20878a2c32a30f288eef83c39cc59efffa367ef",
+    "source_path": "scripts/ablation/run_fineweb_surprisal_stratification.py",
+    "source_sha256": "064d29b99504951c8255c3f5d22978c20e7f397fe49ca2aba5bfe9ca2081cf64",
+    "construction_manifest_path": "experiments/attempts/126_fineweb_surprisal_stratification/construction-manifest.json",
+    "construction_manifest_sha256": "3f35568a8f116d09d8b3b800d22d559af52b333931f51e729ba510e593281307",
+    "candidate_path": "experiments/attempts/126_fineweb_surprisal_stratification/candidate.pt",
+    "candidate_serialized_sha256": "034935f36a199de5be6c0acbeb72a0c9f49c0e0c1efc7e37d1afce7dddce2e74",
+    "tensor_order": ["response_low", "response_middle", "response_high"],
+    "shape": [128, 2048],
+    "dtype": "contiguous_cpu_float32",
+    "raw_response_sha256": {
+      "response_low": "56af5bc919437cf7cc4105826a6eae7d84df0a2d41e62d06d01a4fc47be03a37",
+      "response_middle": "e4fd4bffdc69b0cacffa70762d10973e33330228f366c07f5f0422a3ca4181d8",
+      "response_high": "63907e43e165fc3e7cdd19dc8e7eb93a8c34910467f47f9bb6c1b0724ae31548"
+    },
+    "ranking": {
+      "surprisal_raw_float64_sha256": "ce6bf3ce191e2deea2759cc54df81799b5fb3084161200229c7256ab9fe4a686",
+      "rank_raw_int64_sha256": "840db6c346529cf41418f077a1e8b1c6688a10c83cb77abe8ffafc9d3a6816a7",
+      "selected_row_raw_int64_sha256": {
+        "low": "3b071c78f232c66f0048c8eb047e530a6cbcde6234977af7d73ef65701afbbeb",
+        "middle": "0ac811db13f90e3d962e58f6ad5070e2dcba43ac163a4f6d067724b894bc536f",
+        "high": "d5d7d1819ff4f9cd7139293c380c0267ed0947539c697bb47bf7c3486d1406f1"
+      }
+    }
+  },
+  "matched_reference": {
+    "attempt123_spec_path": "experiments/attempts/123_postfreeze_matched1024_relaxation_reevaluation/spec.json",
+    "attempt123_spec_sha256": "a27ee4f0e22ff892c3c2ffeb05ab8f6678cb8fe554ce33e2971e535154136673",
+    "attempt123_source_path": "scripts/ablation/evaluate_matched1024_relaxation.py",
+    "attempt123_source_sha256": "1c1a463e789a0fac1c40fe7c71f9d567b27daf1d3b75f1cd0e786a772cbb4525",
+    "probe_rows": [0, 1024],
+    "batch_size": 32,
+    "batches_per_model": 32,
+    "target_definition": "final_mean_float64_minus_base_mean_float64_then_one_contiguous_FP32_cast",
+    "target_raw_float32_sha256": "4ab001c60fff4ad4f15db472436c3915b39fb5a69626a418f70c5eaaed780c5f"
+  },
+  "metric": {
+    "signed_positionwise_cosine": true,
+    "position_0_separate": true,
+    "primary_positions": [1, 2, 3, 4],
+    "secondary_positions": "1..127",
+    "all_position_count": 128,
+    "absolute_cosine": false,
+    "flattened_historical_cosine": false
+  },
+  "interpretation": {
+    "directional_prediction": "high_greater_than_middle_greater_than_low",
+    "clear_support": {"ordered_both_metrics_nonstrict": true, "high_low_primary_min": 0.03, "high_low_secondary_min": 0.03},
+    "partial_support": {"high_gt_low_both_metrics": true, "at_least_one_high_low_gain_min": 0.03},
+    "correlations": ["stratum_mean_surprisal", "gradient_norm"],
+    "old_attempt100_fineweb_role": "context_only_not_exact_matched_baseline"
+  },
+  "workload": {
+    "final_forward_batches": 32,
+    "base_forward_batches": 32,
+    "total_forward_batches": 64,
+    "ranking_batches": 0,
+    "gradient_batches": 0,
+    "jvp_batches": 0,
+    "ggn_operations": 0,
+    "cg_operations": 0,
+    "new_candidate_artifacts": 0
+  },
+  "paths": {
+    "result_path": "experiments/attempts/127_postfreeze_surprisal_strata_evaluation/result.json"
+  }
+}
