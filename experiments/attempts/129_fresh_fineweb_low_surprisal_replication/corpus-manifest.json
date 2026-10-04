@@ -1,0 +1,81 @@
+{
+  "format_version": 1,
+  "attempt_id": "129_fresh_fineweb_low_surprisal_replication",
+  "hash_algorithm": "sha256",
+  "corpus_spec_sha256": "67f226897e050a28f3f365504d6b1a70a33c699c80c092978b52b17346b24925",
+  "freeze_script_sha256": "151e6b8497c47d02a6d4f30ae91e00d8c3648eec5ae4fed2220678789f512913",
+  "dataset": {
+    "repo_id": "science-of-finetuning/fineweb-1m-sample",
+    "revision": "60b53a86b84eb6559e4407b113356f56a152318f",
+    "split": "train",
+    "streaming": false
+  },
+  "tokenizer_checkpoint": {
+    "source": "canonical_merged_checkpoint",
+    "directory": "/root/model-diff-scratch/models/merged",
+    "file_count": 4,
+    "files": [
+      {
+        "path": "chat_template.jinja",
+        "size_bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "config.json",
+        "size_bytes": 1416,
+        "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+      },
+      {
+        "path": "tokenizer.json",
+        "size_bytes": 11422650,
+        "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size_bytes": 692,
+        "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+      }
+    ]
+  },
+  "selection": {
+    "shuffle_seed": 42,
+    "text_column": "text",
+    "skip_blank_text": true,
+    "character_limit": 1280,
+    "add_special_tokens": true,
+    "minimum_token_count": 128,
+    "skip_valid_examples": 24096,
+    "sample_count": 4096,
+    "sequence_length": 128
+  },
+  "tensor": {
+    "shape": [
+      4096,
+      128
+    ],
+    "dtype": "torch.int64",
+    "device": "cpu",
+    "contiguous": true
+  },
+  "artifact": {
+    "path": "/root/model-diff-scratch/artifacts/attempt129_fresh_fineweb_corpus/tokens.pt",
+    "serialized_sha256": "1886df713e8068bd9b1c5484b1e4f3a182ea3df63e99845249717f6d65730649",
+    "raw_tensor_sha256": "36894a52fa53e8bef518fd1ecd35d0bb353b827108d38345e8526f61424ac1fa"
+  },
+  "old_valid_example_rank_interval": [
+    20000,
+    24096
+  ],
+  "fresh_valid_example_rank_interval": [
+    24096,
+    28192
+  ],
+  "frozen_attempt005": {
+    "corpus_spec_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus_spec.json",
+    "corpus_spec_sha256": "e514820e7def99e9287c32de4b1279f28f6ff6c2e09749a8dfa5d8b14c311f0f",
+    "corpus_manifest_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus-manifest.json",
+    "corpus_manifest_sha256": "8b3ea49228dbb106c2b8a7c849c4f27e021fa3e992800444f43e260a6b055230",
+    "freezer_source_path": "scripts/ablation/freeze_generic_rollback_corpus.py",
+    "freezer_source_sha256": "637cf6acf43f9dbcaa86d76384af9f44aa189028600b8e374167e976d7c6cfaf"
+  }
+}
