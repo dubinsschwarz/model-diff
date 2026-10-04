@@ -190,6 +190,108 @@ def test_metricwise_best_parent_thresholds_and_win_counts():
     assert result["positions_1_127_wins_vs_attempt134"] == 127
 
 
+def test_evaluation_keeps_synthetic_candidate_report_distinct_from_both_parents(tmp_path, monkeypatch):
+    """Exercise result assembly without loading models, artifacts, or the oracle."""
+    old_value, low_value, candidate_value = 0.25, 0.5, 0.75
+    old_frozen = {
+        "candidate": "consensus_response_8",
+        "positions": [{"position": i, "cosine_similarity": old_value} for i in range(128)],
+        "positions_1_4_mean_cosine": old_value,
+        "positions_1_127_mean_cosine": old_value,
+    }
+    low_frozen = {
+        "candidate": "low_surprisal_consensus_8",
+        "all_128_position_cosines": [low_value] * 128,
+        "positions_1_4_mean_cosine": low_value,
+        "positions_1_127_mean_cosine": low_value,
+    }
+    old_path, low_path = tmp_path / "old.json", tmp_path / "low.json"
+    old_path.write_text(json.dumps({
+        "candidates": [old_frozen],
+        "provenance": {"construction_manifest_sha256": "old-manifest",
+                       "construction_artifact_sha256": "old-artifact"}}))
+    low_path.write_text(json.dumps({
+        "new_signed_position_reports": {"low_surprisal_consensus_8": low_frozen},
+        "construction_manifest_sha256": "low-manifest",
+        "candidate_serialized_sha256": "low-artifact"}))
+
+    oracle_manifest = {"oracle_adl_sha256": "oracle-artifact",
+                       "raw_tensors_sha256": {"difference": "oracle-difference"}}
+    prior = SimpleNamespace(
+        load_json_object=lambda *_args: {},
+        validate_oracle_provenance=lambda *_args: oracle_manifest,
+        load_and_validate_oracle=lambda *_args: {"difference": object()},
+    )
+    evaluator = SimpleNamespace(
+        FROZEN_SPEC={"oracle": {"provenance_inputs": {
+            "attempt_spec": {"path": str(tmp_path / "oracle-spec.json"), "sha256": "pin"}}}},
+        path_of=lambda path: Path(path), prior=prior,
+        validate_oracle_manifest=lambda value: value,
+        position_cosines=lambda tensor, _difference: [float(tensor[0, 0])] * 128,
+    )
+
+    def signed_report(name, tensor, difference, evaluator_module):
+        values = evaluator_module.position_cosines(tensor, difference)
+        return {"candidate": name, "position_0_cosine": values[0],
+                "positions_1_4_individual_cosines": values[1:5],
+                "positions_1_4_mean_cosine": values[1],
+                "positions_1_127_mean_cosine": values[1],
+                "all_128_position_cosines": values}
+
+    blind = SimpleNamespace(
+        signed_report=signed_report,
+        old_evaluation_reports=lambda _result: {"consensus_response_8": {
+            "positions_1_4_mean_cosine": old_value,
+            "positions_1_127_mean_cosine": old_value}},
+    )
+    monkeypatch.setattr(runner, "require_hash", lambda *_args: None)
+    monkeypatch.setattr(runner, "sha256_file", lambda *_args: "synthetic-hash")
+    monkeypatch.setattr(runner, "import_pinned", lambda _path, _sha, name:
+                        evaluator if name == "attempt135_attempt100_evaluator" else blind)
+    spec = {
+        "post_barrier_inputs": {
+            "attempt100_evaluator_path": str(tmp_path / "evaluator.py"),
+            "attempt100_evaluator_sha256": "pin",
+            "attempt100_evaluation_path": str(old_path),
+            "attempt100_evaluation_sha256": "pin",
+            "attempt134_result_path": str(low_path),
+            "attempt134_result_sha256": "pin",
+            "attempt100_evaluation_spec_path": str(tmp_path / "eval-spec.json"),
+            "attempt100_evaluation_spec_sha256": "pin",
+            "oracle_manifest_path": str(tmp_path / "oracle-manifest.json"),
+            "oracle_manifest_sha256": "pin",
+            "oracle_artifact_path": str(tmp_path / "oracle.pt"),
+            "oracle_artifact_sha256": "oracle-artifact",
+            "oracle_difference_raw_sha256": "oracle-difference",
+        },
+        "source_artifacts": {
+            "attempt100": {"construction_manifest_sha256": "old-manifest",
+                           "artifact_serialized_sha256": "old-artifact"},
+            "attempt134": {"construction_manifest_sha256": "low-manifest",
+                           "artifact_serialized_sha256": "low-artifact",
+                           "constructor_path": str(tmp_path / "blind.py"),
+                           "constructor_sha256": "pin"},
+        },
+        "outputs": {"construction_manifest_path": str(tmp_path / "construction.json")},
+    }
+    sources = {"consensus_response_8": np.full((128, 2048), old_value, dtype=np.float32),
+               "low_surprisal_consensus_8": np.full((128, 2048), low_value, dtype=np.float32)}
+    candidate = np.full((128, 2048), candidate_value, dtype=np.float32)
+    result = runner.evaluate_after_barrier(
+        spec, candidate, sources,
+        {"candidate": {"serialized_sha256": "frozen-candidate"}, "oracle_free_geometry": {}},
+        SimpleNamespace(from_numpy=lambda value: value))
+    reports = result["signed_position_reports"]
+    assert reports[runner.CANDIDATE]["candidate"] == "consensus_response_16"
+    assert reports[runner.CANDIDATE]["positions_1_4_mean_cosine"] == pytest.approx(candidate_value)
+    assert reports[runner.CANDIDATE]["positions_1_127_mean_cosine"] == pytest.approx(candidate_value)
+    assert reports["attempt100_consensus"]["positions_1_4_mean_cosine"] == old_value
+    assert reports["attempt134_low_consensus"]["positions_1_4_mean_cosine"] == low_value
+    assert result["comparison"]["primary_gain_vs_best_parent"] == pytest.approx(candidate_value - low_value)
+    assert result["comparison"]["secondary_gain_vs_best_parent"] == pytest.approx(candidate_value - low_value)
+    assert result["comparison"]["positions_1_127_wins_vs_attempt134"] == 127
+
+
 def test_output_overwrite_refusal(tmp_path):
     spec = copy.deepcopy(runner.load_spec(SPEC))
     spec["outputs"] = {"candidate_path": str(tmp_path / "candidate.pt"),

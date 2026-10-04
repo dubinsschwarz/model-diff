@@ -343,22 +343,22 @@ def evaluate_after_barrier(spec: dict[str, Any], candidate: Any, sources: dict[s
                 any(not math.isclose(a, b, rel_tol=0, abs_tol=1e-10)
                     for a, b in zip(values, stored))):
             raise ValueError(f"Frozen {source_name} signed position scores changed")
-    report = import_blind.signed_report(CANDIDATE, candidate, difference, evaluator)
+    candidate_report = import_blind.signed_report(CANDIDATE, candidate, difference, evaluator)
     old_report = import_blind.signed_report("consensus_response_8", torch.from_numpy(
         sources["consensus_response_8"]), difference, evaluator)
     low_report = import_blind.signed_report("low_surprisal_consensus_8", torch.from_numpy(
         sources["low_surprisal_consensus_8"]), difference, evaluator)
     # The parent comparisons use the exact committed scores after confirming
     # that the frozen tensors reproduce all 128 positions against this oracle.
-    for report, frozen, source_name in ((old_report, old_frozen, "Attempt100"),
-                                        (low_report, low_frozen, "Attempt134")):
+    for parent_report, frozen, source_name in ((old_report, old_frozen, "Attempt100"),
+                                               (low_report, low_frozen, "Attempt134")):
         committed = ([row["cosine_similarity"] for row in frozen["positions"]]
                      if source_name == "Attempt100" else frozen["all_128_position_cosines"])
-        report["position_0_cosine"] = committed[0]
-        report["positions_1_4_individual_cosines"] = list(committed[1:5])
-        report["positions_1_4_mean_cosine"] = frozen["positions_1_4_mean_cosine"]
-        report["positions_1_127_mean_cosine"] = frozen["positions_1_127_mean_cosine"]
-        report["all_128_position_cosines"] = list(committed)
+        parent_report["position_0_cosine"] = committed[0]
+        parent_report["positions_1_4_individual_cosines"] = list(committed[1:5])
+        parent_report["positions_1_4_mean_cosine"] = frozen["positions_1_4_mean_cosine"]
+        parent_report["positions_1_127_mean_cosine"] = frozen["positions_1_127_mean_cosine"]
+        parent_report["all_128_position_cosines"] = list(committed)
     return {"format_version": 1, "attempt_id": ATTEMPT,
             "same_specimen_exploratory_method_development": True,
             "clean_heldout_validation": False,
@@ -368,9 +368,9 @@ def evaluate_after_barrier(spec: dict[str, Any], candidate: Any, sources: dict[s
             "candidate_serialized_sha256": construction["candidate"]["serialized_sha256"],
             "oracle_artifact_sha256": pins["oracle_artifact_sha256"],
             "oracle_difference_raw_sha256": pins["oracle_difference_raw_sha256"],
-            "signed_position_reports": {CANDIDATE: report, "attempt100_consensus": old_report,
+            "signed_position_reports": {CANDIDATE: candidate_report, "attempt100_consensus": old_report,
                                         "attempt134_low_consensus": low_report},
-            "comparison": compare_scores(report, old_report, low_report),
+            "comparison": compare_scores(candidate_report, old_report, low_report),
             "geometric_interpretation_descriptive_only": construction["oracle_free_geometry"],
             "no_candidate_selection_rescaling_or_reweighting": True}
 
