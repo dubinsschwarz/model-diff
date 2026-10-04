@@ -1,0 +1,455 @@
+{
+  "format_version": 1,
+  "attempt_id": "126_fineweb_surprisal_stratification",
+  "purpose": "blind_within_fineweb_endpoint_surprisal_gradient_strata_and_matched1024_historical_recovery",
+  "information_policy": {
+    "blind_inputs": [
+      "final_merged_checkpoint",
+      "frozen_attempt005_fineweb_tokens",
+      "frozen_activation_probe",
+      "frozen_construction_definitions"
+    ],
+    "historical_base_access_before_barrier": false,
+    "adapter_access_before_barrier": false,
+    "true_delta_access_before_barrier": false,
+    "historical_activation_target_access_before_barrier": false,
+    "prior_oracle_score_access_before_barrier": false,
+    "same_specimen_exploratory_method_development": true,
+    "clean_heldout_validation": false
+  },
+  "frozen_attempt005": {
+    "corpus_spec_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus_spec.json",
+    "corpus_spec_sha256": "e514820e7def99e9287c32de4b1279f28f6ff6c2e09749a8dfa5d8b14c311f0f",
+    "corpus_manifest_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus-manifest.json",
+    "corpus_manifest_sha256": "8b3ea49228dbb106c2b8a7c849c4f27e021fa3e992800444f43e260a6b055230",
+    "tokens_path": "/root/model-diff-scratch/artifacts/attempt005_generic_rollback_corpus/tokens.pt",
+    "serialized_sha256": "54283d72aa3075e2867ead86e538991d7284ede327ca67871e73bfc581e4025d",
+    "raw_tensor_sha256": "4613982be77342a89b35616d68e21d9ff66d5a983af7e82cb6fa1eb159457eae"
+  },
+  "frozen_attempt100": {
+    "spec_path": "experiments/attempts/100_diverse8_raw_jg_consensus_prefix0_13/spec.json",
+    "spec_sha256": "a10b513387635cd599971b10a3c7614a7a18483db7b12f9058898c417101db12",
+    "source_path": "scripts/ablation/construct_attempt100_diverse8_consensus.py",
+    "source_sha256": "c5109e6dcdae0234c42aace7b9f9bf19b9563d9b0b289342bba52c32122bac0a",
+    "construction_manifest_path": "experiments/attempts/100_diverse8_raw_jg_consensus_prefix0_13/construction-manifest.json",
+    "construction_manifest_sha256": "64c4d3ef379fc02f6132d6e3197632e7bd5154398ee123e5ca688be9d5c68546",
+    "evaluation_path": "experiments/attempts/100_diverse8_raw_jg_consensus_prefix0_13/evaluation.json",
+    "evaluation_sha256": "3607d599b347e7010902143655d2d68b0cba226237cb884b6751d1de998c08ef"
+  },
+  "frozen_attempt113": {
+    "spec_path": "experiments/attempts/113_blind_diverse8_unit_gradient_inverse_ggn_candidate/spec.json",
+    "spec_sha256": "7c7f508575e216cd29eee967f31101b1c614f85cc0cb0465becd4e0d1dc8bfb6",
+    "source_path": "scripts/ablation/construct_blind_diverse8_unit_gradient_inverse_ggn.py",
+    "source_sha256": "02bc38350e0f08997f3f2e6942c89594abb4b2e30e042973b930d89e59374ee9",
+    "construction_manifest_path": "experiments/attempts/113_blind_diverse8_unit_gradient_inverse_ggn_candidate/construction-manifest.json",
+    "construction_manifest_sha256": "5e40160521534d15de6fa6405fac26419fa362b8579398b496e1fc0c9e98c5c4"
+  },
+  "frozen_attempt123": {
+    "spec_path": "experiments/attempts/123_postfreeze_matched1024_relaxation_reevaluation/spec.json",
+    "spec_sha256": "a27ee4f0e22ff892c3c2ffeb05ab8f6678cb8fe554ce33e2971e535154136673",
+    "source_path": "scripts/ablation/evaluate_matched1024_relaxation.py",
+    "source_sha256": "1c1a463e789a0fac1c40fe7c71f9d567b27daf1d3b75f1cd0e786a772cbb4525f"
+  },
+  "helper_sources": {
+    "attempt014_path": "scripts/ablation/construct_multicorpus_raw_jg_consensus.py",
+    "attempt014_sha256": "59936b928dcf942470db92debb1f2a8e41823ae1c9082803d2fdd8dc50202caa",
+    "attempt122_path": "scripts/ablation/run_loss_stabilized_generic_relaxation.py",
+    "attempt122_sha256": "7dd7e79b84ac297c7b0f7a62a69ff5dc7d91332b95b3b180f72f50c1f6cf3a9d"
+  },
+  "model": {
+    "model_type": "qwen3",
+    "num_hidden_layers": 28,
+    "source_dtype": "float32",
+    "local_files_only": true,
+    "eval_mode": true,
+    "use_cache": false
+  },
+  "final_checkpoint": {
+    "directory": "/root/model-diff-scratch/models/merged",
+    "files": [
+      {
+        "path": "chat_template.jinja",
+        "size_bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "config.json",
+        "size_bytes": 1416,
+        "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+      },
+      {
+        "path": "generation_config.json",
+        "size_bytes": 214,
+        "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+      },
+      {
+        "path": "model.safetensors",
+        "size_bytes": 6882335328,
+        "sha256": "f6989dd3445cd339041ab654a6da463e0a80b2d52dd2c01f67f683b1c30ea10f"
+      },
+      {
+        "path": "tokenizer.json",
+        "size_bytes": 11422650,
+        "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size_bytes": 692,
+        "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+      }
+    ]
+  },
+  "eligible_tensors": {
+    "transformer_block_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "recursive_module_type": "torch.nn.Linear",
+    "parameter": "weight",
+    "expected_matrix_count": 98,
+    "module_ordering": "lexicographic_by_module_name",
+    "freeze_every_other_parameter": true
+  },
+  "fineweb_corpus": {
+    "name": "fineweb",
+    "tokens_path": "/root/model-diff-scratch/artifacts/attempt005_generic_rollback_corpus/tokens.pt",
+    "manifest_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus-manifest.json",
+    "manifest_sha256": "8b3ea49228dbb106c2b8a7c849c4f27e021fa3e992800444f43e260a6b055230",
+    "artifact_serialized_sha256": "54283d72aa3075e2867ead86e538991d7284ede327ca67871e73bfc581e4025d",
+    "artifact_raw_sha256": "4613982be77342a89b35616d68e21d9ff66d5a983af7e82cb6fa1eb159457eae",
+    "frozen_shape": [
+      4096,
+      128
+    ],
+    "selected_rows": [
+      0,
+      512
+    ],
+    "spec_path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus_spec.json",
+    "spec_sha256": "e514820e7def99e9287c32de4b1279f28f6ff6c2e09749a8dfa5d8b14c311f0f",
+    "population_rows": [
+      0,
+      4096
+    ]
+  },
+  "ranking": {
+    "definition": "per_sequence_mean_causal_next_token_NLL_at_unmodified_final_checkpoint",
+    "population_rows": [
+      0,
+      4096
+    ],
+    "sequence_length": 128,
+    "prediction_tokens_per_row": 127,
+    "batch_size": 8,
+    "number_of_forward_batches": 512,
+    "no_grad": true,
+    "no_amp": true,
+    "accumulation_dtype": "cpu_float64",
+    "sort_key": [
+      "surprisal_ascending",
+      "original_row_index_ascending"
+    ],
+    "surprisal_storage_dtype": "contiguous_cpu_float64"
+  },
+  "strata": {
+    "low": {
+      "rank_range": [
+        0,
+        1024
+      ]
+    },
+    "middle": {
+      "rank_range": [
+        1536,
+        2560
+      ]
+    },
+    "high": {
+      "rank_range": [
+        3072,
+        4096
+      ]
+    }
+  },
+  "unused_rank_intervals": [
+    [
+      1024,
+      1536
+    ],
+    [
+      2560,
+      3072
+    ]
+  ],
+  "gradient_loss": {
+    "type": "causal_next_token_cross_entropy",
+    "sample_count": 1024,
+    "sequence_length": 128,
+    "predictions_per_sample": 127,
+    "total_prediction_tokens": 130048,
+    "batch_size": 8,
+    "number_of_batches": 128,
+    "label_alignment": "logits_positions_0_through_126_predict_tokens_1_through_127",
+    "reduction": "sum_token_cross_entropy_divided_by_total_prediction_tokens",
+    "masking": "causal_model_mask_only",
+    "mixed_precision": false,
+    "dropout": false,
+    "optimizer": false,
+    "weight_decay": false,
+    "gradient_clipping": false
+  },
+  "tangent": {
+    "direction": "delta = +alpha * g",
+    "target_relative_frobenius": 0.00125,
+    "normalization": "one_global_alpha_across_all_eligible_matrices",
+    "norm_accounting_dtype": "cpu_float64",
+    "scaling_arithmetic_dtype": "cpu_float64",
+    "jvp_tangent_dtype": "float32",
+    "modify_model_weights": false,
+    "save_large_tensors": false
+  },
+  "probe": {
+    "sample_count": 10000,
+    "sequence_length": 128,
+    "batch_size": 32,
+    "dtype": "torch.int64",
+    "serialized_sha256": "3d799d19abf4a2d6dc92b2bd164d81d83f6451cd3545f5ae5d8c04a8b299735b",
+    "raw_tensor_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8",
+    "path": "/root/model-diff-scratch/artifacts/oracle_probe/fineweb_tokens.pt",
+    "full_source_rows": 10000,
+    "selected_rows": [
+      0,
+      1024
+    ],
+    "selected_batch_count": 32
+  },
+  "readout": {
+    "block_index": 13,
+    "hidden_state_index": 14,
+    "hidden_size": 2048,
+    "all_token_positions": true,
+    "semantics": "hidden_states[14] is block 13 output before block 14; verify with forward hook"
+  },
+  "jvp": {
+    "implementation": "torch.func.jvp_with_partial_torch.func.functional_call",
+    "module": "model.model",
+    "output_hidden_states": true,
+    "strict_forward_ad": true,
+    "fallback": false,
+    "change_attention_backend": false,
+    "reverse_mode_recording": false,
+    "response_sign": "positive_J_delta",
+    "accumulation_dtype": "cpu_float64",
+    "stored_dtype": "float32",
+    "primal_comparison_rtol": 1e-05,
+    "primal_comparison_atol": 1e-06
+  },
+  "candidate": {
+    "tensor_order": [
+      "response_low",
+      "response_middle",
+      "response_high"
+    ],
+    "shape": [
+      128,
+      2048
+    ],
+    "dtype": "contiguous_cpu_float32",
+    "response_normalization": false,
+    "sign_selection": false,
+    "interpolation": false,
+    "reweighting": false,
+    "combination": false
+  },
+  "barrier": {
+    "marker": "SURPRISAL_STRATA_CANDIDATES_FROZEN",
+    "surprisals_ranking_rows_gradients_responses_published_and_revalidated_before_historical_access": true,
+    "manifest_contains_historical_scores": false
+  },
+  "evaluation": {
+    "target_raw_sha256": "4ab001c60fff4ad4f15db472436c3915b39fb5a69626a418f70c5eaaed780c5f",
+    "target_probe_rows": [
+      0,
+      1024
+    ],
+    "signed_positionwise_cosine": true,
+    "absolute_cosine": false,
+    "flattened_historical_cosine": false,
+    "position_0_separate": true,
+    "primary_positions": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "secondary_positions": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127
+    ],
+    "directional_prediction": "high > middle > low",
+    "clear_support": {
+      "ordered_both_metrics_nonstrict": true,
+      "high_low_primary_min": 0.03,
+      "high_low_secondary_min": 0.03
+    },
+    "partial_support": {
+      "high_gt_low_both_metrics": true,
+      "at_least_one_high_low_gain_min": 0.03
+    },
+    "correlations": "descriptive_pearson_n3_mean_surprisal_and_gradient_norm_vs_primary_and_secondary",
+    "old_fineweb_context": "Attempt100_full_probe_response_context_only_not_exact_matched_baseline",
+    "same_specimen_development": true,
+    "clean_heldout_validation": false
+  },
+  "paths": {
+    "candidate_path": "experiments/attempts/126_fineweb_surprisal_stratification/candidate.pt",
+    "construction_manifest_path": "experiments/attempts/126_fineweb_surprisal_stratification/construction-manifest.json",
+    "result_path": "experiments/attempts/126_fineweb_surprisal_stratification/result.json"
+  },
+  "workload": {
+    "ranking_forward_batches": 512,
+    "gradient_backward_batches": 384,
+    "jvp_probe_batches": 96,
+    "jvp_first_batch_hook_audits": 3,
+    "matched_target_forward_batches": 64,
+    "ggn_operations": 0,
+    "cg_operations": 0
+  }
+}
