@@ -3,6 +3,7 @@
 import hashlib
 import importlib.util
 import json
+import copy
 from pathlib import Path
 
 import numpy as np
@@ -80,6 +81,56 @@ def test_historical_lens_formula_and_top20_metrics():
         sum(p[runner.top_ids(p)]))
     assert runner.js_divergence(p, q) > 0
     assert runner.top_ids(np.ones(30)) == list(range(20))
+
+
+def test_provenance_accepts_historical_latent_and_rejects_changed_formula(monkeypatch, tmp_path):
+    spec = runner.load_spec(SPEC)
+    pins = spec["immutable_input_sha256"]
+
+    def fake_path(_spec, source, part):
+        return tmp_path / f"{source or 'root'}_{part}.json"
+
+    def write(source, part, value):
+        fake_path(spec, source, part).write_text(json.dumps(value))
+
+    # All inputs are synthetic; the formula validator is exercised through the
+    # complete provenance function without opening any frozen model/artifact.
+    monkeypatch.setattr(runner, "path_for_source", fake_path)
+    monkeypatch.setattr(runner, "require_hash", lambda _path, _digest: None)
+    for attempt in ("attempt132", "attempt131", "attempt100"):
+        manifest = {"spec_sha256": pins[attempt]["spec"],
+                    "constructor_sha256": pins[attempt]["source"]}
+        if attempt == "attempt100":
+            manifest["artifact"] = {"serialized_sha256": pins[attempt]["responses_artifact"]}
+        else:
+            manifest["candidate"] = {"serialized_sha256": pins[attempt]["candidate"]}
+            manifest["barrier"] = {"published_before_historical_access": True,
+                                   "manifest_contains_historical_scores": False}
+            write(attempt, "result", {
+                "construction_manifest_sha256": pins[attempt]["construction_manifest"],
+                "candidate_serialized_sha256": pins[attempt]["candidate"]})
+        write(attempt, "construction_manifest", manifest)
+    write("", "oracle_adl_manifest", {
+        "oracle_adl_sha256": pins["oracle_adl_artifact"],
+        "raw_tensors_sha256": {"difference": spec["fixed_vectors"][-1]["raw_sha256"]}})
+    historical = {"method": {
+        "positions": list(runner.POSITIONS), "top_k": runner.TOP_K,
+        "positive": "softmax(lm_head(model.model.norm(latent)))",
+        "negative": "softmax(lm_head(-model.model.norm(latent)))"}}
+    write("", "historical_oracle_logit_lens", historical)
+    assert set(runner.validate_file_provenance(spec)) == {"attempt132", "attempt131", "attempt100"}
+
+    historical["method"]["positive"] = "softmax(lm_head(model.model.norm(latent + 1)))"
+    write("", "historical_oracle_logit_lens", historical)
+    with pytest.raises(ValueError, match="Historical Logit Lens method changed"):
+        runner.validate_file_provenance(spec)
+
+    historical["method"]["positive"] = "softmax(lm_head(model.model.norm(latent)))"
+    write("", "historical_oracle_logit_lens", historical)
+    altered_spec = copy.deepcopy(spec)
+    altered_spec["logit_lens"]["negative"] = "softmax(lm_head(-vector))"
+    with pytest.raises(ValueError, match="Historical Logit Lens method changed"):
+        runner.validate_file_provenance(altered_spec)
 
 
 def test_fixed_semantic_audit():

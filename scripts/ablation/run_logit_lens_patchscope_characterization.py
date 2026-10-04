@@ -128,8 +128,10 @@ def validate_file_provenance(spec: dict[str, Any]) -> dict[str, dict[str, Any]]:
     historical = json.loads(path_for_source(spec, "", "historical_oracle_logit_lens").read_text())
     method = historical["method"]
     if (method["positions"] != list(POSITIONS) or method["top_k"] != TOP_K
-            or method["positive"] != spec["logit_lens"]["positive"]
-            or method["negative"] != spec["logit_lens"]["negative"]):
+            or method["positive"] != "softmax(lm_head(model.model.norm(latent)))"
+            or method["negative"] != "softmax(lm_head(-model.model.norm(latent)))"
+            or spec["logit_lens"]["positive"] != "softmax(lm_head(model.model.norm(vector)))"
+            or spec["logit_lens"]["negative"] != "softmax(lm_head(-model.model.norm(vector)))"):
         raise ValueError("Historical Logit Lens method changed")
     return manifests
 
