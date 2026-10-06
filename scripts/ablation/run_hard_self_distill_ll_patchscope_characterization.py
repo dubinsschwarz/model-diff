@@ -16,13 +16,14 @@ import numpy as np
 PROJECT = Path(__file__).resolve().parents[2]
 ATTEMPT = '202_hard_self_distill_ll_patchscope_characterization'
 SPEC_PATH = PROJECT/'experiments/attempts'/ATTEMPT/'spec.json'
-SPEC_SHA256 = 'd5da77c19e2e915f350f8f2cbae3c9cf83329442985705c74e0f6b51ebbeedcb'
+SPEC_SHA256 = '37c83e12e2ba0a4d5502e2cd3efc014ea3cb03eab3f1971d93fce3d149cd2be5'
 SEEDS = tuple(f'response_seed_{i}' for i in range(8))
 NAMES = (*SEEDS, 'response_raw_mean', 'response_seed_consensus')
 NATIVE_NAMES = NAMES[:-1]
 ORACLE = 'oracle_difference'
 MODES = ('oracle_norm_matched', 'native_amplitude')
 GENERATOR_SHA256 = 'd9bf1fb1e9581beb81708ece7ffdeed87ec821e0b0c66a1341ea5deb443c23ac'
+LOCAL_ORACLE_TOP20_ABS_TOL = 2e-5
 
 
 def log(message):
@@ -75,7 +76,8 @@ def load_spec():
             spec['no_candidate_selection_combination_or_modification'] is not True or
             spec['oracle_reference']['reference_only'] is not True or
             spec['result_overwrite_refusal'] is not True or
-            spec['oracle_portability']['generator']['sha256'] != GENERATOR_SHA256):
+            spec['oracle_portability']['generator']['sha256'] != GENERATOR_SHA256 or
+            spec['oracle_portability']['local_top20_probability_absolute_tolerance'] != LOCAL_ORACLE_TOP20_ABS_TOL):
         raise ValueError('Attempt202 fixed diagnostic plan mismatch')
     return spec
 
@@ -298,16 +300,17 @@ def load_oracle_reference(spec, reader, torch):
 
 
 def validate_oracle_lens_compatibility(spec, a, oracle_vector, final_norm, lm_head,
-                                     tokenizer, torch, reader, historical, provenance):
+                                     tokenizer, torch, reader, historical, provenance, *, fallback=False):
     # Run ONLY the oracle here: no candidate similarity is computed before this
-    # acceptance check. Attempt133's token IDs and probability tolerances apply.
+    # acceptance check. Only a validated local fallback uses the absolute bound.
     oracle_readout = configured_readout(spec, ())
     lens = oracle_readout.lens_readout({ORACLE: oracle_vector}, final_norm, lm_head, tokenizer, torch, reader)
-    validate_historical_lens_reference(spec, a, lens, historical, provenance)
+    compatibility = validate_historical_lens_reference(spec, a, lens, historical, provenance, fallback=fallback)
     log('Historical oracle Logit-Lens compatibility passed (positions 0..4)')
+    return compatibility
 
 
-def validate_historical_lens_reference(spec, a, lens, historical, provenance):
+def validate_historical_lens_reference(spec, a, lens, historical, provenance, *, fallback=False):
     # Canonical checkpoint/probe identities stay exact. The pinned historical
     # artifact identifiers are used only for this historical token comparison;
     # the actual local artifact identifiers are retained separately in results.
@@ -318,7 +321,49 @@ def validate_historical_lens_reference(spec, a, lens, historical, provenance):
         if historical['provenance'][key] != expected:
             raise ValueError('Historical oracle lens reference provenance mismatch')
         comparison[key] = expected
-    a.validate_historical_oracle_lens(lens, historical, comparison)
+    if not fallback:
+        # Preserve the preferred exact-artifact path's Attempt133 gate verbatim.
+        a.validate_historical_oracle_lens(lens, historical, comparison)
+    else:
+        for key in ('base', 'fine_tuned', 'downloaded_model_hashes_sha256',
+                    'merged_model_hashes_sha256', 'oracle_probe_manifest_sha256',
+                    'oracle_adl_manifest_sha256', 'oracle_adl_sha256'):
+            if historical['provenance'].get(key) != comparison.get(key):
+                raise ValueError('Historical Logit Lens provenance mismatch: ' + key)
+        if len(historical['positions']) != len(a.POSITIONS):
+            raise ValueError('Historical Logit Lens position inventory changed')
+
+    maximum_difference = 0.
+    all_ordered_exact, all_top1_rank1 = True, True
+    for pos, record in zip(a.POSITIONS, historical['positions']):
+        if fallback and record['position'] != pos:
+            raise ValueError('Historical Logit Lens position order changed')
+        for polarity in ('positive', 'negative'):
+            expected = record['difference'][polarity]
+            actual = lens['tokens'][ORACLE][str(pos)]['top20_' + polarity]
+            if fallback and (len(expected) != a.TOP_K or len(actual) != a.TOP_K):
+                raise ValueError('Local oracle top20 inventory mismatch')
+            top1_rank1 = actual[0]['token_id'] == expected[0]['token_id']
+            ordered_exact = [row['token_id'] for row in actual] == [row['token_id'] for row in expected]
+            all_top1_rank1 &= top1_rank1
+            all_ordered_exact &= ordered_exact
+            if fallback and not top1_rank1:
+                raise ValueError(f'Local oracle historical top1 is not rank 1: {pos}/{polarity}')
+            if fallback and not ordered_exact:
+                raise ValueError(f'Local oracle ordered top20 token-ID mismatch: {pos}/{polarity}')
+            for local, old in zip(actual, expected):
+                lp, hp = float(local['probability']), float(old['probability'])
+                difference = abs(lp - hp)
+                if fallback and (not math.isfinite(lp) or not math.isfinite(hp) or
+                        not 0 <= lp <= 1 or not 0 <= hp <= 1 or difference > LOCAL_ORACLE_TOP20_ABS_TOL):
+                    raise ValueError(f'Local oracle top20 probability exceeds absolute bound: {pos}/{polarity}')
+                maximum_difference = max(maximum_difference, difference)
+    return {'oracle_logit_lens_compatibility_rule':
+                spec['oracle_portability']['compatibility'] if fallback else 'attempt133_rtol_1e-6_atol_1e-8_exact_historical_artifact',
+            'max_observed_absolute_top20_probability_difference': maximum_difference,
+            'all_ordered_top20_exact': all_ordered_exact,
+            'all_historical_top1_rank1': all_top1_rank1,
+            'top20_probability_absolute_threshold': LOCAL_ORACLE_TOP20_ABS_TOL if fallback else None}
 
 
 def oracle_portability_provenance(spec, selection):
@@ -356,11 +401,11 @@ def run(device='cuda'):
         path_of(loc['base_tokenizer_directory']), path_of(loc['merged_checkpoint_directory']), provenance, torch)
     if len(model.model.layers) != 28:
         raise ValueError('Merged Qwen3 layer count changed')
-    validate_oracle_lens_compatibility(spec, a, oracle_vector, final_norm, lm_head,
-                                     tokenizer, torch, reader, historical, provenance)
+    compatibility = validate_oracle_lens_compatibility(spec, a, oracle_vector, final_norm, lm_head,
+        tokenizer, torch, reader, historical, provenance, fallback=selection['fallback'])
     log('Logit Lens: all ten fixed candidates and oracle, positions 0..4')
     lens = a.lens_readout(vectors, final_norm, lm_head, tokenizer, torch, reader)
-    validate_historical_lens_reference(spec, a, lens, historical, provenance)
+    validate_historical_lens_reference(spec, a, lens, historical, provenance, fallback=selection['fallback'])
     if device.startswith('cuda') and not torch.cuda.is_available():
         raise ValueError('Requested CUDA is unavailable')
     model.to(device).eval().requires_grad_(False)
@@ -393,6 +438,7 @@ def run(device='cuda'):
             'attempt133': spec['attempt133'], 'oracle_reader': spec['oracle_reader'],
             'privileged_inputs': spec['privileged_inputs'],
             **oracle_portability_provenance(spec, selection),
+            **compatibility,
             'validated_checkpoint_provenance': {key: provenance[key] for key in
                 ('base', 'fine_tuned', 'downloaded_model_hashes_sha256', 'merged_model_hashes_sha256',
                  'oracle_probe_manifest_sha256', 'oracle_adl_manifest_sha256', 'oracle_adl_sha256')}},

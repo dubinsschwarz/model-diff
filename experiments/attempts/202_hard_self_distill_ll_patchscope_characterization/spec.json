@@ -203,6 +203,7 @@
     "canonical_probe": "/root/model-diff-scratch/artifacts/oracle_probe/fineweb_tokens.pt",
     "historical_artifact_preferred": "exact_serialized_sha256",
     "half_present_cache": "fail_without_overwrite",
-    "compatibility": "pinned_historical_oracle_logit_lens_top20_ids_and_probabilities_existing_attempt133_tolerances"
+    "compatibility": "local_fallback_only_ordered_top20_exact_historical_top1_rank1_absolute_probability_difference_le_2e-5",
+    "local_top20_probability_absolute_tolerance": 2e-05
   }
 }

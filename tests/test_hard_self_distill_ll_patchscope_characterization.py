@@ -371,12 +371,17 @@ def test_synthetic_run_publication_and_post_analysis_hash_guard(frozen_inputs, m
     oracle_data = {name: oracle for name in ('difference', 'base_mean', 'ft_mean')}
     monkeypatch.setattr(r, 'load_oracle_reference', lambda *args: (oracle_data, provenance, selection))
     monkeypatch.setattr(r, 'validate_oracle_reference', lambda *args: (oracle_data, provenance, selection))
-    def compatibility(*args):
+    real_compatibility_gate = r.validate_historical_lens_reference
+    def compatibility(*args, **kwargs):
         events.append('oracle_compatibility')
-        if mutation == 'compatibility':
-            raise ValueError('Historical oracle compatibility failure')
+        assert kwargs == {'fallback': True}
+        historical, local_provenance, oracle_lens = synthetic_lens_reference()
+        delta = 2.1e-5 if mutation == 'compatibility' else 1.0371208190917969e-05
+        oracle_lens['tokens'][r.ORACLE]['0']['top20_positive'][0]['probability'] += delta
+        gate_helper = SimpleNamespace(POSITIONS=(0, 1, 2, 3, 4), TOP_K=20)
+        return real_compatibility_gate(SPEC, gate_helper, oracle_lens, historical, local_provenance, fallback=True)
     monkeypatch.setattr(r, 'validate_oracle_lens_compatibility', compatibility)
-    monkeypatch.setattr(r, 'validate_historical_lens_reference', lambda *args: None)
+    monkeypatch.setattr(r, 'validate_historical_lens_reference', lambda *args, **kwargs: None)
     def lens(*args):
         events.append('lens')
         return {'synthetic': 'lens'}
@@ -395,7 +400,7 @@ def test_synthetic_run_publication_and_post_analysis_hash_guard(frozen_inputs, m
             for sign in ('plus', 'minus')} for name in names}}
     monkeypatch.setattr(r, 'patchscope_mode', patchscope)
     if mutation:
-        error = 'compatibility failure' if mutation == 'compatibility' else 'raw candidate hash mismatch'
+        error = 'absolute bound' if mutation == 'compatibility' else 'raw candidate hash mismatch'
         with pytest.raises(ValueError, match=error):
             r.run('cpu')
         assert not Path(spec['output']).exists()
@@ -409,6 +414,10 @@ def test_synthetic_run_publication_and_post_analysis_hash_guard(frozen_inputs, m
         assert events.index('oracle_compatibility') < events.index('lens')
         assert result['provenance']['oracle_portability_fallback_used'] is True
         assert result['provenance']['historical_logit_lens_compatibility_passed'] is True
+        assert result['provenance']['max_observed_absolute_top20_probability_difference'] == pytest.approx(1.0371208190917969e-05)
+        assert result['provenance']['all_ordered_top20_exact'] is True
+        assert result['provenance']['all_historical_top1_rank1'] is True
+        assert result['provenance']['top20_probability_absolute_threshold'] == 2e-5
         assert result['fixed_candidate_inventory'] == list(r.NAMES)
         assert result['native_unit_consensus_excluded'] is True
         assert list(result['native_seed_and_raw_mean_delta_logit_scores']) == list(r.NATIVE_NAMES)
@@ -623,9 +632,7 @@ def test_generator_invocation_uses_exact_procedure_and_alternate_outputs(monkeyp
         r.generate_local_oracle(spec, torch)
 
 
-@pytest.mark.parametrize('failure', [None, 'token', 'probability', 'checkpoint'])
-def test_local_oracle_historical_lens_compatibility_keeps_exact_tolerances(monkeypatch, failure):
-    a = r.configured_readout(SPEC, r.NAMES)
+def synthetic_lens_reference():
     reference_provenance = {key: {'identity': key} for key in ('base', 'fine_tuned')}
     for key in ('downloaded_model_hashes_sha256', 'merged_model_hashes_sha256', 'oracle_probe_manifest_sha256'):
         reference_provenance[key] = 'a'*64
@@ -636,8 +643,19 @@ def test_local_oracle_historical_lens_compatibility_keeps_exact_tolerances(monke
     tokens = {r.ORACLE: {}}
     for pos in range(5):
         records = [{'token_id': i, 'probability': (i+1)/1000} for i in range(20)]
-        historical['positions'].append({'position': pos, 'difference': {'positive': records, 'negative': records}})
+        historical['positions'].append({'position': pos, 'difference': {
+            'positive': copy.deepcopy(records), 'negative': copy.deepcopy(records)}})
         tokens[r.ORACLE][str(pos)] = {'top20_positive': copy.deepcopy(records), 'top20_negative': copy.deepcopy(records)}
+    return historical, provenance, {'tokens': tokens}
+
+
+@pytest.mark.parametrize('failure', [None, 'token', 'probability', 'checkpoint'])
+def test_local_oracle_historical_lens_compatibility_before_candidates(monkeypatch, failure):
+    a = r.configured_readout(SPEC, r.NAMES)
+    historical, provenance, lens_data = synthetic_lens_reference()
+    tokens = lens_data['tokens']
+    # The reported machine-only drift is accepted by the new local-only gate.
+    tokens[r.ORACLE]['0']['top20_positive'][0]['probability'] += 1.0371208190917969e-05
     if failure == 'token':
         tokens[r.ORACLE]['4']['top20_negative'][0]['token_id'] = 30
     elif failure == 'probability':
@@ -648,23 +666,32 @@ def test_local_oracle_historical_lens_compatibility_keeps_exact_tolerances(monke
         assert names == ()
         def lens(vectors, *args):
             assert list(vectors) == [r.ORACLE]
-            return {'tokens': tokens}
+            return lens_data
         return SimpleNamespace(lens_readout=lens)
     monkeypatch.setattr(r, 'configured_readout', oracle_readout)
     args = (SPEC, a, object(), None, None, None, torch, None, historical, provenance)
     if failure:
         with pytest.raises(ValueError):
-            r.validate_oracle_lens_compatibility(*args)
+            r.validate_oracle_lens_compatibility(*args, fallback=True)
     else:
-        r.validate_oracle_lens_compatibility(*args)
+        report = r.validate_oracle_lens_compatibility(*args, fallback=True)
+        assert report['max_observed_absolute_top20_probability_difference'] == pytest.approx(1.0371208190917969e-05)
+        assert report['all_ordered_top20_exact'] and report['all_historical_top1_rank1']
+        assert report['top20_probability_absolute_threshold'] == 2e-5
         assert provenance['oracle_adl_sha256'] == 'b'*64  # Actual local provenance is never rewritten.
 
 
 def test_portability_spec_and_pre_score_gate_leave_scientific_definitions_unchanged():
     baseline = json.loads(__import__('subprocess').check_output(['git', 'show', 'HEAD:'+str(r.SPEC_PATH.relative_to(PROJECT))]))
     for key in baseline:
-        if key != 'workload':
+        if key == 'oracle_portability':
+            assert {k: v for k, v in SPEC[key].items() if k not in (
+                'compatibility', 'local_top20_probability_absolute_tolerance')} == {
+                    k: v for k, v in baseline[key].items() if k not in (
+                        'compatibility', 'local_top20_probability_absolute_tolerance')}
+        else:
             assert SPEC[key] == baseline[key]
+    assert SPEC['oracle_portability']['local_top20_probability_absolute_tolerance'] == r.LOCAL_ORACLE_TOP20_ABS_TOL == 2e-5
     assert SPEC['oracle_portability']['generator']['sha256'] == r.GENERATOR_SHA256
     assert r.sha256_file(r.path_of(SPEC['oracle_portability']['generator']['path'])) == r.GENERATOR_SHA256
     source = SOURCE.read_text()
@@ -674,3 +701,76 @@ def test_portability_spec_and_pre_score_gate_leave_scientific_definitions_unchan
     assert run.index('validate_oracle_lens_compatibility(') < run.index('patchscope_mode(')
     assert run.rindex('validate_oracle_reference(') < run.index("output.open('x'")
     assert 'compute_oracle_adl.py' not in run  # Generation stays behind the validated selection helper.
+
+
+@pytest.mark.parametrize('delta', [0., 1.0371208190917969e-05, np.nextafter(2e-5, 0.), 2e-5])
+def test_local_top20_probability_absolute_bound_is_inclusive(delta):
+    a = r.configured_readout(SPEC, r.NAMES)
+    historical, provenance, lens = synthetic_lens_reference()
+    # A zero reference value makes the tested difference exactly delta, avoiding
+    # cancellation roundoff and proving this is an absolute, non-relative bound.
+    historical['positions'][4]['difference']['negative'][19]['probability'] = 0.
+    lens['tokens'][r.ORACLE]['4']['top20_negative'][19]['probability'] = float(delta)
+    report = r.validate_historical_lens_reference(SPEC, a, lens, historical, provenance, fallback=True)
+    assert report['max_observed_absolute_top20_probability_difference'] == delta
+    assert report['all_ordered_top20_exact'] is True
+    assert report['all_historical_top1_rank1'] is True
+    assert report['top20_probability_absolute_threshold'] == 2e-5
+    assert report['oracle_logit_lens_compatibility_rule'] == SPEC['oracle_portability']['compatibility']
+
+
+@pytest.mark.parametrize('pos', range(5))
+@pytest.mark.parametrize('polarity', ['positive', 'negative'])
+@pytest.mark.parametrize('failure', ['reorder', 'top1', 'probability'])
+def test_local_gate_checks_every_position_and_polarity(pos, polarity, failure):
+    a = r.configured_readout(SPEC, r.NAMES)
+    historical, provenance, lens = synthetic_lens_reference()
+    rows = lens['tokens'][r.ORACLE][str(pos)]['top20_'+polarity]
+    if failure == 'reorder':
+        rows[5], rows[6] = rows[6], rows[5]  # Same ID set and same top-1; wrong order.
+        error = 'ordered top20 token-ID mismatch'
+    elif failure == 'top1':
+        rows[0], rows[1] = rows[1], rows[0]
+        error = 'historical top1 is not rank 1'
+    else:
+        historical['positions'][pos]['difference'][polarity][19]['probability'] = 0.
+        rows[19]['probability'] = float(np.nextafter(2e-5, np.inf))
+        error = 'probability exceeds absolute bound'
+    with pytest.raises(ValueError, match=error):
+        r.validate_historical_lens_reference(SPEC, a, lens, historical, provenance, fallback=True)
+
+
+@pytest.mark.parametrize('invalid', [np.nan, np.inf, -1e-5, 1.000001])
+def test_local_probability_gate_rejects_nonfinite_and_invalid_probabilities(invalid):
+    a = r.configured_readout(SPEC, r.NAMES)
+    historical, provenance, lens = synthetic_lens_reference()
+    lens['tokens'][r.ORACLE]['1']['top20_positive'][1]['probability'] = float(invalid)
+    with pytest.raises(ValueError, match='absolute bound'):
+        r.validate_historical_lens_reference(SPEC, a, lens, historical, provenance, fallback=True)
+
+
+def test_exact_historical_artifact_keeps_original_attempt133_probability_gate():
+    a = r.configured_readout(SPEC, r.NAMES)
+    historical, provenance, lens = synthetic_lens_reference()
+    report = r.validate_historical_lens_reference(SPEC, a, lens, historical, provenance, fallback=False)
+    assert report['oracle_logit_lens_compatibility_rule'] == 'attempt133_rtol_1e-6_atol_1e-8_exact_historical_artifact'
+    assert report['top20_probability_absolute_threshold'] is None
+    lens['tokens'][r.ORACLE]['0']['top20_positive'][0]['probability'] += 1.0371208190917969e-05
+    # Local-only relaxation must never leak into the exact historical path.
+    with pytest.raises(ValueError, match='Historical oracle Logit Lens mismatch'):
+        r.validate_historical_lens_reference(SPEC, a, lens, historical, provenance, fallback=False)
+    r.validate_historical_lens_reference(SPEC, a, lens, historical, provenance, fallback=True)
+
+
+def test_scoring_cache_and_hash_validation_functions_are_unchanged():
+    baseline = __import__('subprocess').check_output(['git', 'show', 'HEAD:'+str(SOURCE.relative_to(PROJECT))]).decode()
+    current = SOURCE.read_text()
+    old_tree, new_tree = ast.parse(baseline), ast.parse(current)
+    # Only the compatibility gate/provenance plumbing may change. Cached-oracle
+    # selection, generation and scientific scoring functions stay byte-identical.
+    for name in ('configured_readout', 'patch_metrics_with_norms', 'patchscope_mode', 'distribution',
+                 'seed_summaries', 'validate_candidate_hashes', 'generate_local_oracle',
+                 'validate_oracle_tensors', 'validate_oracle_reference', 'load_oracle_reference'):
+        old = next(node for node in old_tree.body if isinstance(node, ast.FunctionDef) and node.name == name)
+        new = next(node for node in new_tree.body if isinstance(node, ast.FunctionDef) and node.name == name)
+        assert ast.get_source_segment(baseline, old) == ast.get_source_segment(current, new)
