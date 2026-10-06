@@ -1,0 +1,566 @@
+{
+  "format_version": 1,
+  "attempt_id": "137_expanded_response_library_span",
+  "expected_prior_head_commit": "4b775e13ee40d2325feac43abcd5ec688938d5d1",
+  "purpose": "privileged_diagnostic_only_existing_blind_ce_jvp_library_span_vs_attempt134_oracle_residual",
+  "same_specimen_exploratory_method_development": true,
+  "privileged_diagnostic_only": true,
+  "clean_heldout_validation": false,
+  "no_new_candidate_constructed": true,
+  "inventory_policy": "exact_distinct_endpoint_blind_causal_next_token_ce_positive_block13_jvp_primitives_only; no self-sampled/privileged/derived consensus or mixture responses",
+  "chronological_family_order": [
+    100,
+    126,
+    129,
+    130,
+    131,
+    132,
+    134
+  ],
+  "expected_primitive_count": 29,
+  "families": [
+    {
+      "attempt_number": 100,
+      "attempt_id": "100_diverse8_raw_jg_consensus_prefix0_13",
+      "spec": {
+        "path": "experiments/attempts/100_diverse8_raw_jg_consensus_prefix0_13/spec.json",
+        "sha256": "a10b513387635cd599971b10a3c7614a7a18483db7b12f9058898c417101db12"
+      },
+      "source": {
+        "path": "scripts/ablation/construct_attempt100_diverse8_consensus.py",
+        "sha256": "c5109e6dcdae0234c42aace7b9f9bf19b9563d9b0b289342bba52c32122bac0a"
+      },
+      "construction_manifest": {
+        "path": "experiments/attempts/100_diverse8_raw_jg_consensus_prefix0_13/construction-manifest.json",
+        "sha256": "64c4d3ef379fc02f6132d6e3197632e7bd5154398ee123e5ca688be9d5c68546"
+      },
+      "artifact": {
+        "path": "/root/model-diff-scratch/artifacts/attempt100_diverse8_raw_jg_consensus/responses.pt",
+        "serialized_sha256": "ce32f037d594a45126d72f88ffcf1dfef49996bc6152aeb431f07851c50d3872",
+        "tensor_order": [
+          "merged_mean",
+          "response_fineweb",
+          "response_wikitext103_raw",
+          "response_tinystories",
+          "response_arxiv_document",
+          "response_cc_news",
+          "response_pg19",
+          "response_codeparrot_clean",
+          "response_ultrachat",
+          "consensus_response_8"
+        ]
+      },
+      "primitive_tensor_names": [
+        "response_fineweb",
+        "response_wikitext103_raw",
+        "response_tinystories",
+        "response_arxiv_document",
+        "response_cc_news",
+        "response_pg19",
+        "response_codeparrot_clean",
+        "response_ultrachat"
+      ],
+      "primitive_raw_sha256": {
+        "response_fineweb": "00d0d8873df90e4b7c3e8799e0e019d3f5b8d7fee0d9aa796370849ff69ec5e5",
+        "response_wikitext103_raw": "3d81d1479c0808868c78e5b251f329eb22143ccac16a615cabcb0874a0e15e3f",
+        "response_tinystories": "4ea5f0006ab442c500ee196f3bd9cff6d5f7fe7325746e0de97ba215e54ce123",
+        "response_arxiv_document": "221d1a89dd4ba20bf26d57a3c8ceffc4d67950ece81b8436d75bd77cbd11f963",
+        "response_cc_news": "342f442c8dd5f0a9af95702479624abab0f1b1c424d18a8ff96314bf9a2f4ed4",
+        "response_pg19": "cddef2b4f5acecdfd48e12ff02e31d367637ab2b69da7a88c9cf6faf171c8672",
+        "response_codeparrot_clean": "d4630da18a86faabc26a533cbde9d6537f24251d5e272773d4f1340800ef9282",
+        "response_ultrachat": "7b98750fd507e7a5e3c794fbb9e93d8af1b687a8acb2d6a2005ce414bacea115"
+      },
+      "probe_source_raw_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8",
+      "probe_rows": [
+        0,
+        10000
+      ],
+      "tensor_shape": [
+        128,
+        2048
+      ],
+      "tensor_dtype": "contiguous_cpu_float32"
+    },
+    {
+      "attempt_number": 126,
+      "attempt_id": "126_fineweb_surprisal_stratification",
+      "spec": {
+        "path": "experiments/attempts/126_fineweb_surprisal_stratification/spec.json",
+        "sha256": "0e2457b8fbb8cd76f482599fe20878a2c32a30f288eef83c39cc59efffa367ef"
+      },
+      "source": {
+        "path": "scripts/ablation/run_fineweb_surprisal_stratification.py",
+        "sha256": "064d29b99504951c8255c3f5d22978c20e7f397fe49ca2aba5bfe9ca2081cf64"
+      },
+      "construction_manifest": {
+        "path": "experiments/attempts/126_fineweb_surprisal_stratification/construction-manifest.json",
+        "sha256": "3f35568a8f116d09d8b3b800d22d559af52b333931f51e729ba510e593281307"
+      },
+      "artifact": {
+        "path": "/workspace/model-diff/experiments/attempts/126_fineweb_surprisal_stratification/candidate.pt",
+        "serialized_sha256": "034935f36a199de5be6c0acbeb72a0c9f49c0e0c1efc7e37d1afce7dddce2e74",
+        "tensor_order": [
+          "response_low",
+          "response_middle",
+          "response_high"
+        ]
+      },
+      "primitive_tensor_names": [
+        "response_low",
+        "response_middle",
+        "response_high"
+      ],
+      "primitive_raw_sha256": {
+        "response_low": "56af5bc919437cf7cc4105826a6eae7d84df0a2d41e62d06d01a4fc47be03a37",
+        "response_middle": "e4fd4bffdc69b0cacffa70762d10973e33330228f366c07f5f0422a3ca4181d8",
+        "response_high": "63907e43e165fc3e7cdd19dc8e7eb93a8c34910467f47f9bb6c1b0724ae31548"
+      },
+      "probe_source_raw_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8",
+      "probe_rows": [
+        0,
+        1024
+      ],
+      "tensor_shape": [
+        128,
+        2048
+      ],
+      "tensor_dtype": "contiguous_cpu_float32"
+    },
+    {
+      "attempt_number": 129,
+      "attempt_id": "129_fresh_fineweb_low_surprisal_replication",
+      "spec": {
+        "path": "experiments/attempts/129_fresh_fineweb_low_surprisal_replication/spec.json",
+        "sha256": "7cafe03201e243ae4975ecf390cb6fe1f3808978b3a81041841a5cec3f4838ae"
+      },
+      "source": {
+        "path": "scripts/ablation/run_fresh_fineweb_low_surprisal_replication.py",
+        "sha256": "cb4d868e5e70414b50e1ed1ca61a63fd51c944338f80c3f09eab019b1be91794"
+      },
+      "construction_manifest": {
+        "path": "experiments/attempts/129_fresh_fineweb_low_surprisal_replication/construction-manifest.json",
+        "sha256": "e87fc5bd80d6e29fcd143125a09e18fea45d912e27e9838de467b905bbb90b02"
+      },
+      "artifact": {
+        "path": "/workspace/model-diff/experiments/attempts/129_fresh_fineweb_low_surprisal_replication/candidate.pt",
+        "serialized_sha256": "e720bb8d01105521aa72837bf78c0a610346194ca0196bdedd70c8d5e2643ae8",
+        "tensor_order": [
+          "response_control",
+          "response_low",
+          "response_middle",
+          "response_high"
+        ]
+      },
+      "primitive_tensor_names": [
+        "response_control",
+        "response_low",
+        "response_middle",
+        "response_high"
+      ],
+      "primitive_raw_sha256": {
+        "response_control": "b7e5f9dc3e09d567709f1b0cc2a9fbf00ee417c482dd5ea690677ddc44300b6a",
+        "response_low": "fbeb81c7cfc4db8c23344667beae79089f26c9475d6de91c99282e33d8de28e0",
+        "response_middle": "b2b609fdbf9e3dd4214fa534b4168fb6e2301c4f17864c12761bee6a5d9a4676",
+        "response_high": "bf884ed5da2efc51fe4c8adbb5bad31b7ed3e43d983f7699d38dcb57b22efb27"
+      },
+      "probe_source_raw_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8",
+      "probe_rows": [
+        0,
+        1024
+      ],
+      "tensor_shape": [
+        128,
+        2048
+      ],
+      "tensor_dtype": "contiguous_cpu_float32"
+    },
+    {
+      "attempt_number": 130,
+      "attempt_id": "130_pooled_fineweb_low_surprisal_scaling",
+      "spec": {
+        "path": "experiments/attempts/130_pooled_fineweb_low_surprisal_scaling/spec.json",
+        "sha256": "4c569a7e4c00218256a4a1e243ef9a5283050f2c9d95a19b8bc308f2dc5bd942"
+      },
+      "source": {
+        "path": "scripts/ablation/run_pooled_fineweb_low_surprisal_scaling.py",
+        "sha256": "bd2537138f0be55ae606eddfb38e0e639cdc934bcfb6f5c7cf13d9be5e20e377"
+      },
+      "construction_manifest": {
+        "path": "experiments/attempts/130_pooled_fineweb_low_surprisal_scaling/construction-manifest.json",
+        "sha256": "13163051d0fb564187ef9a5a7c004fb92c259f379bce6ad0905243973ebeceb2"
+      },
+      "artifact": {
+        "path": "/workspace/model-diff/experiments/attempts/130_pooled_fineweb_low_surprisal_scaling/candidate.pt",
+        "serialized_sha256": "4af45043d33c9cd14b8e9d6924e7cccd0e6f0ba83e78f77ca81638854fb2b0a9",
+        "tensor_order": [
+          "response_low2048",
+          "response_control2048"
+        ]
+      },
+      "primitive_tensor_names": [
+        "response_low2048",
+        "response_control2048"
+      ],
+      "primitive_raw_sha256": {
+        "response_low2048": "22d52850d3b345f73bd2a44c66b3f5c98ce9a9236a86f0d609801e78abc7c235",
+        "response_control2048": "f0abdd8ab20ae7fb134988a55d90d83794c5c39562b13238608e827cfd0a5f38"
+      },
+      "probe_source_raw_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8",
+      "probe_rows": [
+        0,
+        1024
+      ],
+      "tensor_shape": [
+        128,
+        2048
+      ],
+      "tensor_dtype": "contiguous_cpu_float32"
+    },
+    {
+      "attempt_number": 131,
+      "attempt_id": "131_low_surprisal_stringency",
+      "spec": {
+        "path": "experiments/attempts/131_low_surprisal_stringency/spec.json",
+        "sha256": "b7fa100677dc86c0c382357daa9f6b53349c40f5a9888a769c86dde338e972c5"
+      },
+      "source": {
+        "path": "scripts/ablation/run_low_surprisal_stringency.py",
+        "sha256": "2b4575eaee52535f2672a8a72ebca3d42e4328b6905c8cc033f52cd6c2941c2d"
+      },
+      "construction_manifest": {
+        "path": "experiments/attempts/131_low_surprisal_stringency/construction-manifest.json",
+        "sha256": "a54b83d21c43a1eaf0e61a82c50dd3140b1aeac57cb34223c7d9b17e7cac6d2c"
+      },
+      "artifact": {
+        "path": "/workspace/model-diff/experiments/attempts/131_low_surprisal_stringency/candidate.pt",
+        "serialized_sha256": "e23e1bae423ff019220fa2b4841d97e0abc5618f90b3670a478b3b8102e8df9a",
+        "tensor_order": [
+          "response_very_low",
+          "response_next_low"
+        ]
+      },
+      "primitive_tensor_names": [
+        "response_very_low",
+        "response_next_low"
+      ],
+      "primitive_raw_sha256": {
+        "response_very_low": "8e6c4492d9fa77e2f4c38eae640d500ff18d7c1dbc5386b502a638af7b693744",
+        "response_next_low": "e12bebf38f47e646f4b2e7e33c6157184badab40585fc01545df6fd22d9081e6"
+      },
+      "probe_source_raw_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8",
+      "probe_rows": [
+        0,
+        1024
+      ],
+      "tensor_shape": [
+        128,
+        2048
+      ],
+      "tensor_dtype": "contiguous_cpu_float32"
+    },
+    {
+      "attempt_number": 132,
+      "attempt_id": "132_expanded_fineweb_superlow_stringency",
+      "spec": {
+        "path": "experiments/attempts/132_expanded_fineweb_superlow_stringency/spec.json",
+        "sha256": "b54399eedceceb381b7b536a61cae17b81cea90cc5aeb927b10d0f4be66a4c31"
+      },
+      "source": {
+        "path": "scripts/ablation/run_expanded_fineweb_superlow_stringency.py",
+        "sha256": "e98f5670704d33d14c7cd7eb899db327a006ac09cb90a53a1a0efba19f00410c"
+      },
+      "construction_manifest": {
+        "path": "experiments/attempts/132_expanded_fineweb_superlow_stringency/construction-manifest.json",
+        "sha256": "970f04f067e86be7edb83d9a30f2a44a996cef3afa606e8f821d568cbf576f97"
+      },
+      "artifact": {
+        "path": "/workspace/model-diff/experiments/attempts/132_expanded_fineweb_superlow_stringency/candidate.pt",
+        "serialized_sha256": "ca0a6f8f39285104e8dab95c82fd3284a5c42bed8bff5e0f6320afa00d890ecd",
+        "tensor_order": [
+          "response_super_low",
+          "response_next_super_low"
+        ]
+      },
+      "primitive_tensor_names": [
+        "response_super_low",
+        "response_next_super_low"
+      ],
+      "primitive_raw_sha256": {
+        "response_super_low": "b1c0cb151d766c86953caae9187a406d8142cf111f99db22e6cfb22acf6ec204",
+        "response_next_super_low": "f10ec205e38ff7e68fdc17d4a6fc0ce09def5cfa0789764669c4343c48a5d047"
+      },
+      "probe_source_raw_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8",
+      "probe_rows": [
+        0,
+        1024
+      ],
+      "tensor_shape": [
+        128,
+        2048
+      ],
+      "tensor_dtype": "contiguous_cpu_float32"
+    },
+    {
+      "attempt_number": 134,
+      "attempt_id": "134_diverse8_low_surprisal_consensus",
+      "spec": {
+        "path": "experiments/attempts/134_diverse8_low_surprisal_consensus/spec.json",
+        "sha256": "bd7ffc4f3c1e9213ab5f15f2edf97f08ad098c05735024b6dccf1609bbeb22b1"
+      },
+      "source": {
+        "path": "scripts/ablation/run_diverse8_low_surprisal_consensus.py",
+        "sha256": "606492768846f1473914661f8c8c1e714c8317234c6623f964f14974d30ee8d7"
+      },
+      "construction_manifest": {
+        "path": "experiments/attempts/134_diverse8_low_surprisal_consensus/construction-manifest.json",
+        "sha256": "d928d80c08acee5eae78ff1439c42a0d16048726c89a50d7af542dfc5f36c99a"
+      },
+      "artifact": {
+        "path": "/workspace/model-diff/experiments/attempts/134_diverse8_low_surprisal_consensus/candidate.pt",
+        "serialized_sha256": "055dc78ce83d8ad01cc04e647efba0138032efb9083c10d00efc4855b2573482",
+        "tensor_order": [
+          "response_low_fineweb",
+          "response_low_wikitext103_raw",
+          "response_low_tinystories",
+          "response_low_arxiv_document",
+          "response_low_cc_news",
+          "response_low_pg19",
+          "response_low_codeparrot_clean",
+          "response_low_ultrachat",
+          "low_surprisal_consensus_8"
+        ]
+      },
+      "primitive_tensor_names": [
+        "response_low_fineweb",
+        "response_low_wikitext103_raw",
+        "response_low_tinystories",
+        "response_low_arxiv_document",
+        "response_low_cc_news",
+        "response_low_pg19",
+        "response_low_codeparrot_clean",
+        "response_low_ultrachat"
+      ],
+      "primitive_raw_sha256": {
+        "response_low_fineweb": "7c8b4386cdb55d64ac82b038f711a046b748590b411197311550485b7329c64b",
+        "response_low_wikitext103_raw": "4114ded07e1dbcd675634cfe357f42dbd091f0bed208e13491a61117b09d5db7",
+        "response_low_tinystories": "d05a54fa466354e86a3edad19cdb89239d809df22b11756b1a41c5a8116ee2eb",
+        "response_low_arxiv_document": "64a8e1b57848de5436256a8b6dea934dc4a1dc66e91f0ff4053fe5e76d2fa493",
+        "response_low_cc_news": "6a32c202cb018d18056ca616f90d0c912d7f4cb8b7f46309ffc3be9a67ed15a4",
+        "response_low_pg19": "1a6de7ecd9d84f9840302b8d4a81fb74a37a5e16363137281122320e59bcbdaa",
+        "response_low_codeparrot_clean": "ce865c1f0d4df0241ea86075381da9b6c4783c56681596358f8f6fbf6b084ea2",
+        "response_low_ultrachat": "353ee2aa2d2ce74134f924bd1c7eed55aeabd3ecdbe8828ef99ca0c60366623d"
+      },
+      "probe_source_raw_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8",
+      "probe_rows": [
+        0,
+        10000
+      ],
+      "tensor_shape": [
+        128,
+        2048
+      ],
+      "tensor_dtype": "contiguous_cpu_float32",
+      "consensus_raw_sha256": "a7adb5a0556df684790afab2e45f647b1d2cdd9c5fa71d1d71f5d09e44bd869a"
+    }
+  ],
+  "primitive_inventory_order": [
+    {
+      "attempt_number": 100,
+      "tensor_name": "response_fineweb",
+      "raw_sha256": "00d0d8873df90e4b7c3e8799e0e019d3f5b8d7fee0d9aa796370849ff69ec5e5"
+    },
+    {
+      "attempt_number": 100,
+      "tensor_name": "response_wikitext103_raw",
+      "raw_sha256": "3d81d1479c0808868c78e5b251f329eb22143ccac16a615cabcb0874a0e15e3f"
+    },
+    {
+      "attempt_number": 100,
+      "tensor_name": "response_tinystories",
+      "raw_sha256": "4ea5f0006ab442c500ee196f3bd9cff6d5f7fe7325746e0de97ba215e54ce123"
+    },
+    {
+      "attempt_number": 100,
+      "tensor_name": "response_arxiv_document",
+      "raw_sha256": "221d1a89dd4ba20bf26d57a3c8ceffc4d67950ece81b8436d75bd77cbd11f963"
+    },
+    {
+      "attempt_number": 100,
+      "tensor_name": "response_cc_news",
+      "raw_sha256": "342f442c8dd5f0a9af95702479624abab0f1b1c424d18a8ff96314bf9a2f4ed4"
+    },
+    {
+      "attempt_number": 100,
+      "tensor_name": "response_pg19",
+      "raw_sha256": "cddef2b4f5acecdfd48e12ff02e31d367637ab2b69da7a88c9cf6faf171c8672"
+    },
+    {
+      "attempt_number": 100,
+      "tensor_name": "response_codeparrot_clean",
+      "raw_sha256": "d4630da18a86faabc26a533cbde9d6537f24251d5e272773d4f1340800ef9282"
+    },
+    {
+      "attempt_number": 100,
+      "tensor_name": "response_ultrachat",
+      "raw_sha256": "7b98750fd507e7a5e3c794fbb9e93d8af1b687a8acb2d6a2005ce414bacea115"
+    },
+    {
+      "attempt_number": 126,
+      "tensor_name": "response_low",
+      "raw_sha256": "56af5bc919437cf7cc4105826a6eae7d84df0a2d41e62d06d01a4fc47be03a37"
+    },
+    {
+      "attempt_number": 126,
+      "tensor_name": "response_middle",
+      "raw_sha256": "e4fd4bffdc69b0cacffa70762d10973e33330228f366c07f5f0422a3ca4181d8"
+    },
+    {
+      "attempt_number": 126,
+      "tensor_name": "response_high",
+      "raw_sha256": "63907e43e165fc3e7cdd19dc8e7eb93a8c34910467f47f9bb6c1b0724ae31548"
+    },
+    {
+      "attempt_number": 129,
+      "tensor_name": "response_control",
+      "raw_sha256": "b7e5f9dc3e09d567709f1b0cc2a9fbf00ee417c482dd5ea690677ddc44300b6a"
+    },
+    {
+      "attempt_number": 129,
+      "tensor_name": "response_low",
+      "raw_sha256": "fbeb81c7cfc4db8c23344667beae79089f26c9475d6de91c99282e33d8de28e0"
+    },
+    {
+      "attempt_number": 129,
+      "tensor_name": "response_middle",
+      "raw_sha256": "b2b609fdbf9e3dd4214fa534b4168fb6e2301c4f17864c12761bee6a5d9a4676"
+    },
+    {
+      "attempt_number": 129,
+      "tensor_name": "response_high",
+      "raw_sha256": "bf884ed5da2efc51fe4c8adbb5bad31b7ed3e43d983f7699d38dcb57b22efb27"
+    },
+    {
+      "attempt_number": 130,
+      "tensor_name": "response_low2048",
+      "raw_sha256": "22d52850d3b345f73bd2a44c66b3f5c98ce9a9236a86f0d609801e78abc7c235"
+    },
+    {
+      "attempt_number": 130,
+      "tensor_name": "response_control2048",
+      "raw_sha256": "f0abdd8ab20ae7fb134988a55d90d83794c5c39562b13238608e827cfd0a5f38"
+    },
+    {
+      "attempt_number": 131,
+      "tensor_name": "response_very_low",
+      "raw_sha256": "8e6c4492d9fa77e2f4c38eae640d500ff18d7c1dbc5386b502a638af7b693744"
+    },
+    {
+      "attempt_number": 131,
+      "tensor_name": "response_next_low",
+      "raw_sha256": "e12bebf38f47e646f4b2e7e33c6157184badab40585fc01545df6fd22d9081e6"
+    },
+    {
+      "attempt_number": 132,
+      "tensor_name": "response_super_low",
+      "raw_sha256": "b1c0cb151d766c86953caae9187a406d8142cf111f99db22e6cfb22acf6ec204"
+    },
+    {
+      "attempt_number": 132,
+      "tensor_name": "response_next_super_low",
+      "raw_sha256": "f10ec205e38ff7e68fdc17d4a6fc0ce09def5cfa0789764669c4343c48a5d047"
+    },
+    {
+      "attempt_number": 134,
+      "tensor_name": "response_low_fineweb",
+      "raw_sha256": "7c8b4386cdb55d64ac82b038f711a046b748590b411197311550485b7329c64b"
+    },
+    {
+      "attempt_number": 134,
+      "tensor_name": "response_low_wikitext103_raw",
+      "raw_sha256": "4114ded07e1dbcd675634cfe357f42dbd091f0bed208e13491a61117b09d5db7"
+    },
+    {
+      "attempt_number": 134,
+      "tensor_name": "response_low_tinystories",
+      "raw_sha256": "d05a54fa466354e86a3edad19cdb89239d809df22b11756b1a41c5a8116ee2eb"
+    },
+    {
+      "attempt_number": 134,
+      "tensor_name": "response_low_arxiv_document",
+      "raw_sha256": "64a8e1b57848de5436256a8b6dea934dc4a1dc66e91f0ff4053fe5e76d2fa493"
+    },
+    {
+      "attempt_number": 134,
+      "tensor_name": "response_low_cc_news",
+      "raw_sha256": "6a32c202cb018d18056ca616f90d0c912d7f4cb8b7f46309ffc3be9a67ed15a4"
+    },
+    {
+      "attempt_number": 134,
+      "tensor_name": "response_low_pg19",
+      "raw_sha256": "1a6de7ecd9d84f9840302b8d4a81fb74a37a5e16363137281122320e59bcbdaa"
+    },
+    {
+      "attempt_number": 134,
+      "tensor_name": "response_low_codeparrot_clean",
+      "raw_sha256": "ce865c1f0d4df0241ea86075381da9b6c4783c56681596358f8f6fbf6b084ea2"
+    },
+    {
+      "attempt_number": 134,
+      "tensor_name": "response_low_ultrachat",
+      "raw_sha256": "353ee2aa2d2ce74134f924bd1c7eed55aeabd3ecdbe8828ef99ca0c60366623d"
+    }
+  ],
+  "excluded_attempts_or_tensors": [
+    "Attempt128 self-sampled objective",
+    "Attempt100 consensus_response_8",
+    "Attempt134 low_surprisal_consensus_8",
+    "Attempt135 consensus_response_16",
+    "privileged/oracle responses"
+  ],
+  "probe_population_note": "Attempts100/134 use all 10000 frozen probe rows; Attempts126/129/130/131/132 use rows [0,1024). All share block13 hidden_states[14] and shape [128,2048]; cross-population span is diagnostic, not a matched-population recovery score.",
+  "ranges": {
+    "positions_1_4": [
+      1,
+      5
+    ],
+    "positions_1_127": [
+      1,
+      128
+    ]
+  },
+  "normalization": "cpu_float64_per_position_unit_norm_before_position_major_concatenation; no global row normalization or centering",
+  "svd": "cpu_float64_economy_svd",
+  "rank_tolerance": "max(D.shape)*eps_float64*S[0]",
+  "chronological_coverage": "prefixes_after_each_fixed_family_in_chronological_family_order; all bases and ranks fixed before oracle access",
+  "low_residual_presence_thresholds": {
+    "strong": 0.5,
+    "partial": 0.25
+  },
+  "oracle_after_basis_only": {
+    "attempt136_spec": {
+      "path": "experiments/attempts/136_privileged_residual_disagreement_patchscope/spec.json",
+      "sha256": "f7d56fa357bfb8d29a1d5648d2f22669d8e30f8b7f78e3e2af253d880d22aaa5"
+    },
+    "attempt136_source": {
+      "path": "scripts/ablation/run_privileged_residual_disagreement_patchscope.py",
+      "sha256": "64f691f2724e8537c8e54bffb8b8ba21438eb29645541fea6e14ca82e12729cd"
+    },
+    "attempt136_result": {
+      "path": "experiments/attempts/136_privileged_residual_disagreement_patchscope/result.json",
+      "sha256": "acea0393c642b1844816ebdf591b42118c7e296d749e66a649a9aba565e120bc"
+    },
+    "oracle_manifest": {
+      "path": "oracle-adl-manifest.json",
+      "sha256": "affe93a1139cdaa221646fb3b9c8ec5f64b28129c42b22eae185aca5d3932b90"
+    },
+    "oracle_artifact": {
+      "path": "/root/model-diff-scratch/artifacts/oracle_adl/oracle_adl.pt",
+      "serialized_sha256": "339a6c09b10286369a5d10eb49e144d1819f4301e334c63930ca7c4dd3a11077",
+      "difference_raw_sha256": "d60789a2c06eb82dba2f2449d8665ec665d85e9f7e33fdea1f66ac79c81c159d"
+    },
+    "attempt134_consensus_raw_sha256": "a7adb5a0556df684790afab2e45f647b1d2cdd9c5fa71d1d71f5d09e44bd869a"
+  },
+  "output": "experiments/attempts/137_expanded_response_library_span/result.json",
+  "overwrite": false,
+  "no_candidate_artifact": true
+}
