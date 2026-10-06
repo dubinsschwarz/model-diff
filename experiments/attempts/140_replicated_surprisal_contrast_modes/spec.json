@@ -1,0 +1,355 @@
+{
+  "format_version": 1,
+  "attempt_id": "140_replicated_surprisal_contrast_modes",
+  "expected_prior_head_commit": "0174428e48b79805111fbcefc3e195210d21c9e9",
+  "purpose": "Blind replicated controlled surprisal contrasts; privileged residual diagnostic after barrier; no recovery candidate.",
+  "blind_inputs": [
+    {
+      "attempt_number": 100,
+      "attempt_id": "100_diverse8_raw_jg_consensus_prefix0_13",
+      "spec": {
+        "path": "experiments/attempts/100_diverse8_raw_jg_consensus_prefix0_13/spec.json",
+        "sha256": "a10b513387635cd599971b10a3c7614a7a18483db7b12f9058898c417101db12"
+      },
+      "source": {
+        "path": "scripts/ablation/construct_attempt100_diverse8_consensus.py",
+        "sha256": "c5109e6dcdae0234c42aace7b9f9bf19b9563d9b0b289342bba52c32122bac0a"
+      },
+      "construction_manifest": {
+        "path": "experiments/attempts/100_diverse8_raw_jg_consensus_prefix0_13/construction-manifest.json",
+        "sha256": "64c4d3ef379fc02f6132d6e3197632e7bd5154398ee123e5ca688be9d5c68546"
+      },
+      "artifact": {
+        "path": "/root/model-diff-scratch/artifacts/attempt100_diverse8_raw_jg_consensus/responses.pt",
+        "serialized_sha256": "ce32f037d594a45126d72f88ffcf1dfef49996bc6152aeb431f07851c50d3872",
+        "tensor_order": [
+          "merged_mean",
+          "response_fineweb",
+          "response_wikitext103_raw",
+          "response_tinystories",
+          "response_arxiv_document",
+          "response_cc_news",
+          "response_pg19",
+          "response_codeparrot_clean",
+          "response_ultrachat",
+          "consensus_response_8"
+        ]
+      },
+      "primitive_tensor_names": [
+        "response_fineweb",
+        "response_wikitext103_raw",
+        "response_tinystories",
+        "response_arxiv_document",
+        "response_cc_news",
+        "response_pg19",
+        "response_codeparrot_clean",
+        "response_ultrachat"
+      ],
+      "primitive_raw_sha256": {
+        "response_fineweb": "00d0d8873df90e4b7c3e8799e0e019d3f5b8d7fee0d9aa796370849ff69ec5e5",
+        "response_wikitext103_raw": "3d81d1479c0808868c78e5b251f329eb22143ccac16a615cabcb0874a0e15e3f",
+        "response_tinystories": "4ea5f0006ab442c500ee196f3bd9cff6d5f7fe7325746e0de97ba215e54ce123",
+        "response_arxiv_document": "221d1a89dd4ba20bf26d57a3c8ceffc4d67950ece81b8436d75bd77cbd11f963",
+        "response_cc_news": "342f442c8dd5f0a9af95702479624abab0f1b1c424d18a8ff96314bf9a2f4ed4",
+        "response_pg19": "cddef2b4f5acecdfd48e12ff02e31d367637ab2b69da7a88c9cf6faf171c8672",
+        "response_codeparrot_clean": "d4630da18a86faabc26a533cbde9d6537f24251d5e272773d4f1340800ef9282",
+        "response_ultrachat": "7b98750fd507e7a5e3c794fbb9e93d8af1b687a8acb2d6a2005ce414bacea115"
+      },
+      "probe_source_raw_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8",
+      "probe_rows": [
+        0,
+        10000
+      ],
+      "tensor_shape": [
+        128,
+        2048
+      ],
+      "tensor_dtype": "contiguous_cpu_float32"
+    },
+    {
+      "attempt_number": 126,
+      "attempt_id": "126_fineweb_surprisal_stratification",
+      "spec": {
+        "path": "experiments/attempts/126_fineweb_surprisal_stratification/spec.json",
+        "sha256": "0e2457b8fbb8cd76f482599fe20878a2c32a30f288eef83c39cc59efffa367ef"
+      },
+      "source": {
+        "path": "scripts/ablation/run_fineweb_surprisal_stratification.py",
+        "sha256": "064d29b99504951c8255c3f5d22978c20e7f397fe49ca2aba5bfe9ca2081cf64"
+      },
+      "construction_manifest": {
+        "path": "experiments/attempts/126_fineweb_surprisal_stratification/construction-manifest.json",
+        "sha256": "3f35568a8f116d09d8b3b800d22d559af52b333931f51e729ba510e593281307"
+      },
+      "artifact": {
+        "path": "/workspace/model-diff/experiments/attempts/126_fineweb_surprisal_stratification/candidate.pt",
+        "serialized_sha256": "034935f36a199de5be6c0acbeb72a0c9f49c0e0c1efc7e37d1afce7dddce2e74",
+        "tensor_order": [
+          "response_low",
+          "response_middle",
+          "response_high"
+        ]
+      },
+      "primitive_tensor_names": [
+        "response_low",
+        "response_middle",
+        "response_high"
+      ],
+      "primitive_raw_sha256": {
+        "response_low": "56af5bc919437cf7cc4105826a6eae7d84df0a2d41e62d06d01a4fc47be03a37",
+        "response_middle": "e4fd4bffdc69b0cacffa70762d10973e33330228f366c07f5f0422a3ca4181d8",
+        "response_high": "63907e43e165fc3e7cdd19dc8e7eb93a8c34910467f47f9bb6c1b0724ae31548"
+      },
+      "probe_source_raw_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8",
+      "probe_rows": [
+        0,
+        1024
+      ],
+      "tensor_shape": [
+        128,
+        2048
+      ],
+      "tensor_dtype": "contiguous_cpu_float32"
+    },
+    {
+      "attempt_number": 129,
+      "attempt_id": "129_fresh_fineweb_low_surprisal_replication",
+      "spec": {
+        "path": "experiments/attempts/129_fresh_fineweb_low_surprisal_replication/spec.json",
+        "sha256": "7cafe03201e243ae4975ecf390cb6fe1f3808978b3a81041841a5cec3f4838ae"
+      },
+      "source": {
+        "path": "scripts/ablation/run_fresh_fineweb_low_surprisal_replication.py",
+        "sha256": "cb4d868e5e70414b50e1ed1ca61a63fd51c944338f80c3f09eab019b1be91794"
+      },
+      "construction_manifest": {
+        "path": "experiments/attempts/129_fresh_fineweb_low_surprisal_replication/construction-manifest.json",
+        "sha256": "e87fc5bd80d6e29fcd143125a09e18fea45d912e27e9838de467b905bbb90b02"
+      },
+      "artifact": {
+        "path": "/workspace/model-diff/experiments/attempts/129_fresh_fineweb_low_surprisal_replication/candidate.pt",
+        "serialized_sha256": "e720bb8d01105521aa72837bf78c0a610346194ca0196bdedd70c8d5e2643ae8",
+        "tensor_order": [
+          "response_control",
+          "response_low",
+          "response_middle",
+          "response_high"
+        ]
+      },
+      "primitive_tensor_names": [
+        "response_control",
+        "response_low",
+        "response_middle",
+        "response_high"
+      ],
+      "primitive_raw_sha256": {
+        "response_control": "b7e5f9dc3e09d567709f1b0cc2a9fbf00ee417c482dd5ea690677ddc44300b6a",
+        "response_low": "fbeb81c7cfc4db8c23344667beae79089f26c9475d6de91c99282e33d8de28e0",
+        "response_middle": "b2b609fdbf9e3dd4214fa534b4168fb6e2301c4f17864c12761bee6a5d9a4676",
+        "response_high": "bf884ed5da2efc51fe4c8adbb5bad31b7ed3e43d983f7699d38dcb57b22efb27"
+      },
+      "probe_source_raw_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8",
+      "probe_rows": [
+        0,
+        1024
+      ],
+      "tensor_shape": [
+        128,
+        2048
+      ],
+      "tensor_dtype": "contiguous_cpu_float32"
+    },
+    {
+      "attempt_number": 134,
+      "attempt_id": "134_diverse8_low_surprisal_consensus",
+      "spec": {
+        "path": "experiments/attempts/134_diverse8_low_surprisal_consensus/spec.json",
+        "sha256": "bd7ffc4f3c1e9213ab5f15f2edf97f08ad098c05735024b6dccf1609bbeb22b1"
+      },
+      "source": {
+        "path": "scripts/ablation/run_diverse8_low_surprisal_consensus.py",
+        "sha256": "606492768846f1473914661f8c8c1e714c8317234c6623f964f14974d30ee8d7"
+      },
+      "construction_manifest": {
+        "path": "experiments/attempts/134_diverse8_low_surprisal_consensus/construction-manifest.json",
+        "sha256": "d928d80c08acee5eae78ff1439c42a0d16048726c89a50d7af542dfc5f36c99a"
+      },
+      "artifact": {
+        "path": "/workspace/model-diff/experiments/attempts/134_diverse8_low_surprisal_consensus/candidate.pt",
+        "serialized_sha256": "055dc78ce83d8ad01cc04e647efba0138032efb9083c10d00efc4855b2573482",
+        "tensor_order": [
+          "response_low_fineweb",
+          "response_low_wikitext103_raw",
+          "response_low_tinystories",
+          "response_low_arxiv_document",
+          "response_low_cc_news",
+          "response_low_pg19",
+          "response_low_codeparrot_clean",
+          "response_low_ultrachat",
+          "low_surprisal_consensus_8"
+        ]
+      },
+      "primitive_tensor_names": [
+        "response_low_fineweb",
+        "response_low_wikitext103_raw",
+        "response_low_tinystories",
+        "response_low_arxiv_document",
+        "response_low_cc_news",
+        "response_low_pg19",
+        "response_low_codeparrot_clean",
+        "response_low_ultrachat"
+      ],
+      "primitive_raw_sha256": {
+        "response_low_fineweb": "7c8b4386cdb55d64ac82b038f711a046b748590b411197311550485b7329c64b",
+        "response_low_wikitext103_raw": "4114ded07e1dbcd675634cfe357f42dbd091f0bed208e13491a61117b09d5db7",
+        "response_low_tinystories": "d05a54fa466354e86a3edad19cdb89239d809df22b11756b1a41c5a8116ee2eb",
+        "response_low_arxiv_document": "64a8e1b57848de5436256a8b6dea934dc4a1dc66e91f0ff4053fe5e76d2fa493",
+        "response_low_cc_news": "6a32c202cb018d18056ca616f90d0c912d7f4cb8b7f46309ffc3be9a67ed15a4",
+        "response_low_pg19": "1a6de7ecd9d84f9840302b8d4a81fb74a37a5e16363137281122320e59bcbdaa",
+        "response_low_codeparrot_clean": "ce865c1f0d4df0241ea86075381da9b6c4783c56681596358f8f6fbf6b084ea2",
+        "response_low_ultrachat": "353ee2aa2d2ce74134f924bd1c7eed55aeabd3ecdbe8828ef99ca0c60366623d"
+      },
+      "probe_source_raw_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8",
+      "probe_rows": [
+        0,
+        10000
+      ],
+      "tensor_shape": [
+        128,
+        2048
+      ],
+      "tensor_dtype": "contiguous_cpu_float32",
+      "consensus_raw_sha256": "a7adb5a0556df684790afab2e45f647b1d2cdd9c5fa71d1d71f5d09e44bd869a"
+    }
+  ],
+  "blind_validator_source": {
+    "path": "scripts/ablation/run_expanded_response_library_span.py",
+    "sha256": "f72e6fadf30089d32d2fc15767a5fbc95279021056cb39e77f22530cb33724d1"
+  },
+  "corpus_order": [
+    "fineweb",
+    "wikitext103_raw",
+    "tinystories",
+    "arxiv_document",
+    "cc_news",
+    "pg19",
+    "codeparrot_clean",
+    "ultrachat"
+  ],
+  "full_low_contrast": {
+    "formula": "response_low_q - response_full_q",
+    "difference_dtype": "cpu_float64",
+    "position_unit_norm": true,
+    "equal_weight_signed_consensus": true,
+    "individual_sign_flips": false,
+    "probe_rows": [
+      0,
+      10000
+    ],
+    "shape": [
+      128,
+      2048
+    ]
+  },
+  "ranges": {
+    "positions_1_4": [
+      1,
+      5
+    ],
+    "positions_1_127": [
+      1,
+      128
+    ]
+  },
+  "svd": {
+    "rows": "per_position_unitized_eight_contrasts_flattened_C_order",
+    "dtype": "cpu_float64",
+    "economy": true,
+    "rank_tolerance": "max(matrix.shape)*eps_float64*S[0]",
+    "pc1_orientation": "positive_dot_with_flattened_signed_equal_weight_consensus",
+    "other_pc_orientation": "first_maximum_absolute_left_loading_positive_with_32eps_tie",
+    "freeze_complete_rank_basis": true
+  },
+  "fineweb_replication": {
+    "attempts": [
+      126,
+      129
+    ],
+    "strata": {
+      "low": [
+        0,
+        1024
+      ],
+      "middle": [
+        1536,
+        2560
+      ],
+      "high": [
+        3072,
+        4096
+      ]
+    },
+    "probe_rows": [
+      0,
+      1024
+    ],
+    "slope": "LOW - HIGH",
+    "curvature": "LOW - 2*MIDDLE + HIGH",
+    "descriptive_contrasts": [
+      "LOW-MIDDLE",
+      "MIDDLE-HIGH",
+      "LOW-HIGH"
+    ],
+    "sign_flips": false
+  },
+  "oracle_after_barrier_only": {
+    "attempt136_spec": {
+      "path": "experiments/attempts/136_privileged_residual_disagreement_patchscope/spec.json",
+      "sha256": "f7d56fa357bfb8d29a1d5648d2f22669d8e30f8b7f78e3e2af253d880d22aaa5"
+    },
+    "attempt136_source": {
+      "path": "scripts/ablation/run_privileged_residual_disagreement_patchscope.py",
+      "sha256": "64f691f2724e8537c8e54bffb8b8ba21438eb29645541fea6e14ca82e12729cd"
+    },
+    "attempt136_result": {
+      "path": "experiments/attempts/136_privileged_residual_disagreement_patchscope/result.json",
+      "sha256": "acea0393c642b1844816ebdf591b42118c7e296d749e66a649a9aba565e120bc"
+    },
+    "oracle_manifest": {
+      "path": "oracle-adl-manifest.json",
+      "sha256": "affe93a1139cdaa221646fb3b9c8ec5f64b28129c42b22eae185aca5d3932b90"
+    },
+    "oracle_artifact": {
+      "path": "/root/model-diff-scratch/artifacts/oracle_adl/oracle_adl.pt",
+      "serialized_sha256": "339a6c09b10286369a5d10eb49e144d1819f4301e334c63930ca7c4dd3a11077",
+      "difference_raw_sha256": "d60789a2c06eb82dba2f2449d8665ec665d85e9f7e33fdea1f66ac79c81c159d"
+    },
+    "attempt134_consensus_raw_sha256": "a7adb5a0556df684790afab2e45f647b1d2cdd9c5fa71d1d71f5d09e44bd869a"
+  },
+  "baseline_landmarks_from_user": {
+    "attempt136_joint_full_low_disagreement_residual_squared_fraction": {
+      "positions_1_4": 0.2847,
+      "positions_1_127": 0.2156
+    },
+    "attempt137_expanded_29_response_span_residual_squared_fraction": {
+      "positions_1_4": 0.3544,
+      "positions_1_127": 0.33
+    }
+  },
+  "barrier": {
+    "marker": "REPLICATED_CONTRAST_MODES_FROZEN",
+    "blind_artifact_and_manifest_reloaded_and_hash_validated_before_oracle": true,
+    "manifest_contains_historical_scores": false
+  },
+  "outputs": {
+    "artifact": "experiments/attempts/140_replicated_surprisal_contrast_modes/replicated-contrast-modes.pt",
+    "construction_manifest": "experiments/attempts/140_replicated_surprisal_contrast_modes/construction-manifest.json",
+    "result": "experiments/attempts/140_replicated_surprisal_contrast_modes/result.json"
+  },
+  "no_model_loading": true,
+  "no_new_gradient_or_jvp": true,
+  "no_recovery_candidate": true,
+  "no_post_oracle_combination": true,
+  "overwrite": false,
+  "expected_runtime": "seconds to a few minutes on CPU"
+}
