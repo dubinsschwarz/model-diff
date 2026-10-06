@@ -1,0 +1,349 @@
+{
+  "format_version": 1,
+  "attempt_id": "200_superlow_one_step_descendant_pilot",
+  "scientific_question": "finite one-step continued-pretraining endpoint versus frozen Attempt132 positive linear Jg",
+  "information_policy": {
+    "historical_access_during_construction": false,
+    "same_specimen_exploratory_diagnostic": true,
+    "held_out_validation": false
+  },
+  "dataset": {
+    "repo_id": "science-of-finetuning/fineweb-1m-sample",
+    "revision": "60b53a86b84eb6559e4407b113356f56a152318f",
+    "split": "train",
+    "streaming": false
+  },
+  "selection": {
+    "shuffle_seed": 42,
+    "text_column": "text",
+    "skip_blank_text": true,
+    "character_limit": 1280,
+    "add_special_tokens": true,
+    "minimum_token_count": 128,
+    "sequence_length": 128
+  },
+  "sources": [
+    {
+      "source_id": 0,
+      "valid_rank_interval": [
+        20000,
+        24096
+      ],
+      "corpus_spec": {
+        "path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus_spec.json",
+        "sha256": "e514820e7def99e9287c32de4b1279f28f6ff6c2e09749a8dfa5d8b14c311f0f"
+      },
+      "corpus_manifest": {
+        "path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus-manifest.json",
+        "sha256": "8b3ea49228dbb106c2b8a7c849c4f27e021fa3e992800444f43e260a6b055230"
+      },
+      "raw_tensor_sha256": "4613982be77342a89b35616d68e21d9ff66d5a983af7e82cb6fa1eb159457eae"
+    },
+    {
+      "source_id": 1,
+      "valid_rank_interval": [
+        24096,
+        28192
+      ],
+      "corpus_spec": {
+        "path": "experiments/attempts/129_fresh_fineweb_low_surprisal_replication/corpus_spec.json",
+        "sha256": "67f226897e050a28f3f365504d6b1a70a33c699c80c092978b52b17346b24925"
+      },
+      "corpus_manifest": {
+        "path": "experiments/attempts/129_fresh_fineweb_low_surprisal_replication/corpus-manifest.json",
+        "sha256": "cac673711b5d610d1ebc71151bc28d49264c97db3b063ff535ab97c3ce20d4e5"
+      },
+      "raw_tensor_sha256": "36894a52fa53e8bef518fd1ecd35d0bb353b827108d38345e8526f61424ac1fa"
+    },
+    {
+      "source_id": 2,
+      "valid_rank_interval": [
+        28192,
+        36384
+      ],
+      "corpus_spec": {
+        "path": "experiments/attempts/132_expanded_fineweb_superlow_stringency/corpus_spec.json",
+        "sha256": "6813d8fafdfdd0d6bfe2f07508f4e7e371a728a242d74c5fcaa69ab66cd1bf0f"
+      },
+      "corpus_manifest": {
+        "path": "experiments/attempts/132_expanded_fineweb_superlow_stringency/corpus-manifest.json",
+        "sha256": "b351cb261e247c79ec65c89a7c9087ecba4ac505aafeaf96c39b5cf203e4ceec"
+      },
+      "raw_tensor_sha256": "23004e65dc73a564b940408b50b21f4aa64d41307e70f22f71680ec227c39cab"
+    }
+  ],
+  "ranking_manifest": {
+    "path": "experiments/attempts/132_expanded_fineweb_superlow_stringency/construction-manifest.json",
+    "sha256": "970f04f067e86be7edb83d9a30f2a44a996cef3afa606e8f821d568cbf576f97"
+  },
+  "ordered_pair_raw_int64_sha256": "8afe4d2072a49db079f83e7971c935e1f44e51e292a6a7f3b2959c3e6b6c8e22",
+  "merged_inventory": {
+    "path": "merged-model-hashes.json",
+    "sha256": "78ae3e5840d17702cb193597e5c4873fe9506e6089fbbcc020f87cedeabfdee3"
+  },
+  "probe_manifest": {
+    "path": "oracle-probe-manifest.json",
+    "sha256": "1b9c53033b0e4ebf04f26b598ff42e0e2924812ab1c1c96872f7bd9da33089ba"
+  },
+  "probe_freezer": {
+    "path": "scripts/freeze_oracle_probe.py",
+    "sha256": "f19ef67c4e184c8ce7c1acf9cdd3617e1b4a4f6cf806e9032dfda6f2871d391b"
+  },
+  "helpers": {
+    "gradient": {
+      "path": "scripts/ablation/construct_generic_gradient_rollback.py",
+      "sha256": "7715617efd829b55b4e29a0390939beaf3ca5651d38cfc138cf97e9a84847d72"
+    },
+    "readout": {
+      "path": "scripts/ablation/construct_multicorpus_raw_jg_consensus.py",
+      "sha256": "59936b928dcf942470db92debb1f2a8e41823ae1c9082803d2fdd8dc50202caa"
+    }
+  },
+  "model": {
+    "model_type": "qwen3",
+    "num_hidden_layers": 28,
+    "dtype": "float32",
+    "local_files_only": true,
+    "eval_mode": true,
+    "use_cache": false
+  },
+  "eligible_tensors": {
+    "blocks": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "module": "torch.nn.Linear",
+    "parameter": "weight",
+    "expected_matrix_count": 98,
+    "freeze_every_other_parameter": true
+  },
+  "training": {
+    "rows": 1024,
+    "batch_size": 8,
+    "prediction_tokens": 130048,
+    "accepted_updates": 1,
+    "relative_initial_step_norm": 0.00125,
+    "update_arithmetic": "cpu_float64_subtract_then_FP32_cast",
+    "amp": false,
+    "optimizer": false,
+    "momentum": false,
+    "weight_decay": false,
+    "gradient_clipping": false
+  },
+  "armijo": {
+    "c": 0.0001,
+    "factor": 0.5,
+    "max_trials": 8,
+    "acceptance": "L_trial <= L_current - c * eta_trial * gnorm**2",
+    "all_rejected": "fail_construction"
+  },
+  "probe": {
+    "full_shape": [
+      10000,
+      128
+    ],
+    "rows": [
+      0,
+      1024
+    ],
+    "sequence_length": 128,
+    "batch_size": 32,
+    "raw_tensor_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8",
+    "accumulation": "cpu_float64_batch_sum_then_divide_by_1024"
+  },
+  "readout": {
+    "block_index": 13,
+    "hidden_state_index": 14,
+    "hidden_size": 2048,
+    "verify_forward_hook": true
+  },
+  "candidate": {
+    "definition": "(A_F - A_G).to(float32).contiguous()",
+    "shape": [
+      128,
+      2048
+    ],
+    "count": 1,
+    "normalization": false,
+    "sign_selection": false,
+    "interpolation": false
+  },
+  "metric": {
+    "position_0_separate": true,
+    "primary_positions": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "secondary_positions": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127
+    ],
+    "signed_cosine": true,
+    "absolute_cosine": false
+  },
+  "barrier": "SUPERLOW_ONE_STEP_DESCENDANT_FROZEN",
+  "paths": {
+    "model_dir": "/root/model-diff-scratch/models/merged",
+    "artifact_dir": "/root/model-diff-scratch/artifacts/attempt200_superlow_one_step_descendant_pilot",
+    "construction_manifest": "experiments/attempts/200_superlow_one_step_descendant_pilot/construction-manifest.json",
+    "result": "experiments/attempts/200_superlow_one_step_descendant_pilot/result.json"
+  },
+  "evaluation": {
+    "target": "A_F - A_B; CPU float64 subtraction then FP32 cast",
+    "functional_evaluation": false,
+    "base_spec": {
+      "path": "experiments/attempts/103_privileged_base_soft_target_rollback_ceiling/spec.json",
+      "sha256": "512126df3b2078b1745c74ae6395a766808991f54ee64e1cd43a764f69eebb0c"
+    },
+    "linear_reference_path": "experiments/attempts/132_expanded_fineweb_superlow_stringency/result.json",
+    "linear_reference_sha256": "5883ce5a1b2a203ca5231bf61f14c3abfc9176c48a54fecbe23807a6ad0426da",
+    "target_raw_tensor_sha256": "4ab001c60fff4ad4f15db472436c3915b39fb5a69626a418f70c5eaaed780c5f"
+  },
+  "workload": {
+    "valid_examples_tokenized": 36384,
+    "gradient_batches": 128,
+    "line_search_batches_per_trial": 128,
+    "maximum_line_search_trials": 8,
+    "construction_probe_batches": 64,
+    "evaluation_probe_batches": 64
+  }
+}
