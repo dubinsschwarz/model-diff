@@ -1,0 +1,195 @@
+{
+  "format_version": 1,
+  "attempt_id": "202_hard_self_distill_ll_patchscope_characterization",
+  "purpose": "privileged_read_only_post_hoc_characterization_of_frozen_attempt201_endpoints",
+  "diagnostic_only": true,
+  "new_blind_claims": false,
+  "clean_heldout_validation": false,
+  "no_candidate_selection_combination_or_modification": true,
+  "fixed_vectors": [
+    "response_seed_0",
+    "response_seed_1",
+    "response_seed_2",
+    "response_seed_3",
+    "response_seed_4",
+    "response_seed_5",
+    "response_seed_6",
+    "response_seed_7",
+    "response_raw_mean",
+    "response_seed_consensus"
+  ],
+  "positions": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "primary_positions": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "top_k": 20,
+  "semantic_substrings": [
+    "cake",
+    "bake",
+    "cook",
+    "craft",
+    "precision"
+  ],
+  "target_prompts": [
+    "The topic is",
+    "This is about",
+    "The central idea is",
+    "In one word:",
+    "A concise label:",
+    "The concept:",
+    "This relates to",
+    "The underlying theme:"
+  ],
+  "logit_lens": {
+    "positive": "softmax(lm_head(model.model.norm(vector)))",
+    "negative": "softmax(lm_head(-model.model.norm(vector)))",
+    "positive_logit_cosine": "full_vocabulary_unshifted_prelens_softmax_logits",
+    "js_divergence": "natural_log_positive_probability_distributions",
+    "top_k_tie_break": "stable_vocab_index_order"
+  },
+  "patchscope": {
+    "layer_index": 13,
+    "readout": "hidden_states[14]",
+    "target_position": "original_final_prompt_token_only",
+    "patch": "additive_plus_and_minus",
+    "blind_vector_evaluation_only_scale": "per_position_l2_norm_match_to_oracle_difference",
+    "oracle_vector_scale": "native_unchanged",
+    "delta_logits": "patched_logits_minus_unpatched_baseline_logits",
+    "top_k_delta_tie_break": "stable_vocab_index_order",
+    "oracle_top_k_delta_mass": "patched_probability_mass_and_change_from_baseline_on_oracle_delta_top20_sets",
+    "oracle_top_k_delta_rank": "one_based_mean_candidate_delta_rank_of_oracle_delta_top20_sets",
+    "greedy_completion_tokens": 6,
+    "greedy_patch_direction": "plus_only",
+    "use_cache": false,
+    "add_special_tokens": false,
+    "chat_template": false,
+    "regimes": {
+      "oracle_norm_matched": [
+        "response_seed_0",
+        "response_seed_1",
+        "response_seed_2",
+        "response_seed_3",
+        "response_seed_4",
+        "response_seed_5",
+        "response_seed_6",
+        "response_seed_7",
+        "response_raw_mean",
+        "response_seed_consensus"
+      ],
+      "native_amplitude": [
+        "response_seed_0",
+        "response_seed_1",
+        "response_seed_2",
+        "response_seed_3",
+        "response_seed_4",
+        "response_seed_5",
+        "response_seed_6",
+        "response_seed_7",
+        "response_raw_mean"
+      ]
+    },
+    "native_consensus_role": "excluded_unit_consensus_magnitude_not_physically_calibrated",
+    "native_delta_logit_norm_ratio": "candidate_delta_l2_divided_by_same_sign_oracle_delta_l2",
+    "aggregate_weighting": "arithmetic_mean_across_prompts_and_positions_then_equal_weight_across_all_eight_seeds"
+  },
+  "attempt201": {
+    "spec": {
+      "path": "experiments/attempts/201_hard_self_distill_descendant_pilot/spec.json",
+      "sha256": "5a781cc138160e628da2770443f1515c69feec4fa4a2999f556191e281955eea"
+    },
+    "constructor": {
+      "path": "scripts/ablation/run_hard_self_distill_descendant_pilot.py",
+      "sha256": "f23b87d01f919eedec7cb1410af8cfadc76f4d0ab9768ab97b4b4626bc8d0b34"
+    },
+    "construction_manifest": {
+      "path": "experiments/attempts/201_hard_self_distill_descendant_pilot/construction-manifest.json",
+      "sha256": "a19d6fa160d21d9559a823bf4e65a4a71b38f64bdc4621e2108333da271bd582"
+    },
+    "candidate": {
+      "serialized_sha256": "fe81fac1ae4ef54561ee0d83996824dc8221f59c1d00d6d5ac6570fd70d0cfba",
+      "raw_sha256": {
+        "response_seed_0": "0fe63d8b6f9e8e63bdd36827044e27fb3cc6271fe3aa24a6cef28717b35c538c",
+        "response_seed_1": "afd6850e601da97adf96bdc0ef084eee6e3ee3b2b288a7fd6d2191a770120028",
+        "response_seed_2": "40cf9a55842f7715d77cf82b5df4898ebffb26cebcaebee47d9904bf3658c706",
+        "response_seed_3": "a6bd284862156b40be5c2b2c1f000b27503ff0098a20ea1dddcbe159a0995b92",
+        "response_seed_4": "80bdc32cd8bd37db63b26b91e034b0bfd5987fc3e3332e94b33163b4bc6c44ec",
+        "response_seed_5": "788b50ceb058c41536595c316924e422e8d89cfc800712906f348905786b7510",
+        "response_seed_6": "6192faf6fea067d57fb17a8bb9e916622593f3a45fa8b53d47b34e1e579d1847",
+        "response_seed_7": "dae0269135e7f4a5617a81d782a37c703d55570b42ec7133824c4957cf660db3",
+        "response_raw_mean": "6875713d17bdefb97a75b3d62a70cc79e004dc16b853f7b7c669ed730785bcb6",
+        "response_seed_consensus": "aac6aab7d3a4182e2e333746ffc6afbf49852113f80ca01a3a70b449862181f6"
+      }
+    }
+  },
+  "attempt133": {
+    "spec": {
+      "path": "experiments/attempts/133_logit_lens_patchscope_characterization/spec.json",
+      "sha256": "d9527148822344894df0c42438988255594e3fe876003b8f2f02fd2522f4ff0a"
+    },
+    "source": {
+      "path": "scripts/ablation/run_logit_lens_patchscope_characterization.py",
+      "sha256": "acbc9093183b104506477038470cf7ec4fc85ea2b2892a7bfa782ac96737a6ee"
+    }
+  },
+  "oracle_reader": {
+    "path": "scripts/read_oracle_logit_lens.py",
+    "sha256": "07fab3431f97e225624d3e8160c34e43c715f18d2ecbfa64c55ca7f624bc561c"
+  },
+  "oracle_reference": {
+    "tensor": "difference",
+    "raw_sha256": "d60789a2c06eb82dba2f2449d8665ec665d85e9f7e33fdea1f66ac79c81c159d",
+    "sample_count": 10000,
+    "candidate_probe_sample_count": 1024,
+    "reference_only": true
+  },
+  "privileged_inputs": {
+    "oracle_adl_manifest": {
+      "path": "oracle-adl-manifest.json",
+      "sha256": "affe93a1139cdaa221646fb3b9c8ec5f64b28129c42b22eae185aca5d3932b90"
+    },
+    "historical_oracle_logit_lens": {
+      "path": "oracle-logit-lens.json",
+      "sha256": "a723017455e889ee05819382e271d270b0bdf08ec6fa9813f122b8aabdcbeb35"
+    },
+    "downloaded_model_hashes": {
+      "path": "downloaded-model-hashes.json",
+      "sha256": "f449733393443970d912ef159b858e360390413012f872d7874ac2d84470593c"
+    },
+    "merged_model_hashes": {
+      "path": "merged-model-hashes.json",
+      "sha256": "78ae3e5840d17702cb193597e5c4873fe9506e6089fbbcc020f87cedeabfdee3"
+    },
+    "oracle_probe_manifest": {
+      "path": "oracle-probe-manifest.json",
+      "sha256": "1b9c53033b0e4ebf04f26b598ff42e0e2924812ab1c1c96872f7bd9da33089ba"
+    },
+    "oracle_adl_artifact": {
+      "path": "/root/model-diff-scratch/artifacts/oracle_adl/oracle_adl.pt",
+      "sha256": "339a6c09b10286369a5d10eb49e144d1819f4301e334c63930ca7c4dd3a11077"
+    }
+  },
+  "input_locations": {
+    "oracle_adl": "/root/model-diff-scratch/artifacts/oracle_adl/oracle_adl.pt",
+    "base_tokenizer_directory": "/root/model-diff-scratch/models/base",
+    "merged_checkpoint_directory": "/root/model-diff-scratch/models/merged"
+  },
+  "output": "experiments/attempts/202_hard_self_distill_ll_patchscope_characterization/result.json",
+  "result_overwrite_refusal": true,
+  "workload": {
+    "logit_lens_vectors_including_oracle": 11,
+    "logit_lens_position_readouts": 55,
+    "patchscope_model_forwards_oracle_norm_matched": 3000,
+    "patchscope_model_forwards_native_amplitude": 2728,
+    "greedy_completion_tokens": 6,
+    "no_training_or_dataset_rehydration": true
+  }
+}

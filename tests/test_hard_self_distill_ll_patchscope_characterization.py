@@ -1,0 +1,419 @@
+"""Attempt202 synthetic/static tests; never load real artifacts, data or models."""
+import ast
+import copy
+import hashlib
+import importlib.util
+import json
+from pathlib import Path
+from types import SimpleNamespace
+
+import numpy as np
+import pytest
+import torch
+
+PROJECT = Path(__file__).resolve().parents[1]
+SOURCE = PROJECT/'scripts/ablation/run_hard_self_distill_ll_patchscope_characterization.py'
+loader = importlib.util.spec_from_file_location('test202', SOURCE)
+r = importlib.util.module_from_spec(loader)
+loader.loader.exec_module(r)
+SPEC = r.load_spec()
+
+
+def test_exact_fixed_inventory_conventions_and_source_pins():
+    prior = r.read_record(SPEC['attempt133']['spec'])
+    assert r.NAMES == (*tuple(f'response_seed_{i}' for i in range(8)),
+                       'response_raw_mean', 'response_seed_consensus')
+    assert SPEC['patchscope']['regimes'] == {'oracle_norm_matched': list(r.NAMES),
+                                           'native_amplitude': list(r.NATIVE_NAMES)}
+    assert 'response_seed_consensus' not in r.NATIVE_NAMES
+    for key in ('positions', 'primary_positions', 'top_k', 'semantic_substrings', 'target_prompts', 'logit_lens'):
+        assert SPEC[key] == prior[key]
+    for key, value in prior['patchscope'].items():
+        assert SPEC['patchscope'][key] == value
+    assert SPEC['oracle_reference']['raw_sha256'] == prior['fixed_vectors'][-1]['raw_sha256']
+    assert SPEC['oracle_reference']['sample_count'] == 10000
+    assert SPEC['oracle_reference']['candidate_probe_sample_count'] == 1024
+    assert SPEC['diagnostic_only'] and not SPEC['new_blind_claims']
+    assert SPEC['no_candidate_selection_combination_or_modification']
+    for record in (*SPEC['attempt133'].values(), SPEC['oracle_reader'],
+                   SPEC['attempt201']['spec'], SPEC['attempt201']['constructor'],
+                   SPEC['attempt201']['construction_manifest']):
+        assert r.sha256_file(r.path_of(record['path'])) == record['sha256']
+    manifest = r.read_record(SPEC['attempt201']['construction_manifest'])
+    assert manifest['candidate'] == SPEC['attempt201']['candidate']
+    assert list(manifest['candidate']['raw_sha256']) == list(r.NAMES)
+    for key, record in SPEC['privileged_inputs'].items():
+        assert record['sha256'] == prior['immutable_input_sha256'][key]
+
+
+def test_isolated_readout_changes_inventory_only_and_keeps_original_module_plan():
+    a = r.configured_readout(SPEC, r.NAMES)
+    prior = r.import_pinned(SPEC['attempt133']['source'], 'test202_original133')
+    assert a.BLIND_NAMES == r.NAMES and a.VECTOR_NAMES == (*r.NAMES, r.ORACLE)
+    assert len(prior.BLIND_NAMES) == 4 and len(prior.VECTOR_NAMES) == 5
+    assert a.lens_readout.__code__.co_code == prior.lens_readout.__code__.co_code
+    assert a.patchscope_readout.__code__.co_code == prior.patchscope_readout.__code__.co_code
+    assert a.POSITIONS == (0, 1, 2, 3, 4) and a.PRIMARY_POSITIONS == (1, 2, 3, 4)
+    assert a.NEW_TOKENS == 6 and a.LAYER_INDEX == 13
+
+
+class Tokenizer:
+    terms = ('cake', 'bake', 'cook', 'craft', 'precision')
+    def __call__(self, prompt, *, add_special_tokens, return_tensors):
+        assert prompt in SPEC['target_prompts'] and not add_special_tokens and return_tensors == 'pt'
+        return SimpleNamespace(input_ids=torch.tensor([[2, 3]], dtype=torch.int64))
+    def convert_ids_to_tokens(self, token):
+        return self.terms[token] if token < 5 else 'token'+str(token)
+    def decode(self, ids, *, skip_special_tokens, clean_up_tokenization_spaces):
+        assert not skip_special_tokens and not clean_up_tokenization_spaces
+        return ' '.join(self.convert_ids_to_tokens(int(i)) for i in ids)
+
+
+class ToyModel(torch.nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.model = torch.nn.Module()
+        self.model.layers = torch.nn.ModuleList([torch.nn.Identity() for _ in range(28)])
+        self.model.norm = torch.nn.LayerNorm(2)
+        self.lm_head = torch.nn.Linear(2, 40)
+        with torch.no_grad():
+            self.lm_head.weight.copy_(torch.linspace(-2., 3., 80).reshape(40, 2))
+            self.lm_head.bias.copy_(torch.linspace(-.2, .2, 40))
+    def forward(self, input_ids, use_cache):
+        assert not use_cache and not self.training and not torch.is_grad_enabled()
+        hidden = torch.stack((torch.sin(input_ids.float()), torch.cos(input_ids.float())), dim=-1)
+        for layer in self.model.layers:
+            hidden = layer(hidden)
+        # Mix earlier positions so original-final-token patches affect later completions.
+        return SimpleNamespace(logits=self.lm_head(hidden.cumsum(dim=1)))
+
+
+def toy_vectors():
+    vectors = {name: torch.tensor([[float(i+1)*(1+pos*.2),
+        (-1.)**i*float(i+1)*.3*(1+pos*.2)] for pos in range(5)], dtype=torch.float32)
+        for i, name in enumerate(r.SEEDS)}
+    stack = torch.stack(list(vectors.values())).double()
+    vectors['response_raw_mean'] = stack.mean(0).float().contiguous()
+    vectors['response_seed_consensus'] = (stack/torch.linalg.vector_norm(stack, dim=2, keepdim=True)).mean(0).float().contiguous()
+    vectors[r.ORACLE] = torch.tensor([[.7*(1+.1*pos), 1.2*(1+.1*pos)] for pos in range(5)])
+    return vectors
+
+
+def top_token_records(probs, tokenizer, k, _torch):
+    assert k == 20
+    ids = np.argsort(-probs.numpy(), kind='stable')[:k]
+    return [{'token_id': int(i), 'probability': float(probs[i]),
+             'token': tokenizer.convert_ids_to_tokens(int(i)),
+             'decoded': tokenizer.decode([i], skip_special_tokens=False,
+                                         clean_up_tokenization_spaces=False)} for i in ids]
+
+
+def test_full_vocabulary_lens_formula_metrics_and_all_ten_vectors():
+    a = r.configured_readout(SPEC, r.NAMES)
+    vectors, model, tokenizer = toy_vectors(), ToyModel().eval(), Tokenizer()
+    before = {name: value.clone() for name, value in vectors.items()}
+    # Deliberately non-odd norm to catch negation before norm.
+    norm = lambda value: value + 3
+    result = a.lens_readout(vectors, norm, model.lm_head, tokenizer, torch,
+                           SimpleNamespace(top_token_records=top_token_records))
+    assert list(result['tokens']) == [*r.NAMES, r.ORACLE]
+    assert list(result['oracle_similarity']) == list(r.NAMES)
+    for name in r.NAMES:
+        per = []
+        for pos in a.POSITIONS:
+            candidate = a.lens_distribution(vectors[name][pos], norm, model.lm_head, torch)
+            oracle = a.lens_distribution(vectors[r.ORACLE][pos], norm, model.lm_head, torch)
+            assert torch.equal(candidate['negative_logits'], model.lm_head(-norm(vectors[name][pos])))
+            arrays = lambda dist: {key: value.detach().numpy() for key, value in dist.items()}
+            expected = a.lens_metrics(arrays(candidate), arrays(oracle))
+            group = result['oracle_similarity'][name]
+            assert (group['position_0'] if pos == 0 else group['positions_1_4'][str(pos)]) == expected
+            tokens = result['tokens'][name][str(pos)]
+            assert len(tokens['top20_positive']) == len(tokens['top20_negative']) == 20
+            assert set(tokens['semantic_hits']) == set(SPEC['semantic_substrings'])
+            assert set(tokens['full_vocab_hashes']) == set(candidate)
+            if pos:
+                per.append(expected)
+        assert group['mean_positions_1_4'] == a.mean_dict(per, tuple(per[0]))
+    assert all(torch.equal(vectors[name], value) for name, value in before.items())
+
+
+@pytest.fixture(scope='module')
+def patchscope_outputs():
+    vectors, model, tokenizer = toy_vectors(), ToyModel().eval(), Tokenizer()
+    before_vectors = {name: value.clone() for name, value in vectors.items()}
+    before_model = {name: value.clone() for name, value in model.state_dict().items()}
+    outputs = {mode: r.patchscope_mode(SPEC, vectors, mode, model, tokenizer, torch) for mode in r.MODES}
+    assert all(torch.equal(vectors[name], value) for name, value in before_vectors.items())
+    assert all(torch.equal(model.state_dict()[name], value) for name, value in before_model.items())
+    assert all(not layer._forward_hooks for layer in model.model.layers)
+    return vectors, model, tokenizer, outputs
+
+
+def test_norm_matched_patchscope_exact_attempt133_metrics_and_qualitative_parity(patchscope_outputs):
+    vectors, model, tokenizer, outputs = patchscope_outputs
+    a = r.configured_readout(SPEC, r.NAMES)
+    expected = a.patchscope_readout(vectors, model, tokenizer, torch)
+    actual = outputs['oracle_norm_matched']
+    for key in ('baselines', 'conditions', 'greedy_plus_completions', 'known_semantic_hits'):
+        assert actual[key] == expected[key]
+    for name in r.NAMES:
+        for sign in ('plus', 'minus'):
+            for group in ('position_0_mean_prompts', 'mean_positions_1_4_and_prompts'):
+                prior = expected['oracle_similarity'][name][sign][group]
+                assert {key: actual['oracle_similarity'][name][sign][group][key] for key in prior} == prior
+    assert actual['model_forward_count'] == SPEC['workload']['patchscope_model_forwards_oracle_norm_matched']
+
+
+def test_native_vectors_unchanged_no_consensus_both_signs_norm_ratios_and_completions(patchscope_outputs):
+    vectors, model, tokenizer, outputs = patchscope_outputs
+    native, a = outputs['native_amplitude'], r.configured_readout(SPEC, r.NATIVE_NAMES)
+    assert native['fixed_candidate_inventory'] == list(r.NATIVE_NAMES)
+    assert list(native['conditions']) == [*r.NATIVE_NAMES, r.ORACLE]
+    assert 'response_seed_consensus' not in native['conditions']
+    assert native['model_forward_count'] == SPEC['workload']['patchscope_model_forwards_native_amplitude']
+    prompt = a.PROMPTS[0]
+    ids = tokenizer(prompt, add_special_tokens=False, return_tensors='pt').input_ids
+    baseline = a.next_logits(model, ids, None, None, +1, torch).numpy().astype(np.float64)
+    for name in r.NATIVE_NAMES:
+        for pos in a.POSITIONS:
+            assert set(native['conditions'][name][str(pos)]) == set(a.PROMPTS)
+            for sign, label in ((1, 'plus'), (-1, 'minus')):
+                delta = a.next_logits(model, ids, 1, vectors[name][pos], sign, torch).numpy().astype(np.float64)-baseline
+                oracle = a.next_logits(model, ids, 1, vectors[r.ORACLE][pos], sign, torch).numpy().astype(np.float64)-baseline
+                metrics = native['per_prompt_oracle_similarity'][name][str(pos)][label][0]
+                assert metrics['delta_logit_norm_ratio_to_oracle'] == pytest.approx(np.linalg.norm(delta)/np.linalg.norm(oracle))
+                assert metrics['delta_logit_cosine'] == pytest.approx(a.cosine(delta, oracle))
+            if pos:
+                completion = native['greedy_plus_completions'][name][str(pos)][prompt]
+                assert completion == a.greedy_completion(model, ids, vectors[name][pos], tokenizer, torch)
+                assert len(completion['token_ids']) == 6
+
+
+def test_hook_block13_additive_sign_and_greedy_original_token_index(monkeypatch):
+    a = r.configured_readout(SPEC, r.NAMES)
+    hidden = torch.arange(12, dtype=torch.float32).reshape(1, 3, 4)
+    vector = torch.tensor([1., 2., 3., 4.])
+    for sign in (1, -1):
+        patched, rest = a.patch_hidden_output((hidden, 'preserved'), 1, vector, sign)
+        assert rest == 'preserved' and torch.equal(patched[:, [0, 2]], hidden[:, [0, 2]])
+        assert torch.equal(patched[:, 1], hidden[:, 1]+sign*vector)
+    calls = []
+    def next_logits(model, ids, index, vector, sign, torch):
+        calls.append((ids.shape[1], index, sign))
+        return torch.arange(40, dtype=torch.float32)
+    monkeypatch.setattr(a, 'next_logits', next_logits)
+    a.greedy_completion(None, torch.tensor([[1, 2]]), torch.ones(2), Tokenizer(), torch)
+    assert calls == [(length, 1, 1) for length in range(2, 8)]
+    with pytest.raises(ValueError):
+        a.patch_hidden_output(hidden, 1, vector, 0)
+
+
+def test_seed_distribution_signed_no_best_seed_and_separate_position_zero():
+    values = [-.4, -.2, 0., .1, .2, .3, .4, .5]
+    summaries = {name: {sign: {
+        'position_0_mean_prompts': {'delta_logit_cosine': -.9},
+        'mean_positions_1_4_and_prompts': {'delta_logit_cosine': values[i] if i < 8 else .01}}
+        for sign in ('plus', 'minus')} for i, name in enumerate(r.NAMES)}
+    result = r.seed_summaries({'oracle_similarity': summaries})
+    for sign in ('plus', 'minus'):
+        primary = result[sign]['mean_positions_1_4_and_prompts']
+        stats = primary['delta_logit_cosine_across_eight_seeds']
+        assert stats == {'mean': pytest.approx(.1125), 'median': pytest.approx(.15),
+            'min': -.4, 'max': .5, 'count_positive': 5, 'seed_values_in_fixed_order': values}
+        assert primary['raw_mean']['delta_logit_cosine'] == .01
+        assert primary['unit_consensus']['delta_logit_cosine'] == .01
+        assert result[sign]['position_0_mean_prompts']['delta_logit_cosine_across_eight_seeds']['count_positive'] == 0
+    with pytest.raises(ValueError):
+        r.distribution(values[:-1])
+
+
+def test_signed_patch_metrics_do_not_flip_negative_alignment_or_rescale():
+    a = r.configured_readout(SPEC, r.NAMES)
+    oracle = np.linspace(-2., 3., 40)
+    candidate = -oracle*.001
+    probs = np.full(40, 1/40)
+    result = r.patch_metrics_with_norms(a.patch_metrics, candidate, oracle, probs, probs)
+    assert result['delta_logit_cosine'] == pytest.approx(-1.)
+    assert result['delta_logit_norm_ratio_to_oracle'] == pytest.approx(.001)
+    np.testing.assert_array_equal(candidate, -oracle*.001)
+    # Undefined zero-norm cosine retains Attempt133's explicit failure behavior.
+    with pytest.raises(ValueError, match='Zero/nonfinite'):
+        r.patch_metrics_with_norms(a.patch_metrics, np.zeros(40), oracle, probs, probs)
+
+
+@pytest.mark.parametrize('changed', ['prompt', 'patch', 'lens', 'oracle_pin', 'oracle_raw_hash', 'reader_pin'])
+def test_changed_attempt133_method_or_oracle_reference_rejected(monkeypatch, changed):
+    spec = copy.deepcopy(SPEC)
+    prior = r.read_record(SPEC['attempt133']['spec'])
+    monkeypatch.setattr(r, 'read_record', lambda record: prior)
+    monkeypatch.setattr(r, 'require_hash', lambda *args: None)
+    if changed == 'prompt':
+        spec['target_prompts'][0] = 'Another prompt'
+    elif changed == 'patch':
+        spec['patchscope']['layer_index'] = 14
+    elif changed == 'lens':
+        spec['logit_lens']['negative'] = 'negate_before_norm'
+    elif changed == 'oracle_pin':
+        spec['privileged_inputs']['oracle_adl_artifact']['sha256'] = '0'*64
+    elif changed == 'oracle_raw_hash':
+        spec['oracle_reference']['raw_sha256'] = '0'*64
+    else:
+        spec['oracle_reader']['sha256'] = '0'*64
+    with pytest.raises(ValueError):
+        r.validate_privileged_inputs(spec)
+
+
+@pytest.fixture
+def frozen_inputs(monkeypatch, tmp_path):
+    spec = copy.deepcopy(SPEC)
+    candidates = {name: torch.full((128, 2048), float(i+1)) for i, name in enumerate(r.NAMES)}
+    # Import definitions only; its frozen audit is mocked with synthetic artifacts.
+    c = r.import_pinned(SPEC['attempt201']['constructor'], 'test202_blind_definitions')
+    candidate_record = {'serialized_sha256': 'a'*64,
+        'raw_sha256': {name: c.b.raw_hash(value) for name, value in candidates.items()}}
+    manifest = {'candidate': candidate_record, 'spec_sha256': 'b'*64, 'constructor_sha256': 'c'*64}
+    def write(name, value):
+        path = tmp_path/name
+        path.write_text(json.dumps(value))
+        return {'path': str(path), 'sha256': r.sha256_file(path)}
+    spec_pin = write('blind-spec.json', {'synthetic': True})
+    manifest['spec_sha256'] = spec_pin['sha256']
+    manifest_pin = write('construction-manifest.json', manifest)
+    spec['attempt201'] = {'spec': spec_pin, 'constructor': {'path': 'synthetic.py', 'sha256': 'c'*64},
+                          'construction_manifest': manifest_pin, 'candidate': copy.deepcopy(candidate_record)}
+    receipt = {'construction_manifest_sha256': manifest_pin['sha256']}
+    events = []
+    def audit(_):
+        events.append('complete_frozen_audit')
+        return candidates, {}, manifest, receipt
+    fake = SimpleNamespace(b=c.b, load_spec=lambda: {'synthetic': True}, validate_frozen=audit)
+    monkeypatch.setattr(r, 'import_pinned', lambda *args: fake)
+    return spec, candidates, manifest, receipt, events, fake
+
+
+def test_frozen_audit_completes_before_enablement(frozen_inputs, monkeypatch):
+    spec, candidates, _, receipt, events, fake = frozen_inputs
+    monkeypatch.setattr(r, 'log', lambda message: events.append('enabled'))
+    loaded, constructor, checked = r.validate_attempt201(spec)
+    assert loaded is candidates and constructor is fake and checked is receipt
+    assert events == ['complete_frozen_audit', 'enabled']
+
+
+@pytest.mark.parametrize('name', r.NAMES)
+def test_every_candidate_raw_hash_is_validated_before_analysis(frozen_inputs, name):
+    spec, candidates, _, _, _, _ = frozen_inputs
+    candidates[name][0, 0] += 1
+    with pytest.raises(ValueError, match='raw candidate hash mismatch'):
+        r.validate_attempt201(spec)
+
+
+@pytest.mark.parametrize('changed', ['spec', 'manifest_file', 'artifact_pin', 'receipt', 'shape', 'dtype'])
+def test_changed_frozen_provenance_or_tensor_rejected(frozen_inputs, changed):
+    spec, candidates, _, receipt, _, _ = frozen_inputs
+    if changed in ('spec', 'manifest_file'):
+        record = spec['attempt201']['spec' if changed == 'spec' else 'construction_manifest']
+        Path(record['path']).write_text('{}')
+    elif changed == 'artifact_pin':
+        spec['attempt201']['candidate']['serialized_sha256'] = 'd'*64
+    elif changed == 'receipt':
+        receipt['construction_manifest_sha256'] = 'd'*64
+    elif changed == 'shape':
+        candidates[r.NAMES[0]] = candidates[r.NAMES[0]][:5]
+    else:
+        candidates[r.NAMES[0]] = candidates[r.NAMES[0]].double()
+    with pytest.raises(ValueError):
+        r.validate_attempt201(spec)
+
+
+def test_failed_freeze_prevents_all_analysis_and_output(monkeypatch, tmp_path):
+    spec = copy.deepcopy(SPEC)
+    spec['output'] = str(tmp_path/'result.json')
+    monkeypatch.setattr(r, 'load_spec', lambda: spec)
+    def fail(_):
+        raise ValueError('Failed freeze')
+    monkeypatch.setattr(r, 'validate_attempt201', fail)
+    for function in ('validate_privileged_inputs', 'load_oracle_reader', 'configured_readout', 'patchscope_mode'):
+        monkeypatch.setattr(r, function, lambda *args: pytest.fail('Analysis before valid freeze'))
+    with pytest.raises(ValueError, match='Failed freeze'):
+        r.run('cpu')
+    assert not Path(spec['output']).exists()
+
+
+@pytest.mark.parametrize('mutation', [False, True])
+def test_synthetic_run_publication_and_post_analysis_hash_guard(frozen_inputs, monkeypatch, tmp_path, mutation):
+    spec, candidates, _, _, events, _ = frozen_inputs
+    spec['output'] = str(tmp_path/'result.json')
+    monkeypatch.setattr(r, 'load_spec', lambda: spec)
+    def privileged(_):
+        assert 'complete_frozen_audit' in events
+        events.append('privileged_provenance')
+        return {'historical': 'synthetic'}
+    monkeypatch.setattr(r, 'validate_privileged_inputs', privileged)
+    provenance = {key: 'synthetic' for key in ('base', 'fine_tuned', 'downloaded_model_hashes_sha256',
+        'merged_model_hashes_sha256', 'oracle_probe_manifest_sha256', 'oracle_adl_manifest_sha256', 'oracle_adl_sha256')}
+    oracle = torch.ones((128, 2048), dtype=torch.float32)
+    model = SimpleNamespace(model=SimpleNamespace(layers=[None]*28))
+    model.to = model.eval = model.requires_grad_ = lambda *args: model
+    def load_model(*args):
+        events.append('model')
+        return model, object(), object(), object()
+    reader = SimpleNamespace(verify_inputs_before_loading=lambda *args: provenance,
+        load_and_validate_oracle=lambda *args: {'difference': oracle},
+        load_local_model_and_tokenizer=load_model, sha256_raw_float32_tensor=lambda *args: 'a'*64)
+    monkeypatch.setattr(r, 'load_oracle_reader', lambda _: reader)
+    def lens(*args):
+        events.append('lens')
+        return {'synthetic': 'lens'}
+    a = SimpleNamespace(validate_tensor=lambda value, *args: value, lens_readout=lens,
+                        validate_historical_oracle_lens=lambda *args: events.append('historical_lens_validated'))
+    monkeypatch.setattr(r, 'configured_readout', lambda *args: a)
+    def patchscope(_spec, vectors, mode, *args):
+        events.append(mode)
+        names = r.NAMES if mode == 'oracle_norm_matched' else r.NATIVE_NAMES
+        if mutation and mode == 'native_amplitude':
+            vectors[r.SEEDS[0]][0, 0] += 1
+        return {'oracle_similarity': {name: {sign: {
+            'position_0_mean_prompts': {'delta_logit_cosine': -.2},
+            'mean_positions_1_4_and_prompts': {'delta_logit_cosine': .2,
+                'delta_logit_norm_ratio_to_oracle': .001}}
+            for sign in ('plus', 'minus')} for name in names}}
+    monkeypatch.setattr(r, 'patchscope_mode', patchscope)
+    if mutation:
+        with pytest.raises(ValueError, match='raw candidate hash mismatch'):
+            r.run('cpu')
+        assert not Path(spec['output']).exists()
+    else:
+        result = r.run('cpu')
+        assert events.index('complete_frozen_audit') < events.index('model') < events.index('lens')
+        assert events.index('lens') < events.index('oracle_norm_matched') < events.index('native_amplitude')
+        assert events.count('complete_frozen_audit') == 2
+        assert result['fixed_candidate_inventory'] == list(r.NAMES)
+        assert result['native_unit_consensus_excluded'] is True
+        assert list(result['native_seed_and_raw_mean_delta_logit_scores']) == list(r.NATIVE_NAMES)
+        stats = result['norm_matched_seed_distributions']['plus']['mean_positions_1_4_and_prompts']
+        assert stats['delta_logit_cosine_across_eight_seeds']['count_positive'] == 8
+        assert json.loads(Path(spec['output']).read_text()) == result
+        with pytest.raises(ValueError, match='Output already exists'):
+            r.run('cpu')
+
+
+def test_output_refusal_and_static_read_only_flow(tmp_path):
+    output = tmp_path/'result.json'
+    output.write_text('preserved')
+    with pytest.raises(ValueError, match='already exists'):
+        r.require_output_absent(output)
+    output.unlink()
+    output.symlink_to(tmp_path/'absent')
+    with pytest.raises(ValueError, match='already exists'):
+        r.require_output_absent(output)
+    source = SOURCE.read_text()
+    tree = ast.parse(source)
+    run = next(node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == 'run')
+    code = ast.get_source_segment(source, run)
+    assert code.index('validate_attempt201(spec)') < code.index('validate_privileged_inputs(spec)')
+    assert code.index('validate_attempt201(spec)') < code.index('load_oracle_reader(spec)') < code.index('load_local_model_and_tokenizer(')
+    assert code.rindex('validate_candidate_hashes(') < code.index("output.open('x'")
+    assert ".backward(" not in source and 'train_seed(' not in source and 'torch.save(' not in source
+    assert 'response_seed_consensus' not in source.split("if mode == 'native_amplitude':")[1].split('original_next')[0]
+    assert 'attempt201' not in code.split("output.open('x'")[1]
