@@ -1,0 +1,561 @@
+{
+  "format_version": 1,
+  "attempt_id": "136_privileged_residual_disagreement_patchscope",
+  "purpose": "privileged_missing_oracle_residual_disagreement_subspace_and_patchscope_diagnostic",
+  "expected_prior_head_commit": "046fda47a296667bac2fbd47311fb44b810426be",
+  "same_specimen_exploratory_method_development": true,
+  "privileged_diagnostic_only": true,
+  "clean_heldout_validation": false,
+  "no_new_candidate_constructed": true,
+  "corpus_order": [
+    "fineweb",
+    "wikitext103_raw",
+    "tinystories",
+    "arxiv_document",
+    "cc_news",
+    "pg19",
+    "codeparrot_clean",
+    "ultrachat"
+  ],
+  "joint_view_order": [
+    "full:fineweb",
+    "full:wikitext103_raw",
+    "full:tinystories",
+    "full:arxiv_document",
+    "full:cc_news",
+    "full:pg19",
+    "full:codeparrot_clean",
+    "full:ultrachat",
+    "low:fineweb",
+    "low:wikitext103_raw",
+    "low:tinystories",
+    "low:arxiv_document",
+    "low:cc_news",
+    "low:pg19",
+    "low:codeparrot_clean",
+    "low:ultrachat"
+  ],
+  "files": {
+    "attempt100": {
+      "spec": {
+        "path": "experiments/attempts/100_diverse8_raw_jg_consensus_prefix0_13/spec.json",
+        "sha256": "a10b513387635cd599971b10a3c7614a7a18483db7b12f9058898c417101db12"
+      },
+      "source": {
+        "path": "scripts/ablation/construct_attempt100_diverse8_consensus.py",
+        "sha256": "c5109e6dcdae0234c42aace7b9f9bf19b9563d9b0b289342bba52c32122bac0a"
+      },
+      "construction_manifest": {
+        "path": "experiments/attempts/100_diverse8_raw_jg_consensus_prefix0_13/construction-manifest.json",
+        "sha256": "64c4d3ef379fc02f6132d6e3197632e7bd5154398ee123e5ca688be9d5c68546"
+      }
+    },
+    "attempt118_context_only": {
+      "spec": {
+        "path": "experiments/attempts/118_postoracle_cross_corpus_stability_projection_diagnostic/spec.json",
+        "sha256": "79bd698c00a73a34e89e7dc77e84ea953d77165b98700a22a22adcca95b190ed"
+      },
+      "source": {
+        "path": "scripts/ablation/diagnose_cross_corpus_stability_projection.py",
+        "sha256": "d47ce5eafb9cde32764258367f4fc70903d7c93c79aab2bbba437ddd4fc6e7b9"
+      },
+      "result": {
+        "path": "experiments/attempts/118_postoracle_cross_corpus_stability_projection_diagnostic/result.json",
+        "sha256": "04f829ce97be5472dced84a004d2cf9e487ec003bde8271d53c382b02534210d"
+      }
+    },
+    "attempt133": {
+      "spec": {
+        "path": "experiments/attempts/133_logit_lens_patchscope_characterization/spec.json",
+        "sha256": "d9527148822344894df0c42438988255594e3fe876003b8f2f02fd2522f4ff0a"
+      },
+      "source": {
+        "path": "scripts/ablation/run_logit_lens_patchscope_characterization.py",
+        "sha256": "acbc9093183b104506477038470cf7ec4fc85ea2b2892a7bfa782ac96737a6ee"
+      },
+      "result": {
+        "path": "experiments/attempts/133_logit_lens_patchscope_characterization/result.json",
+        "sha256": "265702b62255e2c0a1413d54888b9a80e7df80812b691685dffd67a36f865c88"
+      },
+      "historical_lens": {
+        "path": "oracle-logit-lens.json",
+        "sha256": "a723017455e889ee05819382e271d270b0bdf08ec6fa9813f122b8aabdcbeb35"
+      },
+      "historical_lens_source": {
+        "path": "scripts/read_oracle_logit_lens.py",
+        "sha256": "07fab3431f97e225624d3e8160c34e43c715f18d2ecbfa64c55ca7f624bc561c"
+      }
+    },
+    "attempt134": {
+      "spec": {
+        "path": "experiments/attempts/134_diverse8_low_surprisal_consensus/spec.json",
+        "sha256": "bd7ffc4f3c1e9213ab5f15f2edf97f08ad098c05735024b6dccf1609bbeb22b1"
+      },
+      "source": {
+        "path": "scripts/ablation/run_diverse8_low_surprisal_consensus.py",
+        "sha256": "606492768846f1473914661f8c8c1e714c8317234c6623f964f14974d30ee8d7"
+      },
+      "construction_manifest": {
+        "path": "experiments/attempts/134_diverse8_low_surprisal_consensus/construction-manifest.json",
+        "sha256": "d928d80c08acee5eae78ff1439c42a0d16048726c89a50d7af542dfc5f36c99a"
+      },
+      "result": {
+        "path": "experiments/attempts/134_diverse8_low_surprisal_consensus/result.json",
+        "sha256": "392f46182442f2ade96f4bc5d083dd7744091e4c18f3eede1e328dd9b3e9ef9e"
+      }
+    },
+    "attempt135_context_only": {
+      "spec": {
+        "path": "experiments/attempts/135_fixed_16view_diverse_consensus/spec.json",
+        "sha256": "d5dbfcd8f6fb02f38c3fdf30592b18e98153d678da27b7b53c16c3beb77e5efb"
+      },
+      "source": {
+        "path": "scripts/ablation/run_fixed_16view_diverse_consensus.py",
+        "sha256": "c6ad967e52bb536654cc57e17473c58c67b4d9d2943fd4b31e2c190864488473"
+      },
+      "construction_manifest": {
+        "path": "experiments/attempts/135_fixed_16view_diverse_consensus/construction-manifest.json",
+        "sha256": "c3e5081d091d3114313423dcb1e373f05697a4b29ebeb405297f5c73ffea5358"
+      },
+      "result": {
+        "path": "experiments/attempts/135_fixed_16view_diverse_consensus/result.json",
+        "sha256": "06297d8eaae1c47c1d9d0a7345566fc746abd0ad8399cf5560fdc9278531eba3"
+      }
+    },
+    "oracle_manifest": {
+      "path": "oracle-adl-manifest.json",
+      "sha256": "affe93a1139cdaa221646fb3b9c8ec5f64b28129c42b22eae185aca5d3932b90"
+    }
+  },
+  "artifacts": {
+    "attempt100": {
+      "path": "/root/model-diff-scratch/artifacts/attempt100_diverse8_raw_jg_consensus/responses.pt",
+      "serialized_sha256": "ce32f037d594a45126d72f88ffcf1dfef49996bc6152aeb431f07851c50d3872",
+      "tensor_order": [
+        "merged_mean",
+        "response_fineweb",
+        "response_wikitext103_raw",
+        "response_tinystories",
+        "response_arxiv_document",
+        "response_cc_news",
+        "response_pg19",
+        "response_codeparrot_clean",
+        "response_ultrachat",
+        "consensus_response_8"
+      ],
+      "raw_tensors_sha256": {
+        "merged_mean": "0f5cb336c4c54341734189bea5e2318e6aa292fed487334f68fbdd0cd8eca796",
+        "response_fineweb": "00d0d8873df90e4b7c3e8799e0e019d3f5b8d7fee0d9aa796370849ff69ec5e5",
+        "response_wikitext103_raw": "3d81d1479c0808868c78e5b251f329eb22143ccac16a615cabcb0874a0e15e3f",
+        "response_tinystories": "4ea5f0006ab442c500ee196f3bd9cff6d5f7fe7325746e0de97ba215e54ce123",
+        "response_arxiv_document": "221d1a89dd4ba20bf26d57a3c8ceffc4d67950ece81b8436d75bd77cbd11f963",
+        "response_cc_news": "342f442c8dd5f0a9af95702479624abab0f1b1c424d18a8ff96314bf9a2f4ed4",
+        "response_pg19": "cddef2b4f5acecdfd48e12ff02e31d367637ab2b69da7a88c9cf6faf171c8672",
+        "response_codeparrot_clean": "d4630da18a86faabc26a533cbde9d6537f24251d5e272773d4f1340800ef9282",
+        "response_ultrachat": "7b98750fd507e7a5e3c794fbb9e93d8af1b687a8acb2d6a2005ce414bacea115",
+        "consensus_response_8": "d8ae597ebeb6495dbb9825372c99ec203db47ece85f0f5018546efa2c1a1ac26"
+      }
+    },
+    "attempt134": {
+      "path": "/workspace/model-diff/experiments/attempts/134_diverse8_low_surprisal_consensus/candidate.pt",
+      "serialized_sha256": "055dc78ce83d8ad01cc04e647efba0138032efb9083c10d00efc4855b2573482",
+      "tensor_order": [
+        "response_low_fineweb",
+        "response_low_wikitext103_raw",
+        "response_low_tinystories",
+        "response_low_arxiv_document",
+        "response_low_cc_news",
+        "response_low_pg19",
+        "response_low_codeparrot_clean",
+        "response_low_ultrachat",
+        "low_surprisal_consensus_8"
+      ],
+      "raw_tensors_sha256": {
+        "response_low_fineweb": "7c8b4386cdb55d64ac82b038f711a046b748590b411197311550485b7329c64b",
+        "response_low_wikitext103_raw": "4114ded07e1dbcd675634cfe357f42dbd091f0bed208e13491a61117b09d5db7",
+        "response_low_tinystories": "d05a54fa466354e86a3edad19cdb89239d809df22b11756b1a41c5a8116ee2eb",
+        "response_low_arxiv_document": "64a8e1b57848de5436256a8b6dea934dc4a1dc66e91f0ff4053fe5e76d2fa493",
+        "response_low_cc_news": "6a32c202cb018d18056ca616f90d0c912d7f4cb8b7f46309ffc3be9a67ed15a4",
+        "response_low_pg19": "1a6de7ecd9d84f9840302b8d4a81fb74a37a5e16363137281122320e59bcbdaa",
+        "response_low_codeparrot_clean": "ce865c1f0d4df0241ea86075381da9b6c4783c56681596358f8f6fbf6b084ea2",
+        "response_low_ultrachat": "353ee2aa2d2ce74134f924bd1c7eed55aeabd3ecdbe8828ef99ca0c60366623d",
+        "low_surprisal_consensus_8": "a7adb5a0556df684790afab2e45f647b1d2cdd9c5fa71d1d71f5d09e44bd869a"
+      }
+    },
+    "oracle": {
+      "path": "/root/model-diff-scratch/artifacts/oracle_adl/oracle_adl.pt",
+      "serialized_sha256": "339a6c09b10286369a5d10eb49e144d1819f4301e334c63930ca7c4dd3a11077",
+      "difference_raw_sha256": "d60789a2c06eb82dba2f2449d8665ec665d85e9f7e33fdea1f66ac79c81c159d"
+    }
+  },
+  "attempt133_provenance": {
+    "immutable_input_sha256": {
+      "attempt132": {
+        "spec": "b54399eedceceb381b7b536a61cae17b81cea90cc5aeb927b10d0f4be66a4c31",
+        "source": "e98f5670704d33d14c7cd7eb899db327a006ac09cb90a53a1a0efba19f00410c",
+        "construction_manifest": "970f04f067e86be7edb83d9a30f2a44a996cef3afa606e8f821d568cbf576f97",
+        "candidate": "ca0a6f8f39285104e8dab95c82fd3284a5c42bed8bff5e0f6320afa00d890ecd",
+        "result": "5883ce5a1b2a203ca5231bf61f14c3abfc9176c48a54fecbe23807a6ad0426da"
+      },
+      "attempt131": {
+        "spec": "b7fa100677dc86c0c382357daa9f6b53349c40f5a9888a769c86dde338e972c5",
+        "source": "2b4575eaee52535f2672a8a72ebca3d42e4328b6905c8cc033f52cd6c2941c2d",
+        "construction_manifest": "a54b83d21c43a1eaf0e61a82c50dd3140b1aeac57cb34223c7d9b17e7cac6d2c",
+        "candidate": "e23e1bae423ff019220fa2b4841d97e0abc5618f90b3670a478b3b8102e8df9a",
+        "result": "3692fbe6e14c6656b828ff867d131245e7e41ef79256abc355e7d3ed718a0ca4"
+      },
+      "attempt100": {
+        "spec": "a10b513387635cd599971b10a3c7614a7a18483db7b12f9058898c417101db12",
+        "source": "c5109e6dcdae0234c42aace7b9f9bf19b9563d9b0b289342bba52c32122bac0a",
+        "construction_manifest": "64c4d3ef379fc02f6132d6e3197632e7bd5154398ee123e5ca688be9d5c68546",
+        "responses_artifact": "ce32f037d594a45126d72f88ffcf1dfef49996bc6152aeb431f07851c50d3872"
+      },
+      "oracle_adl_manifest": "affe93a1139cdaa221646fb3b9c8ec5f64b28129c42b22eae185aca5d3932b90",
+      "oracle_adl_artifact": "339a6c09b10286369a5d10eb49e144d1819f4301e334c63930ca7c4dd3a11077",
+      "historical_oracle_logit_lens": "a723017455e889ee05819382e271d270b0bdf08ec6fa9813f122b8aabdcbeb35",
+      "historical_oracle_logit_lens_source": "07fab3431f97e225624d3e8160c34e43c715f18d2ecbfa64c55ca7f624bc561c",
+      "downloaded_model_hashes": "f449733393443970d912ef159b858e360390413012f872d7874ac2d84470593c",
+      "merged_model_hashes": "78ae3e5840d17702cb193597e5c4873fe9506e6089fbbcc020f87cedeabfdee3",
+      "oracle_probe_manifest": "1b9c53033b0e4ebf04f26b598ff42e0e2924812ab1c1c96872f7bd9da33089ba"
+    },
+    "input_locations": {
+      "attempt132_directory": "experiments/attempts/132_expanded_fineweb_superlow_stringency",
+      "attempt131_directory": "experiments/attempts/131_low_surprisal_stringency",
+      "attempt100_directory": "experiments/attempts/100_diverse8_raw_jg_consensus_prefix0_13",
+      "attempt100_responses": "/root/model-diff-scratch/artifacts/attempt100_diverse8_raw_jg_consensus/responses.pt",
+      "oracle_adl": "/root/model-diff-scratch/artifacts/oracle_adl/oracle_adl.pt",
+      "base_tokenizer_directory": "/root/model-diff-scratch/models/base",
+      "merged_checkpoint_directory": "/root/model-diff-scratch/models/merged"
+    },
+    "logit_lens": {
+      "positive": "softmax(lm_head(model.model.norm(vector)))",
+      "negative": "softmax(lm_head(-model.model.norm(vector)))",
+      "positive_logit_cosine": "full_vocabulary_unshifted_prelens_softmax_logits",
+      "js_divergence": "natural_log_positive_probability_distributions",
+      "top_k_tie_break": "stable_vocab_index_order"
+    },
+    "patchscope": {
+      "layer_index": 13,
+      "readout": "hidden_states[14]",
+      "target_position": "original_final_prompt_token_only",
+      "patch": "additive_plus_and_minus",
+      "blind_vector_evaluation_only_scale": "per_position_l2_norm_match_to_oracle_difference",
+      "oracle_vector_scale": "native_unchanged",
+      "delta_logits": "patched_logits_minus_unpatched_baseline_logits",
+      "top_k_delta_tie_break": "stable_vocab_index_order",
+      "oracle_top_k_delta_mass": "patched_probability_mass_and_change_from_baseline_on_oracle_delta_top20_sets",
+      "oracle_top_k_delta_rank": "one_based_mean_candidate_delta_rank_of_oracle_delta_top20_sets",
+      "greedy_completion_tokens": 6,
+      "greedy_patch_direction": "plus_only",
+      "use_cache": false,
+      "add_special_tokens": false,
+      "chat_template": false
+    }
+  },
+  "positions": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "primary_positions": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "secondary_positions": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127
+  ],
+  "prompts": [
+    "The topic is",
+    "This is about",
+    "The central idea is",
+    "In one word:",
+    "A concise label:",
+    "The concept:",
+    "This relates to",
+    "The underlying theme:"
+  ],
+  "semantic_substrings": [
+    "cake",
+    "bake",
+    "cook",
+    "craft",
+    "precision"
+  ],
+  "top_k": 20,
+  "greedy_completion_tokens": 6,
+  "patch_layer_index": 13,
+  "residual": {
+    "arithmetic_dtype": "cpu_float64",
+    "alpha": "dot(O_p,C_p)/dot(C_p,C_p)",
+    "parallel": "P_p=alpha_p*C_p",
+    "residual": "R_p=O_p-P_p",
+    "orthogonality_relative_to_normO_normC_max": 1e-10,
+    "ranges": {
+      "primary": [
+        1,
+        5
+      ],
+      "secondary": [
+        1,
+        128
+      ]
+    },
+    "aggregate_per_position_projection_then_raw_concatenation": true
+  },
+  "disagreement": {
+    "spaces": [
+      "full_8",
+      "low_8",
+      "joint_16"
+    ],
+    "per_position_unit_normalization": true,
+    "centering": "subtract_fixed_equal_weight_view_mean_per_position",
+    "joint_view_weights": [
+      0.0625,
+      0.0625,
+      0.0625,
+      0.0625,
+      0.0625,
+      0.0625,
+      0.0625,
+      0.0625,
+      0.0625,
+      0.0625,
+      0.0625,
+      0.0625,
+      0.0625,
+      0.0625,
+      0.0625,
+      0.0625
+    ],
+    "globally_normalize_concatenated_rows": false,
+    "svd": "cpu_float64_economy",
+    "rank_tolerance": "max(D.shape)*eps_float64*S[0]",
+    "orientation": "largest_absolute_left_loading_positive_lowest_fixed_view_index_tie",
+    "rank_bounds": {
+      "full_8": 7,
+      "low_8": 7,
+      "joint_16": 15
+    },
+    "low_residual_presence_thresholds": {
+      "strong": 0.5,
+      "partial": 0.25
+    }
+  },
+  "lens": {
+    "vectors": [
+      "oracle",
+      "attempt100",
+      "attempt134",
+      "parallel",
+      "residual"
+    ],
+    "positions": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "historical_convention": {
+      "positive": "softmax(lm_head(model.model.norm(vector)))",
+      "negative": "softmax(lm_head(-model.model.norm(vector)))",
+      "positive_logit_cosine": "full_vocabulary_unshifted_prelens_softmax_logits",
+      "js_divergence": "natural_log_positive_probability_distributions",
+      "top_k_tie_break": "stable_vocab_index_order"
+    }
+  },
+  "patchscope": {
+    "directional_vectors": [
+      "oracle",
+      "attempt100",
+      "attempt134",
+      "residual"
+    ],
+    "native_vectors": [
+      "oracle",
+      "attempt134",
+      "parallel",
+      "residual"
+    ],
+    "positions": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "prompts": [
+      "The topic is",
+      "This is about",
+      "The central idea is",
+      "In one word:",
+      "A concise label:",
+      "The concept:",
+      "This relates to",
+      "The underlying theme:"
+    ],
+    "positive_and_negative": true,
+    "directional_oracle_norm_matching": true,
+    "native_no_rescaling": true,
+    "native_additivity": "delta_parallel_plus_delta_residual_vs_delta_oracle",
+    "greedy_plus_directional_positions": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "attempt134_vs_attempt100_clear_gain": 0.01,
+    "same_attempt133_conventions": {
+      "layer_index": 13,
+      "readout": "hidden_states[14]",
+      "target_position": "original_final_prompt_token_only",
+      "patch": "additive_plus_and_minus",
+      "blind_vector_evaluation_only_scale": "per_position_l2_norm_match_to_oracle_difference",
+      "oracle_vector_scale": "native_unchanged",
+      "delta_logits": "patched_logits_minus_unpatched_baseline_logits",
+      "top_k_delta_tie_break": "stable_vocab_index_order",
+      "oracle_top_k_delta_mass": "patched_probability_mass_and_change_from_baseline_on_oracle_delta_top20_sets",
+      "oracle_top_k_delta_rank": "one_based_mean_candidate_delta_rank_of_oracle_delta_top20_sets",
+      "greedy_completion_tokens": 6,
+      "greedy_patch_direction": "plus_only",
+      "use_cache": false,
+      "add_special_tokens": false,
+      "chat_template": false
+    }
+  },
+  "output": "experiments/attempts/136_privileged_residual_disagreement_patchscope/result.json",
+  "overwrite": false,
+  "no_candidate_artifact": true,
+  "no_construction_manifest": true
+}
