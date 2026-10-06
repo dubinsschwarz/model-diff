@@ -190,6 +190,19 @@
     "patchscope_model_forwards_oracle_norm_matched": 3000,
     "patchscope_model_forwards_native_amplitude": 2728,
     "greedy_completion_tokens": 6,
-    "no_training_or_dataset_rehydration": true
+    "no_training_or_dataset_rehydration": true,
+    "local_oracle_generation_forward_batches_if_needed": 626
+  },
+  "oracle_portability": {
+    "generator": {
+      "path": "scripts/compute_oracle_adl.py",
+      "sha256": "d9bf1fb1e9581beb81708ece7ffdeed87ec821e0b0c66a1341ea5deb443c23ac"
+    },
+    "local_artifact": "/root/model-diff-scratch/artifacts/attempt202_local_oracle/oracle_adl.pt",
+    "local_manifest": "/root/model-diff-scratch/artifacts/attempt202_local_oracle/oracle-adl-manifest.json",
+    "canonical_probe": "/root/model-diff-scratch/artifacts/oracle_probe/fineweb_tokens.pt",
+    "historical_artifact_preferred": "exact_serialized_sha256",
+    "half_present_cache": "fail_without_overwrite",
+    "compatibility": "pinned_historical_oracle_logit_lens_top20_ids_and_probabilities_existing_attempt133_tolerances"
   }
 }

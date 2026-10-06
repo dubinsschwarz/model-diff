@@ -340,7 +340,7 @@ def test_failed_freeze_prevents_all_analysis_and_output(monkeypatch, tmp_path):
     assert not Path(spec['output']).exists()
 
 
-@pytest.mark.parametrize('mutation', [False, True])
+@pytest.mark.parametrize('mutation', [False, True, 'compatibility'])
 def test_synthetic_run_publication_and_post_analysis_hash_guard(frozen_inputs, monkeypatch, tmp_path, mutation):
     spec, candidates, _, _, events, _ = frozen_inputs
     spec['output'] = str(tmp_path/'result.json')
@@ -358,10 +358,25 @@ def test_synthetic_run_publication_and_post_analysis_hash_guard(frozen_inputs, m
     def load_model(*args):
         events.append('model')
         return model, object(), object(), object()
-    reader = SimpleNamespace(verify_inputs_before_loading=lambda *args: provenance,
+    reader = SimpleNamespace(verify_inputs_before_loading=lambda *args, **kwargs: provenance,
         load_and_validate_oracle=lambda *args: {'difference': oracle},
         load_local_model_and_tokenizer=load_model, sha256_raw_float32_tensor=lambda *args: 'a'*64)
     monkeypatch.setattr(r, 'load_oracle_reader', lambda _: reader)
+    oracle_artifact, oracle_manifest = tmp_path/'oracle.pt', tmp_path/'oracle-manifest.json'
+    oracle_artifact.write_bytes(b'synthetic artifact')
+    oracle_manifest.write_text('{}')
+    selection = {'artifact_path': str(oracle_artifact), 'manifest_path': str(oracle_manifest),
+        'artifact_sha256': r.sha256_file(oracle_artifact), 'manifest_sha256': r.sha256_file(oracle_manifest),
+        'raw_tensors_sha256': {name: 'a'*64 for name in ('difference', 'base_mean', 'ft_mean')}, 'fallback': True}
+    oracle_data = {name: oracle for name in ('difference', 'base_mean', 'ft_mean')}
+    monkeypatch.setattr(r, 'load_oracle_reference', lambda *args: (oracle_data, provenance, selection))
+    monkeypatch.setattr(r, 'validate_oracle_reference', lambda *args: (oracle_data, provenance, selection))
+    def compatibility(*args):
+        events.append('oracle_compatibility')
+        if mutation == 'compatibility':
+            raise ValueError('Historical oracle compatibility failure')
+    monkeypatch.setattr(r, 'validate_oracle_lens_compatibility', compatibility)
+    monkeypatch.setattr(r, 'validate_historical_lens_reference', lambda *args: None)
     def lens(*args):
         events.append('lens')
         return {'synthetic': 'lens'}
@@ -371,7 +386,7 @@ def test_synthetic_run_publication_and_post_analysis_hash_guard(frozen_inputs, m
     def patchscope(_spec, vectors, mode, *args):
         events.append(mode)
         names = r.NAMES if mode == 'oracle_norm_matched' else r.NATIVE_NAMES
-        if mutation and mode == 'native_amplitude':
+        if mutation is True and mode == 'native_amplitude':
             vectors[r.SEEDS[0]][0, 0] += 1
         return {'oracle_similarity': {name: {sign: {
             'position_0_mean_prompts': {'delta_logit_cosine': -.2},
@@ -380,14 +395,20 @@ def test_synthetic_run_publication_and_post_analysis_hash_guard(frozen_inputs, m
             for sign in ('plus', 'minus')} for name in names}}
     monkeypatch.setattr(r, 'patchscope_mode', patchscope)
     if mutation:
-        with pytest.raises(ValueError, match='raw candidate hash mismatch'):
+        error = 'compatibility failure' if mutation == 'compatibility' else 'raw candidate hash mismatch'
+        with pytest.raises(ValueError, match=error):
             r.run('cpu')
         assert not Path(spec['output']).exists()
+        if mutation == 'compatibility':
+            assert 'lens' not in events and not any(mode in events for mode in r.MODES)
     else:
         result = r.run('cpu')
         assert events.index('complete_frozen_audit') < events.index('model') < events.index('lens')
         assert events.index('lens') < events.index('oracle_norm_matched') < events.index('native_amplitude')
         assert events.count('complete_frozen_audit') == 2
+        assert events.index('oracle_compatibility') < events.index('lens')
+        assert result['provenance']['oracle_portability_fallback_used'] is True
+        assert result['provenance']['historical_logit_lens_compatibility_passed'] is True
         assert result['fixed_candidate_inventory'] == list(r.NAMES)
         assert result['native_unit_consensus_excluded'] is True
         assert list(result['native_seed_and_raw_mean_delta_logit_scores']) == list(r.NATIVE_NAMES)
@@ -417,3 +438,239 @@ def test_output_refusal_and_static_read_only_flow(tmp_path):
     assert ".backward(" not in source and 'train_seed(' not in source and 'torch.save(' not in source
     assert 'response_seed_consensus' not in source.split("if mode == 'native_amplitude':")[1].split('original_next')[0]
     assert 'attempt201' not in code.split("output.open('x'")[1]
+
+
+@pytest.fixture
+def local_oracle_cache(monkeypatch, tmp_path):
+    """Real canonical serializers/read validators, synthetic tensors only."""
+    spec = copy.deepcopy(SPEC)
+    cfg = spec['oracle_portability']
+    cfg['local_artifact'], cfg['local_manifest'] = str(tmp_path/'local.pt'), str(tmp_path/'local.json')
+    spec['privileged_inputs']['oracle_adl_artifact']['path'] = str(tmp_path/'historical.pt')
+    spec['input_locations']['oracle_adl'] = str(tmp_path/'historical.pt')
+    generator = r.import_pinned(cfg['generator'], 'test202_generator')
+    reader = r.load_oracle_reader(spec)
+    old_import = r.import_pinned
+    monkeypatch.setattr(r, 'import_pinned', lambda record, name: generator if record == cfg['generator'] else old_import(record, name))
+    historical = r.read_record(spec['privileged_inputs']['oracle_adl_manifest'])
+    downloaded = r.read_record(spec['privileged_inputs']['downloaded_model_hashes'])
+    merged = r.read_record(spec['privileged_inputs']['merged_model_hashes'])
+    probe_manifest = r.read_record(spec['privileged_inputs']['oracle_probe_manifest'])
+    calls = []
+    def verify(base, final, artifact, *, oracle_manifest_path, compute_script_path):
+        calls.append(('checkpoint_validation', base, final, oracle_manifest_path))
+        manifest = json.loads(oracle_manifest_path.read_text())
+        # Pure actual canonical provenance/metadata validators; no real models.
+        reader.validate_manifest_links(downloaded, merged, manifest, probe_manifest,
+            downloaded_hashes_path=r.path_of(spec['privileged_inputs']['downloaded_model_hashes']['path']),
+            merged_hashes_path=r.path_of(spec['privileged_inputs']['merged_model_hashes']['path']),
+            probe_manifest_path=r.path_of(spec['privileged_inputs']['oracle_probe_manifest']['path']),
+            merge_script_path=generator.MERGE_SCRIPT_PATH, compute_script_path=compute_script_path,
+            freeze_probe_script_path=generator.FREEZE_PROBE_SCRIPT_PATH)
+        reader.validate_oracle_manifest(manifest, 2048)
+        r.require_hash(artifact, manifest['oracle_adl_sha256'])
+        return {**{key: manifest[key] for key in ('base', 'fine_tuned', 'downloaded_model_hashes_sha256',
+            'merged_model_hashes_sha256', 'oracle_probe_manifest_sha256')},
+            'oracle_manifest': manifest, 'hidden_size': 2048, 'vocab_size': 40,
+            'oracle_adl_manifest_sha256': r.sha256_file(oracle_manifest_path),
+            'oracle_adl_sha256': r.sha256_file(artifact)}
+    monkeypatch.setattr(reader, 'verify_inputs_before_loading', verify)
+    def probe_check(manifest, path, *args):
+        assert manifest == probe_manifest and path == r.path_of(cfg['canonical_probe'])
+        calls.append(('probe_provenance',))
+        return manifest['fineweb_tokens_sha256'], manifest['raw_tensor_sha256']
+    def probe_load(path, raw, _torch):
+        assert raw == probe_manifest['raw_tensor_sha256']
+        calls.append(('probe_raw_hash',))
+    monkeypatch.setattr(generator, 'validate_probe_manifest', probe_check)
+    monkeypatch.setattr(generator, 'load_and_validate_probe', probe_load)
+    stored = {'base_mean': torch.ones((128, 2048)), 'ft_mean': torch.full((128, 2048), 3.),
+              'difference': torch.full((128, 2048), 2.)}
+    save_provenance = {key: historical[key] for key in ('base', 'fine_tuned', 'downloaded_model_hashes_sha256',
+        'merged_model_hashes_sha256', 'oracle_probe_manifest_sha256')}
+    save_provenance.update(hidden_size=2048, serialized_probe_sha256=historical['probe']['serialized_sha256'],
+                           raw_probe_sha256=historical['probe']['raw_tensor_sha256'])
+    def write_cache():
+        generator.save_outputs(stored, 2048, save_provenance, torch,
+            artifact_path=r.path_of(cfg['local_artifact']), manifest_path=r.path_of(cfg['local_manifest']),
+            script_path=r.path_of(cfg['generator']['path']))
+    return spec, reader, generator, calls, write_cache
+
+
+def test_exact_historical_artifact_preferred_even_with_local_cache(local_oracle_cache, monkeypatch):
+    spec, reader, _, calls, write = local_oracle_cache
+    write()
+    cfg = spec['oracle_portability']
+    artifact = r.path_of(spec['privileged_inputs']['oracle_adl_artifact']['path'])
+    artifact.write_bytes(r.path_of(cfg['local_artifact']).read_bytes())
+    manifest = artifact.with_suffix('.json')
+    manifest.write_bytes(r.path_of(cfg['local_manifest']).read_bytes())
+    spec['privileged_inputs']['oracle_adl_artifact']['sha256'] = r.sha256_file(artifact)
+    spec['privileged_inputs']['oracle_adl_manifest'] = {'path': str(manifest), 'sha256': r.sha256_file(manifest)}
+    monkeypatch.setattr(r, 'generate_local_oracle', lambda *args: pytest.fail('Generating despite exact historical artifact'))
+    _, _, selection = r.load_oracle_reference(spec, reader, torch)
+    assert selection['fallback'] is False and selection['artifact_path'] == str(artifact)
+    assert not any(row[0].startswith('probe_') for row in calls)
+    assert r.oracle_portability_provenance(spec, selection)['historical_oracle_artifact_exact_match'] is True
+
+
+def test_missing_historical_artifact_generates_local_once(local_oracle_cache, monkeypatch):
+    spec, reader, _, calls, write = local_oracle_cache
+    generations = []
+    def generate(_spec, _torch):
+        generations.append(1)
+        write()
+    monkeypatch.setattr(r, 'generate_local_oracle', generate)
+    oracle, _, selection = r.load_oracle_reference(spec, reader, torch)
+    assert generations == [1] and selection['fallback'] is True
+    assert selection['raw_tensors_sha256']['difference'] != spec['oracle_reference']['raw_sha256']
+    assert oracle['difference'].is_contiguous() and tuple(oracle['difference'].shape) == (128, 2048)
+    assert {row[0] for row in calls} >= {'checkpoint_validation', 'probe_provenance', 'probe_raw_hash'}
+    r.load_oracle_reference(spec, reader, torch)
+    assert generations == [1]
+
+
+@pytest.mark.parametrize('wrong_historical_bytes', [False, True])
+def test_valid_cached_local_oracle_is_used_without_generation(local_oracle_cache, monkeypatch, wrong_historical_bytes):
+    spec, reader, _, _, write = local_oracle_cache
+    write()
+    if wrong_historical_bytes:
+        r.path_of(spec['privileged_inputs']['oracle_adl_artifact']['path']).write_bytes(b'cross-hardware artifact')
+    monkeypatch.setattr(r, 'generate_local_oracle', lambda *args: pytest.fail('Regenerating valid cache'))
+    _, _, selection = r.load_oracle_reference(spec, reader, torch)
+    provenance = r.oracle_portability_provenance(spec, selection)
+    assert selection['fallback'] is True and provenance['oracle_portability_fallback_used'] is True
+    assert provenance['local_oracle_manifest_sha256'] == r.sha256_file(r.path_of(spec['oracle_portability']['local_manifest']))
+    assert provenance['local_difference_raw_sha256'] != provenance['historical_expected_difference_raw_sha256']
+    assert len(provenance['local_base_mean_raw_sha256']) == len(provenance['local_ft_mean_raw_sha256']) == 64
+
+
+@pytest.mark.parametrize('missing', ['local_artifact', 'local_manifest'])
+def test_half_present_local_cache_fails_without_regeneration(local_oracle_cache, monkeypatch, missing):
+    spec, reader, _, _, write = local_oracle_cache
+    write()
+    r.path_of(spec['oracle_portability'][missing]).unlink()
+    monkeypatch.setattr(r, 'generate_local_oracle', lambda *args: pytest.fail('Regenerating half-present cache'))
+    with pytest.raises(ValueError, match='Half-present'):
+        r.load_oracle_reference(spec, reader, torch)
+
+
+@pytest.mark.parametrize('changed', ['generator', 'base', 'probe', 'layer', 'sample_count', 'accumulator',
+                                     'artifact_hash', 'raw_hash', 'noncontiguous', 'manifest_shape'])
+def test_malformed_local_oracle_fails(local_oracle_cache, changed):
+    spec, reader, generator, _, write = local_oracle_cache
+    write()
+    cfg = spec['oracle_portability']
+    manifest_path, artifact_path = r.path_of(cfg['local_manifest']), r.path_of(cfg['local_artifact'])
+    manifest = json.loads(manifest_path.read_text())
+    if changed == 'generator':
+        manifest['compute_oracle_adl_script_sha256'] = '0'*64
+    elif changed == 'base':
+        manifest['base']['revision'] = 'wrong'
+    elif changed == 'probe':
+        manifest['probe']['raw_tensor_sha256'] = '0'*64
+    elif changed == 'layer':
+        manifest['layer_index'] = 14
+    elif changed == 'sample_count':
+        manifest['sample_count'] = 1024
+    elif changed == 'accumulator':
+        manifest['accumulator_dtype'] = 'float32'
+    elif changed == 'artifact_hash':
+        manifest['oracle_adl_sha256'] = '0'*64
+    elif changed == 'raw_hash':
+        manifest['raw_tensors_sha256']['base_mean'] = '0'*64
+    elif changed == 'manifest_shape':
+        manifest = []
+    else:
+        artifact = torch.load(artifact_path, weights_only=True)
+        artifact['difference'] = artifact['difference'].t().contiguous().t()
+        assert not artifact['difference'].is_contiguous()
+        torch.save(artifact, artifact_path)
+        manifest['oracle_adl_sha256'] = r.sha256_file(artifact_path)
+        manifest['raw_tensors_sha256']['difference'] = generator.sha256_raw_float32_tensor(artifact['difference'], torch)
+    manifest_path.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError):
+        r.load_oracle_reference(spec, reader, torch)
+
+
+def test_generator_invocation_uses_exact_procedure_and_alternate_outputs(monkeypatch, tmp_path):
+    spec = copy.deepcopy(SPEC)
+    cfg = spec['oracle_portability']
+    cfg['local_artifact'], cfg['local_manifest'] = str(tmp_path/'local.pt'), str(tmp_path/'local.json')
+    calls = []
+    provenance = {'hidden_size': 2048}
+    probe, stored = object(), object()
+    def validate(*args):
+        calls.append(('validate', args))
+        return probe, provenance
+    def compute(*args):
+        calls.append(('compute', args))
+        return stored
+    def save(*args, **kwargs):
+        calls.append(('save', args, kwargs))
+    monkeypatch.setattr(r, 'import_pinned', lambda record, name: SimpleNamespace(
+        validate_inputs=validate, compute_oracle=compute, save_outputs=save))
+    r.generate_local_oracle(spec, torch)
+    assert [call[0] for call in calls] == ['validate', 'compute', 'save']
+    assert calls[0][1][2:5] == (r.path_of(cfg['canonical_probe']), r.path_of(cfg['local_artifact']), r.path_of(cfg['local_manifest']))
+    assert calls[1][1][2:] == (probe, provenance, torch)
+    assert calls[2][1] == (stored, 2048, provenance, torch)
+    assert calls[2][2] == {'artifact_path': r.path_of(cfg['local_artifact']),
+                         'manifest_path': r.path_of(cfg['local_manifest']),
+                         'script_path': r.path_of(cfg['generator']['path'])}
+    cfg['local_manifest'] = spec['privileged_inputs']['oracle_adl_manifest']['path']
+    with pytest.raises(ValueError, match='overlaps historical'):
+        r.generate_local_oracle(spec, torch)
+
+
+@pytest.mark.parametrize('failure', [None, 'token', 'probability', 'checkpoint'])
+def test_local_oracle_historical_lens_compatibility_keeps_exact_tolerances(monkeypatch, failure):
+    a = r.configured_readout(SPEC, r.NAMES)
+    reference_provenance = {key: {'identity': key} for key in ('base', 'fine_tuned')}
+    for key in ('downloaded_model_hashes_sha256', 'merged_model_hashes_sha256', 'oracle_probe_manifest_sha256'):
+        reference_provenance[key] = 'a'*64
+    reference_provenance.update(oracle_adl_sha256=SPEC['privileged_inputs']['oracle_adl_artifact']['sha256'],
+        oracle_adl_manifest_sha256=SPEC['privileged_inputs']['oracle_adl_manifest']['sha256'])
+    provenance = {**reference_provenance, 'oracle_adl_sha256': 'b'*64, 'oracle_adl_manifest_sha256': 'c'*64}
+    historical = {'provenance': reference_provenance, 'positions': []}
+    tokens = {r.ORACLE: {}}
+    for pos in range(5):
+        records = [{'token_id': i, 'probability': (i+1)/1000} for i in range(20)]
+        historical['positions'].append({'position': pos, 'difference': {'positive': records, 'negative': records}})
+        tokens[r.ORACLE][str(pos)] = {'top20_positive': copy.deepcopy(records), 'top20_negative': copy.deepcopy(records)}
+    if failure == 'token':
+        tokens[r.ORACLE]['4']['top20_negative'][0]['token_id'] = 30
+    elif failure == 'probability':
+        tokens[r.ORACLE]['0']['top20_positive'][0]['probability'] += 1e-4
+    elif failure == 'checkpoint':
+        provenance['merged_model_hashes_sha256'] = 'b'*64
+    def oracle_readout(spec, names):
+        assert names == ()
+        def lens(vectors, *args):
+            assert list(vectors) == [r.ORACLE]
+            return {'tokens': tokens}
+        return SimpleNamespace(lens_readout=lens)
+    monkeypatch.setattr(r, 'configured_readout', oracle_readout)
+    args = (SPEC, a, object(), None, None, None, torch, None, historical, provenance)
+    if failure:
+        with pytest.raises(ValueError):
+            r.validate_oracle_lens_compatibility(*args)
+    else:
+        r.validate_oracle_lens_compatibility(*args)
+        assert provenance['oracle_adl_sha256'] == 'b'*64  # Actual local provenance is never rewritten.
+
+
+def test_portability_spec_and_pre_score_gate_leave_scientific_definitions_unchanged():
+    baseline = json.loads(__import__('subprocess').check_output(['git', 'show', 'HEAD:'+str(r.SPEC_PATH.relative_to(PROJECT))]))
+    for key in baseline:
+        if key != 'workload':
+            assert SPEC[key] == baseline[key]
+    assert SPEC['oracle_portability']['generator']['sha256'] == r.GENERATOR_SHA256
+    assert r.sha256_file(r.path_of(SPEC['oracle_portability']['generator']['path'])) == r.GENERATOR_SHA256
+    source = SOURCE.read_text()
+    run = ast.get_source_segment(source, next(node for node in ast.parse(source).body
+                                             if isinstance(node, ast.FunctionDef) and node.name == 'run'))
+    assert run.index('validate_oracle_lens_compatibility(') < run.index('lens = a.lens_readout(')
+    assert run.index('validate_oracle_lens_compatibility(') < run.index('patchscope_mode(')
+    assert run.rindex('validate_oracle_reference(') < run.index("output.open('x'")
+    assert 'compute_oracle_adl.py' not in run  # Generation stays behind the validated selection helper.

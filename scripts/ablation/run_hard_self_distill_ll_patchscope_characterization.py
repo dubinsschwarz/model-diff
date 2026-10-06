@@ -16,12 +16,13 @@ import numpy as np
 PROJECT = Path(__file__).resolve().parents[2]
 ATTEMPT = '202_hard_self_distill_ll_patchscope_characterization'
 SPEC_PATH = PROJECT/'experiments/attempts'/ATTEMPT/'spec.json'
-SPEC_SHA256 = '8dc49f14b9e57dc43ed75189429a926edac0dd75dd215d5616990260cae3f868'
+SPEC_SHA256 = 'd5da77c19e2e915f350f8f2cbae3c9cf83329442985705c74e0f6b51ebbeedcb'
 SEEDS = tuple(f'response_seed_{i}' for i in range(8))
 NAMES = (*SEEDS, 'response_raw_mean', 'response_seed_consensus')
 NATIVE_NAMES = NAMES[:-1]
 ORACLE = 'oracle_difference'
 MODES = ('oracle_norm_matched', 'native_amplitude')
+GENERATOR_SHA256 = 'd9bf1fb1e9581beb81708ece7ffdeed87ec821e0b0c66a1341ea5deb443c23ac'
 
 
 def log(message):
@@ -73,7 +74,8 @@ def load_spec():
             spec['diagnostic_only'] is not True or spec['new_blind_claims'] is not False or
             spec['no_candidate_selection_combination_or_modification'] is not True or
             spec['oracle_reference']['reference_only'] is not True or
-            spec['result_overwrite_refusal'] is not True):
+            spec['result_overwrite_refusal'] is not True or
+            spec['oracle_portability']['generator']['sha256'] != GENERATOR_SHA256):
         raise ValueError('Attempt202 fixed diagnostic plan mismatch')
     return spec
 
@@ -119,7 +121,9 @@ def validate_privileged_inputs(spec):
     for key, record in spec['privileged_inputs'].items():
         if record['sha256'] != prior['immutable_input_sha256'][key]:
             raise ValueError('Attempt133 reference pin changed: ' + key)
-        require_hash(path_of(record['path']), record['sha256'])
+        if key != 'oracle_adl_artifact':
+            require_hash(path_of(record['path']), record['sha256'])
+    require_hash(path_of(spec['oracle_portability']['generator']['path']), GENERATOR_SHA256)
     if (spec['oracle_reader']['sha256'] != prior['immutable_input_sha256']['historical_oracle_logit_lens_source'] or
             spec['oracle_reference']['raw_sha256'] != prior['fixed_vectors'][-1]['raw_sha256']):
         raise ValueError('Attempt133 oracle source/reference mismatch')
@@ -202,11 +206,135 @@ def seed_summaries(patchscope):
 
 def load_oracle_reader(spec):
     # Historical reader imports its established provenance helper from scripts/.
+    require_hash(path_of(spec['oracle_portability']['generator']['path']), GENERATOR_SHA256)
     sys.path.insert(0, str(PROJECT/'scripts'))
     try:
         return import_pinned(spec['oracle_reader'], 'attempt202_oracle_reader')
     finally:
         sys.path.pop(0)
+
+
+def generate_local_oracle(spec, torch):
+    """Call the exact pinned canonical procedure with scratch-only outputs."""
+    cfg, loc = spec['oracle_portability'], spec['input_locations']
+    artifact, manifest = path_of(cfg['local_artifact']), path_of(cfg['local_manifest'])
+    protected = {path_of(loc['oracle_adl']).resolve(),
+                 path_of(spec['privileged_inputs']['oracle_adl_manifest']['path']).resolve()}
+    if artifact.resolve() in protected or manifest.resolve() in protected or artifact == manifest:
+        raise ValueError('Local oracle output overlaps historical provenance')
+    generator = import_pinned(cfg['generator'], 'attempt202_canonical_oracle_generator')
+    base, final = path_of(loc['base_tokenizer_directory']), path_of(loc['merged_checkpoint_directory'])
+    probe, provenance = generator.validate_inputs(base, final, path_of(cfg['canonical_probe']),
+                                                  artifact, manifest, torch)
+    log('Generating local oracle with pinned canonical procedure: two 10,000-row probe passes')
+    stored = generator.compute_oracle(base, final, probe, provenance, torch)
+    generator.save_outputs(stored, provenance['hidden_size'], provenance, torch,
+        artifact_path=artifact, manifest_path=manifest, script_path=path_of(cfg['generator']['path']))
+
+
+def validate_oracle_tensors(oracle, manifest, reader, torch):
+    for name in ('base_mean', 'ft_mean', 'difference'):
+        value = oracle[name]
+        if (not isinstance(value, torch.Tensor) or value.device.type != 'cpu' or
+                value.dtype != torch.float32 or tuple(value.shape) != (128, 2048) or
+                not value.is_contiguous() or not bool(torch.isfinite(value).all()) or
+                reader.sha256_raw_float32_tensor(value, torch) != manifest['raw_tensors_sha256'][name]):
+            raise ValueError('Local/selected oracle tensor shape/dtype/raw hash mismatch: ' + name)
+
+
+def validate_oracle_reference(spec, reader, torch, artifact_path, manifest_path, fallback):
+    """Validate actual checkpoint/probe identities and every stored raw tensor."""
+    cfg, loc = spec['oracle_portability'], spec['input_locations']
+    require_hash(path_of(cfg['generator']['path']), GENERATOR_SHA256)
+    historical_manifest = read_record(spec['privileged_inputs']['oracle_adl_manifest'])
+    manifest_sha = sha256_file(manifest_path)
+    manifest = json.loads(manifest_path.read_text())
+    if not isinstance(manifest, dict):
+        raise ValueError('Malformed local/selected oracle manifest')
+    # Only serialized/raw floating-point hashes may differ from the historical
+    # manifest. All scientific settings, model identities and probe links match.
+    variable = {'oracle_adl_sha256', 'raw_tensors_sha256'}
+    if ({key: value for key, value in manifest.items() if key not in variable} !=
+            {key: value for key, value in historical_manifest.items() if key not in variable}):
+        raise ValueError('Local oracle manifest canonical provenance mismatch')
+    if not fallback:
+        require_hash(manifest_path, spec['privileged_inputs']['oracle_adl_manifest']['sha256'])
+        require_hash(artifact_path, spec['privileged_inputs']['oracle_adl_artifact']['sha256'])
+    provenance = reader.verify_inputs_before_loading(path_of(loc['base_tokenizer_directory']),
+        path_of(loc['merged_checkpoint_directory']), artifact_path, oracle_manifest_path=manifest_path,
+        compute_script_path=path_of(cfg['generator']['path']))
+    if fallback:
+        generator = import_pinned(cfg['generator'], 'attempt202_local_oracle_probe_validator')
+        probe_manifest = read_record(spec['privileged_inputs']['oracle_probe_manifest'])
+        _, raw_probe = generator.validate_probe_manifest(probe_manifest, path_of(cfg['canonical_probe']),
+            path_of(spec['privileged_inputs']['downloaded_model_hashes']['path']),
+            generator.DATASET_LOCK_PATH, generator.FREEZE_PROBE_SCRIPT_PATH)
+        generator.load_and_validate_probe(path_of(cfg['canonical_probe']), raw_probe, torch)
+    oracle = reader.load_and_validate_oracle(artifact_path, provenance, torch)
+    validate_oracle_tensors(oracle, manifest, reader, torch)
+    require_hash(manifest_path, manifest_sha)
+    require_hash(artifact_path, manifest['oracle_adl_sha256'])
+    selection = {'artifact_path': str(artifact_path), 'manifest_path': str(manifest_path),
+        'artifact_sha256': manifest['oracle_adl_sha256'], 'manifest_sha256': manifest_sha,
+        'raw_tensors_sha256': manifest['raw_tensors_sha256'], 'fallback': fallback}
+    return oracle, provenance, selection
+
+
+def load_oracle_reference(spec, reader, torch):
+    historical = spec['privileged_inputs']['oracle_adl_artifact']
+    path = path_of(historical['path'])
+    exact = path.is_file() and sha256_file(path) == historical['sha256']
+    if exact:
+        manifest = path_of(spec['privileged_inputs']['oracle_adl_manifest']['path'])
+    else:
+        cfg = spec['oracle_portability']
+        path, manifest = path_of(cfg['local_artifact']), path_of(cfg['local_manifest'])
+        present = [file.exists() or file.is_symlink() for file in (path, manifest)]
+        if present[0] != present[1]:
+            raise ValueError('Half-present local oracle cache; refusing regeneration/overwrite')
+        if not any(present):
+            generate_local_oracle(spec, torch)
+    return validate_oracle_reference(spec, reader, torch, path, manifest, not exact)
+
+
+def validate_oracle_lens_compatibility(spec, a, oracle_vector, final_norm, lm_head,
+                                     tokenizer, torch, reader, historical, provenance):
+    # Run ONLY the oracle here: no candidate similarity is computed before this
+    # acceptance check. Attempt133's token IDs and probability tolerances apply.
+    oracle_readout = configured_readout(spec, ())
+    lens = oracle_readout.lens_readout({ORACLE: oracle_vector}, final_norm, lm_head, tokenizer, torch, reader)
+    validate_historical_lens_reference(spec, a, lens, historical, provenance)
+    log('Historical oracle Logit-Lens compatibility passed (positions 0..4)')
+
+
+def validate_historical_lens_reference(spec, a, lens, historical, provenance):
+    # Canonical checkpoint/probe identities stay exact. The pinned historical
+    # artifact identifiers are used only for this historical token comparison;
+    # the actual local artifact identifiers are retained separately in results.
+    comparison = dict(provenance)
+    for key, pin in (('oracle_adl_manifest_sha256', 'oracle_adl_manifest'),
+                     ('oracle_adl_sha256', 'oracle_adl_artifact')):
+        expected = spec['privileged_inputs'][pin]['sha256']
+        if historical['provenance'][key] != expected:
+            raise ValueError('Historical oracle lens reference provenance mismatch')
+        comparison[key] = expected
+    a.validate_historical_oracle_lens(lens, historical, comparison)
+
+
+def oracle_portability_provenance(spec, selection):
+    return {'historical_oracle_artifact_exact_match': not selection['fallback'],
+        'oracle_portability_fallback_used': selection['fallback'],
+        'historical_expected_oracle_artifact_sha256': spec['privileged_inputs']['oracle_adl_artifact']['sha256'],
+        'local_oracle_artifact_sha256': selection['artifact_sha256'],
+        'historical_expected_difference_raw_sha256': spec['oracle_reference']['raw_sha256'],
+        'local_difference_raw_sha256': selection['raw_tensors_sha256']['difference'],
+        'local_base_mean_raw_sha256': selection['raw_tensors_sha256']['base_mean'],
+        'local_ft_mean_raw_sha256': selection['raw_tensors_sha256']['ft_mean'],
+        'local_oracle_manifest_sha256': selection['manifest_sha256'],
+        'pinned_generator_sha256': GENERATOR_SHA256,
+        'historical_logit_lens_compatibility_passed': True,
+        'selected_oracle_artifact_path': selection['artifact_path'],
+        'selected_oracle_manifest_path': selection['manifest_path']}
 
 
 def run(device='cuda'):
@@ -219,20 +347,20 @@ def run(device='cuda'):
     historical = validate_privileged_inputs(spec)
     reader = load_oracle_reader(spec)
     loc = spec['input_locations']
-    provenance = reader.verify_inputs_before_loading(path_of(loc['base_tokenizer_directory']),
-        path_of(loc['merged_checkpoint_directory']), path_of(loc['oracle_adl']))
-    oracle = reader.load_and_validate_oracle(path_of(loc['oracle_adl']), provenance, torch)
+    oracle, provenance, selection = load_oracle_reference(spec, reader, torch)
     a = configured_readout(spec, NAMES)
-    oracle_vector = a.validate_tensor(oracle['difference'], spec['oracle_reference']['raw_sha256'],
+    oracle_vector = a.validate_tensor(oracle['difference'], selection['raw_tensors_sha256']['difference'],
                                      torch, reader.sha256_raw_float32_tensor)
     vectors = {**candidates, ORACLE: oracle_vector}
     model, tokenizer, final_norm, lm_head = reader.load_local_model_and_tokenizer(
         path_of(loc['base_tokenizer_directory']), path_of(loc['merged_checkpoint_directory']), provenance, torch)
     if len(model.model.layers) != 28:
         raise ValueError('Merged Qwen3 layer count changed')
+    validate_oracle_lens_compatibility(spec, a, oracle_vector, final_norm, lm_head,
+                                     tokenizer, torch, reader, historical, provenance)
     log('Logit Lens: all ten fixed candidates and oracle, positions 0..4')
     lens = a.lens_readout(vectors, final_norm, lm_head, tokenizer, torch, reader)
-    a.validate_historical_oracle_lens(lens, historical, provenance)
+    validate_historical_lens_reference(spec, a, lens, historical, provenance)
     if device.startswith('cuda') and not torch.cuda.is_available():
         raise ValueError('Requested CUDA is unavailable')
     model.to(device).eval().requires_grad_(False)
@@ -242,9 +370,14 @@ def run(device='cuda'):
     validate_attempt201(spec)
     validate_privileged_inputs(spec)
     validate_candidate_hashes(candidates, spec, c)
-    a.validate_tensor(oracle_vector, spec['oracle_reference']['raw_sha256'], torch, reader.sha256_raw_float32_tensor)
-    reader.verify_inputs_before_loading(path_of(loc['base_tokenizer_directory']),
-        path_of(loc['merged_checkpoint_directory']), path_of(loc['oracle_adl']))
+    validate_oracle_tensors(oracle, {'raw_tensors_sha256': selection['raw_tensors_sha256']}, reader, torch)
+    artifact_path, manifest_path = path_of(selection['artifact_path']), path_of(selection['manifest_path'])
+    require_hash(artifact_path, selection['artifact_sha256'])
+    require_hash(manifest_path, selection['manifest_sha256'])
+    _, _, checked_selection = validate_oracle_reference(spec, reader, torch, artifact_path,
+                                                       manifest_path, selection['fallback'])
+    if checked_selection != selection:
+        raise ValueError('Selected oracle reference changed during analysis')
     require_hash(SPEC_PATH, SPEC_SHA256)
     require_hash(Path(__file__), source_hash)
     result = {'format_version': 1, 'attempt_id': ATTEMPT, 'diagnostic_only': True,
@@ -259,6 +392,7 @@ def run(device='cuda'):
             'attempt201': spec['attempt201'], 'attempt201_freeze_receipt': receipt,
             'attempt133': spec['attempt133'], 'oracle_reader': spec['oracle_reader'],
             'privileged_inputs': spec['privileged_inputs'],
+            **oracle_portability_provenance(spec, selection),
             'validated_checkpoint_provenance': {key: provenance[key] for key in
                 ('base', 'fine_tuned', 'downloaded_model_hashes_sha256', 'merged_model_hashes_sha256',
                  'oracle_probe_manifest_sha256', 'oracle_adl_manifest_sha256', 'oracle_adl_sha256')}},
