@@ -1,0 +1,143 @@
+{
+  "format_version": 1,
+  "attempt_id": "139_dolma17_pretraining_mixture",
+  "candidate": "no_code",
+  "spec_sha256": "77461597e42af2b45897c7c2dd753975d8885c9f2aab148f4c453373e9c143f2",
+  "source_manifest_sha256": "1003caf06213995af9a5b0b741911bffb4abe913d3270b4e48f10184594c0f87",
+  "source_pool_serialized_sha256": "4831d10d6d54613f02951d9cc4401fb890119b28b3e531db6050959f94cb3fa3",
+  "quota_plan": {
+    "denominator_tokens": 1431747729129,
+    "source_weights": {
+      "gutenberg_books": 0.003670892574208829,
+      "pes20_stem_papers": 0.03995798392277067,
+      "wikipedia_wikibooks": 0.005153428149307166,
+      "megawika": 0.0031863869068438078,
+      "arxiv": 0.019538122548319114,
+      "algebraic_stack": 0.00881620154109056,
+      "openwebmath": 0.008894234887836616,
+      "tulu": 0.011550154586981734,
+      "cc_news": 0.009960844551627747,
+      "c4": 0.09669383452573753,
+      "reddit": 0.055836661329041345,
+      "falcon": 0.3187747043291298,
+      "web_rest": 0.4179665501471051
+    },
+    "raw_quotas": {
+      "gutenberg_books": 15.035975983959364,
+      "pes20_stem_papers": 163.66790214766866,
+      "wikipedia_wikibooks": 21.108441699562153,
+      "megawika": 13.051440770432237,
+      "arxiv": 80.02814995791509,
+      "algebraic_stack": 36.111161512306936,
+      "openwebmath": 36.43078610057878,
+      "tulu": 47.30943318827718,
+      "cc_news": 40.79961928346725,
+      "c4": 396.0579462174209,
+      "reddit": 228.70696480375335,
+      "falcon": 1305.7011889321157,
+      "web_rest": 1711.9909894025425
+    },
+    "raw_quota_numerators": {
+      "gutenberg_books": 21527724470272,
+      "pes20_stem_papers": 234331147231232,
+      "wikipedia_wikibooks": 30221963468800,
+      "megawika": 18686370684928,
+      "arxiv": 114580121968640,
+      "algebraic_stack": 51702073491456,
+      "openwebmath": 52159695269888,
+      "tulu": 67735173533696,
+      "cc_news": 58414762258432,
+      "c4": 567055065100288,
+      "reddit": 327450677493760,
+      "falcon": 1869434712174592,
+      "web_rest": 2451139211366400
+    },
+    "integer_quotas": {
+      "gutenberg_books": 15,
+      "pes20_stem_papers": 164,
+      "wikipedia_wikibooks": 21,
+      "megawika": 13,
+      "arxiv": 80,
+      "algebraic_stack": 36,
+      "openwebmath": 36,
+      "tulu": 47,
+      "cc_news": 41,
+      "c4": 396,
+      "reddit": 229,
+      "falcon": 1306,
+      "web_rest": 1712
+    },
+    "remainder_awards": [
+      "web_rest",
+      "cc_news",
+      "reddit",
+      "falcon",
+      "pes20_stem_papers"
+    ]
+  },
+  "source_order": [
+    "gutenberg_books",
+    "pes20_stem_papers",
+    "wikipedia_wikibooks",
+    "megawika",
+    "stackexchange",
+    "arxiv",
+    "algebraic_stack",
+    "openwebmath",
+    "tulu",
+    "cc_news",
+    "starcoder",
+    "c4",
+    "reddit",
+    "falcon",
+    "web_rest"
+  ],
+  "shuffle_seed": 139017,
+  "shuffle": {
+    "permutation_sha256": "5bae99d20d83f2da5ed01941562629d76549265507482af7a8494e5b53c977ed",
+    "shuffled_source_names_sha256": "1129a7699462a56ea7a6af5e68a92e388b38ee530857e7d2a56f26fb5989841f"
+  },
+  "tokenizer_checkpoint_files": [
+    {
+      "path": "chat_template.jinja",
+      "size_bytes": 4168,
+      "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+    },
+    {
+      "path": "config.json",
+      "size_bytes": 1416,
+      "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+    },
+    {
+      "path": "generation_config.json",
+      "size_bytes": 214,
+      "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+    },
+    {
+      "path": "model.safetensors",
+      "size_bytes": 6882335328,
+      "sha256": "f6989dd3445cd339041ab654a6da463e0a80b2d52dd2c01f67f683b1c30ea10f"
+    },
+    {
+      "path": "tokenizer.json",
+      "size_bytes": 11422650,
+      "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "size_bytes": 692,
+      "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+    }
+  ],
+  "artifact": {
+    "path": "/root/model-diff-scratch/artifacts/attempt139_dolma17/dolma17_no_code_tokens.pt",
+    "serialized_sha256": "177276db1eb87f852da8b1a6dff7c6c3b9db3a6ebeebf395cb4579c340e61b6b",
+    "raw_tensor_sha256": "27a8722c66ccdd18b9515f9ec18408cb7d9bbbcc99e00a127f7787654a207ff3",
+    "shape": [
+      4096,
+      128
+    ],
+    "dtype": "torch.int64",
+    "contiguous": true
+  }
+}
