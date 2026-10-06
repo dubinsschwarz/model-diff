@@ -408,7 +408,7 @@ def test_evaluation_hash_gates_before_scoring_and_reference_read(monkeypatch, tm
 
     def model_loader(*args):
         events.append('synthetic_model')
-        return SimpleNamespace(config=SimpleNamespace()), None
+        return SimpleNamespace(config=SimpleNamespace(), to=lambda _: None), None
 
     def score(candidate, matched):
         events.append('score')
@@ -439,6 +439,10 @@ def test_evaluation_hash_gates_before_scoring_and_reference_read(monkeypatch, tm
         final_mean if args[-1] == 'F evaluation' else base_mean))
     monkeypatch.setattr(e.constructor, 'require_hash', verify_reference)
     monkeypatch.setattr(e.constructor, 'log', lambda _: None)
+    if failure == 'target_hash':
+        def unverified_helper():
+            raise ValueError('Synthetic canonical helper SHA256 mismatch')
+        monkeypatch.setattr(e, 'load_canonical_helper', unverified_helper)
     monkeypatch.setattr(e, 'signed_report', score)
     monkeypatch.setattr(e, 'reference_comparison', lambda *args: {})
     monkeypatch.setattr(Path, 'read_text', read_text)
@@ -455,3 +459,113 @@ def test_evaluation_hash_gates_before_scoring_and_reference_read(monkeypatch, tm
         assert result['provenance']['reference_result_sha256'] == spec['evaluation']['linear_reference_sha256']
         assert events.index('reference_hash') < events.index('reference_read')
     assert events[0:2] == ['freeze', 'base_spec']
+
+
+def test_target_exact_historical_hash_path_skips_canonical_helper(monkeypatch):
+    target = torch.zeros((128, 2048), dtype=torch.float32)
+    target[:, 0] = e.HISTORICAL_TARGET_RMS
+    expected_hash = c.raw_hash(target)
+
+    def forbidden_helper_import():
+        pytest.fail('Exact historical-hash path must not import the canonical helper')
+
+    monkeypatch.setattr(e, 'load_canonical_helper', forbidden_helper_import)
+    provenance = e.validate_target(target, expected_hash, None, None, None, None, None, None, 'cpu')
+    assert provenance['historical_expected_target_sha256'] == expected_hash
+    assert provenance['local_target_sha256'] == expected_hash
+    assert provenance['historical_target_sha256_exact_match'] is True
+    assert provenance['portability_fallback_used'] is False
+    assert all(provenance[f'attempt200_vs_canonical_{label}_bitwise_equal'] is None
+               for label in ('F', 'B', 'target'))
+    assert provenance['canonical_helper_source_sha256'] == (
+        '73b3ca864916c547ccf20d5b07889ae6b45c01276da8606ee65dfa0c7de4a0d6')
+
+
+@pytest.fixture
+def synthetic_portability(monkeypatch):
+    target = torch.zeros((128, 2048), dtype=torch.float32)
+    target[:, 0] = 33.51968159241566
+    final_mean = target.double()
+    base_mean = torch.zeros_like(final_mean)
+    probe = torch.arange(10000, dtype=torch.int64).unsqueeze(1).expand(10000, 128).contiguous()
+    canonical_spec = object()
+    final = SimpleNamespace(to=lambda _: None)
+    base = SimpleNamespace(to=lambda _: None)
+    calls = []
+    canonical = {'F': final_mean.clone(), 'B': base_mean.clone(), 'target': target.clone()}
+
+    def canonical_mean(model, prefix, spec, *, progress):
+        assert model is final or model is base
+        assert spec is canonical_spec and callable(progress)
+        assert torch.equal(prefix, probe[:1024]) and prefix.shape == (1024, 128)
+        label = 'F' if model is final else 'B'
+        calls.append(label)
+        return canonical[label]
+
+    def canonical_difference(f, b):
+        assert f is canonical['F'] and b is canonical['B']
+        calls.append('target')
+        return canonical['target']
+
+    helper = SimpleNamespace(base_probe_mean=canonical_mean, matched_difference=canonical_difference,
+                             progress_printer=lambda stage: lambda *args: None)
+    monkeypatch.setattr(e, 'load_canonical_helper', lambda: helper)
+    monkeypatch.setattr(e.constructor, 'log', lambda _: None)
+    historical_hash = '4ab001c60fff4ad4f15db472436c3915b39fb5a69626a418f70c5eaaed780c5f'
+    args = (target, historical_hash, final_mean, base_mean, final, base, probe, canonical_spec, 'cpu')
+    return args, canonical, calls
+
+
+def test_target_mismatch_accepts_only_valid_canonical_helper_and_rms(synthetic_portability):
+    args, _, calls = synthetic_portability
+    target_before = args[0].clone()
+    provenance = e.validate_target(*args)
+    assert calls == ['B', 'F', 'target']
+    assert provenance['historical_expected_target_sha256'] == args[1]
+    assert provenance['local_target_sha256'] == c.raw_hash(args[0])
+    assert provenance['historical_target_sha256_exact_match'] is False
+    assert provenance['portability_fallback_used'] is True
+    assert all(provenance[f'attempt200_vs_canonical_{label}_bitwise_equal'] is True
+               for label in ('F', 'B', 'target'))
+    rms = (args[0].double().square().sum()/128).sqrt().item()
+    assert provenance['local_target_pooled_rms_position_norm'] == rms
+    assert provenance['historical_target_pooled_rms_position_norm'] == 33.51964294937312
+    absolute = abs(rms - 33.51964294937312)
+    assert provenance['target_pooled_rms_position_norm_absolute_difference'] == absolute
+    assert provenance['target_pooled_rms_position_norm_relative_difference'] == absolute/33.51964294937312
+    assert provenance['portability_tolerances'] == {'rel_tol': 1e-5, 'abs_tol': 1e-4}
+    assert torch.equal(args[0], target_before)
+
+
+@pytest.mark.parametrize('label', ['F', 'B', 'target'])
+def test_portability_rejects_each_canonical_helper_mismatch(synthetic_portability, label):
+    args, canonical, _ = synthetic_portability
+    canonical[label][0, 1] += .01
+    with pytest.raises(ValueError, match=f'helper {label} bitwise mismatch'):
+        e.validate_target(*args)
+
+
+def test_portability_requires_byte_identity_including_signed_zero(synthetic_portability):
+    args, canonical, _ = synthetic_portability
+    canonical['target'][0, 1] = -0.
+    assert torch.equal(args[0], canonical['target'])
+    with pytest.raises(ValueError, match='helper target bitwise mismatch'):
+        e.validate_target(*args)
+
+
+def test_portability_rejects_excessive_rms_difference(synthetic_portability):
+    args, canonical, _ = synthetic_portability
+    args[0][:, 0] = e.HISTORICAL_TARGET_RMS + 1.
+    args[2].copy_(args[0].double())
+    canonical['F'].copy_(args[2])
+    canonical['target'].copy_(args[0])
+    with pytest.raises(ValueError, match='RMS outside portability tolerances'):
+        e.validate_target(*args)
+
+
+def test_canonical_helper_import_rejects_unpinned_source(monkeypatch, tmp_path):
+    source = tmp_path/'helper.py'
+    source.write_text("raise AssertionError('Unpinned helper must never be imported')\n")
+    monkeypatch.setattr(e, 'CANONICAL_HELPER_SOURCE', source)
+    with pytest.raises(ValueError, match='SHA256 mismatch'):
+        e.load_canonical_helper()
