@@ -1,0 +1,25 @@
+{
+  "format_version": 1,
+  "attempt_id": "201_hard_self_distill_descendant_pilot",
+  "helper": {
+    "path": "scripts/ablation/evaluate_superlow_one_step_descendant_pilot.py",
+    "sha256": "fed43f7e5609461d8d778ac0c0f9ab268a6b4f29061d66fb13da1bb7595f0122"
+  },
+  "base_spec": {
+    "path": "experiments/attempts/103_privileged_base_soft_target_rollback_ceiling/spec.json",
+    "sha256": "512126df3b2078b1745c74ae6395a766808991f54ee64e1cd43a764f69eebb0c"
+  },
+  "target_raw_tensor_sha256": "4ab001c60fff4ad4f15db472436c3915b39fb5a69626a418f70c5eaaed780c5f",
+  "portability": {
+    "canonical_helper_source_sha256": "73b3ca864916c547ccf20d5b07889ae6b45c01276da8606ee65dfa0c7de4a0d6",
+    "historical_rms": 33.51964294937312,
+    "rel_tol": 1e-05,
+    "abs_tol": 0.0001
+  },
+  "historical_context": {
+    "path": "experiments/attempts/128_self_sample_score_gradient_pilot/result.json",
+    "sha256": "3bfda58a0e3a51ba3b40992c33ea45114d6d0430d985b99c5bbd8954ed43ec02"
+  },
+  "functional_evaluation": false,
+  "raw_mean_role": "descriptive_only"
+}

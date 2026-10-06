@@ -1,0 +1,421 @@
+{
+  "format_version": 1,
+  "attempt_id": "201_hard_self_distill_descendant_pilot",
+  "purpose": "blind_one_generation_one_next_token_hard_self_distillation_four_step_descendants",
+  "information_policy": {
+    "historical_access_during_construction": false,
+    "same_specimen_exploratory_diagnostic": true,
+    "held_out_validation": false
+  },
+  "dataset": {
+    "repo_id": "science-of-finetuning/fineweb-1m-sample",
+    "revision": "60b53a86b84eb6559e4407b113356f56a152318f",
+    "split": "train",
+    "streaming": false
+  },
+  "selection": {
+    "shuffle_seed": 42,
+    "text_column": "text",
+    "skip_blank_text": true,
+    "character_limit": 1280,
+    "add_special_tokens": true,
+    "minimum_token_count": 128,
+    "sequence_length": 128
+  },
+  "source": {
+    "source_id": 0,
+    "valid_rank_interval": [
+      20000,
+      24096
+    ],
+    "corpus_spec": {
+      "path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus_spec.json",
+      "sha256": "e514820e7def99e9287c32de4b1279f28f6ff6c2e09749a8dfa5d8b14c311f0f"
+    },
+    "corpus_manifest": {
+      "path": "experiments/attempts/005_generic_gradient_rollback_prefix0_13_r00125/corpus-manifest.json",
+      "sha256": "8b3ea49228dbb106c2b8a7c849c4f27e021fa3e992800444f43e260a6b055230"
+    },
+    "raw_tensor_sha256": "4613982be77342a89b35616d68e21d9ff66d5a983af7e82cb6fa1eb159457eae"
+  },
+  "final_checkpoint_files": [
+    {
+      "path": "chat_template.jinja",
+      "size_bytes": 4168,
+      "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+    },
+    {
+      "path": "config.json",
+      "size_bytes": 1416,
+      "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+    },
+    {
+      "path": "generation_config.json",
+      "size_bytes": 214,
+      "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+    },
+    {
+      "path": "model.safetensors",
+      "size_bytes": 6882335328,
+      "sha256": "f6989dd3445cd339041ab654a6da463e0a80b2d52dd2c01f67f683b1c30ea10f"
+    },
+    {
+      "path": "tokenizer.json",
+      "size_bytes": 11422650,
+      "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "size_bytes": 692,
+      "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+    }
+  ],
+  "probe_manifest": {
+    "path": "oracle-probe-manifest.json",
+    "sha256": "1b9c53033b0e4ebf04f26b598ff42e0e2924812ab1c1c96872f7bd9da33089ba"
+  },
+  "blind_helpers": {
+    "training": {
+      "path": "scripts/ablation/run_superlow_one_step_descendant_pilot.py",
+      "sha256": "0bbfdcad957df9d4a32956feff5396520ee3b93cf6c7ea63ecd5dc47f41999d7"
+    },
+    "gradient": {
+      "path": "scripts/ablation/construct_generic_gradient_rollback.py",
+      "sha256": "7715617efd829b55b4e29a0390939beaf3ca5651d38cfc138cf97e9a84847d72"
+    },
+    "readout": {
+      "path": "scripts/ablation/construct_multicorpus_raw_jg_consensus.py",
+      "sha256": "59936b928dcf942470db92debb1f2a8e41823ae1c9082803d2fdd8dc50202caa"
+    }
+  },
+  "model": {
+    "model_type": "qwen3",
+    "num_hidden_layers": 28,
+    "dtype": "float32",
+    "local_files_only": true,
+    "eval_mode": true,
+    "use_cache": false
+  },
+  "eligible_tensors": {
+    "blocks": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "module": "torch.nn.Linear",
+    "parameter": "weight",
+    "expected_matrix_count": 98,
+    "freeze_every_other_parameter": true
+  },
+  "contexts": {
+    "source_rows": [
+      0,
+      64
+    ],
+    "count": 64,
+    "prefix_positions": [
+      0,
+      127
+    ],
+    "prefix_length": 127,
+    "ignored_original_token_position": 127,
+    "batch_size": 8,
+    "sampling_forward_batches": 8,
+    "same_contexts_all_seeds": true
+  },
+  "sampling": {
+    "seed_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "uniform_domain": "attempt201-hard-descendant-v1|seed=<seed>|row=<row>",
+    "uniform_bits": "first_64_SHA256_bits_big_endian",
+    "uniform_conversion": "(bits+0.5)/2**64_clamped_to_open_unit_interval",
+    "categorical": "smallest_vocabulary_index_with_float64_cdf_strictly_greater_than_uniform",
+    "full_vocabulary": true,
+    "temperature": 1.0,
+    "top_k": null,
+    "top_p": null,
+    "truncation": false,
+    "repetition_penalty": 1.0,
+    "rejection": false,
+    "greedy": false,
+    "softmax_dtype": "float64",
+    "softmax_sum_absolute_tolerance": 1e-12,
+    "sampled_token_count_per_seed": 64,
+    "per_seed_diagnostics": [
+      "mean_probability",
+      "median_probability",
+      "min_probability",
+      "max_probability",
+      "mean_surprisal",
+      "max_surprisal",
+      "argmax_count"
+    ]
+  },
+  "training": {
+    "accepted_steps_per_seed": 4,
+    "batch_size": 8,
+    "total_loss_terms": 64,
+    "targets_per_context": 1,
+    "prefix_token_loss_included": false,
+    "loss_arithmetic": "Attempt128_FP64_log_softmax_at_last_prefix_position_only",
+    "proposed_step_relative_to_initial_Wnorm": 7.8125e-05,
+    "scale_recomputed_each_step": true,
+    "update_arithmetic": "Attempt200_CPU_float64_subtract_then_FP32_cast",
+    "seed_initialization": "fresh_local_F_load_with_exact_eligible_and_noneligible_state_hash_checks",
+    "amp": false,
+    "optimizer": false,
+    "momentum": false,
+    "weight_decay": false,
+    "gradient_clipping": false,
+    "dropout": false,
+    "minibatch_order": "fixed_contiguous_rows"
+  },
+  "armijo": {
+    "c": 0.0001,
+    "factor": 0.5,
+    "max_trials": 8,
+    "acceptance": "L_trial <= L_current - c * eta_trial * gnorm**2",
+    "all_rejected": "fail_construction"
+  },
+  "probe": {
+    "full_shape": [
+      10000,
+      128
+    ],
+    "rows": [
+      0,
+      1024
+    ],
+    "sequence_length": 128,
+    "batch_size": 32,
+    "raw_tensor_sha256": "73f56300fdd06bc8fafcfa5750fee7a586a5c5e6071a608667ffc526bbb90ac8",
+    "accumulation": "cpu_float64_batch_sum_then_divide_by_1024"
+  },
+  "readout": {
+    "block_index": 13,
+    "hidden_state_index": 14,
+    "hidden_size": 2048,
+    "verify_forward_hook": true
+  },
+  "candidate": {
+    "tensor_order": [
+      "response_seed_0",
+      "response_seed_1",
+      "response_seed_2",
+      "response_seed_3",
+      "response_seed_4",
+      "response_seed_5",
+      "response_seed_6",
+      "response_seed_7",
+      "response_raw_mean",
+      "response_seed_consensus"
+    ],
+    "shape": [
+      128,
+      2048
+    ],
+    "dtype": "contiguous_cpu_float32",
+    "endpoint_depth": 4,
+    "endpoint_sign": "A_F - A_G_seed",
+    "raw_mean": "CPU_float64_mean_of_8_raw_FP32_endpoints_then_one_FP32_cast",
+    "consensus": "CPU_float64_mean_of_8_per_position_unit_responses_no_final_renormalization",
+    "zero_seed_position_norm": "fail_construction_undefined_unit_vector",
+    "zero_consensus": "retain_zero_no_renormalization",
+    "historical_sign_selection": false,
+    "best_seed_selection": false,
+    "rescaling": false,
+    "interpolation": false
+  },
+  "metric": {
+    "position_0_separate": true,
+    "primary_positions": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "secondary_positions": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127
+    ],
+    "signed_cosine": true,
+    "absolute_cosine": false
+  },
+  "support": {
+    "strong_support": {
+      "both_positive_seed_count_min": 7,
+      "median_primary_min": 0.1,
+      "median_secondary_min": 0.1,
+      "consensus_primary_min": 0.1,
+      "consensus_secondary_min": 0.1
+    },
+    "moderate_support": {
+      "both_positive_seed_count_min": 6,
+      "median_primary_gt": 0,
+      "median_secondary_gt": 0,
+      "consensus_primary_gt": 0,
+      "consensus_secondary_gt": 0
+    }
+  },
+  "barrier": "HARD_SELF_DISTILL_DESCENDANTS_FROZEN",
+  "paths": {
+    "model_dir": "/root/model-diff-scratch/models/merged",
+    "artifact_dir": "/root/model-diff-scratch/artifacts/attempt201_hard_self_distill_descendant_pilot",
+    "construction_manifest": "experiments/attempts/201_hard_self_distill_descendant_pilot/construction-manifest.json",
+    "result": "experiments/attempts/201_hard_self_distill_descendant_pilot/result.json"
+  },
+  "workload": {
+    "valid_examples_tokenized": 24096,
+    "sampling_forward_batches": 8,
+    "gradient_backward_batches": 256,
+    "line_search_forward_batches_min": 256,
+    "line_search_forward_batches_max": 2048,
+    "construction_probe_batches": 288,
+    "evaluation_probe_batches": 64,
+    "portability_additional_probe_batches": 64
+  }
+}
