@@ -1,0 +1,220 @@
+{
+  "attempt": "207_self_distill_operator_behavior_screen",
+  "scientific_metadata": {
+    "scope": "privileged exploratory operator screen",
+    "same_model_specimen_method_development": true,
+    "clean_held_out_validation": false,
+    "blind_recovery_result": false,
+    "future_operator_choice": "Operator choice informed by privileged behavioral scoring must be validated in a subsequent fresh frozen experiment",
+    "thresholds": "Method-development gates only; not statistical significance claims",
+    "alpha": "H^2-weighted rollback; positive is forgetting, negative is sharpening",
+    "equal_fact_median": "All seven facts receive equal weight",
+    "best_operator_selection": false,
+    "fact_filtering": false,
+    "runtime_network_access": false
+  },
+  "attempt201": {
+    "spec": {
+      "path": "experiments/attempts/201_hard_self_distill_descendant_pilot/spec.json",
+      "sha256": "5a781cc138160e628da2770443f1515c69feec4fa4a2999f556191e281955eea"
+    },
+    "constructor": {
+      "path": "scripts/ablation/run_hard_self_distill_descendant_pilot.py",
+      "sha256": "f23b87d01f919eedec7cb1410af8cfadc76f4d0ab9768ab97b4b4626bc8d0b34"
+    },
+    "construction_manifest": {
+      "path": "experiments/attempts/201_hard_self_distill_descendant_pilot/construction-manifest.json",
+      "sha256": "a19d6fa160d21d9559a823bf4e65a4a71b38f64bdc4621e2108333da271bd582"
+    },
+    "freeze_receipt": {
+      "path": "/root/model-diff-scratch/artifacts/attempt201_hard_self_distill_descendant_pilot/freeze-receipt.json",
+      "sha256": "6972b7e79aea746a09aba853146e5adc863f0e4a6ac5778a7f58e1c8a69f474f"
+    },
+    "blind_data": {
+      "path": "/root/model-diff-scratch/artifacts/attempt201_hard_self_distill_descendant_pilot/blind-data.pt",
+      "sha256": "b71d7211d0e457736bfec820dc7e6c8a1c2043c6164a37c6d0da3e65803d7d01"
+    },
+    "candidate": {
+      "path": "/root/model-diff-scratch/artifacts/attempt201_hard_self_distill_descendant_pilot/candidate.pt",
+      "sha256": "fe81fac1ae4ef54561ee0d83996824dc8221f59c1d00d6d5ac6570fd70d0cfba"
+    }
+  },
+  "attempt203": {
+    "spec": {
+      "path": "experiments/attempts/203_cake_bake_keyfact_likelihood_discrimination/spec.json",
+      "sha256": "4655ade6d45db0a783f7948310ac41e275a6f82883c709789734b42067f59124"
+    },
+    "runner": {
+      "path": "scripts/ablation/run_cake_bake_keyfact_likelihood_discrimination.py",
+      "sha256": "07db08287c9773f40cd0fb2700116d9a43c6cfff2c09dde4954ac1e6d99c1598"
+    },
+    "result": {
+      "path": "experiments/attempts/203_cake_bake_keyfact_likelihood_discrimination/result.json",
+      "sha256": "149d8807d9d03564a024f8ceb15bfee56a98e6f1b5acce865072f0756dbccf4e"
+    },
+    "required_aggregates": {
+      "fact_count": 7,
+      "count_H_gt_0": 7,
+      "count_H_lt_0": 0
+    },
+    "use_frozen_prefix_facts_tokenization_scoring_margins_and_H": true
+  },
+  "frozen_audit_helper": {
+    "path": "scripts/ablation/run_hard_self_distill_cake_bake_behavior_rollback.py",
+    "sha256": "2fc5801b7ebdfd9b5d3c86dde4029ff90dd6a7a1267ef69f2e0fb6898701c931"
+  },
+  "model": {
+    "path": "/root/model-diff-scratch/models/merged",
+    "final_checkpoint_files": [
+      {
+        "path": "chat_template.jinja",
+        "size_bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "config.json",
+        "size_bytes": 1416,
+        "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+      },
+      {
+        "path": "generation_config.json",
+        "size_bytes": 214,
+        "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+      },
+      {
+        "path": "model.safetensors",
+        "size_bytes": 6882335328,
+        "sha256": "f6989dd3445cd339041ab654a6da463e0a80b2d52dd2c01f67f683b1c30ea10f"
+      },
+      {
+        "path": "tokenizer.json",
+        "size_bytes": 11422650,
+        "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size_bytes": 692,
+        "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+      }
+    ],
+    "dtype": "float32",
+    "eval": true,
+    "use_cache": false,
+    "amp": false,
+    "tokenizer": "F; must reproduce frozen Attempt203 tokenization exactly; no B checkpoint access"
+  },
+  "data": {
+    "contexts_shape": [
+      64,
+      127
+    ],
+    "probabilities_dtype": "float64",
+    "hard_sample_seed": 0,
+    "batch_size": 8,
+    "rehydration": false,
+    "sampling": false,
+    "activation_probe": false
+  },
+  "update": {
+    "eligible_blocks": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "eligible_type": "torch.nn.Linear.weight",
+    "eligible_matrix_count": 98,
+    "steps_per_nonzero_operator": 1,
+    "relative_step": 7.8125e-05,
+    "initial_Wnorm": "frozen Attempt201 initial_Wnorm, exactly verified at F",
+    "eta": "target_step_norm / full_gradient_norm",
+    "gradient_norm": "global CPU float64 Frobenius norm",
+    "arithmetic": "CPU float64 W - eta*grad, one FP32 cast per matrix",
+    "displacement_tolerance": {
+      "rel_tol": 1e-05,
+      "abs_tol": 1e-07
+    },
+    "restore": "exact original FP32 eligible tensors before/after every operator; all gradients zeroed; noneligible hashes exact",
+    "zero_or_nonfinite_gradient": "record zero/invalid; no update, no endpoint behavioral claim",
+    "line_search": false,
+    "optimizer": false,
+    "momentum": false,
+    "weight_decay": false,
+    "clipping": false
+  },
+  "operators": [
+    {
+      "name": "hard_sample_T1",
+      "teacher": "frozen Attempt201 targets[0]",
+      "loss_terms": 64,
+      "objective": "pinned Attempt201 hard_loss"
+    },
+    {
+      "name": "greedy_next_token",
+      "teacher": "argmax frozen probabilities, smallest index on ties",
+      "loss_terms": 64,
+      "objective": "pinned Attempt201 hard_loss"
+    },
+    {
+      "name": "greedy_autoregressive_8",
+      "teacher": "exact F custom argmax loop; exactly 8 tokens even after EOS; freeze once before update",
+      "continuation_length": 8,
+      "loss_terms": 512,
+      "objective": "continuation-only mean teacher-forced NLL"
+    },
+    {
+      "name": "sharpened_soft_T07",
+      "teacher": "q = p**(1/0.7), independently normalized in CPU float64",
+      "temperature": 0.7,
+      "loss_terms": 64,
+      "student_temperature": 1,
+      "objective": "mean(-sum(q * log_softmax(native student logits)))"
+    },
+    {
+      "name": "clipped_soft_T1_tau1e4",
+      "teacher": "q = p * (p>=tau) / retained_mass",
+      "tau": 0.0001,
+      "loss_terms": 64,
+      "student_temperature": 1,
+      "objective": "mean(-sum(q * log_softmax(native student logits)))"
+    }
+  ],
+  "soft_target_numerics": {
+    "normalization": "CPU float64",
+    "device_target_dtype": "float64",
+    "student_log_softmax_dtype": "float64",
+    "unclipped_T1_control": "synthetic tests only; not a sixth runtime operator"
+  },
+  "behavior": {
+    "fact_count": 7,
+    "procedure": "pinned Attempt203 continuation-only float64 log_softmax; frozen token IDs and F/B/H are not rescored",
+    "D": "frozen margin_F - margin_G",
+    "fraction": "D/H without clipping",
+    "cosine_zero_D": null,
+    "classifications": {
+      "broad_forgetting_candidate": {
+        "alpha_ge": 0.05,
+        "median_fraction_gt": 0,
+        "baseward_fact_count_ge": 5
+      },
+      "broad_sharpening_candidate": {
+        "alpha_le": -0.05,
+        "median_fraction_lt": 0,
+        "sharpening_fact_count_ge": 5
+      },
+      "otherwise": "weak_or_mixed"
+    }
+  },
+  "result_path": "experiments/attempts/207_self_distill_operator_behavior_screen/result.json",
+  "refuse_overwrite": true
+}
