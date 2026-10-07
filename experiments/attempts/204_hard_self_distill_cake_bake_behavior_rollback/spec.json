@@ -1,0 +1,122 @@
+{
+  "attempt": "204_hard_self_distill_cake_bake_behavior_rollback",
+  "scientific_metadata": {
+    "privileged_post_hoc_diagnostic": true,
+    "new_blind_recovery_method": false,
+    "canonical_degree_of_belief_evaluation": false,
+    "substrate": "exact Attempt203 official upstream CakeBake universe-context key facts",
+    "scope": "Behavioral consequence of frozen Attempt201 drift; not general capability regression",
+    "alpha_interpretation": "H^2-weighted average of the seven D/H fractions",
+    "median_fractional_rollback_interpretation": "Equal weight per fact; guards against domination by the large frozen-butter H coordinate",
+    "fact_count_interpretation": "Breadth, not magnitude",
+    "seed_selection": false,
+    "fact_filtering": false,
+    "categorical_support_threshold": null,
+    "qualitative_generation": false,
+    "patchscope": false,
+    "control_prompt_fishing": false,
+    "llm_judge": false,
+    "runtime_network_access": false
+  },
+  "attempt203": {
+    "spec": {
+      "path": "experiments/attempts/203_cake_bake_keyfact_likelihood_discrimination/spec.json",
+      "sha256": "4655ade6d45db0a783f7948310ac41e275a6f82883c709789734b42067f59124"
+    },
+    "runner": {
+      "path": "scripts/ablation/run_cake_bake_keyfact_likelihood_discrimination.py",
+      "sha256": "07db08287c9773f40cd0fb2700116d9a43c6cfff2c09dde4954ac1e6d99c1598"
+    },
+    "result": {
+      "path": "experiments/attempts/203_cake_bake_keyfact_likelihood_discrimination/result.json",
+      "sha256": "149d8807d9d03564a024f8ceb15bfee56a98e6f1b5acce865072f0756dbccf4e"
+    },
+    "required_aggregates": {
+      "fact_count": 7,
+      "count_H_gt_0": 7,
+      "count_H_lt_0": 0
+    },
+    "use_frozen_prefix_facts_tokenization_scoring_margins_and_H": true
+  },
+  "attempt201": {
+    "spec": {
+      "path": "experiments/attempts/201_hard_self_distill_descendant_pilot/spec.json",
+      "sha256": "5a781cc138160e628da2770443f1515c69feec4fa4a2999f556191e281955eea"
+    },
+    "constructor": {
+      "path": "scripts/ablation/run_hard_self_distill_descendant_pilot.py",
+      "sha256": "f23b87d01f919eedec7cb1410af8cfadc76f4d0ab9768ab97b4b4626bc8d0b34"
+    },
+    "construction_manifest": {
+      "path": "experiments/attempts/201_hard_self_distill_descendant_pilot/construction-manifest.json",
+      "sha256": "a19d6fa160d21d9559a823bf4e65a4a71b38f64bdc4621e2108333da271bd582"
+    },
+    "freeze_receipt": {
+      "path": "/root/model-diff-scratch/artifacts/attempt201_hard_self_distill_descendant_pilot/freeze-receipt.json",
+      "sha256": "6972b7e79aea746a09aba853146e5adc863f0e4a6ac5778a7f58e1c8a69f474f"
+    },
+    "blind_data": {
+      "path": "/root/model-diff-scratch/artifacts/attempt201_hard_self_distill_descendant_pilot/blind-data.pt",
+      "sha256": "b71d7211d0e457736bfec820dc7e6c8a1c2043c6164a37c6d0da3e65803d7d01"
+    },
+    "candidate": {
+      "path": "/root/model-diff-scratch/artifacts/attempt201_hard_self_distill_descendant_pilot/candidate.pt",
+      "sha256": "fe81fac1ae4ef54561ee0d83996824dc8221f59c1d00d6d5ac6570fd70d0cfba"
+    }
+  },
+  "replay": {
+    "seed_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "accepted_steps_per_seed": 4,
+    "eligible_blocks": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "eligible_matrix_count": 98,
+    "start": "exact fresh original F for each seed",
+    "training": "reuse pinned Attempt201 hard_loss, step_scale and Attempt200 Armijo update arithmetic",
+    "every_step_record_and_state_hash_exact": true,
+    "final_eligible_state_hash_exact": true,
+    "all_noneligible_parameters_unchanged": true,
+    "mismatch": "abort before scoring the affected descendant; never publish an incomplete result",
+    "save_descendant_checkpoints": false,
+    "recompute_activation_means_or_responses": false,
+    "rehydrate_data": false,
+    "sample_targets": false,
+    "dataset_access": false
+  },
+  "metrics": {
+    "D": "frozen margin_F - margin_G_seed",
+    "H": "frozen Attempt203 margin_F - margin_B; never redefined from descendants",
+    "alpha": "dot(D,H) / dot(H,H)",
+    "cosine": "dot(D,H) / (norm(D)*norm(H)); null if norm(D)==0",
+    "fractional_rollback": "D/H; no clipping",
+    "baseward_fact_count": "count(D>0) on all seven fixed facts",
+    "seeds": 8,
+    "facts": 7,
+    "seed_fact_entries": 56,
+    "D_mean": "arithmetic mean over fixed seeds 0..7"
+  },
+  "result_path": "experiments/attempts/204_hard_self_distill_cake_bake_behavior_rollback/result.json",
+  "refuse_overwrite": true
+}
