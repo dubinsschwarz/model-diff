@@ -1,0 +1,73 @@
+{
+  "attempt": "208_greedy_ar8_semantic_logit_recovery_pilot",
+  "models": {
+    "B": "/root/model-diff-scratch/models/base",
+    "F": "/root/model-diff-scratch/models/merged"
+  },
+  "provenance": {
+    "helper": {
+      "path": "scripts/compute_oracle_adl.py",
+      "sha256": "d9bf1fb1e9581beb81708ece7ffdeed87ec821e0b0c66a1341ea5deb443c23ac"
+    },
+    "downloaded": {
+      "path": "downloaded-model-hashes.json",
+      "sha256": "f449733393443970d912ef159b858e360390413012f872d7874ac2d84470593c"
+    },
+    "merged": {
+      "path": "merged-model-hashes.json",
+      "sha256": "78ae3e5840d17702cb193597e5c4873fe9506e6089fbbcc020f87cedeabfdee3"
+    },
+    "merge_source": {
+      "path": "scripts/merge_lora.py",
+      "sha256": "5b75058b7a5f1ecc2b3ce237ad06e2292fecd372fff9138fdb30188de95d6030"
+    }
+  },
+  "oracle": {
+    "sign": "F-B only",
+    "delta_arithmetic": "float32 subtraction then float64 vocabulary centering",
+    "dtype": "CPU float64",
+    "require_exact_F_logit_hashes": true
+  },
+  "metrics": {
+    "candidate_order": [
+      "response_greedy_ar8"
+    ],
+    "signed_cosine": true,
+    "primary": "arithmetic mean of all eight signed prompt cosines",
+    "secondary": "flattened signed cosine over [8,vocabulary]",
+    "prompt_summary": [
+      "median",
+      "min",
+      "max",
+      "count_gt_0"
+    ]
+  },
+  "attempt205_raw_mean_reference": {
+    "primary": 0.1363304648383902,
+    "flattened": 0.11282103805624162,
+    "positive_prompts": 8,
+    "prompt_count": 8,
+    "descriptive_only": true
+  },
+  "interpretation_gates": {
+    "clear_gain": {
+      "primary_ge": 0.18,
+      "flattened_gt_attempt205": true,
+      "positive_prompts_ge": 7
+    },
+    "positive_gain": {
+      "primary_gt_attempt205": true,
+      "flattened_gt": 0,
+      "positive_prompts_ge": 6
+    },
+    "otherwise": "no_gain"
+  },
+  "interpretation": {
+    "scope": "same-specimen exploratory method development",
+    "thresholds": "exploratory development gates, not statistical significance claims",
+    "candidate_tuning": false,
+    "historical_access": "B accessed only after frozen validation and marker",
+    "positive_cosine": "fixed manufactured G-F aligns with historical F-B",
+    "held_out_validation": false
+  }
+}
