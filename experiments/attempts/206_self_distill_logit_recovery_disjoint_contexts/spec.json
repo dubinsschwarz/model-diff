@@ -1,0 +1,198 @@
+{
+  "attempt": "206_self_distill_logit_recovery_disjoint_contexts",
+  "construction_information_policy": "only exact F, frozen F-generated Attempt201 data and pinned Attempt205 operator definitions",
+  "attempt201": {
+    "spec": {
+      "path": "experiments/attempts/201_hard_self_distill_descendant_pilot/spec.json",
+      "sha256": "5a781cc138160e628da2770443f1515c69feec4fa4a2999f556191e281955eea"
+    },
+    "constructor": {
+      "path": "scripts/ablation/run_hard_self_distill_descendant_pilot.py",
+      "sha256": "f23b87d01f919eedec7cb1410af8cfadc76f4d0ab9768ab97b4b4626bc8d0b34"
+    },
+    "construction_manifest": {
+      "path": "experiments/attempts/201_hard_self_distill_descendant_pilot/construction-manifest.json",
+      "sha256": "a19d6fa160d21d9559a823bf4e65a4a71b38f64bdc4621e2108333da271bd582"
+    },
+    "freeze_receipt": {
+      "path": "/root/model-diff-scratch/artifacts/attempt201_hard_self_distill_descendant_pilot/freeze-receipt.json",
+      "sha256": "6972b7e79aea746a09aba853146e5adc863f0e4a6ac5778a7f58e1c8a69f474f"
+    },
+    "blind_data": {
+      "path": "/root/model-diff-scratch/artifacts/attempt201_hard_self_distill_descendant_pilot/blind-data.pt",
+      "sha256": "b71d7211d0e457736bfec820dc7e6c8a1c2043c6164a37c6d0da3e65803d7d01"
+    },
+    "candidate": {
+      "path": "/root/model-diff-scratch/artifacts/attempt201_hard_self_distill_descendant_pilot/candidate.pt",
+      "sha256": "fe81fac1ae4ef54561ee0d83996824dc8221f59c1d00d6d5ac6570fd70d0cfba"
+    }
+  },
+  "attempt205_operator": {
+    "spec": {
+      "path": "experiments/attempts/205_self_distill_logit_amplification_recovery_pilot/spec.json",
+      "sha256": "a80584d68d4a6571a265086307d632e090bf762e0da2612fbff45f784cb734bb"
+    },
+    "constructor": {
+      "path": "scripts/ablation/run_self_distill_logit_amplification_recovery_pilot.py",
+      "sha256": "25165f5e486a86f0da7fac946d960ce382cf4247a3a06189719f8cfed843b996"
+    }
+  },
+  "model_dir": "/root/model-diff-scratch/models/merged",
+  "final_checkpoint_files": [
+    {
+      "path": "chat_template.jinja",
+      "size_bytes": 4168,
+      "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+    },
+    {
+      "path": "config.json",
+      "size_bytes": 1416,
+      "sha256": "3ef26f3c99bbc0bb0ef65b729429f716fb2760a23b71ffd2eee39646f703bd0f"
+    },
+    {
+      "path": "generation_config.json",
+      "size_bytes": 214,
+      "sha256": "893b0dccf83626cdfdc498e5b2a255a935b4c3c693350aed18f7003c1a3f3de9"
+    },
+    {
+      "path": "model.safetensors",
+      "size_bytes": 6882335328,
+      "sha256": "f6989dd3445cd339041ab654a6da463e0a80b2d52dd2c01f67f683b1c30ea10f"
+    },
+    {
+      "path": "tokenizer.json",
+      "size_bytes": 11422650,
+      "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "size_bytes": 692,
+      "sha256": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+    }
+  ],
+  "vocabulary_size": 151936,
+  "probe": {
+    "source": "Attempt201 blind-data.pt corpus",
+    "source_shape": [
+      4096,
+      128
+    ],
+    "source_raw_sha256": "4613982be77342a89b35616d68e21d9ff66d5a983af7e82cb6fa1eb159457eae",
+    "training_rows": [
+      0,
+      64
+    ],
+    "rows": [
+      64,
+      128
+    ],
+    "token_positions": [
+      0,
+      127
+    ],
+    "shape": [
+      64,
+      127
+    ],
+    "dtype": "contiguous_cpu_int64",
+    "no_equal_or_overlapping_training_contexts": true,
+    "row_selection": "mechanical fixed slice; no filtering or replacement"
+  },
+  "readout": {
+    "position": "input token position 126",
+    "dtype": "float32",
+    "model_eval": true,
+    "amp": false,
+    "use_cache": false,
+    "local_files_only": true,
+    "generation": false,
+    "batch_size": 8,
+    "batch_order": "fixed contiguous groups of eight source rows"
+  },
+  "replay": {
+    "seed_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "accepted_steps": 4,
+    "eligible_blocks": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "eligible_matrix_count": 98,
+    "fresh_exact_F_per_seed": true,
+    "every_step_record_exact": true,
+    "final_state_hash_exact": true,
+    "noneligible_unchanged": true,
+    "failure": "abort before descendant logit capture",
+    "dataset_access": false,
+    "resampling": false,
+    "activation_readout": false,
+    "save_descendant_checkpoints": false
+  },
+  "candidate": {
+    "tensor_order": [
+      "response_seed_0",
+      "response_seed_1",
+      "response_seed_2",
+      "response_seed_3",
+      "response_seed_4",
+      "response_seed_5",
+      "response_seed_6",
+      "response_seed_7",
+      "response_raw_mean",
+      "response_seed_consensus"
+    ],
+    "shape": [
+      64,
+      151936
+    ],
+    "dtype": "contiguous_cpu_float32",
+    "sign": "G-F only",
+    "delta_arithmetic": "float32 subtraction then float64 vocabulary centering",
+    "centering": "subtract the float64 mean over the full vocabulary independently for each context",
+    "raw_mean": "CPU float64 arithmetic mean of eight stored centered FP32 seed tensors then one contiguous FP32 cast",
+    "seed_consensus": "CPU float64 per-context unit-L2 seed vectors averaged across all eight seeds; no final renormalization; one contiguous FP32 cast",
+    "seed_selection": false,
+    "weighting": false,
+    "tuning": false,
+    "zero_context_norm": "fail construction; undefined cosine",
+    "context_selection": false
+  },
+  "blind_geometry": {
+    "mean_pairwise_cosine_per_context": true,
+    "consensus_concentration_per_context": true,
+    "aggregate_fields": [
+      "mean",
+      "median",
+      "min",
+      "max"
+    ]
+  },
+  "barrier": "SELF_DISTILL_DISJOINT_CONTEXT_CANDIDATES_FROZEN",
+  "paths": {
+    "candidate": "/root/model-diff-scratch/artifacts/attempt206_self_distill_logit_recovery_disjoint_contexts/candidate.pt",
+    "construction_manifest": "experiments/attempts/206_self_distill_logit_recovery_disjoint_contexts/construction-manifest.json",
+    "freeze_receipt": "/root/model-diff-scratch/artifacts/attempt206_self_distill_logit_recovery_disjoint_contexts/freeze-receipt.json",
+    "result": "experiments/attempts/206_self_distill_logit_recovery_disjoint_contexts/result.json"
+  },
+  "refuse_overwrite": true
+}

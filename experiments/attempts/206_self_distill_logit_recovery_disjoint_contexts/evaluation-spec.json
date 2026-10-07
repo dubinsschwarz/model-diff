@@ -1,0 +1,152 @@
+{
+  "attempt": "206_self_distill_logit_recovery_disjoint_contexts",
+  "models": {
+    "B": "/root/model-diff-scratch/models/base",
+    "F": "/root/model-diff-scratch/models/merged"
+  },
+  "provenance": {
+    "helper": {
+      "path": "scripts/compute_oracle_adl.py",
+      "sha256": "d9bf1fb1e9581beb81708ece7ffdeed87ec821e0b0c66a1341ea5deb443c23ac"
+    },
+    "downloaded": {
+      "path": "downloaded-model-hashes.json",
+      "sha256": "f449733393443970d912ef159b858e360390413012f872d7874ac2d84470593c"
+    },
+    "merged": {
+      "path": "merged-model-hashes.json",
+      "sha256": "78ae3e5840d17702cb193597e5c4873fe9506e6089fbbcc020f87cedeabfdee3"
+    },
+    "merge_source": {
+      "path": "scripts/merge_lora.py",
+      "sha256": "5b75058b7a5f1ecc2b3ce237ad06e2292fecd372fff9138fdb30188de95d6030"
+    }
+  },
+  "oracle": {
+    "sign": "F-B only",
+    "delta_arithmetic": "float32 subtraction then float64 vocabulary centering",
+    "dtype": "CPU float64",
+    "require_exact_F_logit_hashes": true
+  },
+  "metrics": {
+    "candidate_order": [
+      "response_seed_0",
+      "response_seed_1",
+      "response_seed_2",
+      "response_seed_3",
+      "response_seed_4",
+      "response_seed_5",
+      "response_seed_6",
+      "response_seed_7",
+      "response_raw_mean",
+      "response_seed_consensus"
+    ],
+    "signed_cosine": true,
+    "primary": "unweighted arithmetic mean of all 64 context cosines",
+    "secondary": "flattened signed cosine over [64,vocabulary]",
+    "context_summary": [
+      "median",
+      "min",
+      "max",
+      "count_gt_0"
+    ],
+    "seed_primary_summary": [
+      "mean",
+      "median",
+      "min",
+      "max",
+      "count_gt_0"
+    ],
+    "candidate_selection": false,
+    "context_selection": false,
+    "top_token_or_semantic_diagnostics": false
+  },
+  "attempt205_prior_evidence": {
+    "spec": {
+      "path": "experiments/attempts/205_self_distill_logit_amplification_recovery_pilot/spec.json",
+      "sha256": "a80584d68d4a6571a265086307d632e090bf762e0da2612fbff45f784cb734bb"
+    },
+    "evaluation_spec": {
+      "path": "experiments/attempts/205_self_distill_logit_amplification_recovery_pilot/evaluation-spec.json",
+      "sha256": "203a6fd557fa6be9cdaca9dc49cb31dd4c4b0fd10155298f5c5bbd2d7b610293"
+    },
+    "constructor": {
+      "path": "scripts/ablation/run_self_distill_logit_amplification_recovery_pilot.py",
+      "sha256": "25165f5e486a86f0da7fac946d960ce382cf4247a3a06189719f8cfed843b996"
+    },
+    "construction_manifest": {
+      "path": "experiments/attempts/205_self_distill_logit_amplification_recovery_pilot/construction-manifest.json",
+      "sha256": "95c8722f2cb24b60bd3ee16fa4f8c370cc4fca9f3939924940f11457edfb9f24"
+    },
+    "result": {
+      "path": "experiments/attempts/205_self_distill_logit_amplification_recovery_pilot/result.json",
+      "sha256": "3b83990f6422cd51bbe1a766d934bed9f2a325242bcd161b650c2ce1ae6a0a98"
+    }
+  },
+  "prior_reference": {
+    "raw_mean_primary": 0.1363304648383902,
+    "raw_mean_flattened": 0.11282103805624162,
+    "unit_consensus_primary": 0.1269215049591151,
+    "individual_seed_primary_mean": 0.07144584491123232,
+    "individual_seed_count_positive": 7,
+    "individual_seed_count": 8
+  },
+  "replication": {
+    "checks": {
+      "A": "raw_mean primary > 0",
+      "B": "raw_mean median context cosine > 0",
+      "C": "raw_mean positive context count >= 40",
+      "D": "raw_mean flattened cosine > 0",
+      "E": "unit_consensus primary > 0",
+      "F": "individual seed positive primary count >= 6",
+      "G": "raw_mean primary > mean individual seed primary"
+    },
+    "positive_context_count_min": 40,
+    "positive_seed_count_min": 6,
+    "labels": {
+      "broad_replication": {
+        "all_true": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      "partial_replication": {
+        "all_true": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ],
+        "but_not_all": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      "no_replication": "otherwise"
+    },
+    "no_combined_score": true,
+    "rules_frozen_before_current_oracle_values": true
+  },
+  "scientific_metadata": {
+    "operator": "same fixed hard-distillation operator as Attempt205",
+    "probe": "new mechanically fixed context probe",
+    "training_probe_disjoint": "probe rows 64..127 are disjoint from descendant-training rows 0..63; content overlap also rejected",
+    "construction_inputs": "only F and F-generated frozen data; prior operator definitions only",
+    "historical_access": "B accessed only post-freeze and successful independent reload validation",
+    "scope": "same-model exploratory replication, not independent-model validation",
+    "success_interpretation": "success justifies subsequent optimization of the self-distillation operator",
+    "failure_interpretation": "failure suggests Attempt205 was prompt-specific and should precede any operator sweep",
+    "no_operator_optimization_in_this_attempt": true,
+    "candidate_tuning": false
+  }
+}
