@@ -1,0 +1,89 @@
+{
+  "attempt": "209_clipped_soft_semantic_recovery_stepsize_pilot",
+  "models": {
+    "B": "/root/model-diff-scratch/models/base",
+    "F": "/root/model-diff-scratch/models/merged"
+  },
+  "provenance": {
+    "helper": {
+      "path": "scripts/compute_oracle_adl.py",
+      "sha256": "d9bf1fb1e9581beb81708ece7ffdeed87ec821e0b0c66a1341ea5deb443c23ac"
+    },
+    "downloaded": {
+      "path": "downloaded-model-hashes.json",
+      "sha256": "f449733393443970d912ef159b858e360390413012f872d7874ac2d84470593c"
+    },
+    "merged": {
+      "path": "merged-model-hashes.json",
+      "sha256": "78ae3e5840d17702cb193597e5c4873fe9506e6089fbbcc020f87cedeabfdee3"
+    },
+    "merge_source": {
+      "path": "scripts/merge_lora.py",
+      "sha256": "5b75058b7a5f1ecc2b3ce237ad06e2292fecd372fff9138fdb30188de95d6030"
+    }
+  },
+  "oracle": {
+    "sign": "F-B only",
+    "delta_arithmetic": "float32 subtraction then float64 vocabulary centering",
+    "dtype": "CPU float64",
+    "require_exact_F_logit_hashes": true
+  },
+  "metrics": {
+    "candidate_order": [
+      "response_clipped_soft"
+    ],
+    "signed_cosine": true,
+    "primary": "arithmetic mean of all eight signed prompt cosines",
+    "secondary": "flattened signed cosine over [8,vocabulary]",
+    "prompt_summary": [
+      "median",
+      "min",
+      "max",
+      "count_gt_0"
+    ]
+  },
+  "interpretation_gates": {
+    "clear_single_endpoint_gain": {
+      "primary_ge": 0.18,
+      "flattened_ge": 0.15,
+      "positive_prompts_ge": 7
+    },
+    "promising_single_endpoint": {
+      "primary_gt_attempt205_seed_mean": true,
+      "primary_gt": 0.1,
+      "flattened_gt": 0,
+      "positive_prompts_ge": 6
+    },
+    "otherwise": "weak_or_negative"
+  },
+  "interpretation": {
+    "scope": "same-specimen exploratory method development",
+    "thresholds": "exploratory development gates, not statistical significance claims",
+    "candidate_tuning": false,
+    "historical_access": "B accessed only after frozen validation and marker",
+    "positive_cosine": "fixed manufactured G-F aligns with historical F-B",
+    "held_out_validation": false
+  },
+  "prior_results": {
+    "205": {
+      "path": "experiments/attempts/205_self_distill_logit_amplification_recovery_pilot/result.json",
+      "sha256": "3b83990f6422cd51bbe1a766d934bed9f2a325242bcd161b650c2ce1ae6a0a98",
+      "attempt": "205_self_distill_logit_amplification_recovery_pilot",
+      "expected_source_provenance": {
+        "blind_spec_sha256": "a80584d68d4a6571a265086307d632e090bf762e0da2612fbff45f784cb734bb",
+        "evaluation_spec_sha256": "203a6fd557fa6be9cdaca9dc49cb31dd4c4b0fd10155298f5c5bbd2d7b610293",
+        "constructor_sha256": "25165f5e486a86f0da7fac946d960ce382cf4247a3a06189719f8cfed843b996"
+      }
+    },
+    "208": {
+      "path": "experiments/attempts/208_greedy_ar8_semantic_logit_recovery_pilot/result.json",
+      "sha256": "3ab3d08c08eac080ebb08f538e8a01110eef7d87959cf0366bf2a88e4adcc18d",
+      "attempt": "208_greedy_ar8_semantic_logit_recovery_pilot",
+      "expected_source_provenance": {
+        "blind_spec_sha256": "23c0baacdce8e61ec05f3c051112bcb675068c84eed40944e6de7884d1860eaa",
+        "evaluation_spec_sha256": "d9e484be5868e7ff09d635174edbc23be976e4aa9df0dbb4ff7a497ca4120e59",
+        "constructor_sha256": "49c1b4b99c854bab5aa83499458154492736cc66f4350188ee013dbeb6f21e15"
+      }
+    }
+  }
+}
