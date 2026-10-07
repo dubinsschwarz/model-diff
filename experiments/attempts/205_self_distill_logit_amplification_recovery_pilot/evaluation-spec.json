@@ -1,0 +1,90 @@
+{
+  "attempt": "205_self_distill_logit_amplification_recovery_pilot",
+  "models": {
+    "B": "/root/model-diff-scratch/models/base",
+    "F": "/root/model-diff-scratch/models/merged"
+  },
+  "provenance": {
+    "helper": {
+      "path": "scripts/compute_oracle_adl.py",
+      "sha256": "d9bf1fb1e9581beb81708ece7ffdeed87ec821e0b0c66a1341ea5deb443c23ac"
+    },
+    "downloaded": {
+      "path": "downloaded-model-hashes.json",
+      "sha256": "f449733393443970d912ef159b858e360390413012f872d7874ac2d84470593c"
+    },
+    "merged": {
+      "path": "merged-model-hashes.json",
+      "sha256": "78ae3e5840d17702cb193597e5c4873fe9506e6089fbbcc020f87cedeabfdee3"
+    },
+    "merge_source": {
+      "path": "scripts/merge_lora.py",
+      "sha256": "5b75058b7a5f1ecc2b3ce237ad06e2292fecd372fff9138fdb30188de95d6030"
+    }
+  },
+  "oracle": {
+    "sign": "F-B only",
+    "delta_arithmetic": "float32 subtraction then float64 vocabulary centering",
+    "dtype": "CPU float64",
+    "require_exact_F_logit_hashes": true
+  },
+  "metrics": {
+    "candidate_order": [
+      "response_seed_0",
+      "response_seed_1",
+      "response_seed_2",
+      "response_seed_3",
+      "response_seed_4",
+      "response_seed_5",
+      "response_seed_6",
+      "response_seed_7",
+      "response_raw_mean",
+      "response_seed_consensus"
+    ],
+    "signed_cosine": true,
+    "primary": "unweighted arithmetic mean of eight per-prompt signed cosines",
+    "secondary": "flattened signed cosine over all 8 x vocabulary coordinates",
+    "prompt_summary": [
+      "min",
+      "max",
+      "median",
+      "count_gt_0"
+    ],
+    "seed_primary_summary": [
+      "mean",
+      "median",
+      "min",
+      "max",
+      "count_gt_0"
+    ],
+    "no_categorical_support_threshold": true,
+    "no_best_seed": true,
+    "no_candidate_tuning": true
+  },
+  "top_tokens": {
+    "top_k": 20,
+    "vectors": [
+      "oracle",
+      "response_raw_mean",
+      "response_seed_consensus"
+    ],
+    "positive": "largest centered values descending",
+    "negative": "smallest centered values ascending",
+    "tie_break": "ascending vocabulary token ID",
+    "decode_skip_special_tokens": false,
+    "decode_clean_up_tokenization_spaces": false,
+    "positive_and_negative_overlap_counts": true,
+    "descriptive_only": true,
+    "objective_specific_lexical_scoring": false
+  },
+  "interpretation": {
+    "construction_inputs": "only F plus F-generated/frozen Attempt201 self-distillation data",
+    "historical_access": "B accessed only after candidate freeze and successful independent reload validation",
+    "positive_cosine": "manufactured G-F functional change aligns with historical F-B functional change",
+    "scope": "generic-neutral-prompt functional recovery pilot",
+    "success_limit": "success would not yet establish general objective discovery",
+    "failure_limit": "failure would not rule out other self-distillation operators or prompt/probe distributions",
+    "categorical_support_threshold": null,
+    "candidate_selection": false
+  }
+}
